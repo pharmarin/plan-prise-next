@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", function () {
-    include PUBLIC_PATH . "index.php";
-
-    return true;
+  include base_path() . "/legacy/index.php";
 });
+
+require __DIR__ . "/auth.php";

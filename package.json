@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "prettier": "prettier"
+    "postinstall": "valet proxy node.plan-prise http://localhost:3000"
   },
   "devDependencies": {
-    "prettier": "^2.8.1",
-    "@prettier/plugin-php": "^0.19.2"
-  }
+    "@prettier/plugin-php": "^0.19.2",
+    "prettier": "^2.8.1"
+  },
+  "workspaces": [
+    "client"
+  ]
 }
