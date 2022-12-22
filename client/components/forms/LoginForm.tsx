@@ -4,17 +4,26 @@ import Button from "components/inputs/Button";
 import CheckboxInput from "components/inputs/CheckboxInput";
 import TextInput from "components/inputs/TextInput";
 import { useAuth } from "lib/useAuth";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type LoginFormType = { email: string; password: string; remember?: boolean };
 
 const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
+  const searchParams = useSearchParams();
+
   const {
     register,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<LoginFormType>({ mode: "all" });
+  } = useForm<LoginFormType>({
+    defaultValues: {
+      email: searchParams.get("email") ?? undefined,
+      password: searchParams.get("password") ?? undefined,
+    },
+    mode: "all",
+  });
 
   const { errors: loginErrors, login } = useAuth({ middleware: "guest" });
 
