@@ -25,13 +25,10 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
     mode: "all",
   });
 
-  const { errors: loginErrors, login } = useAuth({ middleware: "guest" });
+  const { errors: loginErrors, login } = useAuth();
 
-  const onSubmit: SubmitHandler<LoginFormType> = (values) => {
-    console.log("values: ", values);
-
-    login(values);
-  };
+  const onSubmit: SubmitHandler<LoginFormType> = async (values) =>
+    await login(values);
 
   return (
     <>

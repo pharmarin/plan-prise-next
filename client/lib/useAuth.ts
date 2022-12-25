@@ -1,23 +1,22 @@
 import axios from "lib/axios";
+import { UserType } from "lib/types";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 
-export const useAuth = ({
-  middleware,
-  redirectIfAuthenticated,
-}: { middleware?: string; redirectIfAuthenticated?: string } = {}) => {
+export const useAuth = () => {
   const router = useRouter();
 
   const [errors, setErrors] = useState<string[]>([]);
 
   const {
     data: user,
+    isLoading: isLoadingUser,
     error,
     mutate,
   } = useSWR("/api/user", () =>
     axios
-      .get("/api/user")
+      .get<UserType>("/api/user")
       .then((res) => res.data)
       .catch((error) => {
         if (error.response.status !== 409) throw error;
@@ -108,19 +107,9 @@ export const useAuth = ({
     window.location.pathname = "/login";
   };
 
-  useEffect(() => {
-    if (middleware === "guest" && redirectIfAuthenticated && user) {
-      router.push(redirectIfAuthenticated);
-    }
-
-    if (middleware === "auth" && error) {
-      logout();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, error]);
-
   return {
     errors,
+    isLoadingUser,
     user,
     //register,
     login,

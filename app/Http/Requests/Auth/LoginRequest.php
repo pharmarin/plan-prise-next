@@ -64,6 +64,8 @@ class LoginRequest extends FormRequest
 
         Auth::login($user);
       } catch (\Throwable $th) {
+        Debugbar::log($th);
+
         RateLimiter::hit($this->throttleKey());
 
         throw ValidationException::withMessages([

@@ -59,5 +59,7 @@ class User extends Authenticatable
     $user->created_at = $old_user->inscription;
 
     $user->save();
+
+    return $user;
   }
 }
