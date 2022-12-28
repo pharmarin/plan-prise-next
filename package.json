@@ -8,5 +8,8 @@
   },
   "workspaces": [
     "client"
-  ]
+  ],
+  "dependencies": {
+    "@headlessui/react": "^1.7.7"
+  }
 }

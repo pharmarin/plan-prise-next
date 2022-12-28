@@ -1,3 +1,5 @@
+import Dropdown from "components/Dropdown";
+import Avatar from "components/icons/Avatar";
 import { logoutUserAction } from "lib/redux/auth/actions";
 import { selectUser } from "lib/redux/auth/selectors";
 import { useDispatch } from "lib/redux/store";
@@ -21,12 +23,31 @@ const Navbar = () => {
             prise
           </div>
         </Link>
-        <div>
-          {user?.display_name}
-          <button onClick={() => dispatch(logoutUserAction())}>
-            Déconnexion
-          </button>
-        </div>
+        <Dropdown
+          buttonProps={{
+            className:
+              "bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mx-3",
+          }}
+          buttonContent={
+            <>
+              <span className="sr-only">Ouvrir le menu utilisateur</span>
+              <Avatar
+                firstName={user?.first_name || "P"}
+                lastName={user?.last_name || "P"}
+              />
+            </>
+          }
+          items={[
+            {
+              label: "Profil",
+              path: "/profil",
+            },
+            {
+              label: "Déconnexion",
+              action: () => dispatch(logoutUserAction()),
+            },
+          ]}
+        />
       </div>
     </div>
   );

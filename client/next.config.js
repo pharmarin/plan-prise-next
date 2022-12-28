@@ -8,14 +8,14 @@ const nextConfig = {
     NEXT_PUBLIC_APP_URL: process.env.APP_URL,
   },
   experimental: { appDir: true },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "eu.ui-avatars.com",
+      },
+    ],
+  },
   reactStrictMode: true,
-  /* redirects() {
-    return ["/sanctum/csrf-cookie", "/login", "/api/:path*"].map((path) => ({
-      source: path,
-      destination: `http://plan-prise.test${path}`,
-      permanent: false,
-    }));
-  }, */
 };
 
 module.exports = nextConfig;
