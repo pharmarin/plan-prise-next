@@ -3,15 +3,21 @@
 import Button from "components/inputs/Button";
 import CheckboxInput from "components/inputs/CheckboxInput";
 import TextInput from "components/inputs/TextInput";
-import { useAuth } from "lib/useAuth";
+import { loginUserAction } from "lib/redux/auth/actions";
+import { selectLoginError } from "lib/redux/auth/selectors";
+import { useDispatch } from "lib/redux/store";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 type LoginFormType = { email: string; password: string; remember?: boolean };
 
 const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
   const searchParams = useSearchParams();
+  const dispatch = useDispatch();
+
+  const loginError = useSelector(selectLoginError);
 
   const {
     register,
@@ -25,10 +31,8 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
     mode: "all",
   });
 
-  const { errors: loginErrors, login } = useAuth();
-
   const onSubmit: SubmitHandler<LoginFormType> = async (values) =>
-    await login(values);
+    dispatch(loginUserAction(values));
 
   return (
     <>
@@ -64,7 +68,7 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
           Se connecter
         </Button>
         <p className="mt-4 h-0 text-center text-xs text-red-600">
-          {loginErrors[0]}
+          {loginError?.message}
         </p>
       </form>
     </>

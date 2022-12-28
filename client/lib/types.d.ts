@@ -11,3 +11,9 @@ export type UserType = {
   updated_at: string;
   active_at?: string;
 };
+
+export type LoginCredentialsType = {
+  email: string;
+  password: string;
+  remember?: boolean;
+};
