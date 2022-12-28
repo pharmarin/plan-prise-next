@@ -1,7 +1,7 @@
 import Dropdown from "components/Dropdown";
 import Avatar from "components/icons/Avatar";
 import { logoutUserAction } from "lib/redux/auth/actions";
-import { selectUser } from "lib/redux/auth/selectors";
+import { selectUserData } from "lib/redux/auth/selectors";
 import { useDispatch } from "lib/redux/store";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector(selectUser);
+  const user = useSelector(selectUserData);
 
   return (
     <div className="py-2">

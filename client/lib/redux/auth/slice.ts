@@ -11,7 +11,10 @@ const initialState: AuthReduxState = {
     isLoading: false,
     error: undefined,
   },
-  user: undefined,
+  user: {
+    isLoading: true,
+    data: undefined,
+  },
 };
 
 export const authSlice = createSlice({
@@ -20,26 +23,22 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUserAction.pending, (state) => {
-      // Reset state
-      state.user = undefined;
-      state.login.error = undefined;
-      // Then
-      state.login.isLoading = true;
+      state.user.data = undefined;
+      state.user.isLoading = true;
     });
 
     builder.addCase(fetchUserAction.fulfilled, (state, { payload }) => {
-      state.login.isLoading = false;
-      state.user = payload;
+      state.user.isLoading = false;
+      state.user.data = payload;
     });
 
     builder.addCase(fetchUserAction.rejected, (state, { payload }) => {
-      state.login.isLoading = false;
-      state.login.error = payload as SerializedError;
+      state.user.isLoading = false;
     });
 
     builder.addCase(loginUserAction.pending, (state) => {
       // Reset state
-      state.user = undefined;
+      state.user.data = undefined;
       state.login.error = undefined;
       // Then
       state.login.isLoading = true;
@@ -47,6 +46,7 @@ export const authSlice = createSlice({
 
     builder.addCase(loginUserAction.fulfilled, (state, { payload }) => {
       state.login.isLoading = false;
+      state.user.data = payload;
     });
 
     builder.addCase(loginUserAction.rejected, (state, { payload }) => {
@@ -55,7 +55,7 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(logoutUserAction.pending, (state) => {
-      state.user = undefined;
+      state.user.data = undefined;
     });
   },
 });

@@ -1,7 +1,7 @@
 import { createAsyncThunk, SerializedError } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { fetchUser, loginUser, logoutUser } from "lib/auth";
-import { LoginCredentialsType } from "lib/types";
+import { LoginCredentialsType, UserType } from "lib/types";
 
 export const fetchUserAction = createAsyncThunk(
   "user/fetchUser",
@@ -9,15 +9,15 @@ export const fetchUserAction = createAsyncThunk(
 );
 
 export const loginUserAction = createAsyncThunk<
-  void,
+  UserType | undefined,
   LoginCredentialsType,
   {
     rejectValue: SerializedError;
   }
->("user/login", async (credentials, { dispatch, rejectWithValue }) => {
+>("user/login", async (credentials, { rejectWithValue }) => {
   try {
     await loginUser(credentials);
-    dispatch(fetchUserAction());
+    return await fetchUser();
   } catch (error) {
     const axiosError = error as AxiosError<{ message: string }>;
     return rejectWithValue({

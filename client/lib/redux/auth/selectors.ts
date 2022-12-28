@@ -3,9 +3,13 @@ import { ReduxState } from "lib/redux/store";
 
 export const selectAuth = (state: ReduxState) => state.auth;
 
-export const selectUser = (state: ReduxState) => selectAuth(state).user;
+export const selectUserData = (state: ReduxState) =>
+  selectAuth(state).user.data;
 
-export const selectIsLoggedIn = (state: ReduxState) => !!selectUser(state);
+export const selectIsCheckingUser = (state: ReduxState) =>
+  selectAuth(state).user.isLoading;
+
+export const selectIsLoggedIn = (state: ReduxState) => !!selectUserData(state);
 
 export const selectLoginError = createSelector(
   selectAuth,
