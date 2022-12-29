@@ -24,7 +24,7 @@ export const loginUserAction = createAsyncThunk<
       code: String(axiosError.response?.status),
       message:
         axiosError.response?.data.message ||
-        "Une erreur est survenir lors de la connexion. ",
+        "Une erreur inconnue est survenue lors de la connexion. ",
     });
   }
 });
