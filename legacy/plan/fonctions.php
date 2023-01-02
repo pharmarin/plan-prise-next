@@ -10,6 +10,7 @@ require LEGACY_PATH . "/connexion.php";
 function plan_list()
 {
   global $dbh;
+
   $sth = $dbh->prepare("SELECT id FROM plans_old WHERE user = ? ORDER BY id");
   try {
     $sth->execute([Auth::user()->old_user->login]);

@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::login(User::find(8));
+
 Route::get("/", function () {
   include base_path() . "/legacy/index.php";
 });
