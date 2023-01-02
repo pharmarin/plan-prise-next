@@ -1,0 +1,170 @@
+.pagination>li>a, .pagination>li>a:hover, .pagination>.disabled>a:hover {
+	border-bottom-width:1px;
+}
+.loading div {
+	min-width:100%;
+	min-height:40vh;
+	line-height: 40vh;
+	vertical-align: middle;
+	text-align: center;
+	font-size:600%;
+	color:green;
+}
+
+.droite {
+	text-align:right;
+}
+.table>tfoot>tr>td {
+	border:0;
+}
+
+.select2-container {
+	background: transparent;
+}
+
+.select2-container .select2-selection, .select2-dropdown {
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+}
+.select2-container .select2-selection span:first-child {
+    color: black;
+}
+
+.select2-results ul li {
+    color: black;
+}
+
+.error-message {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    margin-left: -400px;
+    width: 800px;
+    z-index: 9999;
+    opacity:0.95;
+}
+.scroll-top-wrapper {
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+	overflow: hidden;
+	text-align: center;
+	z-index: 99999999;
+    background-color: #777777;
+	color: #eeeeee;
+	width: 50px;
+	height: 50px;
+	line-height: 1em;
+	right: 40px;
+	bottom: 40px;
+	padding-top: 2px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+	font-size:1em;
+}
+.scroll-top-wrapper:hover {
+	background-color: #888888;
+}
+.scroll-top-wrapper.show {
+    visibility:visible;
+    cursor:pointer;
+	opacity: 1.0;
+}
+.scroll-top-wrapper i.fa {
+	line-height: inherit;
+}
+
+.hoverable .glyphicon {
+	display:none;
+}
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+/*@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	table, thead, tbody, th, td, tr {
+		display: inline-block;
+	}
+
+	thead {display:none;}
+
+	tbody {
+		width:100%;
+	}
+
+	tbody tr {
+		border: 0 !important;
+		display:flex;
+		flex-wrap:wrap;
+		width:100%;
+	}
+
+	tbody td {
+		border: 0 !important;
+		border-bottom: 0 !important;
+		position: relative;
+		text-align:left !important;
+	}
+
+	tbody td:before {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px !important;
+		white-space: nowrap;
+		font-weight:bold;
+	}
+
+	tbody td:nth-of-type(1) {
+		flex-basis:88%;
+		order:1;
+	}
+	tbody td:nth-of-type(6) {
+		flex-basis:100%;
+		text-align:center;
+		order:3;
+	}
+	tbody td:nth-of-type(7) {
+		flex-basis:42px;
+		order:2;
+	}
+	tbody td:nth-of-type(2),
+	tbody td:nth-of-type(3),
+	tbody td:nth-of-type(4),
+	tbody td:nth-of-type(5) {
+		display:none;
+	}
+	tfoot td:nth-of-type(1) {
+		display:table-cell;
+		width:80%;
+	}
+	tfoot td:nth-of-type(2) {
+		display:table-cell;
+		text-align:right;
+	}
+
+	.commentaire { display:none; }
+
+	.hoverable .glyphicon {
+		display:inline;
+		margin-right:10px;
+	}
+
+	.pagination {
+		font-size:16px
+	}
+
+}*/

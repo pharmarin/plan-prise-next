@@ -1,0 +1,4 @@
+AuthType Basic
+AuthUserFile "/var/www/vhosts/plandeprise.fr/httpdocs/class/phpsitemapng/.htpasswd"
+AuthName "Enter valid username and password!"
+require valid-user

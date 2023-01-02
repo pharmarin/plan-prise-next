@@ -4,7 +4,7 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
 define("LARAVEL_START", microtime(true));
-define("LEGACY_PATH", dirname(__DIR__) . "/legacy/");
+define("LEGACY_PATH", dirname(__DIR__) . "/legacy");
 
 /*
 |--------------------------------------------------------------------------

@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Confirmation de l'inscription</title>
+<style>
+/* -------------------------------------
+    GLOBAL
+------------------------------------- */
+* {
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 600px;
+  width: auto;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+  -webkit-text-size-adjust: none;
+  width: 100% !important;
+}
+
+
+/* -------------------------------------
+    ELEMENTS
+------------------------------------- */
+a {
+  color: #348eda;
+}
+
+.btn-primary {
+  Margin-bottom: 10px;
+  width: auto !important;
+}
+
+.btn-primary td {
+  background-color: #348eda;
+  border-radius: 25px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.btn-primary td a {
+  background-color: #348eda;
+  border: solid 1px #348eda;
+  border-radius: 25px;
+  border-width: 10px 20px;
+  display: inline-block;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 2;
+  text-decoration: none;
+}
+
+.last {
+  margin-bottom: 0;
+}
+
+.first {
+  margin-top: 0;
+}
+
+.padding {
+  padding: 10px 0;
+}
+
+
+/* -------------------------------------
+    BODY
+------------------------------------- */
+table.body-wrap {
+  padding: 20px;
+  width: 100%;
+}
+
+table.body-wrap .container {
+  border: 1px solid #f0f0f0;
+}
+
+
+/* -------------------------------------
+    FOOTER
+------------------------------------- */
+table.footer-wrap {
+  clear: both !important;
+  width: 100%;
+}
+
+.footer-wrap .container p {
+  color: #666666;
+  font-size: 12px;
+
+}
+
+table.footer-wrap a {
+  color: #999999;
+}
+
+
+/* -------------------------------------
+    TYPOGRAPHY
+------------------------------------- */
+h1,
+h2,
+h3 {
+  color: #555555;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 400;
+  line-height: 1.2em;
+}
+
+h1 {
+  font-size: 36px;
+}
+h2 {
+  font-size: 28px;
+}
+h3 {
+  font-size: 22px;
+}
+
+p,
+ul,
+ol {
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+ul li,
+ol li {
+  margin-left: 5px;
+  list-style-position: inside;
+}
+
+/* ---------------------------------------------------
+    RESPONSIVENESS
+------------------------------------------------------ */
+
+/* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+.container {
+  clear: both !important;
+  display: block !important;
+  margin: 0 auto !important;
+  max-width: 600px !important;
+  border-radius: 5px !important;
+}
+
+/* Set the padding on the td rather than the div for Outlook compatibility */
+.body-wrap .container {
+  padding: 20px;
+}
+
+/* This should also be a block element, so that it will fill 100% of the .container */
+.content {
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+/* Let's make sure tables in the content area are 100% wide */
+.content table {
+  width: 100%;
+}
+
+.title {
+  text-align:center;
+  vertical-align: middle !important;
+  color: white !important;
+  height: 100px;
+  border: 5px;
+}
+
+.title h1 {
+  margin-bottom: 50px;
+}
+
+/* Copyright 2013-2015 etc Chris Tabor. See https://github.com/christabor/css-progress-wizard/blob/master/LICENSE for details. */
+.progress-indicator {
+  margin: 0;
+  padding: 0;
+  font-size: 80%;
+  margin-bottom: 1em; }
+  .progress-indicator .wrap{
+    list-style: none;
+    text-align: center;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    text-overflow: ellipsis;
+    color: #bbb;
+    width: 33%;}
+    .progress-indicator .wrap:hover {
+      color: #6f6f6f; }
+  .progress-indicator .wrap.bubble {
+    border-radius: 1000px;
+    width: 20px;
+    height: 20px;
+    background-color: #bbb;
+    display: block;
+    margin: 0 auto 0.5em auto;
+    border-bottom: 1px solid #888888; }
+  .progress-indicator .wrap.completed {
+    color: #28B62C; }
+    .progress-indicator .wrap.completed .bubble {
+      background-color: #28B62C;
+      color: #28B62C;
+      border-color: #0c390e; }
+  .progress-indicator .wrap.active {
+    color: #00a95c; }
+    .progress-indicator .wrap.active .bubble {
+      background-color: #00a95c;
+      color: #00a95c;
+      border-color: #001009; }
+
+@media handheld, screen and (max-width: 400px) {
+  .progress-indicator {
+    font-size: 60%; } }
+
+</style>
+</head>
+
+<body bgcolor="#f6f6f6">
+
+<!-- body -->
+<table class="body-wrap" bgcolor="#f6f6f6">
+  <tr>
+    <td></td>
+    <td class="container" bgcolor="#FFFFFF">
+
+      <!-- content -->
+      <div class="content">
+      <table>
+        <tr>
+          <td>
+            <table class="progress-indicator"><tr>
+              <td class="wrap completed"><span class="bubble"></span><img src="http://www.#URL#/mail/img/check.png" width="10px" height="10px"/> Inscription</td>
+              <td class="wrap completed"><span class="bubble"></span><img src="http://www.#URL#/mail/img/check.png" width="10px" height="10px"/> Mail de confirmation</td>
+              <td class="wrap completed"><span class="bubble"></span><img src="http://www.#URL#/mail/img/check.png" width="10px" height="10px"/> Activation du compte</td>
+            </tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">
+            <img src="http://www.#URL#/img/logo/favicon-96x96.png" width="96px" height="96px"/>
+            <h1>Merci de votre inscription</h1>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Bonjour, </p>
+            <p>Votre compte sur <a href="http://www.#URL#">#URL#</a> à bien été activé. </p>
+            <p>Vous pouvez dès à présent vous connecter sur le site. </p>
+            <p>Rappel de vos identifiants :
+              <ul>
+                <li>
+                  <strong>Identifiant</strong> : #IDENTIFIANT#
+                </li>
+                <li>
+                  <strong>Mot de passe</strong> : Mot de passe utilisé lors de l'inscription
+                </li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+      </table>
+      </div>
+      <!-- /content -->
+
+    </td>
+    <td></td>
+  </tr>
+</table>
+<!-- /body -->
+
+</body>
+</html>
