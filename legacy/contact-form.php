@@ -1,4 +1,7 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 if (isset($_POST["submit"])) {
   $name = $_POST["name"];
   $email = $_POST["email"];
@@ -42,8 +45,6 @@ if (isset($_POST["submit"])) {
     $message_corps .= "<p>Message : </p>";
     $message_corps .= "<p>" . $message . "</p>";
 
-    require LEGACY_PATH . "/class/PHPMailer/class.phpmailer.php";
-
     $phpmailer = new PHPMailer();
     $phpmailer->CharSet = "UTF-8";
     $phpmailer->From = $config["infos"]["mail"];
@@ -61,7 +62,8 @@ if (isset($_POST["submit"])) {
     $alert .= "Votre message a été envoyé. ";
     $alert .= "</div>";
   }
-} ?>
+}
+?>
 
 <!DOCTYPE html>
 <html lang="fr">

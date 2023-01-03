@@ -474,8 +474,10 @@ function plan_precautions($printable = false)
 function validate_utf8($str)
 {
   $decoded = utf8_encode($str);
+
   if (mb_detect_encoding($decoded, "UTF-8", true) === true) {
     return $str;
   }
+
   return $decoded;
 }

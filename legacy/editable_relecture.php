@@ -19,7 +19,6 @@ if (isset($_GET["id"])) {
   } catch (PDOException $e) {
     echo $query . "<br>" . $e->getMessage();
   }
-  $dbh = null;
 
   echo $query;
 }

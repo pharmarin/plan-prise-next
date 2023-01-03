@@ -1,4 +1,8 @@
-<?php class plandeprise
+<?php
+
+use Illuminate\Support\Facades\Auth;
+
+class plandeprise
 {
   private $nom_PP;
   private $list_table;
@@ -14,17 +18,9 @@
     $this->nom_PP = "PP_" . Auth::user()->old_user->login;
   }
 
-  private function log($type, $message)
-  {
-    include_once PUBLIC_PATH . "/class/PHPLogger.php";
-    $tag = "planprise";
-    $log = new PHPLogger();
-    $log->$type($tag, $message);
-  }
-
   public function prepare()
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query =
       "SHOW TABLES FROM " . $sql_database . " LIKE '" . $this->nom_PP . "'";
     $sth = $dbh->query($query);
@@ -46,7 +42,7 @@
 
   public function prepareModif()
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query = "SHOW TABLES FROM $sql_database LIKE '" . $this->nom_PP . "'";
     $sth = $dbh->query($query);
     $this->list_table = $sth->fetchall(PDO::FETCH_ASSOC);
@@ -54,7 +50,7 @@
 
   public function listCol()
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query = "SELECT * FROM " . $this->nom_PP;
     $sth = $dbh->query($query);
     $this->listMedic = $sth->fetchall(PDO::FETCH_ASSOC);
@@ -70,7 +66,7 @@
 
   public function coucher()
   {
-    require PUBLIC_PATH . "connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query =
       'SELECT PPcoucher FROM users WHERE login="' .
       Auth::user()->old_user->login .
@@ -82,7 +78,7 @@
 
   public function create()
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $table = $this->tableExists();
     if ($table != 1) {
       $query =
@@ -117,7 +113,7 @@
 
   public function ajout($id)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     if (
       count($this->listCol["idMedic"]) == 1 &&
       $this->listCol["idMedic"][0] == $id
@@ -153,7 +149,7 @@
 
   public function supprime($id)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query = "DELETE FROM " . $this->nom_PP . " WHERE idMedic='" . $id . "'";
     $dbh->exec($query);
     $query = "SELECT * FROM " . $this->nom_PP . " ORDER BY id";
@@ -167,7 +163,7 @@
 
   public function resize($id)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query =
       "SELECT options FROM " . $this->nom_PP . " WHERE idMedic='" . $id . "'";
     $sth = $dbh->query($query);
@@ -196,7 +192,7 @@
 
   public function result($id)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query = "SELECT * FROM medics_simple WHERE id='" . $id . "'";
     $sth = $dbh->query($query);
     $result = $sth->fetch();
@@ -271,14 +267,14 @@
   {
     $coloffset = (12 - $col) / 2;
     if (count($this->colonnes["precaution"]) > 0) {
-      require PUBLIC_PATH . "/connexion.php";
+      require LEGACY_PATH . "/connexion.php";
       $prec = array_unique(array_filter($this->colonnes["precaution"]));
       $nb_prec = count($prec);
       $prec = array_filter($prec);
       if (in_array("valproate", $prec)) {
         $nb_prec - 1;
       }
-      if (count($nb_prec) >= 1) {
+      if ($nb_prec >= 1) {
         $print = '<div class="row">';
         $i = 0;
         foreach ($prec as $value) {
@@ -317,7 +313,7 @@
 
   public function precautionJSON()
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query = "SELECT mot_cle FROM precautions";
     $sth = $dbh->query($query);
     $resultat = $sth->fetchall(PDO::FETCH_COLUMN);
@@ -331,7 +327,7 @@
   public function commentaire($id, $rang, $status)
   {
     //print_r ($_GET);
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query =
       "SELECT commentaire FROM " . $this->nom_PP . " WHERE idMedic = " . $id;
     $sth = $dbh->query($query);
@@ -357,8 +353,8 @@
   public function modifComment($id, $rang, $comment)
   {
     //return $comment;
-    require PUBLIC_PATH . "/connexion.php";
-    require "fonctions.php";
+    require LEGACY_PATH . "/connexion.php";
+    require LEGACY_PATH . "/plan/fonctions.php";
     $query =
       "SELECT commentaire FROM " . $this->nom_PP . " WHERE idMedic = " . $id;
     $sth = $dbh->query($query);
@@ -379,7 +375,7 @@
 
   public function setconservation($id, $duree)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query =
       "UPDATE " .
       $this->nom_PP .
@@ -394,7 +390,7 @@
 
   public function setindication($id, $indic)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query =
       "UPDATE " .
       $this->nom_PP .
@@ -409,7 +405,7 @@
 
   private function statistiques($id)
   {
-    require PUBLIC_PATH . "/connexion.php";
+    require LEGACY_PATH . "/connexion.php";
     $query = "UPDATE medics_simple SET stat = stat+1 WHERE id = '" . $id . "'";
     try {
       $dbh->exec($query);
