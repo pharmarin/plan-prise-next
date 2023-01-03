@@ -24,18 +24,19 @@ Route::get("/", function () {
 });
 
 Route::get("/{assets}/{stylesheet}", function ($assets, $stylesheet) {
-  return Response::file(base_path() . "/legacy/" . $assets . "/" . $stylesheet);
+  return Response::file(LEGACY_PATH . "/" . $assets . "/" . $stylesheet);
 })
   ->whereIn("assets", ["css", "js", "img", "fonts"])
   ->where("stylesheet", ".*");
 
 Route::get("/plan/{file}", function ($file) {
-  return Response::file(base_path() . "/legacy/plan/" . $file);
+  return Response::file(LEGACY_PATH . "/plan/" . $file);
 })->whereIn("file", ["select2.css", "edit.js", "select.js", "load.js"]);
 
 Route::middleware("auth")->group(function () {
+  /* Plan de prise */
   Route::get("/plan/{file?}", function ($file = "index.php") {
-    include base_path() . "/legacy/plan/" . $file;
+    include LEGACY_PATH . "/plan/" . $file;
   });
 
   Route::post("/plan", function () {
@@ -43,11 +44,21 @@ Route::middleware("auth")->group(function () {
   })->withoutMiddleware(VerifyCsrfToken::class);
 
   Route::post("/plan/actions.php", function () {
-    include base_path() . "/legacy/plan/actions.php";
+    include LEGACY_PATH . "/plan/actions.php";
   })->withoutMiddleware(VerifyCsrfToken::class);
 
+  /* Calendrier */
+  Route::get("/calendrier/{file?}", function ($file = "index.php") {
+    include LEGACY_PATH . "/calendrier/" . $file;
+  });
+
+  Route::post("/calendrier", function () {
+    include LEGACY_PATH . "/calendrier/index.php";
+  })->withoutMiddleware(VerifyCsrfToken::class);
+
+  /* AJAX */
   Route::get("/ajax/{file}", function ($file) {
-    include base_path() . "/legacy/ajax/" . $file;
+    include LEGACY_PATH . "/ajax/" . $file;
   });
 });
 

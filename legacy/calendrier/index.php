@@ -1,7 +1,7 @@
-<?php global $_url;
+<?php global $_url, $toheader;
 
-include_once LEGACY_PATH . "/fonctions.php";
-require_once LEGACY_PATH . "connexion.php";
+include_once LEGACY_PATH . "/calendrier/fonctions.php";
+require_once LEGACY_PATH . "/connexion.php";
 
 //Pre-process post
 if (isset($_GET["id"])) {
@@ -185,6 +185,9 @@ if (isset($erreur) || $data != "new") {
   }
   if ($data != "new") {
     foreach ($data as $temp) {
+      if (!array_key_exists("id_medic", $temp)) {
+        continue;
+      }
       $recherche[] = $temp["id_medic"];
     }
   }
@@ -281,6 +284,7 @@ if (isset($erreur) || $data != "new") {
           $nb = 1;
         }
         $datecount = 0;
+        $javascript = "";
         for ($i = 0; $i < $nb; $i++) {
 
           if ($i != 0) {
@@ -333,7 +337,7 @@ if (isset($erreur) || $data != "new") {
 						<td>
 							<div class="wrapper">
 								<h4 class="text-center title modify"><span class="glyphicon glyphicon-edit"></span> Modifier <?php echo ctype_digit(
-          $entree["id_medic"]
+          $modifier["id_medic"]
         )
           ? $correspondance[$modifier["id_medic"]]
           : $modifier["id_medic"]; ?></h4>
@@ -396,7 +400,14 @@ if (isset($erreur) || $data != "new") {
 					<?php if ($data != "new") {
        $data = array_reverse($data);
        foreach ($data as $entree) {
-         if ($modifier["id_medic"] != $entree["id_medic"]) { ?>
+         if (!array_key_exists("id_medic", $entree)) {
+           continue;
+         }
+
+         if (
+           !isset($modifier) ||
+           $modifier["id_medic"] != $entree["id_medic"]
+         ) { ?>
 						<td>
 							<div class="wrapper">
 								<h4 class="text-center title"><?php echo ctype_digit($entree["id_medic"])

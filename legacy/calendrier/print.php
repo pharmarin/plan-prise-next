@@ -1,6 +1,6 @@
 <?php
 
-include_once LEGACY_PATH . "/fonctions.php";
+include_once LEGACY_PATH . "/calendrier/fonctions.php";
 
 global $_url;
 if (isset($_REQUEST["id"])) {

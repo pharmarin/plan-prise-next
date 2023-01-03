@@ -22,6 +22,8 @@ function calendar_list()
 
 function calendar_read($id = null)
 {
+  global $dbh;
+
   if (isset($id)) {
     $query =
       "SELECT id, data FROM calendriers WHERE id = '" .
@@ -35,23 +37,24 @@ function calendar_read($id = null)
       Auth::user()->old_user->login .
       "'";
   }
-  global $dbh;
-  if (!is_object($dbh)) {
-    require_once LEGACY_PATH . "connexion.php";
-  }
+
   try {
     $sth = $dbh->query($query);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
+
   $db = $sth->fetchall(PDO::FETCH_ASSOC);
+
   if (!$db) {
     $data = "new";
     return $data;
   }
-  foreach ($db as $db) {
-    $data[$db["id"]] = json_decode($db["data"], true);
+
+  foreach ($db as $calendar) {
+    $data[$calendar["id"]] = json_decode($calendar["data"], true);
   }
+
   if (isset($id)) {
     return $data[$id];
   } else {
@@ -108,9 +111,11 @@ function calendar_print($id, $type = "horizontal", $patient = "")
 {
   ini_set("memory_limit", "128M");
   ini_set("max_execution_time", "60");
-  include_once LEGACY_PATH . "/class/mpdf/mpdf.php";
+
   include_once LEGACY_PATH . "/config.php";
+
   global $print;
+
   if ($type == "vertical") {
     $mpdf = new Mpdf([
       "mode" => "UTF-8",
@@ -262,7 +267,7 @@ function calendar_draw_vertical($month, $year, $events = [])
           $title = $event["id_medic"];
         }
         $titre =
-          ' <img src="image.php?color=' .
+          ' <img src="/calendrier/image.php?color=' .
           $listmedic[$event["id_medic"]] .
           '" style="margin: 1mm;"> ' .
           $event["nombre"] .
@@ -385,7 +390,7 @@ function calendar_draw_horizontal($month, $year, $events = [])
           $title = $event["id_medic"];
         }
         $titre =
-          '<img src="image.php?color=' .
+          '<img src="/calendrier/image.php?color="' .
           $listmedic[$event["id_medic"]] .
           '" style="margin: 1mm;"> ' .
           $event["nombre"] .
