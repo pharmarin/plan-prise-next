@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Auth::login(User::find(8));
 
 Route::get("/", function () {
-  include base_path() . "/legacy/index.php";
+  include LEGACY_PATH . "/index.php";
 });
 
 Route::get("/{assets}/{stylesheet}", function ($assets, $stylesheet) {

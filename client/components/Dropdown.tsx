@@ -11,7 +11,7 @@ const Dropdown: React.FC<{
   return (
     <Menu>
       {({ open }) => (
-        <div className="relative">
+        <div className="relative z-10">
           <Menu.Button {...buttonProps}>{buttonContent}</Menu.Button>
           <Transition
             show={open || false}
@@ -22,7 +22,7 @@ const Dropdown: React.FC<{
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="divide-y-1 absolute right-0 z-10 mt-2 w-full min-w-fit origin-top-right divide-gray-300 overflow-hidden rounded-md bg-white shadow-lg">
+            <Menu.Items className="divide-y-1 absolute right-0 mt-2 w-full min-w-fit origin-top-right divide-gray-300 overflow-hidden rounded-md bg-white shadow-lg">
               {(items || []).map((item, index) => (
                 <Menu.Item key={index}>
                   {({ active }) =>

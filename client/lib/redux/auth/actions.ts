@@ -1,35 +1,43 @@
-import { createAsyncThunk, SerializedError } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { fetchUser, loginUser, logoutUser } from "lib/auth";
-import { LoginCredentialsType, UserType } from "lib/types";
+import { Document, DocWithErrors, ErrorObject } from "jsonapi-typescript";
+import axios from "lib/axios";
+import { LoginCredentials, UserObject } from "lib/types";
 
-export const fetchUserAction = createAsyncThunk(
-  "user/fetchUser",
-  async () => await fetchUser()
+const fetchCsrfCookie = () => axios.get("/sanctum/csrf-cookie");
+
+export const fetchUserAction = createAsyncThunk("user/fetchUser", async () =>
+  axios.get<Document>("/api/user").then((response) => {
+    if ("data" in response.data) {
+      return response.data.data as UserObject;
+    }
+
+    throw new Error();
+  })
 );
 
 export const loginUserAction = createAsyncThunk<
-  UserType | undefined,
-  LoginCredentialsType,
+  UserObject | undefined,
+  LoginCredentials,
   {
-    rejectValue: SerializedError;
+    rejectValue: ErrorObject | undefined;
   }
->("user/login", async (credentials, { rejectWithValue }) => {
+>("user/login", async (credentials, { dispatch, rejectWithValue }) => {
   try {
-    await loginUser(credentials);
-    return await fetchUser();
+    await fetchCsrfCookie();
+
+    await axios.post("/login", credentials);
+
+    dispatch(fetchUserAction());
+
+    return;
   } catch (error) {
-    const axiosError = error as AxiosError<{ message: string }>;
-    return rejectWithValue({
-      code: String(axiosError.response?.status),
-      message:
-        axiosError.response?.data.message ||
-        "Une erreur inconnue est survenue lors de la connexion. ",
-    });
+    const axiosError = error as AxiosError<DocWithErrors>;
+    return rejectWithValue(axiosError.response?.data.errors[0]);
   }
 });
 
 export const logoutUserAction = createAsyncThunk(
   "user/logout",
-  async () => await logoutUser()
+  async () => await axios.post("/logout")
 );

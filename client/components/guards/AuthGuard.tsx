@@ -1,7 +1,6 @@
 "use client";
 
 import Welcome from "components/containers/Welcome";
-import Navbar from "components/navigation/Navbar";
 import LoadingScreen from "components/screens/LoadingScreen";
 import { fetchUserAction } from "lib/redux/auth/actions";
 import {
@@ -30,18 +29,7 @@ const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
     return <LoadingScreen />;
   }
 
-  return (
-    <>
-      {isLoggedIn ? (
-        <>
-          <Navbar />
-          {children}
-        </>
-      ) : (
-        <Welcome />
-      )}
-    </>
-  );
+  return <>{isLoggedIn ? children : <Welcome />}</>;
 };
 
 export default AuthGuard;

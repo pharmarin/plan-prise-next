@@ -1,7 +1,13 @@
+"use client";
+
+import { useSetTitle } from "lib/redux/navigation/actions";
+
 const Index = () => {
+  useSetTitle("Bienvenue");
+
   return (
     <div className="flex h-screen items-center">
-      <div className="container mx-auto overflow-hidden rounded-lg bg-white p-8">
+      <div className="overflow-hidden rounded-lg bg-white p-8">
         <h1 className="mb-8 text-center text-xl font-bold">
           Que souhaitez-vous créer ?
         </h1>

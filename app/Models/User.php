@@ -46,6 +46,8 @@ class User extends Authenticatable
    */
   protected $casts = [
     "active_at" => "datetime",
+    "admin" => "boolean",
+    "student" => "boolean",
   ];
 
   static function fromOldUser(OldUser $old_user, string $password)

@@ -1,10 +1,10 @@
-import { createSlice, SerializedError } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchUserAction,
   loginUserAction,
   logoutUserAction,
 } from "lib/redux/auth/actions";
-import { AuthReduxState } from "lib/redux/auth/types";
+import { AuthReduxState } from "lib/types";
 
 const initialState: AuthReduxState = {
   login: {
@@ -12,7 +12,7 @@ const initialState: AuthReduxState = {
     error: undefined,
   },
   user: {
-    isLoading: true,
+    isLoading: false,
     data: undefined,
   },
 };
@@ -32,7 +32,7 @@ export const authSlice = createSlice({
       state.user.data = payload;
     });
 
-    builder.addCase(fetchUserAction.rejected, (state, { payload }) => {
+    builder.addCase(fetchUserAction.rejected, (state) => {
       state.user.isLoading = false;
     });
 
@@ -51,7 +51,7 @@ export const authSlice = createSlice({
 
     builder.addCase(loginUserAction.rejected, (state, { payload }) => {
       state.login.isLoading = false;
-      state.login.error = payload as SerializedError;
+      state.login.error = payload;
     });
 
     builder.addCase(logoutUserAction.pending, (state) => {
@@ -60,6 +60,4 @@ export const authSlice = createSlice({
   },
 });
 
-const authReducer = authSlice.reducer;
-
-export default authReducer;
+export default authSlice.reducer;

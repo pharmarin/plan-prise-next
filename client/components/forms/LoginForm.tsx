@@ -68,7 +68,7 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
           Se connecter
         </Button>
         <p className="mt-4 h-0 text-center text-xs text-red-600">
-          {loginError?.message}
+          {loginError?.detail}
         </p>
       </form>
     </>
