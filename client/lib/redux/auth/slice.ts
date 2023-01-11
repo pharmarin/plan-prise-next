@@ -4,9 +4,9 @@ import {
   loginUserAction,
   logoutUserAction,
 } from "lib/redux/auth/actions";
-import { AuthReduxState } from "lib/types";
+import { AuthState } from "lib/types";
 
-const initialState: AuthReduxState = {
+const initialState: AuthState = {
   login: {
     isLoading: false,
     error: undefined,

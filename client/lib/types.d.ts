@@ -1,4 +1,5 @@
 import { ErrorObject, ResourceObject } from "jsonapi-typescript";
+import { NavbarIcons } from "lib/redux/navigation/slice";
 
 /* 
 export type User = {
@@ -25,7 +26,9 @@ export type LoginCredentials = {
  * REDUX
  */
 
-export type AuthReduxState = {
+// AUTH
+
+export type AuthState = {
   user: { isLoading: boolean; data?: UserObject };
   login: {
     isLoading: boolean;
@@ -33,21 +36,18 @@ export type AuthReduxState = {
   };
 };
 
-export interface NavigationItem {
-  label?: string;
-  component?: {
-    name: "arrowLeft" | "download" | "home" | "options" | "trash";
-    props?: any;
-  };
-  path?: string;
-  event?: string;
-}
+// NAVIGATION
 
-export interface NavigationState {
+export type NavigationItem = {
+  icon: NavbarIcons;
+  className?: string;
+} & ({ path: string } | { event: string });
+
+export type NavigationState = {
   options?: NavigationItem[];
   returnTo?: NavigationItem;
   title: string;
-}
+};
 
 export type ResourcesState = {
   [type: string]: { [id: string]: ResourceObject };

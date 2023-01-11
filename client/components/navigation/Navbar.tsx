@@ -1,23 +1,27 @@
 import Dropdown from "components/Dropdown";
 import Avatar from "components/icons/Avatar";
+import NavbarLink from "components/navigation/NavbarLink";
 import { logoutUserAction } from "lib/redux/auth/actions";
 import { selectUserData } from "lib/redux/auth/selectors";
 import { selectTitle } from "lib/redux/navigation/selectors";
 import { useDispatch } from "lib/redux/store";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const pathname = usePathname();
 
   const user = useSelector(selectUserData);
   const navTitle = useSelector(selectTitle);
+  const isHome = pathname === "/";
 
   return (
     <div className="py-2">
       <div className="container mx-auto flex justify-between rounded-lg bg-white p-4">
         <div id="navbar-left" className="flex-1">
-          <div className="w-fit">
+          <div className="flex w-fit flex-row items-center space-x-8">
             <Link
               className="flex flex-row overflow-hidden rounded-full font-bold shadow-lg"
               href="/"
@@ -29,13 +33,14 @@ const Navbar = () => {
                 prise
               </div>
             </Link>
+            {!isHome && <NavbarLink icon="home" path="/" />}
           </div>
         </div>
         <div id="navbar-center" className="w-fit text-xl font-semibold">
           {navTitle}
         </div>
         <div id="navbar-right" className="flex-1 justify-end">
-          <div className="w-fit ml-auto">
+          <div className="ml-auto w-fit">
             <Dropdown
               buttonProps={{
                 className:
@@ -45,8 +50,8 @@ const Navbar = () => {
                 <>
                   <span className="sr-only">Ouvrir le menu utilisateur</span>
                   <Avatar
-                    firstName={user?.attributes?.first_name || "P"}
-                    lastName={user?.attributes?.last_name || "P"}
+                    firstName={user?.attributes?.firstName || "P"}
+                    lastName={user?.attributes?.lastName || "P"}
                   />
                 </>
               }

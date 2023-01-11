@@ -50,6 +50,10 @@ class User extends Authenticatable
     "student" => "boolean",
   ];
 
+  protected function name(): Attribute {
+    return Attribute::make(fn () => $this->first_name && $this->last_name ? $this->first_name . " " . $this->last_name : "");
+  }
+
   static function fromOldUser(OldUser $old_user, string $password)
   {
     $user = User::create([

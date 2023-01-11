@@ -3,10 +3,12 @@ lockfileVersion: 5.4
 specifiers:
   '@prettier/plugin-php': ^0.19.2
   prettier: ^2.8.1
+  prettier-plugin-tailwindcss: ^0.2.1
 
 devDependencies:
   '@prettier/plugin-php': 0.19.2_prettier@2.8.2
   prettier: 2.8.2
+  prettier-plugin-tailwindcss: 0.2.1_prettier@2.8.2
 
 packages:
 
@@ -52,6 +54,15 @@ packages:
 
   /php-parser/3.1.2:
     resolution: {integrity: sha512-RRCMK/bCKYPLRhlpfMlVVVsaIesuW+X6UxRqWjm7dTAmTZk8PvD6hCmG/RVeDzse7iqYWJwLJeqEbaGLC+aHeQ==}
+    dev: true
+
+  /prettier-plugin-tailwindcss/0.2.1_prettier@2.8.2:
+    resolution: {integrity: sha512-aIO8IguumORyRsmT+E7JfJ3A9FEoyhqZR7Au7TBOege3VZkgMvHJMkufeYp4zjnDK2iq4ktkvGMNOQR9T8lisQ==}
+    engines: {node: '>=12.17.0'}
+    peerDependencies:
+      prettier: '>=2.2.0'
+    dependencies:
+      prettier: 2.8.2
     dev: true
 
   /prettier/2.8.2:

@@ -42,6 +42,7 @@ class UserSchema extends Schema
       Str::make("email"),
       Str::make("firstName"),
       Str::make("lastName"),
+      Str::make('name'),
       Str::make("displayName"),
       Boolean::make("admin")->readOnly(),
       Boolean::make("student"),
@@ -56,7 +57,11 @@ class UserSchema extends Schema
    */
   public function filters(): array
   {
-    return [WhereIdIn::make($this), Where::make("activeAt")];
+    return [
+      WhereIdIn::make($this), 
+      Where::make("activeAt"), 
+      Where::make("lastName")
+    ];
   }
 
   /**

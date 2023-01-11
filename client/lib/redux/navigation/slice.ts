@@ -1,5 +1,12 @@
+import { HomeIcon } from "@heroicons/react/20/solid";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NavigationState } from "lib/types";
+
+export const navbarIcons = {
+  home: HomeIcon,
+} as const;
+
+export type NavbarIcons = keyof typeof navbarIcons;
 
 const initialState: NavigationState = {
   title: "",

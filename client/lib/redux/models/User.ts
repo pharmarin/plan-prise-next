@@ -3,23 +3,25 @@ import BaseModel from "lib/redux/models/BaseModel";
 class User extends BaseModel {
   static type = "users";
 
-  admin: boolean = this.getAttribute("admin") ?? false;
+  admin?: boolean = this.getAttribute("admin") ?? false;
 
-  display_name: string = this.getAttribute("display_name");
+  displayName: string = this.getAttribute("displayName");
 
   email: string = this.getAttribute("email");
 
-  last_name: string = this.getAttribute("last_name");
+  lastName?: string = this.getAttribute("lastName");
 
-  first_name: string = this.getAttribute("first_name");
+  firstName?: string = this.getAttribute("firstName");
 
-  rpps: string = this.getAttribute("rpps");
+  name: string = this.getAttribute("");
 
-  status: string = this.getAttribute("status");
+  rpps?: string = this.getAttribute("rpps");
 
-  created_at: string = this.getAttribute("created_at");
+  student?: boolean = this.getAttribute("student");
 
-  approved_at: string = this.getAttribute("approved_at");
+  createdAt: string = this.getAttribute("createdAt");
+
+  activeAt: string = this.getAttribute("activeAt");
 }
 
 export default User;

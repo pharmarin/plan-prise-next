@@ -62,6 +62,7 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
         <Button
           className="mx-auto mt-4 w-fit"
           disabled={"email" in formErrors || "password" in formErrors}
+          gradient
           loading={isSubmitting}
           type="submit"
         >
