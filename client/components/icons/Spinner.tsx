@@ -3,10 +3,7 @@ import { twMerge } from "tailwind-merge";
 const Spinner: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <svg
-      className={twMerge(
-        "-ml-1 mr-3 h-5 w-5 animate-spin text-white",
-        className
-      )}
+      className={twMerge("h-4 w-4 animate-spin text-white", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
