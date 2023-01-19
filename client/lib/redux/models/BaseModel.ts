@@ -440,10 +440,12 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
    * EXTRACTER
    */
 
-  static extractOne<T extends typeof BaseModel>(
-    this: T,
-    data?: ResourceObject | ResourceIdentifierObject
-  ) {
+  static extractOne<
+    Attributes extends AttributesObject,
+    Data extends ResourceObject<string, Attributes> | ResourceIdentifierObject,
+    ModelType extends typeof BaseModel,
+    ModelInstance extends { new (data: Data): InstanceType<ModelType> }
+  >(this: ModelType, data?: Data) {
     if (!data) {
       return undefined;
     }
@@ -452,7 +454,7 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
       throw new Error("Le serveur a répondu un nombre de données invalide");
     }
 
-    return new this(data) as InstanceType<T>;
+    return new this(data) as unknown as ModelInstance;
   }
 
   static extractMany<T extends typeof BaseModel>(

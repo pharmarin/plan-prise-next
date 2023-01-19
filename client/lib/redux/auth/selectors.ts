@@ -8,7 +8,7 @@ export const selectUserData = (state: ReduxState) =>
   selectAuth(state).user.data;
 
 export const selectUser = (state: ReduxState) =>
-  User.extractOne(selectAuth(state).user.data);
+  new User(selectAuth(state).user.data);
 
 export const selectIsCheckingUser = (state: ReduxState) =>
   selectAuth(state).user.isLoading;
