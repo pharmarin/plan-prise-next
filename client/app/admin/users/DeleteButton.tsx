@@ -1,6 +1,6 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
+import Button from "components/forms/inputs/Button";
 import Spinner from "components/icons/Spinner";
-import Button from "components/inputs/Button";
 import User from "lib/redux/models/User";
 import { useAsyncCallback } from "react-async-hook";
 

@@ -36,8 +36,11 @@ const Navbar = () => {
             {!isHome && <NavbarLink icon="home" path="/" />}
           </div>
         </div>
-        <div id="navbar-center" className="w-fit text-xl font-semibold">
-          {navTitle}
+        <div
+          id="navbar-center"
+          className="flex w-fit items-center text-xl font-semibold"
+        >
+          <div>{navTitle}</div>
         </div>
         <div id="navbar-right" className="flex-1 justify-end">
           <div className="ml-auto w-fit">
@@ -55,6 +58,7 @@ const Navbar = () => {
                   />
                 </>
               }
+              className="z-20"
               items={[
                 {
                   label: "Profil",

@@ -1,11 +1,10 @@
 {
   "scripts": {
-    "preinstall": "exit",
-    "postinstall": "valet proxy node.plan-prise http://localhost:3000"
+    "proxy": "valet proxy node.plan-prise http://localhost:3000"
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.19.2",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "prettier-plugin-tailwindcss": "^0.2.1"
   }
 }

@@ -24,6 +24,6 @@ Route::middleware(["auth:sanctum"])->get("/user", function () {
 JsonApiRoute::server("v1")
   ->prefix("v1")
   ->resources(function ($server) {
-    $server->resource("users", JsonApiController::class)->readOnly();
+    $server->resource("users", JsonApiController::class);
     $server->resource("old-users", JsonApiController::class)->readOnly();
   });

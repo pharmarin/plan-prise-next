@@ -3,8 +3,8 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import Dropdown from "components/Dropdown";
+import TextInput from "components/forms/inputs/TextInput";
 import Spinner from "components/icons/Spinner";
-import TextInput from "components/inputs/TextInput";
 import Pagination from "components/navigation/Pagination";
 import Table from "components/table/Table";
 import TableBody from "components/table/TableBody";

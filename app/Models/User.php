@@ -50,8 +50,23 @@ class User extends Authenticatable
     "student" => "boolean",
   ];
 
-  protected function name(): Attribute {
-    return Attribute::make(fn () => $this->first_name && $this->last_name ? $this->first_name . " " . $this->last_name : "");
+  protected function name(): Attribute
+  {
+    return Attribute::make(
+      fn() => $this->first_name && $this->last_name
+        ? $this->first_name . " " . $this->last_name
+        : ""
+    );
+  }
+
+  protected function active(): Attribute
+  {
+    return Attribute::make(fn() => $this->active_at !== null);
+  }
+
+  public function old_user()
+  {
+    return $this->hasOne(OldUser::class, "mail", "email");
   }
 
   static function fromOldUser(OldUser $old_user, string $password)
@@ -71,10 +86,5 @@ class User extends Authenticatable
     $user->save();
 
     return $user;
-  }
-
-  public function old_user()
-  {
-    return $this->hasOne(OldUser::class, "mail", "email");
   }
 }

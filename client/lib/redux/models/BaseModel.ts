@@ -10,7 +10,8 @@ import {
 import axios from "lib/axios";
 import { sync } from "lib/redux/resources/slice";
 import store, { ReduxState } from "lib/redux/store";
-import { castArray, isEqual, transform, uniqueId } from "lodash";
+import { castArray, isEqual, pickBy, transform, uniqueId } from "lodash";
+import "reflect-metadata";
 
 export type QueryOptions = {
   include?: string | string[];
@@ -55,7 +56,49 @@ export const handleResponse = (
   throw new Error("Le serveur a renvoyé une réponse invalide");
 };
 
-class BaseModel {
+const ATTRIBUTES_METADATA_KEY = "registeredAttributes";
+
+export const Attribute =
+  (options?: { getter?: (value: any) => any; setter?: (value: any) => any }) =>
+  <M extends BaseModel>(target: M, propertyKey: string) => {
+    let attributeValue: any;
+
+    let registeredAttributes: string[] = Reflect.getMetadata(
+      ATTRIBUTES_METADATA_KEY,
+      target
+    );
+
+    if (registeredAttributes) {
+      registeredAttributes.push(propertyKey);
+    } else {
+      registeredAttributes = [propertyKey];
+      Reflect.defineMetadata(
+        ATTRIBUTES_METADATA_KEY,
+        registeredAttributes,
+        target
+      );
+    }
+
+    Object.defineProperty(target, propertyKey, {
+      get: () =>
+        options?.getter ? options.getter(attributeValue) : attributeValue,
+      set: (value) =>
+        (attributeValue = options?.setter ? options.setter(value) : value),
+    });
+  };
+
+export type AttributesKeysOnly<
+  M extends BaseModel,
+  A extends AttributesObject
+> = {
+  [K in keyof M]: K extends keyof A
+    ? A[K]
+    : K extends keyof BaseModel
+    ? BaseModel[K]
+    : never;
+};
+
+class BaseModel<A extends AttributesObject = AttributesObject> {
   static readonly type: string;
   static readonly defaultIncludes: string[];
   static readonly defaultRelationships: { [key: string]: any } = {};
@@ -66,23 +109,28 @@ class BaseModel {
 
   public instance = this.constructor;
 
-  private attributes?: AttributesObject;
+  protected attributes: A = {} as A;
   private relationships?: RelationshipsObject;
 
-  constructor(
-    data?: Partial<ResourceObject> | Partial<ResourceIdentifierObject>
-  ) {
+  constructor(data?: ResourceObject<string, A> | ResourceIdentifierObject) {
     this.id = data?.id ?? uniqueId("-");
+
     this.type =
       data?.type ??
       (this.constructor as typeof BaseModel).type ??
       uniqueId("model_type_");
+
     this.identifier = {
       id: this.id,
       type: this.type,
     };
 
-    this.attributes = data && "attributes" in data ? data.attributes : {};
+    this.attributes =
+      data && "attributes" in data && data.attributes
+        ? data.attributes
+        : ({} as A);
+    this.assignAttributes(this.attributes || {});
+
     this.relationships =
       data && "relationships" in data
         ? data.relationships
@@ -95,12 +143,19 @@ class BaseModel {
           );
   }
 
-  protected getResources = () => {
-    return (store.getState() as ReduxState).resources;
+  get registeredAttributes(): (keyof A)[] {
+    return Reflect.getMetadata(ATTRIBUTES_METADATA_KEY, this);
+  }
+
+  public assignAttributes = (attributes: Partial<A>) => {
+    Object.assign(
+      this,
+      pickBy(attributes, (_, key) => this.registeredAttributes.includes(key))
+    );
   };
 
-  protected getAttribute = (key: string) => {
-    return this.attributes?.[key] as any;
+  protected getResources = () => {
+    return (store.getState() as ReduxState).resources;
   };
 
   protected getRelationship = <M extends typeof BaseModel>(
@@ -184,7 +239,7 @@ class BaseModel {
     );
   };
 
-  update = (values: AttributesObject) => {
+  /* update = (values: AttributesObject) => {
     if (!this.attributes) {
       this.attributes = {};
     }
@@ -197,7 +252,21 @@ class BaseModel {
     );
 
     return this;
-  };
+  }; */
+
+  get documentWithData(): DocWithData {
+    return {
+      data: {
+        ...this.identifier,
+        attributes: Object.fromEntries(
+          this.registeredAttributes.map((attributeKey) => [
+            attributeKey,
+            (this as any)[attributeKey],
+          ])
+        ),
+      },
+    };
+  }
 
   /**
    * FETCHER
@@ -231,7 +300,11 @@ class BaseModel {
     );
   }
 
-  static buildUrl(this: typeof BaseModel, url: string, options?: QueryOptions) {
+  static buildUrl(
+    this: typeof BaseModel,
+    path: string,
+    options?: QueryOptions
+  ) {
     const params: string[] = ([] as string[]).concat(
       this.prepareInclude(options && options.include),
       this.prepareFilter(options && options.filter),
@@ -240,9 +313,13 @@ class BaseModel {
       this.prepareCustom(options && options.custom)
     );
 
-    return `${process.env.NEXT_PUBLIC_API_PATH || ""}/${url}?${params.join(
-      "&"
-    )}`;
+    return `${process.env.NEXT_PUBLIC_API_PATH || ""}/${path}${
+      params.length > 0 ? `?${params.join("&")}` : ""
+    }`;
+  }
+
+  get pathWithID(): string {
+    return `${this.type}/${this.id}`;
   }
 
   static async fetch<T extends typeof BaseModel>(
@@ -301,6 +378,22 @@ class BaseModel {
    * SETTER
    */
 
+  save = () => {
+    if (false && this.id.startsWith("-")) {
+      //return this.postWithValues(values);
+    } else {
+      return this.patch();
+    }
+  };
+
+  patch = async () => {
+    const url = BaseModel.buildUrl(this.pathWithID);
+
+    return await axios
+      .patch<Document>(url, this.documentWithData)
+      .then((response) => response.data);
+  };
+
   async postWithValues(values: ResourceObject) {
     delete values.id;
 
@@ -316,20 +409,14 @@ class BaseModel {
   async patchWithValues(values: ResourceObject) {
     const modelUrl = `${this.type}/${this.id}`;
 
+    const url = BaseModel.buildUrl(modelUrl);
+
     const data: DocWithData = {
       data: values,
     };
 
     return await axios
-      .patch<Document>(modelUrl, data)
-      .then((response) => response.data);
-  }
-
-  async delete() {
-    const modelUrl = `${this.type}/${this.id}`;
-
-    return await axios
-      .delete<Document>(modelUrl)
+      .patch<Document>(url, data)
       .then((response) => response.data);
   }
 
@@ -339,6 +426,14 @@ class BaseModel {
     } else {
       return this.patchWithValues(values);
     }
+  }
+
+  async delete() {
+    const modelUrl = `${this.type}/${this.id}`;
+
+    const url = BaseModel.buildUrl(modelUrl);
+
+    return await axios.delete<Document>(url).then((response) => response.data);
   }
 
   /**

@@ -1,27 +1,43 @@
-import BaseModel from "lib/redux/models/BaseModel";
+import BaseModel, {
+  Attribute,
+  AttributesKeysOnly,
+} from "lib/redux/models/BaseModel";
+import { UserAttributes } from "lib/types";
 
-class User extends BaseModel {
+class User
+  extends BaseModel<UserAttributes>
+  implements AttributesKeysOnly<User, UserAttributes>
+{
   static type = "users";
 
-  admin?: boolean = this.getAttribute("admin") ?? false;
+  @Attribute()
+  admin?: boolean;
 
-  displayName: string = this.getAttribute("displayName");
+  @Attribute()
+  displayName?: string;
 
-  email: string = this.getAttribute("email");
+  @Attribute()
+  email?: string;
 
-  lastName?: string = this.getAttribute("lastName");
+  @Attribute()
+  lastName?: string;
 
-  firstName?: string = this.getAttribute("firstName");
+  @Attribute()
+  firstName?: string;
 
-  name: string = this.getAttribute("");
+  @Attribute()
+  name?: string;
 
-  rpps?: string = this.getAttribute("rpps");
+  @Attribute({
+    setter: (value) => (value ? Number(value) : undefined),
+  })
+  rpps?: number;
 
-  student?: boolean = this.getAttribute("student");
+  @Attribute()
+  student?: boolean;
 
-  createdAt: string = this.getAttribute("createdAt");
-
-  activeAt: string = this.getAttribute("activeAt");
+  @Attribute()
+  active?: boolean;
 }
 
 export default User;

@@ -1,6 +1,6 @@
 "use client";
 
-import Welcome from "components/containers/Welcome";
+import Welcome from "app/Welcome";
 import LoadingScreen from "components/screens/LoadingScreen";
 import { fetchUserAction } from "lib/redux/auth/actions";
 import {

@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   fetchUserAction,
   loginUserAction,
   logoutUserAction,
 } from "lib/redux/auth/actions";
-import { AuthState } from "lib/types";
+import { AuthState, UserObject } from "lib/types";
 
 const initialState: AuthState = {
   login: {
@@ -20,7 +20,11 @@ const initialState: AuthState = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, { payload }: PayloadAction<UserObject>) => {
+      state.user.data = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUserAction.pending, (state) => {
       state.user.data = undefined;
@@ -59,5 +63,7 @@ export const authSlice = createSlice({
     });
   },
 });
+
+export const { setUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,8 +1,8 @@
 "use client";
 
-import Button from "components/inputs/Button";
-import CheckboxInput from "components/inputs/CheckboxInput";
-import TextInput from "components/inputs/TextInput";
+import Button from "components/forms/inputs/Button";
+import CheckboxInput from "components/forms/inputs/CheckboxInput";
+import TextInput from "components/forms/inputs/TextInput";
 import { loginUserAction } from "lib/redux/auth/actions";
 import { selectLoginError } from "lib/redux/auth/selectors";
 import { useDispatch } from "lib/redux/store";

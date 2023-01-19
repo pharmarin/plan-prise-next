@@ -6,12 +6,13 @@ import { twMerge } from "tailwind-merge";
 const Dropdown: React.FC<{
   buttonContent: React.ReactElement | string;
   buttonProps?: any;
+  className?: string;
   items: ({ label: string } & ({ path: string } | { action: () => void }))[];
-}> = ({ buttonContent, buttonProps, items }) => {
+}> = ({ buttonContent, buttonProps, className, items }) => {
   return (
     <Menu>
       {({ open }) => (
-        <div className="relative z-10">
+        <div className={twMerge("relative z-10", className)}>
           <Menu.Button {...buttonProps}>{buttonContent}</Menu.Button>
           <Transition
             show={open || false}

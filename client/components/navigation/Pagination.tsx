@@ -4,7 +4,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import Button from "components/inputs/Button";
+import Button from "components/forms/inputs/Button";
 import React from "react";
 
 const Pagination: React.FC<{

@@ -21,6 +21,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.30.0",
     "eslint-config-next": "13.0.7",
+    "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "next": "^13.1.1",
     "re-reselect": "^4.0.1",
@@ -31,7 +32,10 @@
     "react-redux": "^8.0.5",
     "reapop": "^4.2.1",
     "redux": "^4.2.0",
-    "typescript": "4.9.4"
+    "reflect-metadata": "^0.1.13",
+    "typescript": "4.9.4",
+    "yup": "^0.32.11",
+    "yup-locales": "^1.2.10"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.191",

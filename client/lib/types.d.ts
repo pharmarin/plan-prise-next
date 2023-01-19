@@ -59,15 +59,14 @@ export type ResourcesState = {
 
 type UserAttributes = {
   admin: boolean;
+  active: boolean;
   firstName: string;
   lastName: string;
-  //name: string;
+  name: string;
   displayName?: string;
   email: string;
-  rpps?: string;
+  rpps?: number;
   student: boolean;
-  createdAt: string;
-  activeAt?: string;
 };
 
 export type UserObject = ResourceObject<"users", UserAttributes>;
