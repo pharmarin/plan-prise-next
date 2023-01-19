@@ -386,13 +386,13 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
     }
   };
 
-  patch = async () => {
+  async patch() {
     const url = BaseModel.buildUrl(this.pathWithID);
 
     return await axios
       .patch<Document>(url, this.documentWithData)
       .then((response) => response.data);
-  };
+  }
 
   async postWithValues(values: ResourceObject) {
     delete values.id;
