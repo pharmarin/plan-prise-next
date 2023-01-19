@@ -26,23 +26,13 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
   );
 
   useEffect(() => {
-    console.log(
-      showModal,
-      user,
-      (user.firstName || "").length,
-      (user.lastName || "").length
-    );
-
     if (showModal === undefined && user) {
-      console.log("init");
       if (
         (user.firstName || "").length > 0 &&
         (user.lastName || "").length > 0
       ) {
-        console.log("ok");
         setShowModal(false);
       } else {
-        console.log("not ok");
         setShowModal(true);
       }
     }
@@ -82,12 +72,10 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
         initialValues={initialValues}
         onSubmit={async (values, { setSubmitting }) => {
           setErrors(undefined);
-          setSubmitting(true);
 
-          console.log("values: ", values);
           user.assignAttributes(values);
 
-          user
+          await user
             .save()
             .then((response) => {
               if ("data" in response) {

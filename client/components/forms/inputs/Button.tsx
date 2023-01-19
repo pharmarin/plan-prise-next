@@ -11,7 +11,7 @@ const Button: React.FC<
   return (
     <button
       className={twMerge(
-        "flex flex-row space-x-2 rounded-full bg-teal-500 py-2 px-4 font-bold text-white disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-slate-500",
+        "flex flex-row items-center space-x-2 rounded-full bg-teal-500 py-2 px-4 font-bold text-white disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-slate-500",
         gradient && "bg-gradient-to-r from-emerald-500 to-teal-500",
         className
       )}
