@@ -1,4 +1,4 @@
-import Image from "next/image";
+import RoundedIcon from "components/icons/RoundedIcon";
 import React from "react";
 
 const Avatar: React.FC<{ firstName: string; lastName: string }> = ({
@@ -6,13 +6,12 @@ const Avatar: React.FC<{ firstName: string; lastName: string }> = ({
   lastName,
 }) => {
   return (
-    <Image
-      alt=""
-      className="h-8 w-8 rounded-full"
-      height={50}
-      width={50}
-      src={`https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&color=FFFFFF&background=14b8a6`}
-    />
+    <RoundedIcon color="primary">
+      <span className="text-lg uppercase text-white">
+        {firstName[0]}
+        {lastName[0]}
+      </span>
+    </RoundedIcon>
   );
 };
 

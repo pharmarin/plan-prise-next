@@ -1,13 +1,10 @@
 import { AxiosError } from "axios";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
-import Button, { BUTTON_LINK_CLASSNAME } from "components/forms/inputs/Button";
+import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import TextInput from "components/forms/inputs/TextInput";
-import Modal from "components/modal/Modal";
-import ModalContent from "components/modal/ModalContent";
-import ModalFooter from "components/modal/ModalFooter";
-import ModalTitle from "components/modal/ModalTitle";
+import Modal from "components/Modal";
 import { Formik } from "formik";
 import { DocWithErrors, Errors } from "jsonapi-typescript";
 import { setUser } from "lib/redux/auth/slice";
@@ -53,24 +50,35 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <>
-      <Modal show={showModal || false} toggle={() => setShowModal(!showModal)}>
-        <ModalTitle>Informations importantes</ModalTitle>
-        <ModalContent>
-          Suite à des changements sur le site plandeprise.fr nous avons besoin
-          de connaitre votre nom et votre prénom. <br />
-          Ils apparaitront sur les plans de prise ou calendriers exportés sauf
-          si vous remplissez le champ "Nom de la structure".
-        </ModalContent>
-        <ModalFooter>
-          <Button onClick={() => setShowModal(false)}>
+      <Modal
+        content={
+          <>
+            <p>
+              Suite à des changements sur le site plandeprise.fr nous avons
+              besoin de connaitre votre nom et votre prénom.
+            </p>
+            <p>
+              Ils apparaitront sur les plans de prise ou calendriers exportés
+              sauf si vous remplissez le champ "Nom de la structure".
+            </p>
+          </>
+        }
+        footer={
+          <Button
+            className="w-full sm:mt-0 sm:ml-3 sm:w-auto"
+            onClick={() => setShowModal(false)}
+          >
             Mettre à jour mes informations
           </Button>
-        </ModalFooter>
-      </Modal>
+        }
+        show={showModal || false}
+        title="Information importante"
+        toggle={() => setShowModal(!showModal)}
+      />
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values) => {
           setErrors(undefined);
 
           user.assignAttributes(values);
@@ -151,7 +159,8 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
             />
             {values.student && (
               <Button
-                className={twMerge(BUTTON_LINK_CLASSNAME, "mt-2")}
+                className={twMerge("mt-2")}
+                color="link"
                 onClick={() => setFieldValue("student", false)}
               >
                 Modifier en compte pharmacien
@@ -200,7 +209,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
                 ))}
               </div>
             )}
-            <Button gradient loading={isSubmitting} type="submit">
+            <Button loading={isSubmitting} type="submit">
               Mettre à jour les informations
             </Button>
           </Form>
