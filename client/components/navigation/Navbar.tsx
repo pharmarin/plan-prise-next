@@ -38,7 +38,7 @@ const Navbar = () => {
         </div>
         <div
           id="navbar-center"
-          className="flex w-fit items-center text-xl font-semibold"
+          className="flex w-fit items-center text-xl font-semibold text-teal-900"
         >
           <div>{navTitle}</div>
         </div>
