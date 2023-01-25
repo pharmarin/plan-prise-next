@@ -1,15 +1,18 @@
 "use client";
 
+import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import CheckboxInput from "components/forms/inputs/CheckboxInput";
+import FormikField from "components/forms/inputs/FormikField";
 import TextInput from "components/forms/inputs/TextInput";
+import { Formik } from "formik";
 import { loginUserAction } from "lib/redux/auth/actions";
 import { selectLoginError } from "lib/redux/auth/selectors";
 import { useDispatch } from "lib/redux/store";
 import { useSearchParams } from "next/navigation";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import * as yup from "yup";
 
 type LoginFormType = { email: string; password: string; remember?: boolean };
 
@@ -19,59 +22,68 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
 
   const loginError = useSelector(selectLoginError);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
-  } = useForm<LoginFormType>({
-    defaultValues: {
-      email: searchParams.get("email") ?? undefined,
-      password: searchParams.get("password") ?? undefined,
-    },
-    mode: "all",
-  });
-
-  const onSubmit: SubmitHandler<LoginFormType> = async (values) =>
-    dispatch(loginUserAction(values));
-
   return (
     <>
-      <form className={className} onSubmit={handleSubmit(onSubmit)}>
-        <h3 className="mb-4 text-center text-lg">Se connecter</h3>
+      <Formik
+        initialValues={{
+          email: searchParams.get("email") ?? "",
+          password: searchParams.get("password") ?? "",
+          remember: false,
+        }}
+        onSubmit={async (values) => dispatch(loginUserAction(values))}
+        validateOnMount
+        validationSchema={yup.object().shape({
+          email: yup.string().email().required().label("Adresse mail"),
+          password: yup.string().required(),
+        })}
+      >
+        {({ errors, handleSubmit, isSubmitting }) => (
+          <Form className={className} onSubmit={handleSubmit}>
+            <h3 className="mb-4 text-center text-lg">Se connecter</h3>
 
-        <div className="space-y-2">
-          <TextInput
-            {...register("email", { required: true })}
-            id="login_email"
-            label="Adresse mail"
-          />
-          <TextInput
-            {...register("password", { required: true })}
-            id="login_password"
-            label="Mot de passe"
-            type="password"
-          />
-          <CheckboxInput
-            {...register("remember")}
-            id="login_remember"
-            label="Rester connecté"
-            wrapperClassName="justify-center"
-          />
-        </div>
+            <div className="space-y-2">
+              <FormikField
+                id="login_email"
+                label="Adresse mail"
+                name="email"
+                required
+                type="email"
+              >
+                <TextInput />
+              </FormikField>
+              <FormikField
+                id="login_password"
+                label="Mot de passe"
+                name="password"
+                required
+                type="password"
+              >
+                <TextInput />
+              </FormikField>
+              <FormikField
+                id="login_remember"
+                label="Rester connecté"
+                name="remember"
+              >
+                <CheckboxInput wrapperClassName="justify-center" />
+              </FormikField>
+            </div>
 
-        <Button
-          className="mx-auto mt-4 w-fit"
-          color="gradient"
-          disabled={"email" in formErrors || "password" in formErrors}
-          loading={isSubmitting}
-          type="submit"
-        >
-          Se connecter
-        </Button>
-        <p className="mt-4 h-0 text-center text-xs text-red-600">
-          {loginError?.detail}
-        </p>
-      </form>
+            <Button
+              className="mx-auto mt-4 w-fit"
+              color="gradient"
+              disabled={"email" in errors || "password" in errors}
+              loading={isSubmitting}
+              type="submit"
+            >
+              Se connecter
+            </Button>
+            <p className="mt-4 h-0 text-center text-xs text-red-600">
+              {loginError?.detail}
+            </p>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 };
