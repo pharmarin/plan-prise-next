@@ -19,14 +19,14 @@ const Navbar = () => {
 
   return (
     <div className="py-2">
-      <div className="container mx-auto flex justify-between rounded-lg bg-white p-4">
+      <div className="container mx-auto flex items-center justify-between rounded-lg bg-white p-4">
         <div id="navbar-left" className="flex-1">
-          <div className="flex w-fit flex-row items-center space-x-8">
+          <div className="flex w-fit flex-row items-center sm:space-x-8">
             <Link
-              className="flex flex-row overflow-hidden rounded-full font-bold shadow-lg"
+              className="hidden flex-row overflow-hidden rounded-full font-bold shadow-lg sm:flex"
               href="/"
             >
-              <div className="bg-white py-1 pl-2 pr-0.5 text-gray-900">
+              <div className="whitespace-nowrap bg-white py-1 pl-2 pr-0.5 text-gray-900">
                 Plan de
               </div>
               <div className="bg-gradient-to-r from-emerald-500 to-teal-500 py-1 pr-2 pl-0.5 text-white">
