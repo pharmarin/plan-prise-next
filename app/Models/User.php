@@ -85,6 +85,8 @@ class User extends Authenticatable
 
     $user->save();
 
+    // TODO: Later we will delete OldUser, but for now we need it for legacy
+
     return $user;
   }
 }
