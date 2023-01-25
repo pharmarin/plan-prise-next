@@ -67,6 +67,7 @@ type UserAttributes = {
   email: string;
   rpps?: number;
   student: boolean;
+  createdAt?: string;
 };
 
 export type UserObject = ResourceObject<"users", UserAttributes>;

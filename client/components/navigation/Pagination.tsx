@@ -31,12 +31,24 @@ const Pagination: React.FC<{
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 justify-between sm:hidden">
-        <Button className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500">
-          Précédent
-        </Button>
-        <Button className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500">
-          Suivant
-        </Button>
+        {(currentPage || 0) > 1 && (
+          <Button
+            className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500"
+            color="link"
+            onClick={() => setPage((currentPage || 2) - 1)}
+          >
+            Précédent
+          </Button>
+        )}
+        {(currentPage || 0) !== (lastPage || 0) && (
+          <Button
+            className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500"
+            color="link"
+            onClick={() => setPage((currentPage || 1) + 1)}
+          >
+            Suivant
+          </Button>
+        )}
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         {from && to && total && (

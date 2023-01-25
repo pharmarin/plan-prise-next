@@ -6,7 +6,7 @@ import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
 import InfosModal from "components/overlays/modals/InfosModal";
 import { Formik } from "formik";
-import { DocWithErrors, Errors } from "jsonapi-typescript";
+import { AttributesObject, DocWithErrors, Errors } from "jsonapi-typescript";
 import { setUser } from "lib/redux/auth/slice";
 import User from "lib/redux/models/User";
 import { useDispatch } from "lib/redux/store";
@@ -81,7 +81,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
         onSubmit={async (values) => {
           setErrors(undefined);
 
-          user.assignAttributes(values);
+          user.assignAttributes(values as AttributesObject);
 
           await user
             .save()

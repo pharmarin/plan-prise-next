@@ -101,7 +101,7 @@ export type AttributesKeysOnly<
     : never;
 };
 
-class BaseModel<A extends AttributesObject = AttributesObject> {
+class BaseModel {
   static readonly type: string;
   static readonly defaultIncludes: string[];
   static readonly defaultRelationships: { [key: string]: any } = {};
@@ -112,10 +112,12 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
 
   public instance = this.constructor;
 
-  protected attributes: A = {} as A;
+  protected attributes: AttributesObject = {};
   private relationships?: RelationshipsObject;
 
-  constructor(data?: ResourceObject<string, A> | ResourceIdentifierObject) {
+  constructor(
+    data?: ResourceObject<string, AttributesObject> | ResourceIdentifierObject
+  ) {
     this.id = data?.id ?? uniqueId("-");
 
     this.type =
@@ -129,9 +131,7 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
     };
 
     this.attributes =
-      data && "attributes" in data && data.attributes
-        ? data.attributes
-        : ({} as A);
+      data && "attributes" in data && data.attributes ? data.attributes : {};
     this.assignAttributes(this.attributes || {});
 
     this.relationships =
@@ -146,11 +146,11 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
           );
   }
 
-  get registeredAttributes(): (keyof A)[] {
+  get registeredAttributes(): string[] {
     return Reflect.getMetadata(ATTRIBUTES_METADATA_KEY, this);
   }
 
-  public assignAttributes = (attributes: Partial<A>) => {
+  public assignAttributes = (attributes: AttributesObject) => {
     Object.assign(
       this,
       pickBy(attributes, (_, key) => this.registeredAttributes.includes(key))

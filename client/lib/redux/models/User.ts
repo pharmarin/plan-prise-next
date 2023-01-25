@@ -5,7 +5,7 @@ import BaseModel, {
 import { UserAttributes } from "lib/types";
 
 class User
-  extends BaseModel<UserAttributes>
+  extends BaseModel
   implements AttributesKeysOnly<User, UserAttributes>
 {
   static type = "users";
@@ -38,6 +38,9 @@ class User
 
   @Attribute()
   active?: boolean;
+
+  @Attribute()
+  createdAt?: string;
 }
 
 export default User;

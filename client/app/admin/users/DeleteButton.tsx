@@ -14,7 +14,7 @@ const DeleteButton: React.FC<{
 
   return (
     <Button
-      className="bg-red-500"
+      color="red"
       disabled={loading}
       onClick={async () => {
         try {

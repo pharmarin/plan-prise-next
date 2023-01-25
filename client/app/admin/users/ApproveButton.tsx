@@ -20,7 +20,7 @@ const ApproveButton: React.FC<{
 
   return (
     <Button
-      className="bg-green-500"
+      color="primary"
       disabled={loading}
       onClick={async () => {
         try {
