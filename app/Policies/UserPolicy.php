@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,7 +82,20 @@ class UserPolicy
    */
   public function delete(User $user, User $model)
   {
-    //
+    if ($user->admin) {
+      return true;
+    }
+
+    if (
+      $user->id === $model->id &&
+      request()->validate([
+        "meta.password_confirmation" => ["required", "current_password"],
+      ])
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   /**

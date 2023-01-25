@@ -4,7 +4,7 @@ import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
-import Modal from "components/Modal";
+import InfosModal from "components/overlays/modals/InfosModal";
 import { Formik } from "formik";
 import { DocWithErrors, Errors } from "jsonapi-typescript";
 import { setUser } from "lib/redux/auth/slice";
@@ -50,7 +50,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <>
-      <Modal
+      <InfosModal
         content={
           <>
             <p>

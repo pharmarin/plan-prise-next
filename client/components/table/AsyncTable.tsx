@@ -2,10 +2,10 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import Dropdown from "components/Dropdown";
 import TextInput from "components/forms/inputs/TextInput";
 import Spinner from "components/icons/Spinner";
 import Pagination from "components/navigation/Pagination";
+import Dropdown from "components/overlays/Dropdown";
 import Table from "components/table/Table";
 import TableBody from "components/table/TableBody";
 import TableCell from "components/table/TableCell";

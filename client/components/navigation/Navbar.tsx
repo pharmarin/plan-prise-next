@@ -1,6 +1,6 @@
-import Dropdown from "components/Dropdown";
 import Avatar from "components/icons/Avatar";
 import NavbarLink from "components/navigation/NavbarLink";
+import Dropdown from "components/overlays/Dropdown";
 import { logoutUserAction } from "lib/redux/auth/actions";
 import { selectUserData } from "lib/redux/auth/selectors";
 import { selectTitle } from "lib/redux/navigation/selectors";

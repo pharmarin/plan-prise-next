@@ -1,7 +1,10 @@
+import { AxiosError } from "axios";
 import {
   AttributesObject,
+  DocBase,
   Document,
   DocWithData,
+  Errors,
   RelationshipsObject,
   RelationshipsWithData,
   ResourceIdentifierObject,
@@ -417,12 +420,13 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
     }
   }
 
-  async delete() {
-    const modelUrl = `${this.type}/${this.id}`;
+  async delete(data?: DocBase) {
+    const url = BaseModel.buildUrl(this.pathWithID);
 
-    const url = BaseModel.buildUrl(modelUrl);
-
-    return await axios.delete<Document>(url).then((response) => response.data);
+    return await axios
+      .delete<Document>(url, { data })
+      .then((response) => response.data)
+      .catch((error: AxiosError<Errors>) => error.response?.data);
   }
 
   /**

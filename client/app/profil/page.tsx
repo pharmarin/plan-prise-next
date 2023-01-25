@@ -1,5 +1,6 @@
 "use client";
 
+import DeleteUser from "app/profil/DeleteUser";
 import EditInformations from "app/profil/EditInformations";
 import EditPassword from "app/profil/EditPassword";
 import { selectUser } from "lib/redux/auth/selectors";
@@ -79,9 +80,7 @@ const Profil = () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            {/* <Card>
-              <DeleteUser user={user} />
-            </Card> */}
+            <DeleteUser user={user} />
           </div>
         </div>
       </div>
