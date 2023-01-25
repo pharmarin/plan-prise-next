@@ -6,7 +6,7 @@ const LoadingScreen = () => {
       <div className="m-auto flex max-w-5xl flex-col content-center items-center">
         <div className="m-0 ml-4 flex flex-row items-center space-x-4 text-5xl text-gray-700">
           <Spinner className="h-16 w-16 flex-shrink-0 p-3 text-gray-700" />
-          <span className="font-light">Chargement en cours...</span>
+          <span className="pr-4 font-light">Chargement en cours...</span>
         </div>
       </div>
     </div>

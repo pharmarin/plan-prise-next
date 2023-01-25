@@ -1,7 +1,7 @@
 "use client";
 
 import Welcome from "app/Welcome";
-import LoadingScreen from "components/screens/LoadingScreen";
+import LoadingScreen from "components/overlays/screens/LoadingScreen";
 import { fetchUserAction } from "lib/redux/auth/actions";
 import {
   selectIsCheckingUser,
