@@ -2,9 +2,9 @@ import LoginForm from "app/LoginForm";
 
 const Welcome = () => {
   return (
-    <div className="flex h-screen items-center">
-      <div className="container mx-auto flex flex-row overflow-hidden rounded-lg bg-white">
-        <div className="w-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 p-8 text-white">
+    <div className="flex min-h-screen items-center p-4 pb-0">
+      <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white sm:flex-row">
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-8 text-white sm:w-1/2">
           <h1 className="mb-4 text-2xl font-bold">
             Bienvenue sur plandeprise.fr
           </h1>
@@ -26,8 +26,8 @@ const Welcome = () => {
             Grenoble).
           </p>
         </div>
-        <div className="flex w-1/2 flex-col items-center justify-center bg-white">
-          <LoginForm className="flex w-1/2 flex-col" />
+        <div className="flex flex-col items-center justify-center bg-white sm:w-1/2">
+          <LoginForm className="my-8 px-4 flex w-full flex-col sm:w-1/2" />
         </div>
       </div>
     </div>

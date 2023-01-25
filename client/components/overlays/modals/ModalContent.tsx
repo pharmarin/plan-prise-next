@@ -10,7 +10,7 @@ const ModalContent: React.FC<PropsWithChildren<{ title?: string }>> = ({
   return (
     <div className="mb-4 bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
       <div className="sm:flex sm:items-start">
-        <RoundedIcon color="red">
+        <RoundedIcon className="mb-4" color="red">
           <ExclamationTriangleIcon
             className="h-6 w-6 text-red-600"
             aria-hidden="true"

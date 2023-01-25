@@ -1,7 +1,7 @@
 import { styled, tw } from "classname-variants/react";
 import React, { PropsWithChildren } from "react";
 
-const RoundedIconBase: React.FC<PropsWithChildren> = ({
+const RoundedIconBase: React.FC<PropsWithChildren<{ className?: string }>> = ({
   children,
   ...props
 }) => {
