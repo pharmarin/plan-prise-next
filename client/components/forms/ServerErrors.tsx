@@ -5,8 +5,10 @@ import React from "react";
 const ServerErrors: React.FC<{ errors?: Errors }> = ({ errors }) => {
   return (
     <>
-      {errors?.map((error) => (
-        <FormInfo color="red">{error.detail}</FormInfo>
+      {errors?.map((error, index) => (
+        <FormInfo color="red" key={index}>
+          {error.detail}
+        </FormInfo>
       ))}
     </>
   );
