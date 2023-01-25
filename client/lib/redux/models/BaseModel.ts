@@ -392,10 +392,12 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
   async patch(values?: ResourceObject, customUrl?: string) {
     const url = BaseModel.buildUrl(this.pathWithID);
 
+    console.log(this.documentWithData);
+
     return await axios
       .patch<Document>(
         customUrl ?? url,
-        ({ data: values } as DocWithData) ?? this.documentWithData
+        values ? ({ data: values } as DocWithData) : this.documentWithData
       )
       .then((response) => response.data);
   }
