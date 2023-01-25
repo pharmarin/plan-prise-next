@@ -1,6 +1,7 @@
 "use client";
 
 import EditInformations from "app/profil/EditInformations";
+import EditPassword from "app/profil/EditPassword";
 import { selectUser } from "lib/redux/auth/selectors";
 import { useSetTitle } from "lib/redux/navigation/actions";
 import { useSelector } from "react-redux";
@@ -54,9 +55,7 @@ const Profil = () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            {/* <Card>
-              <EditPassword user={user} />
-            </Card> */}
+            <EditPassword user={user} />
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import Form from "components/forms/Form";
-import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import TextInput from "components/forms/inputs/TextInput";
+import ServerErrors from "components/forms/ServerErrors";
 import Modal from "components/Modal";
 import { Formik } from "formik";
 import { DocWithErrors, Errors } from "jsonapi-typescript";
@@ -200,15 +200,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
             >
               <TextInput />
             </FormikField>
-            {errors && (
-              <div>
-                {(errors || []).map((errorItem: any, key: any) => (
-                  <FormInfo key={key} className="text-red-600">
-                    {errorItem.title}
-                  </FormInfo>
-                ))}
-              </div>
-            )}
+            <ServerErrors errors={errors} />
             <Button loading={isSubmitting} type="submit">
               Mettre à jour les informations
             </Button>

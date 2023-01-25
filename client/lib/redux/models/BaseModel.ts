@@ -378,19 +378,22 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
    * SETTER
    */
 
-  save = () => {
+  save() {
     if (false && this.id.startsWith("-")) {
       //return this.postWithValues(values);
     } else {
       return this.patch();
     }
-  };
+  }
 
-  async patch() {
+  async patch(values?: ResourceObject, customUrl?: string) {
     const url = BaseModel.buildUrl(this.pathWithID);
 
     return await axios
-      .patch<Document>(url, this.documentWithData)
+      .patch<Document>(
+        customUrl ?? url,
+        ({ data: values } as DocWithData) ?? this.documentWithData
+      )
       .then((response) => response.data);
   }
 
@@ -406,25 +409,11 @@ class BaseModel<A extends AttributesObject = AttributesObject> {
       .then((response) => response.data);
   }
 
-  async patchWithValues(values: ResourceObject) {
-    const modelUrl = `${this.type}/${this.id}`;
-
-    const url = BaseModel.buildUrl(modelUrl);
-
-    const data: DocWithData = {
-      data: values,
-    };
-
-    return await axios
-      .patch<Document>(url, data)
-      .then((response) => response.data);
-  }
-
   async saveWithValues(values: ResourceObject) {
     if (this.id.startsWith("-")) {
       return this.postWithValues(values);
     } else {
-      return this.patchWithValues(values);
+      return this.patch(values);
     }
   }
 

@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1\Users;
 
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;

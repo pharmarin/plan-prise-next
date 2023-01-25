@@ -11,6 +11,7 @@ const TextInput = forwardRef<
       info?: string;
       label?: string;
       slideLabel?: boolean;
+      type?: "text" | "password";
       wrapperClassName?: string;
     },
     "ref"
@@ -23,6 +24,7 @@ const TextInput = forwardRef<
       info,
       label,
       slideLabel,
+      type = "text",
       value,
       wrapperClassName,
       ...props
@@ -35,13 +37,13 @@ const TextInput = forwardRef<
           <FormLabel name={props.name}>{label}</FormLabel>
         )}
         <input
-          type="text"
           id={id}
           className={twMerge(
             "peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent p-2 text-sm text-gray-700 focus:border-emerald-600 focus:outline-none focus:ring-0",
             slideLabel && "px-2 pb-2 pt-4",
             className
           )}
+          type={type}
           {...props}
           ref={ref}
           value={value || ""}
