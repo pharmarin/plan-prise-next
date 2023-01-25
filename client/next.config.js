@@ -5,13 +5,6 @@ require("dotenv").config({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: { appDir: true },
-  images: {
-    remotePatterns: [
-      {
-        hostname: "eu.ui-avatars.com",
-      },
-    ],
-  },
   reactStrictMode: true,
 };
 
