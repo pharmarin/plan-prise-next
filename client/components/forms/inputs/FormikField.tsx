@@ -15,8 +15,8 @@ const FormikField: React.FC<
   label,
   ...props
 }) => {
-  const [field, meta] = useField(props);
-  const { isSubmitting } = useFormikContext();
+  const [field, meta, helpers] = useField(props);
+  const { isSubmitting, setFieldValue } = useFormikContext();
 
   return (
     <>
@@ -25,6 +25,10 @@ const FormikField: React.FC<
           return React.cloneElement(child, {
             ...field,
             ...props,
+            ...(props.type === "file" && {
+              onChange: (event) =>
+                setFieldValue(props.name, event.currentTarget.files?.[0]),
+            }),
             disabled: (disableOnSubmit && isSubmitting) || disabled,
             label,
           } as React.HTMLProps<HTMLInputElement>);
