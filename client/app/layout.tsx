@@ -17,19 +17,17 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
     <Provider store={store}>
       <html lang="fr">
         <body
-          className="bg-cover"
+          className="min-h-screen w-screen bg-white/30  bg-cover backdrop-blur-sm"
           style={{ backgroundImage: `url(${background.src})` }}
         >
-          <div className="min-h-screen w-screen bg-gray-200 bg-opacity-30 pb-8">
-            <AuthGuard>
-              <>
-                <Navbar />
-                <div className="container mx-auto overflow-hidden rounded-lg bg-white p-4">
-                  {children}
-                </div>
-              </>
-            </AuthGuard>
-          </div>
+          <AuthGuard>
+            <>
+              <Navbar />
+              <div className="container mx-auto overflow-hidden rounded-lg bg-white p-4 pb-8">
+                {children}
+              </div>
+            </>
+          </AuthGuard>
         </body>
       </html>
     </Provider>
