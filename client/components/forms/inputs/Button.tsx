@@ -1,14 +1,19 @@
 import { styled, tw } from "classname-variants/react";
 import Spinner from "components/icons/Spinner";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 const ButtonBase: React.FC<
   JSX.IntrinsicElements["button"] & {
     loading?: boolean;
   }
-> = ({ children, disabled, loading, ...props }) => {
+> = ({ children, className, disabled, loading, ...props }) => {
   return (
-    <button disabled={disabled || loading} {...props}>
+    <button
+      className={twMerge(className)}
+      disabled={disabled || loading}
+      {...props}
+    >
       {loading && <Spinner className="-ml-1 mr-2" />}
       <span className="truncate">{children}</span>
     </button>

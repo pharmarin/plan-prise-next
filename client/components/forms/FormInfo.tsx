@@ -1,10 +1,14 @@
 import { styled, tw } from "classname-variants/react";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
-const FormInfoBase: React.FC<React.PropsWithChildren> = ({
-  children,
-  ...props
-}) => <div {...props}>{children}</div>;
+const FormInfoBase: React.FC<
+  React.PropsWithChildren<{ className?: string }>
+> = ({ children, className, ...props }) => (
+  <div className={twMerge(className)} {...props}>
+    {children}
+  </div>
+);
 
 const FormInfo = styled("div", {
   base: tw`mt-1 text-xs`,

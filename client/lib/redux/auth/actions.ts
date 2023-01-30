@@ -9,7 +9,7 @@ import { LoginCredentials, UserObject } from "lib/types";
  *
  * @returns void
  */
-const fetchCsrfCookie = () => axios.get("/sanctum/csrf-cookie");
+export const fetchCsrfCookie = () => axios.get("/sanctum/csrf-cookie");
 
 /** (Redux thunk) Fetch user from server */
 export const fetchUserAction = createAsyncThunk(
