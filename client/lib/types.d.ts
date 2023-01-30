@@ -1,4 +1,4 @@
-import { ErrorObject, ResourceObject } from "jsonapi-typescript";
+import { Errors, ResourceObject } from "jsonapi-typescript";
 import { NavbarIcons } from "lib/redux/navigation/slice";
 
 /* 
@@ -32,7 +32,7 @@ export type AuthState = {
   user: { isLoading: boolean; data?: UserObject };
   login: {
     isLoading: boolean;
-    error?: ErrorObject;
+    error?: Errors;
   };
 };
 

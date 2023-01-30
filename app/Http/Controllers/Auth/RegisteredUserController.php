@@ -23,18 +23,25 @@ class RegisteredUserController extends Controller
   public function store(Request $request)
   {
     $request->validate([
+      "recaptcha" => ["required", "captcha"],
       "email" => [
         "required",
         "string",
         "email",
         "max:255",
-        "unique:" . User::class,
+        "unique:" . User::class . ",email",
       ],
       "password" => ["required", "confirmed", Rules\Password::defaults()],
-      "first_name" => ["required", "string", "max:255"],
-      "last_name" => ["required", "string", "max:255"],
+      "firstName" => ["required", "string", "max:255"],
+      "lastName" => ["required", "string", "max:255"],
+      "display_name" => ["string", "min:3", "max:50"],
       "student" => ["boolean"],
-      "rpps" => ["numeric", "digits:11"],
+      "rpps" => ["required_if:student,false", "numeric", "digits:11"],
+      "certificate" => [
+        "required_if:student,true",
+        "file",
+        "mimes:png,jpg,jpeg,pdf",
+      ],
     ]);
 
     $user = User::create([
@@ -47,8 +54,6 @@ class RegisteredUserController extends Controller
     ]);
 
     event(new Registered($user));
-
-    Auth::login($user);
 
     return response()->noContent();
   }

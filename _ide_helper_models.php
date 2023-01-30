@@ -50,11 +50,11 @@ namespace App\Models{
  * App\Models\User
  *
  * @property int $id
- * @property int $admin
+ * @property bool $admin
  * @property string|null $first_name
  * @property string|null $last_name
  * @property string|null $display_name
- * @property int $student
+ * @property bool $student
  * @property int|null $rpps
  * @property string $email
  * @property string $password

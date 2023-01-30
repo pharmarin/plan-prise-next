@@ -1,6 +1,11 @@
 import LoginForm from "app/LoginForm";
+import RegisterForm from "app/RegisterForm";
+import Button from "components/forms/inputs/Button";
+import { useState } from "react";
 
 const Welcome = () => {
+  const [showRegister, setShowRegister] = useState(false);
+
   return (
     <div className="flex min-h-screen items-center p-4 pb-0">
       <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white sm:flex-row">
@@ -27,7 +32,20 @@ const Welcome = () => {
           </p>
         </div>
         <div className="flex flex-col items-center justify-center bg-white sm:w-1/2">
-          <LoginForm className="my-8 px-4 flex w-full flex-col sm:w-1/2" />
+          {showRegister ? (
+            <RegisterForm className="my-8 flex w-full flex-col px-4 sm:w-2/3" />
+          ) : (
+            <LoginForm className="my-8 flex w-full flex-col px-4 sm:w-1/2" />
+          )}
+          <Button
+            className="mb-4"
+            color="link"
+            onClick={() => setShowRegister(!showRegister)}
+          >
+            {showRegister
+              ? "J'ai déjà un compte : Se connecter"
+              : "Je n'ai pas de compte : S'inscrire"}
+          </Button>
         </div>
       </div>
     </div>

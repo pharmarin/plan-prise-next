@@ -70,7 +70,7 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
             </div>
 
             <Button
-              className="mx-auto mt-4 w-fit"
+              className="mt-4"
               color="gradient"
               disabled={"email" in errors || "password" in errors}
               loading={isSubmitting}

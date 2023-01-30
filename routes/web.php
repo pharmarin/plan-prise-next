@@ -61,5 +61,3 @@ Route::middleware("auth")->group(function () {
     include LEGACY_PATH . "/ajax/" . $file;
   });
 });
-
-require __DIR__ . "/auth.php";
