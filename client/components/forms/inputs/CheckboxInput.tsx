@@ -18,7 +18,7 @@ const CheckboxInput = forwardRef<
         <input
           type="checkbox"
           className={twMerge(
-            "focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 checked:bg-teal-600 focus:ring-emerald-300",
+            "focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 checked:bg-teal-600 checked:hover:bg-teal-700 focus:ring-emerald-300",
             className
           )}
           id={id}
