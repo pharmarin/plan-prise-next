@@ -72,29 +72,18 @@ const RegisterForm: React.FC<{ className?: string }> = ({ className }) => {
 
   return (
     <Formik
-      initialValues={
-        /* {
-        certificate: undefined,
+      initialValues={{
+        recaptcha: "",
         email: "",
         firstName: "",
         lastName: "",
         rpps: "",
+        certificate: undefined,
         student: false,
+        displayName: "",
         password: "",
         password_confirmation: "",
-      } */ {
-          recaptcha: "",
-          email: "test@test.com",
-          firstName: "Test prénom",
-          lastName: "Test nom",
-          rpps: "10101000000",
-          certificate: undefined,
-          student: false,
-          displayName: "Test structure",
-          password: "testtest",
-          password_confirmation: "testtest",
-        }
-      }
+      }}
       onSubmit={async (values, { setFieldValue, setSubmitting }) => {
         if (!reCaptchaRef) {
           throw new Error("Le service ReCAPTCHA n'a pas pu être chargé");
