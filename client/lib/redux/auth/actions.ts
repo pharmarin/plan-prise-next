@@ -51,7 +51,7 @@ export const loginUserAction = createAsyncThunk<
    * @returns Dispatch fetchUserAction
    * @throws Errors
    */
-  async (credentials, { dispatch }) => {
+  async (credentials, { dispatch, rejectWithValue }) => {
     try {
       await fetchCsrfCookie();
 
@@ -62,7 +62,8 @@ export const loginUserAction = createAsyncThunk<
       return;
     } catch (error) {
       const axiosError = error as AxiosError<DocWithErrors>;
-      return Promise.reject(axiosError.response?.data.errors);
+
+      return rejectWithValue(axiosError.response?.data.errors);
     }
   }
 );
