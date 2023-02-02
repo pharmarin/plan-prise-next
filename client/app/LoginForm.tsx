@@ -5,6 +5,7 @@ import Button from "components/forms/inputs/Button";
 import CheckboxInput from "components/forms/inputs/CheckboxInput";
 import FormikField from "components/forms/inputs/FormikField";
 import TextInput from "components/forms/inputs/TextInput";
+import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
 import { loginUserAction } from "lib/redux/auth/actions";
 import { selectLoginError } from "lib/redux/auth/selectors";
@@ -14,13 +15,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 
-type LoginFormType = { email: string; password: string; remember?: boolean };
-
 const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
 
-  const loginError = useSelector(selectLoginError);
+  const loginErrors = useSelector(selectLoginError);
 
   return (
     <>
@@ -46,19 +45,21 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
                 id="login_email"
                 label="Adresse mail"
                 name="email"
+                placeholder="Adresse mail"
                 required
                 type="email"
               >
-                <TextInput />
+                <TextInput slideLabel />
               </FormikField>
               <FormikField
                 id="login_password"
                 label="Mot de passe"
                 name="password"
+                placeholder="Mot de passe"
                 required
                 type="password"
               >
-                <TextInput />
+                <TextInput slideLabel />
               </FormikField>
               <FormikField
                 id="login_remember"
@@ -78,9 +79,8 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
             >
               Se connecter
             </Button>
-            <p className="mt-4 h-0 text-center text-xs text-red-600">
-              {loginError?.detail}
-            </p>
+
+            <ServerErrors errors={loginErrors} />
           </Form>
         )}
       </Formik>
