@@ -316,9 +316,7 @@ class BaseModel {
       this.prepareCustom(options && options.custom)
     );
 
-    return `${process.env.NEXT_PUBLIC_API_PATH || ""}/${path}${
-      params.length > 0 ? `?${params.join("&")}` : ""
-    }`;
+    return `/${path}${params.length > 0 ? `?${params.join("&")}` : ""}`;
   }
 
   get pathWithID(): string {

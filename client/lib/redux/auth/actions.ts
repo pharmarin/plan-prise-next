@@ -22,7 +22,7 @@ export const fetchUserAction = createAsyncThunk(
    */
   async () =>
     axios
-      .get<Document>("/api/user")
+      .get<Document>("/user")
       .then((response) => {
         if ("data" in response.data) {
           return response.data.data as UserObject;
