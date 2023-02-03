@@ -29,8 +29,8 @@ const Users = () => {
           avatar: "",
           lastName: "Nom",
           firstName: "Prénom",
-          email: "Adresse mail",
           status: "Statut",
+          rpps: "RPPS",
           signup_date: "Date d'inscription",
           actions: "",
         }}
@@ -47,8 +47,6 @@ const Users = () => {
               return user.lastName || "";
             case "firstName":
               return user.firstName || "";
-            case "email":
-              return user.email || "";
             case "status":
               return user.admin ? (
                 <Pill className="bg-red-400">Admin</Pill>
@@ -57,6 +55,8 @@ const Users = () => {
                   {user.student ? "Étudiant" : "Pharmacien"}
                 </Pill>
               );
+            case "rpps":
+              return user.rpps?.toString() || "";
             case "signup_date":
               return new Date(user?.createdAt || "").toLocaleDateString(
                 "fr-FR"
