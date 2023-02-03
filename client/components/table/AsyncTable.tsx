@@ -98,7 +98,7 @@ const AsyncTable = <
   const columnsLength = Object.keys(columns).length;
 
   return (
-    <div {...props} className="overflow-y-auto">
+    <div {...props}>
       <div className="mb-4 flex items-center justify-between">
         {searchKey && (
           <div className="flex-1 pr-4">
