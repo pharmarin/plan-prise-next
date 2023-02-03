@@ -61,10 +61,12 @@ export const handleResponse = (
 
 const ATTRIBUTES_METADATA_KEY = "registeredAttributes";
 
-export const Attribute =
-  (options?: { getter?: (value: any) => any; setter?: (value: any) => any }) =>
-  <M extends BaseModel>(target: M, propertyKey: string) => {
-    let attributeValue: any;
+export function Attribute(options?: {
+  getter?: (value: any) => any;
+  setter?: (value: any) => any;
+}) {
+  return function <M extends BaseModel>(target: M, propertyKey: keyof M) {
+    /** Register attribute in metadata */
 
     let registeredAttributes: string[] = Reflect.getMetadata(
       ATTRIBUTES_METADATA_KEY,
@@ -72,9 +74,9 @@ export const Attribute =
     );
 
     if (registeredAttributes) {
-      registeredAttributes.push(propertyKey);
+      registeredAttributes.push(propertyKey as string);
     } else {
-      registeredAttributes = [propertyKey];
+      registeredAttributes = [propertyKey as string];
       Reflect.defineMetadata(
         ATTRIBUTES_METADATA_KEY,
         registeredAttributes,
@@ -82,13 +84,24 @@ export const Attribute =
       );
     }
 
-    Object.defineProperty(target, propertyKey, {
-      get: () =>
-        options?.getter ? options.getter(attributeValue) : attributeValue,
-      set: (value) =>
-        (attributeValue = options?.setter ? options.setter(value) : value),
+    /** Modify getter and setter for property */
+
+    const uniquePropertyKey = Symbol();
+
+    Reflect.defineProperty(target, propertyKey, {
+      get(this: any) {
+        return options?.getter
+          ? options.getter(this[uniquePropertyKey])
+          : this[uniquePropertyKey];
+      },
+      set(this: any, value) {
+        this[uniquePropertyKey] = options?.setter
+          ? options.setter(value)
+          : value;
+      },
     });
   };
+}
 
 export type AttributesKeysOnly<
   M extends BaseModel,
