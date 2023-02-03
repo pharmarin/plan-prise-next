@@ -141,7 +141,7 @@ const AsyncTable = <
         )}
       </div>
 
-      <Table className="text-center" stripped>
+      <Table className="text-center">
         <TableHead>
           <TableRow>
             {Object.entries(columns).map(([id, label]) => (
@@ -153,7 +153,7 @@ const AsyncTable = <
           {(() => {
             if (loading) {
               return (
-                <TableRow>
+                <TableRow stripped>
                   <TableCell colSpan={columnsLength}>
                     <div className="flex justify-center align-middle text-gray-600">
                       <Spinner />
@@ -191,7 +191,11 @@ const AsyncTable = <
 
             if (((result?.data as InstanceType<T>[]) || []).length > 0) {
               return ((result?.data as InstanceType<T>[]) || []).map((row) => (
-                <TableRow key={row.id || ""} hover={linkTo !== undefined}>
+                <TableRow
+                  key={row.id || ""}
+                  hover={linkTo !== undefined}
+                  stripped
+                >
                   {Object.keys(columns).map((id) => (
                     <TableCell
                       key={id}
