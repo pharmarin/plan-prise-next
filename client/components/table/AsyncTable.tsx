@@ -36,7 +36,7 @@ const AsyncTable = <
   extractData: (
     filter: string | number,
     columnId: keyof C,
-    data: any,
+    data: InstanceType<T>,
     forceReload?: any
   ) => string | React.ReactElement;
   filters?: {

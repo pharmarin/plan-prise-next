@@ -34,7 +34,7 @@ const Users = () => {
           signup_date: "Date d'inscription",
           actions: "",
         }}
-        extractData={(filter, columnId, user: User, forceReload) => {
+        extractData={(filter, columnId, user, forceReload) => {
           switch (columnId) {
             case "avatar":
               return (
