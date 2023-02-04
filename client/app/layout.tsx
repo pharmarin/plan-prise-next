@@ -23,7 +23,7 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
           <AuthGuard>
             <>
               <Navbar />
-              <div className="container mx-auto overflow-hidden rounded-lg bg-white p-4 pb-8">
+              <div className="container mx-auto overflow-hidden rounded-lg bg-white p-4">
                 {children}
               </div>
             </>
