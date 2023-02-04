@@ -41,9 +41,9 @@ class UserSchema extends Schema
       Boolean::make("admin")->readOnly(),
       Boolean::make("student"),
       Number::make("rpps"),
-      DateTime::make("createdAt")->hidden(
-        static fn($request) => !$request->user()->admin
-      ),
+      DateTime::make("createdAt")
+        ->hidden(static fn($request) => !$request->user()->admin)
+        ->sortable(),
     ];
   }
 

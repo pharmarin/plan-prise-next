@@ -85,6 +85,7 @@ const Users = () => {
           }
         }}
         searchKey="lastName"
+        sortBy="createdAt"
         type={User}
       />
     </div>
