@@ -9,43 +9,29 @@ import React from "react";
 
 const Pagination: React.FC<{
   data: {
-    "current-page"?: number;
+    currentPage?: number;
     from?: number;
-    "last-page"?: number;
-    "per-page"?: number;
+    lastPage?: number;
+    perPage?: number;
     to?: number;
     total?: number;
   };
   setPage: (pageNumber: number) => void;
 }> = ({ data, setPage }) => {
-  const {
-    "current-page": currentPage,
-    from,
-    "last-page": lastPage,
-    to,
-    total,
-  } = data;
+  const { currentPage, from, lastPage, to, total } = data;
 
   const ICON_CLASSNAME = "h-3 w-3";
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex flex-1 justify-between sm:hidden">
+      <div className="flex flex-1 justify-start space-x-1 sm:hidden">
         {(currentPage || 0) > 1 && (
-          <Button
-            className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500"
-            color="link"
-            onClick={() => setPage((currentPage || 2) - 1)}
-          >
+          <Button color="white" onClick={() => setPage((currentPage || 2) - 1)}>
             Précédent
           </Button>
         )}
         {(currentPage || 0) !== (lastPage || 0) && (
-          <Button
-            className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500"
-            color="link"
-            onClick={() => setPage((currentPage || 1) + 1)}
-          >
+          <Button color="white" onClick={() => setPage((currentPage || 1) + 1)}>
             Suivant
           </Button>
         )}
@@ -63,11 +49,14 @@ const Pagination: React.FC<{
         {currentPage && lastPage && (
           <div>
             <nav
-              className="relative z-0 inline-flex -space-x-px shadow-sm"
+              className="relative inline-flex h-8 space-x-1"
               aria-label="Pagination"
             >
+              <Button color="white" onClick={() => setPage(1)}>
+                <ChevronDoubleLeftIcon className={ICON_CLASSNAME} />
+              </Button>
               <Button
-                className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50"
+                color="white"
                 disabled={currentPage === 1}
                 onClick={() =>
                   currentPage > 1 ? setPage(currentPage - 1) : null
@@ -76,17 +65,11 @@ const Pagination: React.FC<{
                 <span className="sr-only">Précédent</span>
                 <ChevronLeftIcon className={ICON_CLASSNAME} />
               </Button>
-              <Button
-                className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50"
-                onClick={() => setPage(1)}
-              >
-                <ChevronDoubleLeftIcon className={ICON_CLASSNAME} />
-              </Button>
               {[3, 2, 1].map((key) =>
                 currentPage - key > 0 && currentPage - key < lastPage ? (
                   <Button
                     key={`end_${currentPage - key}`}
-                    className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    color="white"
                     onClick={() => setPage(currentPage - key)}
                   >
                     {currentPage - key}
@@ -94,7 +77,7 @@ const Pagination: React.FC<{
                 ) : undefined
               )}
               <select
-                className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                color="white"
                 onChange={(e) => setPage(Number(e.target.value))}
                 value={currentPage}
               >
@@ -115,7 +98,7 @@ const Pagination: React.FC<{
                 currentPage + key > 0 && currentPage + key <= lastPage ? (
                   <Button
                     key={`start_${currentPage + key}`}
-                    className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    color="white"
                     onClick={() => setPage(currentPage + key)}
                   >
                     {currentPage + key}
@@ -123,13 +106,7 @@ const Pagination: React.FC<{
                 ) : undefined
               )}
               <Button
-                className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50"
-                onClick={() => setPage(lastPage)}
-              >
-                <ChevronDoubleRightIcon className={ICON_CLASSNAME} />
-              </Button>
-              <Button
-                className="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50"
+                color="white"
                 disabled={currentPage === lastPage}
                 onClick={() =>
                   currentPage < lastPage ? setPage(currentPage + 1) : null
@@ -137,6 +114,9 @@ const Pagination: React.FC<{
               >
                 <span className="sr-only">Suivant</span>
                 <ChevronRightIcon className={ICON_CLASSNAME} />
+              </Button>
+              <Button color="white" onClick={() => setPage(lastPage)}>
+                <ChevronDoubleRightIcon className={ICON_CLASSNAME} />
               </Button>
             </nav>
           </div>
