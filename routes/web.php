@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Mail\Registered as MailRegistered;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //Auth::login(User::find(8));
 
 Route::get("/", function () {
-  include LEGACY_PATH . "/index.php";
+  return "Hello world !";
 });
 
 Route::get("/{assets}/{stylesheet}", function ($assets, $stylesheet) {

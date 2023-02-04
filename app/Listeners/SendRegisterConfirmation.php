@@ -30,7 +30,7 @@ class SendRegisterConfirmation
    */
   public function handle(Registered $event)
   {
-    Mail::to($event->user->email)->send(new MailRegistered());
+    Mail::to($event->user->email)->queue(new MailRegistered());
     Notification::send(new User(), new RegisteredAdmin());
   }
 }
