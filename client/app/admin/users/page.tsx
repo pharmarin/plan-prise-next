@@ -34,7 +34,17 @@ const Users = () => {
           signup_date: "Date d'inscription",
           actions: "",
         }}
-        extractData={(filter, columnId, user, forceReload) => {
+        filters={{
+          pending: {
+            label: "Utilisateurs à approuver",
+            filter: {
+              field: "activeAt",
+              value: "",
+            },
+          },
+          all: { label: "Tous les utilisateurs", filter: undefined },
+        }}
+        renderData={(filter, columnId, user, forceReload) => {
           switch (columnId) {
             case "avatar":
               return (
@@ -73,16 +83,6 @@ const Users = () => {
             default:
               return "";
           }
-        }}
-        filters={{
-          pending: {
-            label: "Utilisateurs à approuver",
-            filter: {
-              field: "activeAt",
-              value: "",
-            },
-          },
-          all: { label: "Tous les utilisateurs", filter: undefined },
         }}
         searchKey="lastName"
         type={User}

@@ -17,28 +17,23 @@ import BaseModel from "lib/redux/models/BaseModel";
 import { debounce } from "lodash";
 import React, { useState } from "react";
 import { useAsync } from "react-async-hook";
+import { twMerge } from "tailwind-merge";
 
 const AsyncTable = <
   T extends typeof BaseModel,
   C extends { [id: string]: string }
 >({
   columns,
-  extractData,
   filters = {},
   include,
   linkTo,
+  renderData,
   searchKey,
   sortBy,
   type,
   ...props
 }: {
   columns: C;
-  extractData: (
-    filter: string | number,
-    columnId: keyof C,
-    data: InstanceType<T>,
-    forceReload?: any
-  ) => string | React.ReactElement;
   filters?: {
     [key: string]: {
       label: string;
@@ -51,6 +46,12 @@ const AsyncTable = <
    * Must contain "ID" which will be replaced by the id of the row element
    */
   linkTo?: string;
+  renderData: (
+    filter: string | number,
+    columnId: keyof C,
+    data: InstanceType<T>,
+    forceReload?: any
+  ) => string | React.ReactElement;
   sortBy?: string;
   searchKey?: string;
   type: T;
@@ -141,91 +142,96 @@ const AsyncTable = <
         )}
       </div>
 
-      <Table className="text-center">
-        <TableHead>
-          <TableRow>
-            {Object.entries(columns).map(([id, label]) => (
-              <TableHeadCell key={id}>{label}</TableHeadCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(() => {
-            if (loading) {
-              return (
-                <TableRow stripped>
-                  <TableCell colSpan={columnsLength}>
-                    <div className="flex justify-center align-middle text-gray-600">
-                      <Spinner />
-                      <span className="ml-4">Chargement en cours...</span>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            }
-
-            if (error) {
-              console.error(error);
-              return (
-                <TableRow>
-                  <TableCell colSpan={columnsLength}>
-                    <div className="text-center text-red-600">
-                      Une erreur est survenue pendant le chargement
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            }
-
-            if (((result?.data as InstanceType<T>[]) || []).length === 0) {
-              return (
-                <TableRow>
-                  <TableCell colSpan={columnsLength}>
-                    <div className="flex justify-center align-middle text-gray-600">
-                      La recherche n&apos;a rien retourné
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            }
-
-            if (((result?.data as InstanceType<T>[]) || []).length > 0) {
-              return ((result?.data as InstanceType<T>[]) || []).map((row) => (
-                <TableRow
-                  key={row.id || ""}
-                  hover={linkTo !== undefined}
-                  stripped
-                >
-                  {Object.keys(columns).map((id) => (
-                    <TableCell
-                      key={id}
-                      link={
-                        linkTo && linkTo.replace("ID", String(row.id) || "")
-                      }
-                    >
-                      {extractData(filter, id, row, () =>
-                        reload(page, filter, search)
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ));
-            }
-          })()}
-        </TableBody>
-        {result?.data && (
-          <TableFooter>
+      <div className="-m-4 overflow-scroll p-4">
+        <Table className="text-center">
+          <TableHead>
             <TableRow>
-              <TableCell colSpan={columnsLength}>
-                <Pagination
-                  setPage={(pageNumber) => setPage(pageNumber)}
-                  data={(result.meta as any)?.page || {}}
-                />
-              </TableCell>
+              {Object.entries(columns).map(([id, label]) => (
+                <TableHeadCell key={id}>{label}</TableHeadCell>
+              ))}
             </TableRow>
-          </TableFooter>
-        )}
-      </Table>
+          </TableHead>
+          <TableBody>
+            {(() => {
+              if (loading) {
+                return (
+                  <TableRow stripped>
+                    <TableCell colSpan={columnsLength}>
+                      <div className="flex justify-center align-middle text-gray-600">
+                        <Spinner />
+                        <span className="ml-4">Chargement en cours...</span>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+
+              if (error) {
+                console.error(error);
+                return (
+                  <TableRow>
+                    <TableCell colSpan={columnsLength}>
+                      <div className="text-center text-red-600">
+                        Une erreur est survenue pendant le chargement
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+
+              if (((result?.data as InstanceType<T>[]) || []).length === 0) {
+                return (
+                  <TableRow>
+                    <TableCell colSpan={columnsLength}>
+                      <div className="flex justify-center align-middle text-gray-600">
+                        La recherche n&apos;a rien retourné
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+
+              if (((result?.data as InstanceType<T>[]) || []).length > 0) {
+                return ((result?.data as InstanceType<T>[]) || []).map(
+                  (row) => (
+                    <TableRow
+                      className={twMerge("flex-col sm:flex-row")}
+                      hover={linkTo !== undefined}
+                      key={row.id || ""}
+                      stripped
+                    >
+                      {Object.keys(columns).map((id) => (
+                        <TableCell
+                          key={id}
+                          link={
+                            linkTo && linkTo.replace("ID", String(row.id) || "")
+                          }
+                        >
+                          {renderData(filter, id, row, () =>
+                            reload(page, filter, search)
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  )
+                );
+              }
+            })()}
+          </TableBody>
+          {result?.data && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={columnsLength}>
+                  <Pagination
+                    data={(result.meta as any)?.page || {}}
+                    setPage={(pageNumber) => setPage(pageNumber)}
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
+        </Table>
+      </div>
     </div>
   );
 };
