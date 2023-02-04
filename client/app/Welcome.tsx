@@ -33,9 +33,9 @@ const Welcome = () => {
         </div>
         <div className="flex flex-col items-center justify-center bg-white sm:w-1/2">
           {showRegister ? (
-            <RegisterForm className="my-8 flex w-full flex-col px-4 sm:w-2/3" />
+            <RegisterForm className="my-8 flex w-full flex-col px-4 md:w-2/3" />
           ) : (
-            <LoginForm className="my-8 flex w-full flex-col px-4 sm:w-1/2" />
+            <LoginForm className="my-8 flex w-full flex-col px-4 md:w-2/3" />
           )}
           <Button
             className="mb-4"
