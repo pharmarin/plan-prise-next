@@ -13,7 +13,7 @@ export type User = {
   email: string;
   created_at: string;
   updated_at: string;
-  active_at?: string;
+  approved_at?: string;
 }; */
 
 export type LoginCredentials = {

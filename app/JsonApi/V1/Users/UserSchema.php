@@ -56,7 +56,7 @@ class UserSchema extends Schema
   {
     return [
       WhereIdIn::make($this),
-      Where::make("activeAt"),
+      Where::make("approvedAt"),
       Where::make("lastName"),
     ];
   }

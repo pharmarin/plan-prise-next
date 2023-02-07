@@ -13,7 +13,7 @@ const ApproveButton: React.FC<{
     return user.saveWithValues({
       ...user.identifier,
       attributes: {
-        approved_at: new Date().toISOString(),
+        approvedAt: new Date().toISOString(),
       },
     });
   });

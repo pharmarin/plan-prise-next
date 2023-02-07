@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Exceptions\ApprobationException;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,17 @@ class LoginRequest extends FormRequest
     $this->ensureIsNotRateLimited();
 
     if (
-      !Auth::attempt(
+      !Auth::attemptWhen(
         $this->only("email", "password"),
+        function (User $user) {
+          if (!$user->approved_at) {
+            throw new ApprobationException();
+
+            return false;
+          }
+
+          return true;
+        },
         $this->boolean("remember")
       )
     ) {

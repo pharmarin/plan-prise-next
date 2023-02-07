@@ -39,7 +39,7 @@ return new class extends Migration {
         ->bigInteger("rpps")
         ->after("student")
         ->nullable();
-      $table->timestamp("active_at")->nullable();
+      $table->timestamp("approved_at")->nullable();
     });
   }
 
@@ -61,7 +61,7 @@ return new class extends Migration {
         "display_name",
         "student",
         "rpps",
-        "active_at",
+        "approved_at",
       ]);
     });
   }

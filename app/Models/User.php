@@ -45,7 +45,7 @@ class User extends Authenticatable
    * @var array<string, string>
    */
   protected $casts = [
-    "active_at" => "datetime",
+    "approved_at" => "datetime",
     "admin" => "boolean",
     "student" => "boolean",
   ];
@@ -61,7 +61,7 @@ class User extends Authenticatable
 
   protected function active(): Attribute
   {
-    return Attribute::make(fn() => $this->active_at !== null);
+    return Attribute::make(fn() => $this->approved_at !== null);
   }
 
   public function old_user()
@@ -80,7 +80,7 @@ class User extends Authenticatable
     ]);
 
     $user->admin = $old_user->admin;
-    $user->active_at = $old_user->inscription;
+    $user->approved_at = $old_user->inscription;
     $user->created_at = $old_user->inscription;
 
     $user->save();

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Exceptions\ApprobationException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Exceptions\InactiveUserException;
 use Illuminate\Auth\AuthenticationException;
 
 class OldUser extends Model
@@ -21,8 +21,8 @@ class OldUser extends Model
   {
     $user = OldUser::firstWhere("mail", $ulogin);
 
-    if ($user->active === 0) {
-      throw new InactiveUserException();
+    if ($user->active !== 1) {
+      throw new ApprobationException();
     }
 
     if (password_verify($upassword, $user->password)) {

@@ -38,7 +38,7 @@ const Users = () => {
           pending: {
             label: "Utilisateurs à approuver",
             filter: {
-              field: "activeAt",
+              field: "approvedAt",
               value: "",
             },
           },
