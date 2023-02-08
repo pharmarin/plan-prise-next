@@ -10,12 +10,7 @@ const ApproveButton: React.FC<{
   onSuccess: () => void;
 }> = ({ user, onSuccess }) => {
   const { loading, execute: approveUser } = useAsyncCallback(() => {
-    return user.saveWithValues({
-      ...user.identifier,
-      attributes: {
-        approvedAt: new Date().toISOString(),
-      },
-    });
+    return user.approve();
   });
 
   return (

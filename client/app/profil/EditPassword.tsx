@@ -29,7 +29,7 @@ const EditPassword = ({ user }: { user: User }) => {
               ...user.identifier,
               attributes: values,
             },
-            "/api/v1/users/update-password"
+            "/users/update-password"
           )
           .catch((error: AxiosError<DocWithErrors>) => {
             setErrors(error.response?.data.errors);

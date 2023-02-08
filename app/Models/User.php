@@ -30,6 +30,7 @@ class User extends Authenticatable
     "display_name",
     "student",
     "rpps",
+    "approved_at",
   ];
 
   /**

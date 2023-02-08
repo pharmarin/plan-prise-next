@@ -41,6 +41,18 @@ class User
 
   @Attribute()
   createdAt?: string;
+
+  approve() {
+    return this.patch(
+      {
+        ...this.identifier,
+        attributes: {
+          approvedAt: new Date().toISOString(),
+        },
+      },
+      BaseModel.buildUrl(this.pathWithID) + "/approve"
+    );
+  }
 }
 
 export default User;

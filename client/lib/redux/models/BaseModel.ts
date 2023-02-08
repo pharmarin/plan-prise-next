@@ -105,9 +105,12 @@ export function Attribute(options?: {
 
 export type AttributesKeysOnly<
   M extends BaseModel,
-  A extends AttributesObject
+  A extends AttributesObject,
+  C extends { [key: string]: any } = {}
 > = {
-  [K in keyof M]: K extends keyof A
+  [K in keyof M & keyof C]: K extends keyof C
+    ? C[K]
+    : K extends keyof A
     ? A[K]
     : K extends keyof BaseModel
     ? BaseModel[K]

@@ -44,6 +44,9 @@ class UserSchema extends Schema
       DateTime::make("createdAt")
         ->hidden(static fn($request) => !$request->user()->admin)
         ->sortable(),
+      DateTime::make("approvedAt")->hidden(
+        static fn($request) => !$request->user()->admin
+      ),
     ];
   }
 

@@ -2,15 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Mail\Registered as MailRegistered;
+use App\Mail\UserRegistered;
 use App\Models\User;
 use App\Notifications\RegisteredAdmin;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
-class SendRegisterConfirmation
+class SendUserRegisteredConfirmation
 {
   /**
    * Create the event listener.
@@ -30,7 +29,7 @@ class SendRegisterConfirmation
    */
   public function handle(Registered $event)
   {
-    Mail::to($event->user->email)->queue(new MailRegistered());
+    Mail::to($event->user->email)->queue(new UserRegistered());
     Notification::send(new User(), new RegisteredAdmin());
   }
 }
