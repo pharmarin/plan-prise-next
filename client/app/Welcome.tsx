@@ -31,14 +31,14 @@ const Welcome = () => {
             Grenoble).
           </p>
         </div>
-        <div className="flex flex-col items-center justify-center bg-white sm:w-1/2">
+        <div className="flex flex-col items-center justify-center bg-white p-8 sm:w-1/2">
           {showRegister ? (
-            <RegisterForm className="my-8 flex w-full flex-col px-4 md:w-2/3" />
+            <RegisterForm className="my-auto flex w-full flex-col px-4 md:w-2/3" />
           ) : (
-            <LoginForm className="my-8 flex w-full flex-col px-4 md:w-2/3" />
+            <LoginForm className="my-auto flex w-full flex-col px-4 md:w-2/3" />
           )}
           <Button
-            className="mb-4"
+            className="mt-4"
             color="link"
             onClick={() => setShowRegister(!showRegister)}
           >

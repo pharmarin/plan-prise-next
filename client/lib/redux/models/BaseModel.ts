@@ -404,33 +404,30 @@ class BaseModel {
   }
 
   async patch(values?: ResourceObject, customUrl?: string) {
-    const url = BaseModel.buildUrl(this.pathWithID);
-
-    console.log(this.documentWithData);
+    const url = customUrl ?? BaseModel.buildUrl(this.pathWithID);
 
     return await axios
       .patch<Document>(
-        customUrl ?? url,
+        url,
         values ? ({ data: values } as DocWithData) : this.documentWithData
       )
       .then((response) => response.data);
   }
 
-  async postWithValues(values: ResourceObject) {
-    delete values.id;
-
-    const data: DocWithData = {
-      data: values,
-    };
+  async post(values?: ResourceObject, customUrl?: string) {
+    const url = customUrl ?? BaseModel.buildUrl(this.pathWithID);
 
     return await axios
-      .post<Document>(this.type, data)
+      .post<Document>(
+        url,
+        values ? ({ data: values } as DocWithData) : this.documentWithData
+      )
       .then((response) => response.data);
   }
 
   async saveWithValues(values: ResourceObject) {
     if (this.id.startsWith("-")) {
-      return this.postWithValues(values);
+      return this.post(values);
     } else {
       return this.patch(values);
     }

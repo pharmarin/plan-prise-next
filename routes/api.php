@@ -47,6 +47,7 @@ JsonApiRoute::server("v1")
       ->actions(function ($actions) {
         $actions->patch("update-password");
         $actions->withId()->patch("approve");
+        $actions->post("forgot-password");
       });
 
     $server->resource("old-users", JsonApiController::class)->readOnly();

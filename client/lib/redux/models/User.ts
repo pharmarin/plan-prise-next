@@ -53,6 +53,18 @@ class User
       BaseModel.buildUrl(this.pathWithID) + "/approve"
     );
   }
+
+  forgotPassword(email: string) {
+    return this.post(
+      {
+        ...this.identifier,
+        attributes: {
+          email,
+        },
+      },
+      "/users/forgot-password"
+    );
+  }
 }
 
 export default User;

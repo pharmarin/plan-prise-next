@@ -1,5 +1,6 @@
 "use client";
 
+import AskPasswordResetForm from "app/AskPasswordResetForm";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import CheckboxInput from "components/forms/inputs/CheckboxInput";
@@ -11,7 +12,7 @@ import { loginUserAction } from "lib/redux/auth/actions";
 import { selectLoginError } from "lib/redux/auth/selectors";
 import { useDispatch } from "lib/redux/store";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 
@@ -20,6 +21,12 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
   const dispatch = useDispatch();
 
   const loginErrors = useSelector(selectLoginError);
+
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+
+  if (showForgotPassword) {
+    return <AskPasswordResetForm className={className} />;
+  }
 
   return (
     <>
@@ -38,7 +45,7 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
       >
         {({ errors, handleSubmit, isSubmitting }) => (
           <Form className={className} onSubmit={handleSubmit}>
-            <h3 className="mb-4 text-center text-lg">Se connecter</h3>
+            <h3 className="mb-4 text-center text-lg font-bold">Connexion</h3>
 
             <div className="space-y-2">
               <FormikField
@@ -61,6 +68,13 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
               >
                 <TextInput slideLabel />
               </FormikField>
+              <Button
+                className="!mt-1 text-xs"
+                color="link"
+                onClick={() => setShowForgotPassword(true)}
+              >
+                Mot de passe oublié ?
+              </Button>
               <FormikField
                 id="login_remember"
                 label="Rester connecté"
