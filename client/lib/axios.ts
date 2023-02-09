@@ -28,6 +28,8 @@ axios.interceptors.response.use(
 
       return axios(error.response.config);
     }
+
+    return Promise.reject(error);
   }
 );
 
