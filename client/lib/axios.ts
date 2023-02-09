@@ -1,4 +1,5 @@
-import Axios from "axios";
+import Axios, { AxiosError } from "axios";
+import { fetchCsrfCookie } from "lib/redux/auth/actions";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 const API_PATH = process.env.NEXT_PUBLIC_API_PATH;
@@ -15,5 +16,19 @@ const axios = Axios.create({
   },
   withCredentials: true,
 });
+
+/**
+ * If server respond with code 419 (CSRF token mismatch), fetch a new cookie and send request again
+ */
+axios.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError) => {
+    if (error.response?.status === 419) {
+      await fetchCsrfCookie();
+
+      return axios(error.response.config);
+    }
+  }
+);
 
 export default axios;
