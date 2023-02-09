@@ -22,7 +22,7 @@ export const fetchUserAction = createAsyncThunk(
    */
   async () =>
     axios
-      .get<Document>("/user")
+      .get<Document>("/users/current")
       .then((response) => {
         if ("data" in response.data) {
           return response.data.data as UserObject;
@@ -55,7 +55,7 @@ export const loginUserAction = createAsyncThunk<
     try {
       await fetchCsrfCookie();
 
-      await axios.post("/login", credentials);
+      await axios.post("/users/login", credentials);
 
       dispatch(fetchUserAction());
 
@@ -77,6 +77,6 @@ export const logoutUserAction = createAsyncThunk(
    * @returns void
    */
   async () => {
-    await axios.post("/logout");
+    await axios.post("/users/logout");
   }
 );

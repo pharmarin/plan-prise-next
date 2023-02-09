@@ -3,11 +3,15 @@
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\JsonApi\V1\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
 use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
+use LaravelJsonApi\Laravel\Routing\ActionRegistrar;
+use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
+use LaravelJsonApi\Laravel\Routing\Route as RoutingRoute;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,34 +24,22 @@ use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 |
 */
 
-Route::prefix("v1")->group(function () {
-  Route::middleware(["auth:sanctum"])->get("/user", function () {
-    return redirect()->route("v1.users.show", ["user" => Auth::id()]);
-  });
-
-  Route::post("/register", [RegisteredUserController::class, "store"])->name(
-    "register"
-  );
-
-  Route::post("/login", [AuthenticatedSessionController::class, "store"])->name(
-    "login"
-  );
-
-  Route::post("/logout", [AuthenticatedSessionController::class, "destroy"])
-    ->middleware("auth")
-    ->name("logout");
-});
-
 JsonApiRoute::server("v1")
   ->prefix("v1")
-  ->resources(function ($server) {
+  ->resources(function (ResourceRegistrar $server) {
     $server->resource("users", UserController::class);
     $server
       ->resource("users", UserController::class)
-      ->actions(function ($actions) {
+      ->actions(function (ActionRegistrar $actions) {
+        // Auth
+        $actions->get("current");
+        $actions->post("register");
+        $actions->post("login");
+        $actions->post("logout");
+        $actions->post("forgot-password");
+        // User management
         $actions->patch("update-password");
         $actions->withId()->patch("approve");
-        $actions->post("forgot-password");
       });
 
     $server->resource("old-users", JsonApiController::class)->readOnly();

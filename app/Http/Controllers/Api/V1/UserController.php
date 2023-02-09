@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Events\UserApproved;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\JsonApi\V1\Users\UserQuery;
 use App\JsonApi\V1\Users\UserSchema;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +17,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
+use LaravelJsonApi\Contracts\Routing\Route;
+use LaravelJsonApi\Contracts\Store\Store;
+use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
@@ -32,6 +38,18 @@ class UserController extends Controller
   use Actions\UpdateRelationship;
   use Actions\AttachRelationship;
   use Actions\DetachRelationship;
+
+  public function current(Route $route, Store $store)
+  {
+    $request = ResourceQuery::queryOne($resourceType = $route->resourceType());
+
+    $model = $store
+      ->queryOne($resourceType, (string) Auth::id())
+      ->withRequest($request)
+      ->first();
+
+    return DataResponse::make($model)->withQueryParameters($request);
+  }
 
   /**
    * @return \Illuminate\Http\Response
@@ -85,6 +103,84 @@ class UserController extends Controller
     UserApproved::dispatch($user);
 
     return response("", 204);
+  }
+
+  /**
+   * Handle an incoming registration request.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   *
+   * @throws \Illuminate\Validation\ValidationException
+   */
+  public function register(Request $request)
+  {
+    $request->validate([
+      "recaptcha" => ["required", "captcha"],
+      "email" => [
+        "required",
+        "string",
+        "email",
+        "max:255",
+        "unique:" . User::class . ",email",
+      ],
+      "password" => ["required", "confirmed", Rules\Password::defaults()],
+      "firstName" => ["required", "string", "max:255"],
+      "lastName" => ["required", "string", "max:255"],
+      "display_name" => ["string", "min:3", "max:50"],
+      "student" => ["boolean"],
+      "rpps" => ["required_if:student,false", "numeric", "digits:11"],
+      "certificate" => [
+        "required_if:student,true",
+        "file",
+        "mimes:png,jpg,jpeg,pdf",
+      ],
+    ]);
+
+    $user = User::create([
+      "email" => $request->email,
+      "password" => Hash::make($request->password),
+      "first_name" => $request->firstName,
+      "last_name" => $request->lastName,
+      "student" => $request->student,
+      "rpps" => $request->rpps,
+    ]);
+
+    event(new Registered($user));
+
+    return response()->noContent();
+  }
+
+  /**
+   * Handle an incoming authentication request.
+   *
+   * @param  \App\Http\Requests\Auth\LoginRequest  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function login(LoginRequest $request)
+  {
+    $request->authenticate();
+
+    $request->session()->regenerate();
+
+    return response()->noContent();
+  }
+
+  /**
+   * Destroy an authenticated session.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function logout(Request $request)
+  {
+    Auth::guard("web")->logout();
+
+    $request->session()->invalidate();
+
+    $request->session()->regenerateToken();
+
+    return response()->noContent();
   }
 
   /**

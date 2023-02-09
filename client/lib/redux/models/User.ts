@@ -54,13 +54,11 @@ class User
     );
   }
 
-  forgotPassword(email: string) {
+  forgotPassword(data: { email: string; recaptcha: string }) {
     return this.post(
       {
         ...this.identifier,
-        attributes: {
-          email,
-        },
+        attributes: data,
       },
       "/users/forgot-password"
     );
