@@ -25,13 +25,13 @@ Route::prefix("v1")->group(function () {
     return redirect()->route("v1.users.show", ["user" => Auth::id()]);
   });
 
-  Route::post("/register", [RegisteredUserController::class, "store"])
-    ->middleware("guest")
-    ->name("register");
+  Route::post("/register", [RegisteredUserController::class, "store"])->name(
+    "register"
+  );
 
-  Route::post("/login", [AuthenticatedSessionController::class, "store"])
-    ->middleware("guest")
-    ->name("login");
+  Route::post("/login", [AuthenticatedSessionController::class, "store"])->name(
+    "login"
+  );
 
   Route::post("/logout", [AuthenticatedSessionController::class, "destroy"])
     ->middleware("auth")
