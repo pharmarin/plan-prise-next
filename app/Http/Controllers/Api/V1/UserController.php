@@ -35,13 +35,13 @@ class UserController extends Controller
    */
   public function updatePassword(Request $request): \Illuminate\Http\Response
   {
-    $validated = $request->validate([
+    $request->validate([
       "data.attributes.current_password" => ["required", "current_password"],
       "data.attributes.password" => ["required", "confirmed", "min:8"],
     ]);
 
     User::findOrFail(Auth::id())->update([
-      "password" => Hash::make($validated["data"]["attributes"]["password"]),
+      "password" => Hash::make($request->input("data.attributes.password")),
     ]);
 
     return response("", 204);
@@ -57,7 +57,7 @@ class UserController extends Controller
       );
     }
 
-    $validated = $request->validate([
+    $request->validate([
       "data.id" => ["required", "numeric"],
       "data.type" => ["required", "in:users"],
       "data.attributes.approvedAt" => [
@@ -67,11 +67,11 @@ class UserController extends Controller
       ],
     ]);
 
-    $user = User::findOrFail($validated["data"]["id"]);
+    $user = User::findOrFail($request->input("data.id"));
 
     $user->update([
       "approved_at" => Carbon::parse(
-        $validated["data"]["attributes"]["approvedAt"]
+        $request->input("data.attributes.approvedAt")
       ),
     ]);
 
