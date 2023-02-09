@@ -73,7 +73,6 @@ const RegisterForm: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <Formik
       initialValues={{
-        recaptcha: "",
         email: "",
         firstName: "",
         lastName: "",
@@ -84,36 +83,30 @@ const RegisterForm: React.FC<{ className?: string }> = ({ className }) => {
         password: "",
         password_confirmation: "",
       }}
-      onSubmit={async (values, { setFieldValue, setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting }) => {
         if (!reCaptchaRef) {
           throw new Error("Le service ReCAPTCHA n'a pas pu être chargé");
         }
 
         setSubmitting(true);
 
-        let reCaptchaValue = null;
-
-        if ((values?.recaptcha || "").length === 0) {
-          reCaptchaValue = await (
-            reCaptchaRef.current as ReCAPTCHA
-          ).executeAsync();
-
-          setFieldValue("recaptcha", reCaptchaValue);
+        if (!reCaptchaRef.current?.getValue()) {
+          await (reCaptchaRef.current as ReCAPTCHA).executeAsync();
         }
 
         try {
           await signUp({
             ...values,
-            recaptcha:
-              (values.recaptcha || "").length === 0
-                ? reCaptchaValue
-                : values.recaptcha,
+            recaptcha: reCaptchaRef.current?.getValue() || "",
           });
+
           setSubmitting(false);
         } catch {
           setSubmitting(false);
           //(reCaptchaRef.current as ReCAPTCHA).reset();
         }
+
+        reCaptchaRef.current?.reset();
       }}
       validateOnMount
       validationSchema={yup.object().shape({
