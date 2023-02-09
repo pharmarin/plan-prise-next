@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Events\UserApproved;
 use App\Http\Controllers\Controller;
+use App\JsonApi\V1\Users\UserQuery;
+use App\JsonApi\V1\Users\UserSchema;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -49,31 +51,27 @@ class UserController extends Controller
     return response("", 204);
   }
 
-  public function approve(Request $request): \Illuminate\Http\Response
-  {
-    $isAdmin = Auth::user() && Auth::user()->admin;
+  public function approve(
+    UserQuery $query,
+    User $user
+  ): \Illuminate\Http\Response {
+    $this->authorize("approve", $user);
 
-    if (!$isAdmin) {
-      throw new AuthorizationException(
-        "Les utilisateurs ne peuvent pas modifier se paramètre. "
-      );
-    }
-
-    $request->validate([
+    $query->validate([
       "data.id" => ["required", "numeric"],
       "data.type" => ["required", "in:users"],
       "data.attributes.approvedAt" => [
         "date",
         "nullable",
-        Rule::prohibitedIf(!$isAdmin),
+        Rule::prohibitedIf(!Auth::user()->admin),
       ],
     ]);
 
-    $user = User::findOrFail($request->input("data.id"));
+    $user = User::findOrFail($query->input("data.id"));
 
     $user->update([
       "approved_at" => Carbon::parse(
-        $request->input("data.attributes.approvedAt")
+        $query->input("data.attributes.approvedAt")
       ),
     ]);
 

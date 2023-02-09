@@ -121,4 +121,20 @@ class UserPolicy
   {
     //
   }
+
+  /**
+   * Determine whether the user can approve the user.
+   *
+   * @param  \App\Models\User  $user
+   * @param  \App\Models\User  $model
+   * @return \Illuminate\Auth\Access\Response|bool
+   */
+  public function approve(User $user, User $model)
+  {
+    if ($user->admin) {
+      return true;
+    }
+
+    return false;
+  }
 }
