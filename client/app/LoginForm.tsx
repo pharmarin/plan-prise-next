@@ -72,7 +72,6 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
                 className="!mt-1 text-xs"
                 color="link"
                 onClick={() => setShowForgotPassword(true)}
-                type="button"
               >
                 Mot de passe oublié ?
               </Button>

@@ -7,11 +7,12 @@ const ButtonBase: React.FC<
   JSX.IntrinsicElements["button"] & {
     loading?: boolean;
   }
-> = ({ children, className, disabled, loading, ...props }) => {
+> = ({ children, className, disabled, loading, type = "button", ...props }) => {
   return (
     <button
       className={twMerge(className)}
       disabled={disabled || loading}
+      type={type}
       {...props}
     >
       {loading && <Spinner className="-ml-1 mr-2" />}
