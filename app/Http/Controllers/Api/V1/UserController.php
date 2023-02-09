@@ -99,6 +99,7 @@ class UserController extends Controller
   {
     $request->validate([
       "data.attributes.email" => ["required", "email"],
+      "data.attributes.recaptcha" => ["required", "captcha"],
     ]);
 
     // We will send the password reset link to this user. Once we have attempted
