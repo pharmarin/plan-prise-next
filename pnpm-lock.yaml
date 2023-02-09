@@ -27,7 +27,7 @@ importers:
       '@types/redux-logger': ^3.0.9
       autoprefixer: ^10.4.13
       axios: ^1.2.6
-      classname-variants: ^1.3.2
+      classname-variants: github:pharmarin/classname-variants
       dotenv: ^16.0.3
       dotenv-expand: ^10.0.0
       eslint: 8.30.0
@@ -64,7 +64,7 @@ importers:
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.9
       axios: 1.2.6
-      classname-variants: 1.3.2
+      classname-variants: github.com/pharmarin/classname-variants/35d5b981e3d585f5b1927d7e2444b4b235c5799e
       dotenv: 16.0.3
       dotenv-expand: 10.0.0
       eslint: 8.30.0
@@ -81,6 +81,7 @@ importers:
       reapop: 4.2.1_biqbaboplfbrettd7655fr4n2y
       redux: 4.2.1
       reflect-metadata: 0.1.13
+      tailwind-merge: 1.9.0
       typescript: 4.9.4
       windstitch: 0.3.0_react@18.2.0
       yup: 0.32.11
@@ -96,7 +97,6 @@ importers:
       prettier: 2.8.3
       prettier-plugin-tailwindcss: 0.2.2_prettier@2.8.3
       redux-logger: 3.0.6
-      tailwind-merge: 1.9.0
       tailwindcss: 3.2.4_postcss@8.4.21
 
 packages:
@@ -736,10 +736,6 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
-
-  /classname-variants/1.3.2:
-    resolution: {integrity: sha512-1KunzRErM/xTmlNenjiqxjA4iJuTYG6dzomAzl3g6z1Hfs8S4zeLFUGu+rXp4JExQni8nqJ/yYA6QqLGACefFg==}
-    dev: false
 
   /client-only/0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -2816,7 +2812,7 @@ packages:
 
   /tailwind-merge/1.9.0:
     resolution: {integrity: sha512-coziXxViLHbVtFvD1+jwSu+UmDJSFX4dhj9ZuqHCuhTzu9Wk5wMedAz5AVY3uUYw95TaO7NwgUS/dLGcWvtgqw==}
-    dev: true
+    dev: false
 
   /tailwindcss/3.2.4_postcss@8.4.21:
     resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
@@ -3064,4 +3060,12 @@ packages:
       nanoclone: 0.2.1
       property-expr: 2.0.5
       toposort: 2.0.2
+    dev: false
+
+  github.com/pharmarin/classname-variants/35d5b981e3d585f5b1927d7e2444b4b235c5799e:
+    resolution: {tarball: https://codeload.github.com/pharmarin/classname-variants/tar.gz/35d5b981e3d585f5b1927d7e2444b4b235c5799e}
+    name: classname-variants
+    version: 1.3.2
+    dependencies:
+      tailwind-merge: 1.9.0
     dev: false

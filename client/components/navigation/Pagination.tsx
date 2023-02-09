@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 import Button from "components/forms/inputs/Button";
+import Select from "components/forms/inputs/Select";
 import React from "react";
 
 const Pagination: React.FC<{
@@ -20,18 +21,26 @@ const Pagination: React.FC<{
 }> = ({ data, setPage }) => {
   const { currentPage, from, lastPage, to, total } = data;
 
-  const ICON_CLASSNAME = "h-3 w-3";
+  const ICON_CLASSNAME = "h-4 w-4";
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 justify-start space-x-1 sm:hidden">
         {(currentPage || 0) > 1 && (
-          <Button color="white" onClick={() => setPage((currentPage || 2) - 1)}>
+          <Button
+            color="white"
+            onClick={() => setPage((currentPage || 2) - 1)}
+            size="sm"
+          >
             Précédent
           </Button>
         )}
         {(currentPage || 0) !== (lastPage || 0) && (
-          <Button color="white" onClick={() => setPage((currentPage || 1) + 1)}>
+          <Button
+            color="white"
+            onClick={() => setPage((currentPage || 1) + 1)}
+            size="sm"
+          >
             Suivant
           </Button>
         )}
@@ -48,11 +57,8 @@ const Pagination: React.FC<{
         )}
         {currentPage && lastPage && (
           <div>
-            <nav
-              className="relative inline-flex h-8 space-x-1"
-              aria-label="Pagination"
-            >
-              <Button color="white" onClick={() => setPage(1)}>
+            <nav className="flex space-x-1" aria-label="Pagination">
+              <Button color="white" onClick={() => setPage(1)} size="sm">
                 <ChevronDoubleLeftIcon className={ICON_CLASSNAME} />
               </Button>
               <Button
@@ -61,6 +67,7 @@ const Pagination: React.FC<{
                 onClick={() =>
                   currentPage > 1 ? setPage(currentPage - 1) : null
                 }
+                size="sm"
               >
                 <span className="sr-only">Précédent</span>
                 <ChevronLeftIcon className={ICON_CLASSNAME} />
@@ -71,14 +78,15 @@ const Pagination: React.FC<{
                     key={`end_${currentPage - key}`}
                     color="white"
                     onClick={() => setPage(currentPage - key)}
+                    size="sm"
                   >
                     {currentPage - key}
                   </Button>
                 ) : undefined
               )}
-              <select
-                color="white"
+              <Select
                 onChange={(e) => setPage(Number(e.target.value))}
+                size="sm"
                 value={currentPage}
               >
                 {[
@@ -93,13 +101,14 @@ const Pagination: React.FC<{
                       {page}
                     </option>
                   ))}
-              </select>
+              </Select>
               {[1, 2, 3].map((key) =>
                 currentPage + key > 0 && currentPage + key <= lastPage ? (
                   <Button
                     key={`start_${currentPage + key}`}
                     color="white"
                     onClick={() => setPage(currentPage + key)}
+                    size="sm"
                   >
                     {currentPage + key}
                   </Button>
@@ -111,11 +120,12 @@ const Pagination: React.FC<{
                 onClick={() =>
                   currentPage < lastPage ? setPage(currentPage + 1) : null
                 }
+                size="sm"
               >
                 <span className="sr-only">Suivant</span>
                 <ChevronRightIcon className={ICON_CLASSNAME} />
               </Button>
-              <Button color="white" onClick={() => setPage(lastPage)}>
+              <Button color="white" onClick={() => setPage(lastPage)} size="sm">
                 <ChevronDoubleRightIcon className={ICON_CLASSNAME} />
               </Button>
             </nav>

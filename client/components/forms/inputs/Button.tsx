@@ -1,7 +1,6 @@
 import { styled, tw } from "classname-variants/react";
 import Spinner from "components/icons/Spinner";
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
 const ButtonBase: React.FC<
   JSX.IntrinsicElements["button"] & {
@@ -10,7 +9,7 @@ const ButtonBase: React.FC<
 > = ({ children, className, disabled, loading, type = "button", ...props }) => {
   return (
     <button
-      className={twMerge(className)}
+      className={className}
       disabled={disabled || loading}
       type={type}
       {...props}
@@ -22,7 +21,7 @@ const ButtonBase: React.FC<
 };
 
 const Button = styled(ButtonBase, {
-  base: tw`inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm text-white items-center disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-teal-500 transition-colors min-w-0`,
+  base: tw`inline-flex justify-center rounded-md border border-transparent text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm text-white items-center disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-teal-500 transition-colors min-w-0`,
   variants: {
     color: {
       white: tw`border-gray-300 bg-white text-gray-700 hover:bg-gray-50`,
@@ -31,9 +30,14 @@ const Button = styled(ButtonBase, {
       gradient: tw`bg-gradient-to-r from-emerald-500 to-teal-500 disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-slate-500`,
       link: tw`bg-transparent p-0 font-normal text-teal-500 shadow-none`,
     },
+    size: {
+      sm: tw`px-2 py-1`,
+      md: tw`px-4 py-2`,
+    },
   },
   defaultVariants: {
     color: "primary",
+    size: "md",
   },
 });
 
