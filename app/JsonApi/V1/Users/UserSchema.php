@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1\Users;
 
+use App\JsonApi\Filters\WhereBegins;
 use App\Models\User;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
@@ -60,7 +61,7 @@ class UserSchema extends Schema
     return [
       WhereIdIn::make($this),
       Where::make("approvedAt"),
-      Where::make("lastName"),
+      WhereBegins::make("lastName"),
     ];
   }
 

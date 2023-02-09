@@ -51,6 +51,13 @@ class UserController extends Controller
     return response("", 204);
   }
 
+  /**
+   * Handle an approbation incoming request.
+   *
+   * @param UserQuery $query
+   * @param User $user
+   * @return \Illuminate\Http\Response
+   */
   public function approve(
     UserQuery $query,
     User $user

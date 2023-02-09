@@ -107,13 +107,13 @@ const AsyncTable = <
               <TextInput
                 className="border-0 py-2 pl-10 pr-4 shadow-md"
                 name="search"
-                type="search"
-                placeholder="Rechercher..."
                 onChange={(event) => {
                   event.currentTarget.value.length > 0
                     ? setSearchDebounced(event.currentTarget.value)
                     : setSearch("");
                 }}
+                placeholder="Rechercher..."
+                type="search"
               />
               <div className="absolute left-0 top-0 inline-flex items-center p-2">
                 <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />

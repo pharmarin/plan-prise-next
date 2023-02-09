@@ -25,7 +25,6 @@ const TextInput = forwardRef<
       label,
       slideLabel,
       type = "text",
-      value,
       wrapperClassName,
       ...props
     },
@@ -46,7 +45,6 @@ const TextInput = forwardRef<
           type={type}
           {...props}
           ref={ref}
-          value={value || ""}
         />
         {slideLabel && label && (
           <label
