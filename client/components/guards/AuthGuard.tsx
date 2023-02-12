@@ -1,6 +1,5 @@
 "use client";
 
-import Welcome from "app/Welcome";
 import LoadingScreen from "components/overlays/screens/LoadingScreen";
 import { fetchUserAction } from "lib/redux/auth/actions";
 import {
@@ -9,13 +8,17 @@ import {
   selectUser,
 } from "lib/redux/auth/selectors";
 import { ReduxState, useDispatch } from "lib/redux/store";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { PropsWithChildren, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
+const AuthGuard: React.FC<
+  PropsWithChildren<{ guest?: boolean; noRedirect?: boolean }>
+> = ({ children, guest, noRedirect }) => {
   const dispatch = useDispatch();
+  const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const isLoggedIn = useSelector((state: ReduxState) =>
     selectIsLoggedIn(state)
@@ -35,11 +38,22 @@ const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
     }
   }, [isLoggedIn, user]);
 
+  useEffect(() => {
+    if (!isCheckingUser) {
+      if (!guest && !isLoggedIn) {
+        router.push(`/login?${pathname && `redirectTo=${pathname}`}`);
+      }
+      if (guest && isLoggedIn && !noRedirect) {
+        router.push(searchParams.get("redirectTo") || "/");
+      }
+    }
+  }, [isLoggedIn, pathname]);
+
   if (isCheckingUser) {
     return <LoadingScreen />;
   }
 
-  return <>{isLoggedIn ? children : <Welcome />}</>;
+  return <>{children}</>;
 };
 
 export default AuthGuard;

@@ -1,7 +1,7 @@
 "use client";
 
-import ApproveButton from "app/admin/users/ApproveButton";
-import DeleteButton from "app/admin/users/DeleteButton";
+import ApproveButton from "app/(auth)/admin/users/ApproveButton";
+import DeleteButton from "app/(auth)/admin/users/DeleteButton";
 import Avatar from "components/icons/Avatar";
 import Pill from "components/Pill";
 import AsyncTable from "components/table/AsyncTable";

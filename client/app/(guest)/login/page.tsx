@@ -1,6 +1,5 @@
 "use client";
 
-import AskPasswordResetForm from "app/AskPasswordResetForm";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import CheckboxInput from "components/forms/inputs/CheckboxInput";
@@ -11,22 +10,16 @@ import { Formik } from "formik";
 import { loginUserAction } from "lib/redux/auth/actions";
 import { selectLoginError } from "lib/redux/auth/selectors";
 import { useDispatch } from "lib/redux/store";
-import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 
-const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
-  const searchParams = useSearchParams();
+const Login = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const loginErrors = useSelector(selectLoginError);
-
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
-
-  if (showForgotPassword) {
-    return <AskPasswordResetForm className={className} />;
-  }
 
   return (
     <>
@@ -36,7 +29,13 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
           password: searchParams.get("password") ?? "",
           remember: false,
         }}
-        onSubmit={async (values) => dispatch(loginUserAction(values))}
+        onSubmit={async (values) => {
+          try {
+            await dispatch(loginUserAction(values));
+
+            router.push(searchParams.get("redirectTo") ?? "/");
+          } catch (error) {}
+        }}
         validateOnMount
         validationSchema={yup.object().shape({
           email: yup.string().email().required().label("Adresse mail"),
@@ -44,7 +43,10 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
         })}
       >
         {({ errors, handleSubmit, isSubmitting }) => (
-          <Form className={className} onSubmit={handleSubmit}>
+          <Form
+            className="flex flex-col justify-center"
+            onSubmit={handleSubmit}
+          >
             <h3 className="mb-4 text-center text-lg font-bold">Connexion</h3>
 
             <div className="space-y-2">
@@ -69,9 +71,9 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
                 <TextInput slideLabel />
               </FormikField>
               <Button
-                className="!mt-1 text-xs"
+                className="!mt-1 px-0 py-0 text-xs"
                 color="link"
-                onClick={() => setShowForgotPassword(true)}
+                onClick={() => router.push("/forgot-password")}
               >
                 Mot de passe oublié ?
               </Button>
@@ -98,8 +100,15 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
           </Form>
         )}
       </Formik>
+      <Button
+        className="mt-4"
+        color="link"
+        onClick={() => router.push("/register")}
+      >
+        Je n'ai pas de compte : S'inscrire
+      </Button>
     </>
   );
 };
 
-export default LoginForm;
+export default Login;

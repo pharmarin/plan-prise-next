@@ -1,8 +1,8 @@
 "use client";
 
-import DeleteUser from "app/profil/DeleteUser";
-import EditInformations from "app/profil/EditInformations";
-import EditPassword from "app/profil/EditPassword";
+import DeleteUser from "app/(auth)/profil/DeleteUser";
+import EditInformations from "app/(auth)/profil/EditInformations";
+import EditPassword from "app/(auth)/profil/EditPassword";
 import { selectUser } from "lib/redux/auth/selectors";
 import { useSetTitle } from "lib/redux/navigation/actions";
 import { useSelector } from "react-redux";

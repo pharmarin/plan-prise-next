@@ -8,9 +8,7 @@ import { useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as yup from "yup";
 
-const AskPasswordResetForm: React.FC<{ className?: string }> = ({
-  className,
-}) => {
+const ForgotPassword: React.FC<{ className?: string }> = ({ className }) => {
   const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
   return (
@@ -80,4 +78,4 @@ const AskPasswordResetForm: React.FC<{ className?: string }> = ({
     </Formik>
   );
 };
-export default AskPasswordResetForm;
+export default ForgotPassword;

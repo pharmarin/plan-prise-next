@@ -1,11 +1,6 @@
-import LoginForm from "app/LoginForm";
-import RegisterForm from "app/RegisterForm";
-import Button from "components/forms/inputs/Button";
-import { useState } from "react";
+import { PropsWithChildren } from "react";
 
-const Welcome = () => {
-  const [showRegister, setShowRegister] = useState(false);
-
+const Welcome: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="flex min-h-screen items-center p-4">
       <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white sm:flex-row">
@@ -32,24 +27,12 @@ const Welcome = () => {
           </p>
         </div>
         <div className="flex flex-col items-center justify-center bg-white p-8 sm:w-1/2">
-          {showRegister ? (
-            <RegisterForm className="my-auto flex w-full flex-col px-4 md:w-2/3" />
-          ) : (
-            <LoginForm className="my-auto flex w-full flex-col px-4 md:w-2/3" />
-          )}
-          <Button
-            className="mt-4"
-            color="link"
-            onClick={() => setShowRegister(!showRegister)}
-          >
-            {showRegister
-              ? "J'ai déjà un compte : Se connecter"
-              : "Je n'ai pas de compte : S'inscrire"}
-          </Button>
+          <div className="my-auto flex w-full flex-col px-4 md:w-2/3">
+            {children}
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default Welcome;

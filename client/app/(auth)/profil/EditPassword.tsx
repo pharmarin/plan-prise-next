@@ -10,30 +10,48 @@ import User from "lib/redux/models/User";
 import { useState } from "react";
 import * as yup from "yup";
 
-const EditPassword = ({ user }: { user: User }) => {
+const EditPassword: React.FC<
+  { user: User } | { email: string; token: string }
+> = (props) => {
   const [errors, setErrors] = useState<Errors | undefined>(undefined);
 
   return (
     <Formik
       initialValues={{
         current_password: "",
+        email: "email" in props ? props.email : "",
         password: "",
         password_confirmation: "",
+        token: "token" in props ? props.token : "",
       }}
       onSubmit={async (values) => {
         setErrors(undefined);
 
-        await user
-          .patch(
-            {
-              ...user.identifier,
-              attributes: values,
-            },
-            "/users/update-password"
-          )
-          .catch((error: AxiosError<DocWithErrors>) => {
-            setErrors(error.response?.data.errors);
-          });
+        "user" in props
+          ? await props.user
+              .patch(
+                {
+                  ...props.user.identifier,
+                  attributes: {
+                    current_password: values.current_password,
+                    password: values.password,
+                    password_confirmation: values.password_confirmation,
+                  },
+                },
+                "/users/update-password"
+              )
+              .catch((error: AxiosError<DocWithErrors>) => {
+                setErrors(error.response?.data.errors);
+              })
+          : new User().post({
+              type: "users",
+              attributes: {
+                email: values.email,
+                password: values.password,
+                password_confirmation: values.password_confirmation,
+                token: values.token,
+              },
+            });
       }}
       validationSchema={yup.object().shape({
         current_password: yup.string().required().label("Mot de passe actuel"),
@@ -67,7 +85,7 @@ const EditPassword = ({ user }: { user: User }) => {
             autoComplete="off"
             name="email"
             type="hidden"
-            value={user.email}
+            value={"user" in props ? props.user.email : props.email}
           />
           <FormikField
             autoComplete="new-password"
