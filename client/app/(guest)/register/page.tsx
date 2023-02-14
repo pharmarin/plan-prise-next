@@ -9,8 +9,9 @@ import FormikField from "components/forms/inputs/FormikField";
 import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
 import { DocWithErrors } from "jsonapi-typescript";
-import axios from "lib/axios";
 import { fetchCsrfCookie } from "lib/redux/auth/actions";
+import User from "lib/redux/models/User";
+import { RegisterAttributes } from "lib/types";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useAsyncCallback } from "react-async-hook";
@@ -25,16 +26,16 @@ const Register = () => {
   const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
   const {
-    execute: signUp,
+    execute: register,
     error: serverErrors,
     result: data,
-  } = useAsyncCallback(async (data: object) => {
+  } = useAsyncCallback(async (data: RegisterAttributes) => {
     await fetchCsrfCookie().catch((errors: AxiosError<DocWithErrors>) =>
       Promise.reject(errors.response?.data.errors)
     );
 
-    return await axios
-      .post("register", data)
+    return await new User()
+      .register(data)
       .then(() => "success")
       .catch((errors: AxiosError<DocWithErrors>) =>
         Promise.reject(errors.response?.data.errors)
@@ -94,7 +95,7 @@ const Register = () => {
           }
 
           try {
-            await signUp({
+            await register({
               ...values,
               recaptcha: reCaptchaRef.current?.getValue() || "",
             });
@@ -102,7 +103,6 @@ const Register = () => {
             setSubmitting(false);
           } catch {
             setSubmitting(false);
-            //(reCaptchaRef.current as ReCAPTCHA).reset();
           }
 
           reCaptchaRef.current?.reset();

@@ -2,7 +2,7 @@ import BaseModel, {
   Attribute,
   AttributesKeysOnly,
 } from "lib/redux/models/BaseModel";
-import { UserAttributes } from "lib/types";
+import { RegisterAttributes, UserAttributes } from "lib/types";
 
 class User
   extends BaseModel
@@ -42,6 +42,16 @@ class User
   @Attribute()
   createdAt?: string;
 
+  register(data: RegisterAttributes) {
+    return this.post(
+      {
+        type: "users",
+        attributes: data,
+      },
+      { customUrl: "/users/register", serializeToFormData: true }
+    );
+  }
+
   approve() {
     return this.patch(
       {
@@ -60,7 +70,7 @@ class User
         ...this.identifier,
         attributes: data,
       },
-      "/users/forgot-password"
+      { customUrl: "/users/forgot-password" }
     );
   }
 }

@@ -20,6 +20,7 @@ use LaravelJsonApi\Contracts\Store\Store;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
+use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
 class UserController extends Controller
 {
@@ -61,7 +62,7 @@ class UserController extends Controller
       "password" => Hash::make($request->input("data.attributes.password")),
     ]);
 
-    return response("", 204);
+    return response()->noContent();
   }
 
   /**
@@ -97,7 +98,7 @@ class UserController extends Controller
 
     UserApproved::dispatch($user);
 
-    return response("", 204);
+    return response()->noContent();
   }
 
   /**
@@ -110,36 +111,58 @@ class UserController extends Controller
    */
   public function register(Request $request)
   {
-    $request->validate([
-      "recaptcha" => ["required", "captcha"],
-      "email" => [
+    $validationSchema = [
+      "data.type" => ["required", "in:users"],
+      "data.attributes.recaptcha" => ["required", "captcha"],
+      "data.attributes.email" => [
         "required",
         "string",
         "email",
         "max:255",
         "unique:" . User::class . ",email",
       ],
-      "password" => ["required", "confirmed", Rules\Password::defaults()],
-      "firstName" => ["required", "string", "max:255"],
-      "lastName" => ["required", "string", "max:255"],
-      "display_name" => ["string", "min:3", "max:50"],
-      "student" => ["boolean"],
-      "rpps" => ["required_if:student,false", "numeric", "digits:11"],
-      "certificate" => [
-        "required_if:student,true",
+      "data.attributes.password" => [
+        "required",
+        "confirmed",
+        Rules\Password::defaults(),
+      ],
+      "data.attributes.firstName" => ["required", "string", "max:255"],
+      "data.attributes.lastName" => ["required", "string", "max:255"],
+      "data.attributes.display_name" => ["string", "min:3", "max:50"],
+      "data.attributes.student" => ["boolean"],
+    ];
+
+    if ($request->boolean("data.attributes.student")) {
+      $validationSchema["data.attributes.certificate"] = [
+        "required",
         "file",
         "mimes:png,jpg,jpeg,pdf",
-      ],
-    ]);
+      ];
+    } else {
+      $validationSchema["data.attributes.rpps"] = [
+        "required",
+        "numeric",
+        "digits:11",
+      ];
+    }
+
+    $request->validate($validationSchema);
 
     $user = User::create([
-      "email" => $request->email,
-      "password" => Hash::make($request->password),
-      "first_name" => $request->firstName,
-      "last_name" => $request->lastName,
-      "student" => $request->student,
-      "rpps" => $request->rpps,
+      "email" => $request->input("data.attributes.email"),
+      "password" => Hash::make($request->input("data.attributes.password")),
+      "first_name" => $request->input("data.attributes.firstName"),
+      "last_name" => $request->input("data.attributes.lastName"),
+      "student" => $request->boolean("data.attributes.student"),
+      "rpps" => $request->integer("data.attributes.rpps"),
     ]);
+
+    if ($certificate = $request->file("data.attributes.certificate")) {
+      $certificate->storeAs(
+        "certificates",
+        $user->id . "." . $certificate->extension()
+      );
+    }
 
     event(new Registered($user));
 
@@ -206,6 +229,6 @@ class UserController extends Controller
       ]);
     } */
 
-    return response("", 204);
+    return response()->noContent();
   }
 }

@@ -14,6 +14,7 @@ import axios from "lib/axios";
 import { sync } from "lib/redux/resources/slice";
 import store, { ReduxState } from "lib/redux/store";
 import { castArray, isEqual, pickBy, transform, uniqueId } from "lodash";
+import { serialize as serializeFormData } from "object-to-formdata";
 import "reflect-metadata";
 
 export type QueryOptions = {
@@ -414,13 +415,21 @@ class BaseModel {
       .then((response) => response.data);
   }
 
-  async post(values?: ResourceObject, customUrl?: string) {
-    const url = customUrl ?? BaseModel.buildUrl(this.pathWithID);
+  async post(
+    values?: ResourceObject,
+    options?: { customUrl?: string; serializeToFormData?: boolean }
+  ) {
+    const url = options?.customUrl ?? BaseModel.buildUrl(this.pathWithID);
+    const data = values
+      ? ({ data: values } as DocWithData)
+      : this.documentWithData;
 
     return await axios
       .post<Document>(
         url,
-        values ? ({ data: values } as DocWithData) : this.documentWithData
+        options?.serializeToFormData
+          ? serializeFormData(data, { booleansAsIntegers: true })
+          : data
       )
       .then((response) => response.data);
   }
