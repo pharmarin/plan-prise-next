@@ -1,7 +1,6 @@
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
-import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
 import Modal from "components/overlays/modals/Modal";
 import ModalContent from "components/overlays/modals/ModalContent";
@@ -52,9 +51,7 @@ const ConfirmPasswordModal: React.FC<{
                   label="Confirmez votre mot de passe"
                   name="password"
                   type="password"
-                >
-                  <TextInput />
-                </FormikField>
+                />
                 <ServerErrors errors={errors} />
               </div>
             </ModalContent>

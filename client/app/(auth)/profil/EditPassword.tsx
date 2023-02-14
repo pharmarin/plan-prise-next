@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
-import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
 import { DocWithErrors, Errors } from "jsonapi-typescript";
@@ -78,9 +77,7 @@ const EditPassword: React.FC<
             name="current_password"
             placeholder="Mot de passe actuel"
             type="password"
-          >
-            <TextInput />
-          </FormikField>
+          />
           <input
             autoComplete="off"
             name="email"
@@ -95,9 +92,7 @@ const EditPassword: React.FC<
             name="password"
             placeholder="Nouveau mot de passe"
             type="password"
-          >
-            <TextInput />
-          </FormikField>
+          />
           <FormikField
             autoComplete="new-password"
             disableOnSubmit
@@ -106,9 +101,7 @@ const EditPassword: React.FC<
             name="password_confirmation"
             placeholder="Confirmation du nouveau mot de passe"
             type="password"
-          >
-            <TextInput />
-          </FormikField>
+          />
           <ServerErrors errors={errors} />
           <Button color="primary" loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe

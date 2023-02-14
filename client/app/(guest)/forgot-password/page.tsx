@@ -1,7 +1,6 @@
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
-import TextInput from "components/forms/inputs/TextInput";
 import { Formik } from "formik";
 import User from "lib/redux/models/User";
 import { useRef } from "react";
@@ -60,9 +59,7 @@ const ForgotPassword: React.FC<{ className?: string }> = ({ className }) => {
             placeholder="Adresse mail"
             required
             type="email"
-          >
-            <TextInput />
-          </FormikField>
+          />
 
           <Button
             className="mt-4"

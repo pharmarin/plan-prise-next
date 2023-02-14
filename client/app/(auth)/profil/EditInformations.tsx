@@ -137,9 +137,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
               name="lastName"
               placeholder="Nom"
               required
-            >
-              <TextInput />
-            </FormikField>
+            />
             <FormikField
               autoComplete="first-name"
               disableOnSubmit
@@ -148,9 +146,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
               name="firstName"
               placeholder="Prénom"
               required
-            >
-              <TextInput />
-            </FormikField>
+            />
             <TextInput
               disabled
               label="Statut"
@@ -174,20 +170,17 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
                 label="N° RPPS"
                 name="rpps"
                 placeholder="N° RPPS"
-              >
-                <TextInput />
-              </FormikField>
+              />
             )}
             <FormikField
               autoComplete="off"
               disableOnSubmit
               displayErrors
+              info="Si indiqué, le nom de la structure apparaitra à la place de votre nom sur le plan de prise"
               label="Nom de la structure (optionnel)"
               name="displayName"
               placeholder="Nom de la structure"
-            >
-              <TextInput info="Si indiqué, le nom de la structure apparaitra à la place de votre nom sur le plan de prise" />
-            </FormikField>
+            />
 
             <FormikField
               autoComplete="email"
@@ -197,9 +190,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
               name="email"
               placeholder="Adresse mail"
               type="email"
-            >
-              <TextInput />
-            </FormikField>
+            />
             <ServerErrors errors={errors} />
             <Button loading={isSubmitting} type="submit">
               Mettre à jour les informations

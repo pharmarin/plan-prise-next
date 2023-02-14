@@ -11,7 +11,7 @@ const TextInput = forwardRef<
       info?: string;
       label?: string;
       slideLabel?: boolean;
-      type?: "text" | "password" | "search";
+      type?: "email" | "text" | "password" | "search";
       wrapperClassName?: string;
     },
     "ref"

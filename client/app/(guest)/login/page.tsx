@@ -2,9 +2,7 @@
 
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
-import CheckboxInput from "components/forms/inputs/CheckboxInput";
 import FormikField from "components/forms/inputs/FormikField";
-import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
 import { loginUserAction } from "lib/redux/auth/actions";
@@ -56,20 +54,18 @@ const Login = () => {
                 name="email"
                 placeholder="Adresse mail"
                 required
+                slideLabel
                 type="email"
-              >
-                <TextInput slideLabel />
-              </FormikField>
+              />
               <FormikField
                 id="login_password"
                 label="Mot de passe"
                 name="password"
                 placeholder="Mot de passe"
                 required
+                slideLabel
                 type="password"
-              >
-                <TextInput slideLabel />
-              </FormikField>
+              />
               <Button
                 className="!mt-1 px-0 py-0 text-xs"
                 color="link"
@@ -81,9 +77,9 @@ const Login = () => {
                 id="login_remember"
                 label="Rester connecté"
                 name="remember"
-              >
-                <CheckboxInput wrapperClassName="justify-center" />
-              </FormikField>
+                type="checkbox"
+                wrapperClassName="justify-center"
+              />
             </div>
 
             <Button

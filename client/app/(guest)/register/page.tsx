@@ -5,10 +5,7 @@ import { AxiosError } from "axios";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
-import CheckboxInput from "components/forms/inputs/CheckboxInput";
-import FileInput from "components/forms/inputs/FileInput";
 import FormikField from "components/forms/inputs/FormikField";
-import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
 import { DocWithErrors } from "jsonapi-typescript";
@@ -184,9 +181,7 @@ const Register = () => {
                   name="lastName"
                   placeholder="Nom"
                   required
-                >
-                  <TextInput />
-                </FormikField>
+                />
                 <FormikField
                   autoComplete="given-name"
                   disableOnSubmit
@@ -195,18 +190,15 @@ const Register = () => {
                   name="firstName"
                   placeholder="Prénom"
                   required
-                >
-                  <TextInput />
-                </FormikField>
+                />
                 <FormikField
                   id="status_pharmacist"
                   disableOnSubmit
                   displayErrors
                   label="Étudiant"
                   name="student"
-                >
-                  <CheckboxInput />
-                </FormikField>
+                  type="checkbox"
+                />
                 {values.student ? (
                   <div className="mb-4">
                     <FormikField
@@ -217,9 +209,7 @@ const Register = () => {
                       name="certificate"
                       placeholder="Ajouter un fichier... "
                       type="file"
-                    >
-                      <FileInput />
-                    </FormikField>
+                    />
                   </div>
                 ) : (
                   <FormikField
@@ -229,9 +219,7 @@ const Register = () => {
                     label="N° RPPS"
                     name="rpps"
                     placeholder="N° RPPS"
-                  >
-                    <TextInput />
-                  </FormikField>
+                  />
                 )}
                 <Button
                   color="primary"
@@ -262,9 +250,7 @@ const Register = () => {
                     label="Nom de la structure (optionnel)"
                     name="displayName"
                     placeholder="Nom de la structure"
-                  >
-                    <TextInput />
-                  </FormikField>
+                  />
                   <FormInfo>
                     Si indiqué, le nom de la structure apparaitra à la place de
                     votre nom sur le plan de prise
@@ -279,9 +265,7 @@ const Register = () => {
                     name="email"
                     placeholder="Adresse mail"
                     type="email"
-                  >
-                    <TextInput />
-                  </FormikField>
+                  />
                   <FormInfo>Ne sera jamais utilisée ou diffusée.</FormInfo>
                 </div>
                 <FormikField
@@ -292,9 +276,7 @@ const Register = () => {
                   name="password"
                   placeholder="Mot de passe"
                   type="password"
-                >
-                  <TextInput />
-                </FormikField>
+                />
                 <FormikField
                   autoComplete="new-password"
                   disableOnSubmit
@@ -303,9 +285,7 @@ const Register = () => {
                   name="password_confirmation"
                   placeholder="Confirmation du mot de passe"
                   type="password"
-                >
-                  <TextInput />
-                </FormikField>
+                />
 
                 <ServerErrors errors={serverErrors as any} />
 
