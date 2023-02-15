@@ -138,7 +138,10 @@ const AsyncTable = <
             }}
             items={Object.keys(filters).map((key) => ({
               label: filters[key].label,
-              action: () => setFilter(key),
+              action: () => {
+                setFilter(key);
+                setPage(0);
+              },
             }))}
           />
         )}
