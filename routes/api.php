@@ -40,6 +40,7 @@ JsonApiRoute::server("v1")
         // User management
         $actions->patch("update-password");
         $actions->withId()->patch("approve");
+        $actions->withId()->get("download-certificate");
       });
 
     $server->resource("old-users", JsonApiController::class)->readOnly();

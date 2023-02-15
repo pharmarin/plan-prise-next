@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use LaravelJsonApi\Contracts\Routing\Route;
@@ -230,5 +231,12 @@ class UserController extends Controller
     } */
 
     return response()->noContent();
+  }
+
+  public function downloadCertificate(User $user)
+  {
+    $this->authorize("certificate", User::class);
+
+    return Storage::download("certificates/$user->id");
   }
 }

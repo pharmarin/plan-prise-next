@@ -1,17 +1,20 @@
 "use client";
 
 import ApproveButton from "app/(auth)/admin/users/ApproveButton";
+import ApproveStudent from "app/(auth)/admin/users/ApproveStudent";
 import DeleteButton from "app/(auth)/admin/users/DeleteButton";
-import Avatar from "components/icons/Avatar";
+import Button from "components/forms/inputs/Button";
 import Pill from "components/Pill";
 import AsyncTable from "components/table/AsyncTable";
 import User from "lib/redux/models/User";
 import { setNavigation } from "lib/redux/navigation/actions";
 import { useDispatch } from "lib/redux/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Users = () => {
   const dispatch = useDispatch();
+
+  const [studentToApprove, setStudentToApprove] = useState<User | undefined>();
 
   useEffect(() => {
     dispatch(
@@ -22,11 +25,19 @@ const Users = () => {
     );
   });
 
+  if (studentToApprove) {
+    return (
+      <ApproveStudent
+        close={() => setStudentToApprove(undefined)}
+        user={studentToApprove}
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col space-y-6">
       <AsyncTable
         columns={{
-          avatar: "",
           lastName: "Nom",
           firstName: "Prénom",
           status: "Statut",
@@ -46,13 +57,6 @@ const Users = () => {
         }}
         renderData={(filter, columnId, user, forceReload) => {
           switch (columnId) {
-            case "avatar":
-              return (
-                <Avatar
-                  lastName={user.lastName || ""}
-                  firstName={user.firstName || ""}
-                />
-              );
             case "lastName":
               return user.lastName || "";
             case "firstName":
@@ -66,6 +70,16 @@ const Users = () => {
                 </Pill>
               );
             case "rpps":
+              if (filter === "pending" && user.student && !user.active) {
+                return (
+                  <Button
+                    color="link"
+                    onClick={() => setStudentToApprove(user)}
+                  >
+                    Justificatif
+                  </Button>
+                );
+              }
               return user.rpps?.toString() || "";
             case "signup_date":
               return new Date(user?.createdAt || "").toLocaleDateString(

@@ -33,7 +33,7 @@ const AuthGuard: React.FC<
   }, []);
 
   useEffect(() => {
-    if (isLoggedIn && (!user.firstName || !user.lastName)) {
+    if (isLoggedIn && user && (!user.firstName || !user.lastName)) {
       router.push("/profil");
     }
   }, [isLoggedIn, user]);
@@ -49,7 +49,7 @@ const AuthGuard: React.FC<
     }
   }, [isLoggedIn, pathname]);
 
-  if (isCheckingUser) {
+  if (!user || isCheckingUser) {
     return <LoadingScreen />;
   }
 

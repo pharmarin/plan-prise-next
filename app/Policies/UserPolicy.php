@@ -137,4 +137,22 @@ class UserPolicy
 
     return false;
   }
+
+  /**
+   * Determine whether the user can download the user school certificate.
+   *
+   * @param  \App\Models\User  $user
+   * @param  \App\Models\User  $model
+   * @return \Illuminate\Auth\Access\Response|bool
+   */
+  public function certificate(User $user)
+  {
+    return true;
+
+    if ($user->admin) {
+      return true;
+    }
+
+    return false;
+  }
 }
