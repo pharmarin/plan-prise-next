@@ -7,7 +7,7 @@ import {
   ResourceIdentifierObject,
   ResourceObject,
 } from "jsonapi-typescript";
-import { ResourcesState } from "lib/redux/resources/types";
+import { ResourcesState } from "lib/types";
 import { castArray, isPlainObject, setWith, unset } from "lodash";
 
 const initialState: ResourcesState = {};

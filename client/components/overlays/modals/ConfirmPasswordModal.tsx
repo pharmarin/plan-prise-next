@@ -40,7 +40,7 @@ const ConfirmPasswordModal: React.FC<{
                   votre compte seront définitivement supprimées.
                 </p>
                 <p className="text-red-600">
-                  Aucune annulation n'est possible après avoir confirmé la
+                  Aucune annulation n&apos;est possible après avoir confirmé la
                   suppression de votre compte.
                 </p>
               </div>

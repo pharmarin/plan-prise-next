@@ -1,3 +1,5 @@
+"use client";
+
 import { AxiosError } from "axios";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";

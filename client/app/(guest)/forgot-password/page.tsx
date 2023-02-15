@@ -1,3 +1,5 @@
+"use client";
+
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
@@ -7,7 +9,7 @@ import { useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as yup from "yup";
 
-const ForgotPassword: React.FC<{ className?: string }> = ({ className }) => {
+const ForgotPassword = () => {
   const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
   return (
@@ -41,7 +43,7 @@ const ForgotPassword: React.FC<{ className?: string }> = ({ className }) => {
       })}
     >
       {({ errors, handleSubmit, isSubmitting }) => (
-        <Form className={className} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <h3 className="mb-4 text-center text-lg font-bold">
             Mot de passe oublié
           </h3>
@@ -75,4 +77,5 @@ const ForgotPassword: React.FC<{ className?: string }> = ({ className }) => {
     </Formik>
   );
 };
+
 export default ForgotPassword;

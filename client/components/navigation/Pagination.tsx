@@ -85,7 +85,9 @@ const Pagination: React.FC<{
                 ) : undefined
               )}
               <Select
-                onChange={(e) => setPage(Number(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setPage(Number(e.target.value))
+                }
                 size="sm"
                 value={currentPage}
               >

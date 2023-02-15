@@ -18,5 +18,5 @@ export const useSetTitle = (title: string) => {
 
   useEffect(() => {
     dispatch(setTitle(title));
-  }, []);
+  }, [dispatch, title]);
 };

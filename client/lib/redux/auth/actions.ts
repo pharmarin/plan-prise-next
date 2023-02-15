@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { Document, DocWithErrors, Errors } from "jsonapi-typescript";
 import axios from "lib/axios";
-import { LoginCredentials, UserObject } from "lib/types";
+import { LoginAttributes, UserObject } from "lib/types";
 
 /**
  * Request CSRF cookie from server
@@ -38,7 +38,7 @@ export const fetchUserAction = createAsyncThunk(
 /** (Redux thunk) Logs user in */
 export const loginUserAction = createAsyncThunk<
   UserObject | undefined,
-  LoginCredentials,
+  LoginAttributes,
   {
     rejectValue: Errors | undefined;
   }
