@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `admin` BOOLEAN NOT NULL DEFAULT false,
     `firstName` VARCHAR(191) NULL,
@@ -13,6 +13,6 @@ CREATE TABLE `Users` (
     `updatedAt` DATETIME(3) NULL,
     `approvedAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Users_email_key`(`email`),
+    UNIQUE INDEX `users_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

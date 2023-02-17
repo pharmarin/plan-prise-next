@@ -11,7 +11,7 @@ class OldUser extends Model
 {
   use HasFactory;
 
-  protected $table = "UsersLegacy";
+  protected $table = "old_users";
 
   protected $primaryKey = "Id";
 

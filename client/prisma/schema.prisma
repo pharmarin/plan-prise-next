@@ -9,7 +9,7 @@ datasource db {
   relationMode      = "prisma"
 }
 
-model Users {
+model User {
   id          BigInt    @id @default(autoincrement())
   admin       Boolean   @default(false)
   firstName   String?
@@ -22,9 +22,10 @@ model Users {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime?
   approvedAt  DateTime?
+  @@map("users")
 }
 
-model UsersLegacy {
+model UserLegacy {
   Id          Int      @id @default(autoincrement())
   admin       Boolean  @default(false)
   login       String   @db.VarChar(20)
@@ -37,4 +38,5 @@ model UsersLegacy {
   rpps        BigInt
   status      Int
   inscription DateTime @default(now()) @db.Timestamp(0)
+  @@map("old_users")
 }

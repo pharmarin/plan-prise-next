@@ -17,8 +17,6 @@ class User extends Authenticatable
 
   private OldUser $old_user;
 
-  protected $table = "Users";
-
   const CREATED_AT = "createdAt";
   const UPDATED_AT = "updatedAt";
 
