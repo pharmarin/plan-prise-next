@@ -5,7 +5,7 @@ import { fetchUserAction } from "lib/redux/auth/actions";
 import {
   selectIsCheckingUser,
   selectIsLoggedIn,
-  selectUser,
+  selectUser
 } from "lib/redux/auth/selectors";
 import { ReduxState, useDispatch } from "lib/redux/store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -57,7 +57,7 @@ const AuthGuard: React.FC<
     searchParams,
   ]);
 
-  if (!user || isCheckingUser) {
+  if (isCheckingUser) {
     return <LoadingScreen />;
   }
 
