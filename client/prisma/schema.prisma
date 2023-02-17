@@ -1,19 +1,16 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("PRISMA_DATABASE_URL")
+  provider          = "mysql"
+  url               = env("PRISMA_DATABASE_URL")
   shadowDatabaseUrl = env("PRISMA_SHADOW_DATABASE_URL")
-  relationMode = "prisma"
+  relationMode      = "prisma"
 }
 
-model User {
-  id          BigInt    @default(autoincrement()) @id
+model Users {
+  id          BigInt    @id @default(autoincrement())
   admin       Boolean   @default(false)
   firstName   String?
   lastName    String?
@@ -25,4 +22,19 @@ model User {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime?
   approvedAt  DateTime?
+}
+
+model UsersLegacy {
+  Id          Int      @id @default(autoincrement())
+  admin       Boolean  @default(false)
+  login       String   @db.VarChar(20)
+  password    String   @db.VarChar(255)
+  fullname    String   @db.VarChar(100)
+  active      Boolean
+  mail        String   @db.VarChar(200)
+  resetToken  String   @db.VarChar(200)
+  reset       String   @db.VarChar(20)
+  rpps        BigInt
+  status      Int
+  inscription DateTime @default(now()) @db.Timestamp(0)
 }

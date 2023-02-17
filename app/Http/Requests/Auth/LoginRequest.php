@@ -53,7 +53,7 @@ class LoginRequest extends FormRequest
       !Auth::attemptWhen(
         $this->only("email", "password"),
         function (User $user) {
-          if (!$user->approved_at) {
+          if (!$user->approvedAt) {
             throw new ApprobationException();
 
             return false;

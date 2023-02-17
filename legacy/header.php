@@ -72,7 +72,7 @@ global $toheader, $isindex;
 				</li>
 <?php endif; ?>
 				<li id="nom" class="hidden-xs hidden-sm">
-					<a><span><?= ucwords(strtolower(Auth::user()->display_name)) ?></span></a>
+					<a><span><?= ucwords(strtolower(Auth::user()->displayName)) ?></span></a>
 				</li>
 				<li id="deco">
 					<a href="/fermer-session.php"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a>

@@ -20,16 +20,16 @@ class UserFactory extends Factory
    */
   public function definition()
   {
-    $created_at = fake()->dateTimeBetween("-5 years");
-    $approved_at = fake()->dateTimeBetween($created_at);
-    $updated_at = fake()->dateTimeBetween($created_at);
+    $createdAt = fake()->dateTimeBetween("-5 years");
+    $approvedAt = fake()->dateTimeBetween($createdAt);
+    $updated_at = fake()->dateTimeBetween($createdAt);
 
     $student = fake()->boolean(25);
 
     return [
-      "first_name" => fake()->firstName(),
-      "last_name" => fake()->lastName(),
-      "display_name" => fake()->name(),
+      "firstName" => fake()->firstName(),
+      "lastName" => fake()->lastName(),
+      "displayName" => fake()->name(),
       "email" => fake()
         ->unique()
         ->safeEmail(),
@@ -37,9 +37,9 @@ class UserFactory extends Factory
       "rpps" => $student
         ? null
         : fake()->numberBetween(10000000000, 19999999999),
-      "created_at" => $created_at,
+      "createdAt" => $createdAt,
       "updated_at" => $updated_at,
-      "approved_at" => $approved_at,
+      "approvedAt" => $approvedAt,
       "password" =>
         '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
       "remember_token" => Str::random(10),
@@ -56,7 +56,7 @@ class UserFactory extends Factory
   {
     return $this->state(
       fn(array $attributes) => [
-        "approved_at" => null,
+        "approvedAt" => null,
       ]
     );
   }

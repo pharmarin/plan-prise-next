@@ -11,7 +11,7 @@ class OldUser extends Model
 {
   use HasFactory;
 
-  protected $table = "users_old";
+  protected $table = "UsersLegacy";
 
   protected $primaryKey = "Id";
 
@@ -24,6 +24,8 @@ class OldUser extends Model
     if ($user->active !== 1) {
       throw new ApprobationException();
     }
+
+    debug($upassword, $user->password);
 
     if (password_verify($upassword, $user->password)) {
       return $user;

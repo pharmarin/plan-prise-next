@@ -17,6 +17,11 @@ class User extends Authenticatable
 
   private OldUser $old_user;
 
+  protected $table = "Users";
+
+  const CREATED_AT = "createdAt";
+  const UPDATED_AT = "updatedAt";
+
   /**
    * The attributes that are mass assignable.
    *
@@ -25,12 +30,12 @@ class User extends Authenticatable
   protected $fillable = [
     "email",
     "password",
-    "first_name",
-    "last_name",
-    "display_name",
+    "firstName",
+    "lastName",
+    "displayName",
     "student",
     "rpps",
-    "approved_at",
+    "approvedAt",
   ];
 
   /**
@@ -46,7 +51,7 @@ class User extends Authenticatable
    * @var array<string, string>
    */
   protected $casts = [
-    "approved_at" => "datetime",
+    "approvedAt" => "datetime",
     "admin" => "boolean",
     "student" => "boolean",
   ];
@@ -54,15 +59,15 @@ class User extends Authenticatable
   protected function name(): Attribute
   {
     return Attribute::make(
-      fn() => $this->first_name && $this->last_name
-        ? $this->first_name . " " . $this->last_name
+      fn() => $this->firstName && $this->lastName
+        ? $this->firstName . " " . $this->lastName
         : ""
     );
   }
 
   protected function active(): Attribute
   {
-    return Attribute::make(fn() => $this->approved_at !== null);
+    return Attribute::make(fn() => $this->approvedAt !== null);
   }
 
   public function old_user()
@@ -75,14 +80,14 @@ class User extends Authenticatable
     $user = User::create([
       "email" => $old_user->mail,
       "password" => Hash::make($password),
-      "display_name" => $old_user->fullname,
+      "displayName" => $old_user->fullname,
       "student" => $old_user->status === 2,
       "rpps" => $old_user->rpps,
     ]);
 
     $user->admin = $old_user->admin;
-    $user->approved_at = $old_user->inscription;
-    $user->created_at = $old_user->inscription;
+    $user->approvedAt = $old_user->inscription;
+    $user->createdAt = $old_user->inscription;
 
     $user->save();
 

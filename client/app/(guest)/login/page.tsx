@@ -101,7 +101,7 @@ const Login = () => {
         color="link"
         onClick={() => router.push("/register")}
       >
-        Je n'ai pas de compte : S'inscrire
+        Je n&apos;ai pas de compte : S&apos;inscrire
       </Button>
     </>
   );

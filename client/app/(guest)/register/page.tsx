@@ -131,7 +131,7 @@ const Register = () => {
               )
               .label("Certificat de scolarité"),
           }),
-          display_name: yup
+          displayName: yup
             .string()
             .notRequired()
             .min(3)

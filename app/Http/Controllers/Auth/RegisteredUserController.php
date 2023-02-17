@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
       "password" => ["required", "confirmed", Rules\Password::defaults()],
       "firstName" => ["required", "string", "max:255"],
       "lastName" => ["required", "string", "max:255"],
-      "display_name" => ["string", "min:3", "max:50"],
+      "displayName" => ["string", "min:3", "max:50"],
       "student" => ["boolean"],
       "rpps" => ["required_if:student,false", "numeric", "digits:11"],
       "certificate" => [
@@ -48,8 +48,8 @@ class RegisteredUserController extends Controller
     $user = User::create([
       "email" => $request->email,
       "password" => Hash::make($request->password),
-      "first_name" => $request->firstName,
-      "last_name" => $request->lastName,
+      "firstName" => $request->firstName,
+      "lastName" => $request->lastName,
       "student" => $request->student,
       "rpps" => $request->rpps,
     ]);

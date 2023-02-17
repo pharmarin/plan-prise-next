@@ -92,7 +92,7 @@ class UserController extends Controller
     $user = User::findOrFail($query->input("data.id"));
 
     $user->update([
-      "approved_at" => Carbon::parse(
+      "approvedAt" => Carbon::parse(
         $query->input("data.attributes.approvedAt")
       ),
     ]);
@@ -129,7 +129,7 @@ class UserController extends Controller
       ],
       "data.attributes.firstName" => ["required", "string", "max:255"],
       "data.attributes.lastName" => ["required", "string", "max:255"],
-      "data.attributes.display_name" => ["string", "min:3", "max:50"],
+      "data.attributes.displayName" => ["string", "min:3", "max:50"],
       "data.attributes.student" => ["boolean"],
     ];
 
@@ -152,8 +152,8 @@ class UserController extends Controller
     $user = User::create([
       "email" => $request->input("data.attributes.email"),
       "password" => Hash::make($request->input("data.attributes.password")),
-      "first_name" => $request->input("data.attributes.firstName"),
-      "last_name" => $request->input("data.attributes.lastName"),
+      "firstName" => $request->input("data.attributes.firstName"),
+      "lastName" => $request->input("data.attributes.lastName"),
       "student" => $request->boolean("data.attributes.student"),
       "rpps" => $request->integer("data.attributes.rpps"),
     ]);
