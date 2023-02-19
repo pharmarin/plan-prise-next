@@ -1,11 +1,12 @@
 -- CreateTable
 CREATE TABLE `users` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `admin` BOOLEAN NOT NULL DEFAULT false,
     `firstName` VARCHAR(191) NULL,
     `lastName` VARCHAR(191) NULL,
     `displayName` VARCHAR(191) NULL,
     `student` BOOLEAN NOT NULL,
+    `certificate` TEXT NULL,
     `rpps` BIGINT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,

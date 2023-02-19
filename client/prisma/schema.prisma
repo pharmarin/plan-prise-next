@@ -9,19 +9,52 @@ datasource db {
   relationMode      = "prisma"
 }
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 model User {
-  id          BigInt    @id @default(autoincrement())
+  id          String    @id @default(cuid())
   admin       Boolean   @default(false)
   firstName   String?
   lastName    String?
   displayName String?
   student     Boolean
+  certificate  String? @db.Text
   rpps        BigInt?
   email       String    @unique
   password    String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime?
   approvedAt  DateTime?
+  accounts      Account[]
+  sessions      Session[]
   @@map("users")
 }
 
