@@ -1,23 +1,20 @@
 "use client";
 
 import Form from "components/forms/Form";
+import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
-import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
-import { loginUserAction } from "lib/redux/auth/actions";
-import { selectLoginError } from "lib/redux/auth/selectors";
-import { useDispatch } from "lib/redux/store";
+import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import * as yup from "yup";
 
 const Login = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const loginErrors = useSelector(selectLoginError);
+  const [errorStatus, setErrorStatus] = useState<number | undefined>(undefined);
 
   return (
     <>
@@ -28,11 +25,19 @@ const Login = () => {
           remember: false,
         }}
         onSubmit={async (values) => {
-          try {
-            await dispatch(loginUserAction(values));
+          const signInResponse = await signIn("credentials", {
+            email: values.email,
+            password: values.password,
+            redirect: false,
+          });
 
+          console.log("signInResponse: ", signInResponse);
+
+          if (signInResponse?.ok) {
             router.push(searchParams.get("redirectTo") ?? "/");
-          } catch (error) {}
+          } else {
+            setErrorStatus(signInResponse?.status);
+          }
         }}
         validateOnMount
         validationSchema={yup.object().shape({
@@ -92,7 +97,13 @@ const Login = () => {
               Se connecter
             </Button>
 
-            <ServerErrors errors={loginErrors} />
+            {errorStatus && (
+              <FormInfo color="red">
+                {errorStatus === 401
+                  ? "Ces identifiants nous ont pas permis de vous connecter."
+                  : "Un problème est survenu lors de la connexion."}
+              </FormInfo>
+            )}
           </Form>
         )}
       </Formik>
