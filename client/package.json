@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev:database": "pscale connect plan-prise main",
     "dev:turbo": "next dev --turbo --show-all",
     "dev": "next dev",
     "build": "next build",
