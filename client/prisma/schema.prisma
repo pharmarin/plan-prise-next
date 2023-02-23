@@ -26,6 +26,7 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@index([userId])
+  @@map("accounts")
 }
 
 model Session {
@@ -36,6 +37,7 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@map("sessions")
 }
 
 model User {
@@ -55,20 +57,4 @@ model User {
   accounts      Account[]
   sessions      Session[]
   @@map("users")
-}
-
-model LegacyUser {
-  Id          Int      @id @default(autoincrement())
-  admin       Boolean  @default(false)
-  login       String   @db.VarChar(20)
-  password    String   @db.VarChar(255)
-  fullname    String   @db.VarChar(100)
-  active      Boolean
-  mail        String   @db.VarChar(200) @unique
-  resetToken  String   @db.VarChar(200)
-  reset       String   @db.VarChar(20)
-  rpps        BigInt
-  status      Int
-  inscription DateTime @default(now()) @db.Timestamp(0)
-  @@map("old_users")
 }
