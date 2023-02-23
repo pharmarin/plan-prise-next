@@ -3,7 +3,6 @@ import auth from "lib/redux/auth/slice";
 import navigation from "lib/redux/navigation/slice";
 import resources from "lib/redux/resources/slice";
 import { useDispatch as useReduxDispatch } from "react-redux";
-import logger from "redux-logger";
 
 const rootReducer = combineReducers({
   auth,
@@ -12,7 +11,7 @@ const rootReducer = combineReducers({
 });
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: rootReducer,
 });
 
