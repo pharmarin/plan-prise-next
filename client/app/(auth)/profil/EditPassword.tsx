@@ -1,13 +1,12 @@
 "use client";
 
-import { AxiosError } from "axios";
+import { User } from "@prisma/client";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
-import { DocWithErrors, Errors } from "jsonapi-typescript";
-import User from "lib/redux/models/User";
+import { Errors } from "jsonapi-typescript";
 import { useState } from "react";
 import * as yup from "yup";
 
@@ -28,7 +27,7 @@ const EditPassword: React.FC<
       onSubmit={async (values) => {
         setErrors(undefined);
 
-        "user" in props
+        /* "user" in props
           ? await props.user
               .patch(
                 {
@@ -52,7 +51,7 @@ const EditPassword: React.FC<
                 password_confirmation: values.password_confirmation,
                 token: values.token,
               },
-            });
+            }); */
       }}
       validationSchema={yup.object().shape({
         current_password: yup.string().required().label("Mot de passe actuel"),

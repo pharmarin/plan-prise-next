@@ -1,18 +1,19 @@
-"use client";
-
 import DeleteUser from "app/(auth)/profil/DeleteUser";
 import EditInformations from "app/(auth)/profil/EditInformations";
 import EditPassword from "app/(auth)/profil/EditPassword";
-import { selectUser } from "lib/redux/auth/selectors";
-import { useSetTitle } from "lib/redux/navigation/actions";
-import { useSelector } from "react-redux";
+import { getServerSession } from "next-auth";
+import prisma from "prisma/client";
 
-const Profil = () => {
-  const user = useSelector(selectUser);
+const Profil = async () => {
+  const session = await getServerSession();
+  const user = await prisma.user.findUnique({
+    where: { email: session?.user.email ?? "" },
+  });
 
-  useSetTitle("Profil");
+  //useSetTitle("Profil");
 
   if (!user) {
+    // TODO: Use CustomError
     throw new Error("L'utilisateur n'a pas pu être chargé");
   }
 
@@ -80,7 +81,7 @@ const Profil = () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <DeleteUser user={user} />
+            <DeleteUser id={user.id} />
           </div>
         </div>
       </div>

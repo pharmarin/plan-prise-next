@@ -1,4 +1,6 @@
-import { AxiosError } from "axios";
+"use client";
+
+import { User } from "@prisma/client";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
@@ -6,17 +8,14 @@ import TextInput from "components/forms/inputs/TextInput";
 import ServerErrors from "components/forms/ServerErrors";
 import InfosModal from "components/overlays/modals/InfosModal";
 import { Formik } from "formik";
-import { AttributesObject, DocWithErrors, Errors } from "jsonapi-typescript";
-import { setUser } from "lib/redux/auth/slice";
-import User from "lib/redux/models/User";
-import { useDispatch } from "lib/redux/store";
-import { UserObject } from "lib/types";
+import { Errors } from "jsonapi-typescript";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import * as yup from "yup";
 
-const EditInformations: React.FC<{ user: User }> = ({ user }) => {
-  const dispatch = useDispatch();
+const EditInformations: React.FC<{
+  user: User;
+}> = ({ user }) => {
   const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [showModal, setShowModal] = useState<true | false | undefined>(
     undefined
@@ -33,19 +32,19 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
         setShowModal(true);
       }
     }
-  }, [user]);
+  }, [showModal, user]);
 
   if (!user) {
     return <span>Erreur lors du chargement... </span>;
   }
 
   const initialValues = {
-    displayName: user.displayName,
-    email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    rpps: user.rpps,
-    student: user.student,
+    displayName: user.displayName || "",
+    email: user.email || "",
+    firstName: user.firstName || "",
+    lastName: user.lastName || "",
+    rpps: user.rpps || "",
+    student: user.student || "",
   };
 
   return (
@@ -59,7 +58,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
             </p>
             <p>
               Ils apparaitront sur les plans de prise ou calendriers exportés
-              sauf si vous remplissez le champ "Nom de la structure".
+              sauf si vous remplissez le champ &quot;Nom de la structure&quot;.
             </p>
           </>
         }
@@ -81,13 +80,11 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
         onSubmit={async (values) => {
           setErrors(undefined);
 
-          user.assignAttributes(values as AttributesObject);
-
-          await user
-            .save()
+          /* await prisma.user
+            .update({ where: { id: user.id }, data: values })
             .then((response) => {
               if ("data" in response) {
-                return dispatch(setUser(response.data as UserObject));
+                // TODO: return dispatch(setUser(response.data as UserObject));
               }
 
               setErrors([
@@ -99,7 +96,7 @@ const EditInformations: React.FC<{ user: User }> = ({ user }) => {
             })
             .catch((error: AxiosError<DocWithErrors>) =>
               setErrors(error.response?.data.errors)
-            );
+            ); */
         }}
         validateOnMount
         validationSchema={yup.object().shape({

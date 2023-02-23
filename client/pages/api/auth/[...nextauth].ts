@@ -1,28 +1,41 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
+import UserNotApproved from "lib/errors/UserNotApproved";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prisma from "prisma/client";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user && user.email) {
+        if (!token.user) {
+          token.user = {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+          };
+        }
+      }
+
+      return token;
+    },
+    session: ({ session, user, token }) => {
+      if (token && token.user) {
+        session.user.firstName = token.user.firstName;
+        session.user.lastName = token.user.lastName;
+      }
+
+      return session;
+    },
+  },
   pages: {
     signIn: "/login",
+    signOut: "/logout",
   },
   providers: [
     Credentials({
-      credentials: {
-        email: {
-          label: "Adresse mail",
-          type: "mail",
-          placeholder: "Adresse mail",
-        },
-        password: {
-          label: "Mot de passe",
-          type: "password",
-          placeholder: "Mot de passe",
-        },
-      },
       authorize: async (credentials, req) => {
         if (!credentials?.email || !credentials.password) {
           return null;
@@ -32,6 +45,10 @@ export default NextAuth({
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
+
+        if (user && !user.approvedAt) {
+          throw new UserNotApproved();
+        }
 
         if (
           user &&
@@ -47,6 +64,19 @@ export default NextAuth({
 
         return null;
       },
+      credentials: {
+        email: {
+          label: "Adresse mail",
+          type: "mail",
+          placeholder: "Adresse mail",
+        },
+        password: {
+          label: "Mot de passe",
+          type: "password",
+          placeholder: "Mot de passe",
+        },
+      },
     }),
   ],
+  session: { strategy: "jwt" },
 });

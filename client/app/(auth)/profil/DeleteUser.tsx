@@ -1,14 +1,13 @@
+"use client";
+
+import { User } from "@prisma/client";
 import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import ConfirmPasswordModal from "components/overlays/modals/ConfirmPasswordModal";
 import { Errors } from "jsonapi-typescript";
-import { fetchUserAction } from "lib/redux/auth/actions";
-import User from "lib/redux/models/User";
-import { useDispatch } from "lib/redux/store";
 import React, { useState } from "react";
 
-const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
-  const dispatch = useDispatch();
+const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
   const [showForm, setShowForm] = useState(false);
   const [errors, setErrors] = useState<Errors | undefined>(undefined);
 
@@ -25,8 +24,9 @@ const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
         errors={errors}
         onCancel={() => setShowForm(false)}
         onSubmit={async (password) => {
-          return user
-            .delete({ meta: { password_confirmation: password } })
+          // TODO: await server.verifyPassword()
+          /* return await prisma.user
+            .delete({ where: { id } })
             .then(() => {
               dispatch(fetchUserAction());
               return true;
@@ -34,7 +34,9 @@ const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
             .catch((errors) => {
               setErrors(errors);
               return false;
-            });
+            }); */
+          return false;
+          // TODO: Handle errors, user
         }}
         show={showForm}
       />
