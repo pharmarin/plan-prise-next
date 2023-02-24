@@ -1,5 +1,6 @@
 "use client";
 
+import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import { loginSchema } from "common/validation/auth";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
@@ -9,10 +10,12 @@ import { Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Login = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [errorStatus, setErrorStatus] = useState<number | undefined>(undefined);
 
@@ -22,16 +25,20 @@ const Login = () => {
         initialValues={{
           email: searchParams?.get("email") ?? "",
           password: searchParams?.get("password") ?? "",
-          remember: false,
         }}
         onSubmit={async (values) => {
+          if (!executeRecaptcha) {
+            throw new ReCaptchaNotLoaded();
+          }
+
+          const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+
           const signInResponse = await signIn("credentials", {
             email: values.email,
             password: values.password,
+            recaptcha,
             redirect: false,
           });
-
-          console.log("signInResponse: ", signInResponse);
 
           if (signInResponse?.ok) {
             router.push(searchParams?.get("redirectTo") ?? "/");
@@ -75,13 +82,6 @@ const Login = () => {
               >
                 Mot de passe oublié ?
               </Button>
-              <FormikField
-                id="login_remember"
-                label="Rester connecté"
-                name="remember"
-                type="checkbox"
-                wrapperClassName="justify-center"
-              />
             </div>
 
             <Button

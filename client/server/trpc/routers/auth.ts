@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import checkRecaptcha from "common/check-recaptcha";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
-import UnexpectedMethod from "common/errors/UnexpectedMethod";
 import { registerSchema } from "common/validation/auth";
 import { guestProcedure, router } from "server/trpc/trpc";
 
@@ -12,10 +11,6 @@ const authRouter = router({
   register: guestProcedure
     .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
-      if (ctx.req.method !== "POST") {
-        throw new UnexpectedMethod();
-      }
-
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
 
       if (!recaptcha) {

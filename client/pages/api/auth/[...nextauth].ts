@@ -1,5 +1,8 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
+import checkRecaptcha from "common/check-recaptcha";
+import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
+import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
 import UserNotApproved from "common/errors/UserNotApproved";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -39,8 +42,22 @@ export default NextAuth({
   providers: [
     Credentials({
       authorize: async (credentials, req) => {
-        if (!credentials?.email || !credentials.password) {
+        if (
+          !credentials?.email ||
+          !credentials.password ||
+          !credentials.recaptcha
+        ) {
           return null;
+        }
+
+        const recaptcha = await checkRecaptcha(credentials.recaptcha);
+
+        if (!recaptcha) {
+          throw new ReCaptchaNotLoaded();
+        }
+
+        if (recaptcha <= 0.5) {
+          throw new ReCaptchaVerificationError();
         }
 
         // Add logic here to look up the user from the credentials supplied
@@ -76,6 +93,9 @@ export default NextAuth({
           label: "Mot de passe",
           type: "password",
           placeholder: "Mot de passe",
+        },
+        recaptcha: {
+          type: "hidden",
         },
       },
     }),

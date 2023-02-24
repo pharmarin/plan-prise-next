@@ -55,9 +55,7 @@ const Register = () => {
           password: "",
           password_confirmation: "",
         }}
-        onSubmit={async (values, { setSubmitting }) => {
-          setSubmitting(true);
-
+        onSubmit={async (values) => {
           if (!executeRecaptcha) {
             throw new ReCaptchaNotLoaded();
           }
