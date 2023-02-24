@@ -1,5 +1,6 @@
 "use client";
 
+import { loginSchema } from "common/validation/auth";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
@@ -8,7 +9,6 @@ import { Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import * as yup from "yup";
 
 const Login = () => {
   const router = useRouter();
@@ -20,8 +20,8 @@ const Login = () => {
     <>
       <Formik
         initialValues={{
-          email: searchParams.get("email") ?? "",
-          password: searchParams.get("password") ?? "",
+          email: searchParams?.get("email") ?? "",
+          password: searchParams?.get("password") ?? "",
           remember: false,
         }}
         onSubmit={async (values) => {
@@ -34,16 +34,13 @@ const Login = () => {
           console.log("signInResponse: ", signInResponse);
 
           if (signInResponse?.ok) {
-            router.push(searchParams.get("redirectTo") ?? "/");
+            router.push(searchParams?.get("redirectTo") ?? "/");
           } else {
             setErrorStatus(signInResponse?.status);
           }
         }}
         validateOnMount
-        validationSchema={yup.object().shape({
-          email: yup.string().email().required().label("Adresse mail"),
-          password: yup.string().required(),
-        })}
+        validationSchema={loginSchema}
       >
         {({ errors, handleSubmit, isSubmitting }) => (
           <Form

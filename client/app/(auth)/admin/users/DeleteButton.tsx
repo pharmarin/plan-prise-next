@@ -1,16 +1,16 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
+import { User } from "@prisma/client";
 import Button from "components/forms/inputs/Button";
 import Spinner from "components/icons/Spinner";
-import User from "lib/redux/models/User";
 import { useAsyncCallback } from "react-async-hook";
 
 const DeleteButton: React.FC<{
   user: User;
   onSuccess: () => void;
 }> = ({ user, onSuccess }) => {
-  const { loading, execute: deleteUser } = useAsyncCallback(() =>
-    user.delete()
-  );
+  const { loading, execute: deleteUser } = useAsyncCallback(() => {
+    // TODO: user.delete()
+  });
 
   return (
     <Button

@@ -1,20 +1,15 @@
 import Avatar from "components/icons/Avatar";
 import NavbarLink from "components/navigation/NavbarLink";
 import Dropdown from "components/overlays/Dropdown";
-import { logoutUserAction } from "lib/redux/auth/actions";
-import { selectUserData } from "lib/redux/auth/selectors";
-import { selectTitle } from "lib/redux/navigation/selectors";
-import { useDispatch } from "lib/redux/store";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const pathname = usePathname();
+  const { data } = useSession();
 
-  const user = useSelector(selectUserData);
-  const navTitle = useSelector(selectTitle);
+  //const navTitle = useSelector(selectTitle);
   const isHome = pathname === "/";
 
   return (
@@ -39,7 +34,7 @@ const Navbar = () => {
         id="navbar-center"
         className="flex w-fit items-center text-xl font-semibold text-teal-900"
       >
-        <div>{navTitle}</div>
+        <div>{/* TODO: navTitle */}</div>
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">
@@ -52,8 +47,8 @@ const Navbar = () => {
               <>
                 <span className="sr-only">Ouvrir le menu utilisateur</span>
                 <Avatar
-                  firstName={user?.attributes?.firstName || "P"}
-                  lastName={user?.attributes?.lastName || "P"}
+                  firstName={data?.user?.firstName || "P"}
+                  lastName={data?.user?.lastName || "P"}
                 />
               </>
             }
@@ -63,7 +58,7 @@ const Navbar = () => {
                 label: "Profil",
                 path: "/profil",
               },
-              ...(user?.attributes?.admin
+              ...(data?.user?.admin
                 ? [
                     {
                       label: "Utilisateurs",
@@ -73,7 +68,7 @@ const Navbar = () => {
                 : []),
               {
                 label: "Déconnexion",
-                action: () => dispatch(logoutUserAction()),
+                action: () => signOut({ redirect: false }),
               },
             ]}
           />

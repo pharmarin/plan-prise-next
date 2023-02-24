@@ -1,4 +1,4 @@
-import CustomError from "lib/errors/CustomError";
+import CustomError from "common/errors/CustomError";
 
 export default class AdminGuardError extends CustomError {
   constructor() {

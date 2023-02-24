@@ -4,6 +4,7 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+import { PrismaClient } from "@prisma/client";
 import TextInput from "components/forms/inputs/TextInput";
 import Spinner from "components/icons/Spinner";
 import Pagination from "components/navigation/Pagination";
@@ -15,14 +16,13 @@ import TableFooter from "components/table/TableFooter";
 import TableHead from "components/table/TableHead";
 import TableHeadCell from "components/table/TableHeadCell";
 import TableRow from "components/table/TableRow";
-import BaseModel from "lib/redux/models/BaseModel";
 import { debounce } from "lodash";
 import React, { useState } from "react";
 import { useAsync } from "react-async-hook";
 import { twMerge } from "tailwind-merge";
 
 const AsyncTable = <
-  T extends typeof BaseModel,
+  T extends typeof PrismaClient,
   C extends { [id: string]: string }
 >({
   columns,

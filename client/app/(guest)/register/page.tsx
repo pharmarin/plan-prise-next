@@ -1,69 +1,41 @@
 "use client";
 
 import { CheckBadgeIcon } from "@heroicons/react/20/solid";
-import { AxiosError } from "axios";
+import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
+import { trpc } from "common/trpc";
+import { ALLOWED_FILE_TYPES, registerSchema } from "common/validation/auth";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
-import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
-import { DocWithErrors } from "jsonapi-typescript";
-import { fetchCsrfCookie } from "lib/redux/auth/actions";
-import User from "lib/redux/models/User";
-import { RegisterAttributes } from "lib/types";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { useAsyncCallback } from "react-async-hook";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { twMerge } from "tailwind-merge";
-import * as yup from "yup";
 
 const Register = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
 
-  const reCaptchaRef = useRef<ReCAPTCHA>(null);
-
-  const {
-    execute: register,
-    error: serverErrors,
-    result: data,
-  } = useAsyncCallback(async (data: RegisterAttributes) => {
-    await fetchCsrfCookie().catch((errors: AxiosError<DocWithErrors>) =>
-      Promise.reject(errors.response?.data.errors)
-    );
-
-    return await new User()
-      .register(data)
-      .then(() => "success")
-      .catch((errors: AxiosError<DocWithErrors>) =>
-        Promise.reject(errors.response?.data.errors)
-      );
-  });
-
-  const ALLOWED_FILE_TYPES = [
-    "image/png",
-    "image/jpg",
-    "image/jpeg",
-    "application/pdf",
-  ];
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { mutateAsync, error, data } = trpc.auth.register.useMutation();
 
   if (data === "success") {
     return (
       <div className={twMerge("space-y-2 text-gray-900")}>
         <h4 className="mt-2 flex items-center font-medium">
           <CheckBadgeIcon className="mr-1 h-4 w-4 text-teal-500" />
-          <span>Demande d'inscription terminée</span>
+          <span>Demande d&apos;inscription terminée</span>
         </h4>
         <p>
-          Votre demande d'inscription sur plandeprise.fr est maintenant
+          Votre demande d&apos;inscription sur plandeprise.fr est maintenant
           terminée. Nous allons examiner votre demande dans les plus brefs
           délais.
         </p>
         <p className="text-gray-700">
-          Vous recevrez prochainement un mail vous informant de l'activation de
-          votre compte.
+          Vous recevrez prochainement un mail vous informant de
+          l&apos;activation de votre compte.
         </p>
       </div>
     );
@@ -84,82 +56,28 @@ const Register = () => {
           password_confirmation: "",
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          if (!reCaptchaRef) {
-            throw new Error("Le service ReCAPTCHA n'a pas pu être chargé");
-          }
-
           setSubmitting(true);
 
-          if (!reCaptchaRef.current?.getValue()) {
-            await (reCaptchaRef.current as ReCAPTCHA).executeAsync();
+          if (!executeRecaptcha) {
+            throw new ReCaptchaNotLoaded();
           }
 
-          try {
-            await register({
-              ...values,
-              recaptcha: reCaptchaRef.current?.getValue() || "",
-            });
+          const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
-            setSubmitting(false);
-          } catch {
-            setSubmitting(false);
-          }
-
-          reCaptchaRef.current?.reset();
+          await mutateAsync({ ...values, recaptcha });
         }}
         validateOnMount
-        validationSchema={yup.object().shape({
-          firstName: yup.string().required().max(50).label("Prénom"),
-          lastName: yup.string().required().max(50).label("Nom"),
-          student: yup.boolean(),
-          rpps: yup.mixed().when("student", {
-            is: false,
-            then: yup.string().required().min(11).max(11).label("RPPS"),
-          }),
-          certificate: yup.mixed().when("student", {
-            is: true,
-            then: yup
-              .mixed()
-              .required()
-              .test("fileSize", (value) =>
-                "size" in (value || {}) ? value.size <= 2000000 : false
-              )
-              .test("fileType", (value) =>
-                "type" in (value || {})
-                  ? ALLOWED_FILE_TYPES.includes(value.type)
-                  : false
-              )
-              .label("Certificat de scolarité"),
-          }),
-          displayName: yup
-            .string()
-            .notRequired()
-            .min(3)
-            .max(50)
-            .label("Nom de la structure"),
-          email: yup.string().email().required().label("Email"),
-          password: yup
-            .string()
-            .min(8)
-            .max(20)
-            .required()
-            .label("Mot de passe"),
-          password_confirmation: yup
-            .string()
-            .oneOf([yup.ref("password")])
-            .required()
-            .label("Confirmation du mot de passe"),
-        })}
+        validationSchema={registerSchema}
       >
         {({ errors, handleSubmit, isSubmitting, values }) => (
           <Form className="flex flex-col" onSubmit={handleSubmit}>
             <div>
               <h3 className="text-center text-xl font-bold">Inscription</h3>
-              <ReCAPTCHA
+              {/* <ReCAPTCHA
                 ref={reCaptchaRef}
                 size="invisible"
                 sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
-              />
+              /> */}
             </div>
 
             {step === 1 && (
@@ -287,7 +205,10 @@ const Register = () => {
                   type="password"
                 />
 
-                <ServerErrors errors={serverErrors as any} />
+                {error &&
+                  ["CONFLICT", "INTERNAL_SERVER_ERROR"].includes(
+                    error.data?.code || ""
+                  ) && <FormInfo color="red">{error.message}</FormInfo>}
 
                 <div className="flex gap-4">
                   <Button
@@ -316,7 +237,7 @@ const Register = () => {
         color="link"
         onClick={() => router.push("/login")}
       >
-        J'ai déjà un compte : Se connecter
+        J&apos;ai déjà un compte : Se connecter
       </Button>
     </>
   );

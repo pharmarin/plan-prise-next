@@ -2,7 +2,7 @@ import DeleteUser from "app/(auth)/profil/DeleteUser";
 import EditInformations from "app/(auth)/profil/EditInformations";
 import EditPassword from "app/(auth)/profil/EditPassword";
 import { getServerSession } from "next-auth";
-import prisma from "prisma/client";
+import prisma from "server/prisma/client";
 
 const Profil = async () => {
   const session = await getServerSession();

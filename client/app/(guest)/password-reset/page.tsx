@@ -1,7 +1,7 @@
 "use client";
 
 import EditPassword from "app/(auth)/profil/EditPassword";
-import PasswordResetErrorMissingParam from "lib/errors/PasswordResetErrorMissingParam";
+import PasswordResetErrorMissingParam from "common/errors/PasswordResetErrorMissingParam";
 import { useSearchParams } from "next/navigation";
 
 const PasswordReset = () => {

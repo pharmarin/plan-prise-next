@@ -1,21 +1,11 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { trpc } from "common/trpc";
 
 const Test = () => {
-  return (
-    <button
-      onClick={() => {
-        signIn("credentials", {
-          email: "rouxmarin@outlook.com",
-          password: "gas1ton74300",
-          redirect: false,
-        });
-      }}
-    >
-      Test
-    </button>
-  );
+  const { data } = trpc.auth.register.useMutation();
+
+  return <div>{data}</div>;
 };
 
 export default Test;

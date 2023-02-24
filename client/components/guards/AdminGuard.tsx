@@ -1,18 +1,17 @@
 "use client";
 
-import AdminGuardError from "lib/errors/AdminGuardError";
-import { selectUser } from "lib/redux/auth/selectors";
+import AdminGuardError from "common/errors/AdminGuardError";
+import { useSession } from "next-auth/react";
 import { PropsWithChildren, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 const AdminGuard: React.FC<PropsWithChildren> = ({ children }) => {
-  const user = useSelector(selectUser);
+  const { data } = useSession();
 
   useEffect(() => {
-    if (!user?.admin) {
+    if (!data?.user?.admin) {
       throw new AdminGuardError();
     }
-  }, [user]);
+  }, [data?.user]);
 
   return <>{children}</>;
 };

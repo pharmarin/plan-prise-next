@@ -1,5 +1,5 @@
-import prisma from "../prisma/client";
-import { MySQLExport } from "../prisma/database";
+import prisma from "./client";
+import { MySQLExport } from "./database";
 import database from "./plandepr_medics.json";
 
 const seeder = async () => {

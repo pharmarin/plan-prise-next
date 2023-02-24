@@ -1,9 +1,5 @@
-"use client";
-
-import { useSetTitle } from "lib/redux/navigation/actions";
-
 const Home = () => {
-  useSetTitle("Bienvenue");
+  //useSetTitle("Bienvenue");
 
   return (
     <div className="flex h-[80vh] flex-col justify-center">

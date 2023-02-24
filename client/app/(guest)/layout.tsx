@@ -1,5 +1,3 @@
-"use client";
-
 import AuthGuard from "components/guards/AuthGuard";
 import { PropsWithChildren } from "react";
 
@@ -43,3 +41,7 @@ const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default GuestLayout;
+
+export const metadata = {
+  title: "Plan de prise",
+};

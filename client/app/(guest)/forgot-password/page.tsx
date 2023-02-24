@@ -4,7 +4,6 @@ import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import { Formik } from "formik";
-import User from "lib/redux/models/User";
 import { useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as yup from "yup";
@@ -28,10 +27,11 @@ const ForgotPassword = () => {
         }
 
         try {
+          /* TODO
           await new User().forgotPassword({
             email: values.email,
             recaptcha: reCaptchaRef.current?.getValue() || "",
-          });
+          }); */
         } catch (error) {
           setSubmitting(false);
         }

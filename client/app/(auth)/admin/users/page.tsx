@@ -1,28 +1,25 @@
 "use client";
 
+import { User } from "@prisma/client";
 import ApproveButton from "app/(auth)/admin/users/ApproveButton";
 import ApproveStudent from "app/(auth)/admin/users/ApproveStudent";
 import DeleteButton from "app/(auth)/admin/users/DeleteButton";
 import Button from "components/forms/inputs/Button";
 import Pill from "components/Pill";
 import AsyncTable from "components/table/AsyncTable";
-import User from "lib/redux/models/User";
-import { setNavigation } from "lib/redux/navigation/actions";
-import { useDispatch } from "lib/redux/store";
 import { useEffect, useState } from "react";
 
 const Users = () => {
-  const dispatch = useDispatch();
-
   const [studentToApprove, setStudentToApprove] = useState<User | undefined>();
 
   useEffect(() => {
+    /* // TODO: useContext
     dispatch(
       setNavigation("Utilisateurs", {
         component: { name: "arrowLeft" },
         path: "/admin",
       })
-    );
+    ); */
   });
 
   if (studentToApprove) {

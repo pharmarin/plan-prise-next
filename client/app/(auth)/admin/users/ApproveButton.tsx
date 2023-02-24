@@ -1,7 +1,7 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
+import { User } from "@prisma/client";
 import Button from "components/forms/inputs/Button";
 import Spinner from "components/icons/Spinner";
-import User from "lib/redux/models/User";
 import React from "react";
 import { useAsyncCallback } from "react-async-hook";
 
@@ -10,7 +10,7 @@ const ApproveButton: React.FC<{
   onSuccess: () => void;
 }> = ({ user, onSuccess }) => {
   const { loading, execute: approveUser } = useAsyncCallback(() => {
-    return user.approve();
+    return; // TODO: user.approve();
   });
 
   return (

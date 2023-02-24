@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
-import UserNotApproved from "lib/errors/UserNotApproved";
+import UserNotApproved from "common/errors/UserNotApproved";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import prisma from "prisma/client";
+import prisma from "server/prisma/client";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -15,6 +15,7 @@ export default NextAuth({
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
+            admin: user.admin,
           };
         }
       }
@@ -25,6 +26,7 @@ export default NextAuth({
       if (token && token.user) {
         session.user.firstName = token.user.firstName;
         session.user.lastName = token.user.lastName;
+        session.user.admin = token.user.admin;
       }
 
       return session;

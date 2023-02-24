@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { User } from "@prisma/client";
 import ApproveButton from "app/(auth)/admin/users/ApproveButton";
 import Button from "components/forms/inputs/Button";
-import User from "lib/redux/models/User";
 import dynamic from "next/dynamic";
 import { useAsync } from "react-async-hook";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -34,13 +34,17 @@ const ApproveStudent: React.FC<{ close: () => void; user: User }> = ({
     result: data,
     error,
     loading,
-  } = useAsync(() => user.getCertificate(), [user.id]);
+  } = useAsync(() => {
+    // TODO user.getCertificate()
+    return new Promise(() => {});
+  }, [user.id]);
 
   return (
     <div className="flex flex-col">
       <div className="flex justify-between">
         <h2 className="text-lg font-bold text-gray-700">
-          Justificatif d'inscription pour l'étudiant {user.name}
+          Justificatif d&apos;inscription pour l&apos;étudiant {user.firstName}{" "}
+          {user.lastName}
         </h2>
         <div className="space-x-2">
           <ApproveButton onSuccess={close} user={user} />
