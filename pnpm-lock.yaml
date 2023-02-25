@@ -17,7 +17,6 @@ importers:
       '@headlessui/react': ^1.7.8
       '@heroicons/react': ^2.0.14
       '@next-auth/prisma-adapter': ^1.0.5
-      '@next/font': 13.0.7
       '@prisma/client': ^4.10.1
       '@reduxjs/toolkit': ^1.9.2
       '@tailwindcss/forms': ^0.5.3
@@ -76,7 +75,6 @@ importers:
       '@headlessui/react': 1.7.10_biqbaboplfbrettd7655fr4n2y
       '@heroicons/react': 2.0.15_react@18.2.0
       '@next-auth/prisma-adapter': 1.0.5_qpmskah7lm3ildf4stmwh4q42u
-      '@next/font': 13.0.7
       '@prisma/client': 4.10.1_prisma@4.10.1
       '@reduxjs/toolkit': 1.9.2_k4ae6lp43ej6mezo3ztvx6pykq
       '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
@@ -257,10 +255,6 @@ packages:
     resolution: {integrity: sha512-Q/Z0V3D3UpKhhzFU6/s17wD4rqJ+ZDGded8UpqNyzX1nUdD+/PnsZexPhSIZ2Yf/c8QESeirmJVRb3eAfCQkRQ==}
     dependencies:
       glob: 7.1.7
-    dev: false
-
-  /@next/font/13.0.7:
-    resolution: {integrity: sha512-39SzuoMI6jbrIzPs3KtXdKX03OrVp6Y7kRHcoVmOg69spiBzruPJ5x5DQSfN+OXqznbvVBNZBXnmdnSqs3qXiA==}
     dev: false
 
   /@next/swc-android-arm-eabi/13.2.0:
