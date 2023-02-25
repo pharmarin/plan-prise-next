@@ -1,11 +1,7 @@
 import Providers from "app/Providers";
 import background from "public/home-bg.jpg";
 import React, { PropsWithChildren } from "react";
-import { setLocale } from "yup";
-import { fr } from "yup-locales";
 import "./globals.css";
-
-setLocale(fr);
 
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (

@@ -1,5 +1,9 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ContextType } from "server/trpc/context";
+import { setLocale } from "yup";
+import { fr } from "yup-locales";
+
+setLocale(fr);
 
 const tRPC = initTRPC.context<ContextType>().create();
 
