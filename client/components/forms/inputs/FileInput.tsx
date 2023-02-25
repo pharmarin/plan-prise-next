@@ -6,7 +6,7 @@ const FileInput: React.FC<
   JSX.IntrinsicElements["input"] & { label?: string; value?: File }
 > = ({ className, label, value, ...props }) => {
   return (
-    <div className="mb-4">
+    <div>
       {label && <FormLabel name={props.name}>{label}</FormLabel>}
       <div className="relative">
         <input

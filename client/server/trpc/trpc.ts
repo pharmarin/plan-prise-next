@@ -1,12 +1,11 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ContextType } from "server/trpc/context";
-import SuperJSON from "superjson";
 
-const tRPC = initTRPC.context<ContextType>().create({
-  transformer: SuperJSON,
-});
+const tRPC = initTRPC.context<ContextType>().create();
 
 export const router = tRPC.router;
+
+export const middleware = tRPC.middleware;
 
 export const guestProcedure = tRPC.procedure;
 

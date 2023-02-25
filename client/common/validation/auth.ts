@@ -1,11 +1,13 @@
 import * as yup from "yup";
 
-export const ALLOWED_FILE_TYPES = [
+export const ALLOWED_UPLOADED_FILE_TYPES = [
   "image/png",
   "image/jpg",
   "image/jpeg",
   "application/pdf",
 ];
+
+export const MAX_UPLOADED_FILE_SIZE = 2000000;
 
 export const loginSchema = yup.object({
   email: yup.string().email().required().label("Adresse mail"),
@@ -24,14 +26,19 @@ export const registerSchema = yup.object({
     is: true,
     then: yup
       .mixed()
-      .required()
-      .test("fileSize", (value) =>
-        "size" in (value || {}) ? value.size <= 2000000 : false
+      .test("fileName", "Certificat de scolarité est obligatoire. ", (value) =>
+        "name" in (value || {}) ? (value.name || "").length > 0 : false
       )
-      .test("fileType", (value) =>
-        "type" in (value || {})
-          ? ALLOWED_FILE_TYPES.includes(value.type)
-          : false
+      .test("fileSize", "Le fichier envoyé est trop volumineux. ", (value) =>
+        "size" in (value || {}) ? value.size <= MAX_UPLOADED_FILE_SIZE : false
+      )
+      .test(
+        "fileType",
+        "Le fichier envoyé doit être de type pdf, jpg ou png. ",
+        (value) =>
+          "type" in (value || {})
+            ? ALLOWED_UPLOADED_FILE_TYPES.includes(value.type)
+            : false
       )
       .label("Certificat de scolarité"),
   }),
@@ -52,6 +59,14 @@ export const registerSchema = yup.object({
     .required()
     .label("Confirmation du mot de passe"),
   recaptcha: yup.string(),
+});
+
+export const registerServerSchema = registerSchema.shape({
+  ...registerSchema.fields,
+  certificate: yup.mixed().when("student", {
+    is: true,
+    then: yup.string().required().label("Certificat de scolarité"),
+  }),
 });
 
 export type ILogin = typeof loginSchema;

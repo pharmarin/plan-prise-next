@@ -18,8 +18,8 @@ const FormikField: React.FC<
         } & typeof TextInput.defaultProps)
     )
 > = ({ disabled, disableOnSubmit, displayErrors, label, ...props }) => {
-  const [field, meta, helpers] = useField(props);
-  const { isSubmitting, setFieldValue } = useFormikContext();
+  const [field, meta] = useField(props);
+  const { isSubmitting, setFieldTouched, setFieldValue } = useFormikContext();
 
   const inputProps = {
     ...field,
@@ -29,7 +29,7 @@ const FormikField: React.FC<
   };
 
   return (
-    <>
+    <div>
       {(() => {
         switch (props.type) {
           case "checkbox":
@@ -38,9 +38,13 @@ const FormikField: React.FC<
             return (
               <FileInput
                 {...inputProps}
-                onChange={(event) =>
-                  setFieldValue(props.name, event.currentTarget.files?.[0])
-                }
+                onChange={(event) => {
+                  setFieldValue(props.name, event.currentTarget.files?.[0]);
+                  setFieldTouched(
+                    props.name,
+                    (event.currentTarget.files || []).length > 0
+                  );
+                }}
               />
             );
           default:
@@ -50,7 +54,7 @@ const FormikField: React.FC<
       {displayErrors && meta.touched && meta.error && (
         <div className="mt-1 text-xs text-red-600">{meta.error}</div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -13,7 +13,7 @@ export type RegisterAttributes = {
   firstName: string;
   lastName: string;
   rpps?: string;
-  certificate?: string;
+  certificate?: Blob;
   student: boolean;
   displayName: string;
   password: string;

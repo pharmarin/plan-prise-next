@@ -4,13 +4,13 @@ import bcrypt from "bcrypt";
 import checkRecaptcha from "common/check-recaptcha";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
-import { registerSchema } from "common/validation/auth";
+import { registerServerSchema } from "common/validation/auth";
 import { guestProcedure, router } from "server/trpc/trpc";
 
 const authRouter = router({
   register: guestProcedure
-    .input(registerSchema)
-    .mutation(async ({ input, ctx }) => {
+    .input(registerServerSchema)
+    .mutation(async ({ ctx, input }) => {
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
 
       if (!recaptcha) {

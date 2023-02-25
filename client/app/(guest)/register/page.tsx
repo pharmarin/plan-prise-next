@@ -2,8 +2,13 @@
 
 import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
+import convertToBase64 from "common/file-to-base64";
 import { trpc } from "common/trpc";
-import { ALLOWED_FILE_TYPES, registerSchema } from "common/validation/auth";
+import {
+  ALLOWED_UPLOADED_FILE_TYPES,
+  MAX_UPLOADED_FILE_SIZE,
+  registerSchema,
+} from "common/validation/auth";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
@@ -56,13 +61,26 @@ const Register = () => {
           password_confirmation: "",
         }}
         onSubmit={async (values) => {
+          let convertedCertificate: string | null = null;
+
           if (!executeRecaptcha) {
             throw new ReCaptchaNotLoaded();
           }
 
           const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
-          await mutateAsync({ ...values, recaptcha });
+          if (
+            values.certificate &&
+            (values.certificate as Blob).size < MAX_UPLOADED_FILE_SIZE
+          ) {
+            convertedCertificate = await convertToBase64(values.certificate);
+          }
+
+          await mutateAsync({
+            ...values,
+            certificate: convertedCertificate,
+            recaptcha,
+          });
         }}
         validateOnMount
         validationSchema={registerSchema}
@@ -71,11 +89,6 @@ const Register = () => {
           <Form className="flex flex-col" onSubmit={handleSubmit}>
             <div>
               <h3 className="text-center text-xl font-bold">Inscription</h3>
-              {/* <ReCAPTCHA
-                ref={reCaptchaRef}
-                size="invisible"
-                sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
-              /> */}
             </div>
 
             {step === 1 && (
@@ -116,17 +129,15 @@ const Register = () => {
                   type="checkbox"
                 />
                 {values.student ? (
-                  <div className="mb-4">
-                    <FormikField
-                      accept={ALLOWED_FILE_TYPES.join(",")}
-                      disableOnSubmit
-                      displayErrors
-                      label="Justificatif d'études de pharmacie"
-                      name="certificate"
-                      placeholder="Ajouter un fichier... "
-                      type="file"
-                    />
-                  </div>
+                  <FormikField
+                    accept={ALLOWED_UPLOADED_FILE_TYPES.join(",")}
+                    disableOnSubmit
+                    displayErrors
+                    label="Justificatif d'études de pharmacie"
+                    name="certificate"
+                    placeholder="Ajouter un fichier... "
+                    type="file"
+                  />
                 ) : (
                   <FormikField
                     autoComplete="off"

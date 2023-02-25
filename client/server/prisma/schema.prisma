@@ -48,7 +48,7 @@ model User {
   lastName      String?
   displayName   String?
   student       Boolean
-  certificate   String? @db.Text
+  certificate   String?   @db.LongText
   rpps          BigInt?
   password      String
   createdAt     DateTime  @default(now())
