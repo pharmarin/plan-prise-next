@@ -20,16 +20,22 @@ export const registerSchema = yup.object({
   student: yup.boolean(),
   rpps: yup.mixed().when("student", {
     is: false,
-    then: yup.string().required().min(11).max(11).label("RPPS"),
+    then: yup
+      .string()
+      .required()
+      .min(11)
+      .max(11)
+      .matches(/^\d+$/, "RPPS doit être un numéro")
+      .label("RPPS"),
   }),
   certificate: yup.mixed().when("student", {
     is: true,
     then: yup
       .mixed()
-      .test("fileName", "Certificat de scolarité est obligatoire. ", (value) =>
+      .test("fileName", "Certificat de scolarité est obligatoire", (value) =>
         "name" in (value || {}) ? (value.name || "").length > 0 : false
       )
-      .test("fileSize", "Le fichier envoyé est trop volumineux. ", (value) =>
+      .test("fileSize", "Le fichier envoyé est trop volumineux", (value) =>
         "size" in (value || {}) ? value.size <= MAX_UPLOADED_FILE_SIZE : false
       )
       .test(
