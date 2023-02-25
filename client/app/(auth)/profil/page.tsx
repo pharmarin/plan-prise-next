@@ -1,6 +1,7 @@
 import DeleteUser from "app/(auth)/profil/DeleteUser";
 import EditInformations from "app/(auth)/profil/EditInformations";
 import EditPassword from "app/(auth)/profil/EditPassword";
+import UserNotLoaded from "common/errors/UserNotLoaded";
 import { getServerSession } from "next-auth";
 import prisma from "server/prisma/client";
 
@@ -13,8 +14,7 @@ const Profil = async () => {
   //useSetTitle("Profil");
 
   if (!user) {
-    // TODO: Use CustomError
-    throw new Error("L'utilisateur n'a pas pu être chargé");
+    throw new UserNotLoaded();
   }
 
   return (
