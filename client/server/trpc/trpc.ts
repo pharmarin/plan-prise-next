@@ -16,9 +16,21 @@ export const authProcedure = tRPC.procedure.use((opts) => {
       message: "Vous devez être connecté pour effectuer cette action. ",
     });
   }
+
   return opts.next({
     ctx: {
       user: opts.ctx.user,
     },
   });
+});
+
+export const adminProcedure = authProcedure.use((opts) => {
+  if (!opts.ctx.user.admin) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Vous devez être administrateur pour effectuer cette action. ",
+    });
+  }
+
+  return opts.next();
 });
