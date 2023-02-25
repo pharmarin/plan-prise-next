@@ -34,7 +34,7 @@ const Profil = async () => {
           </div>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
-          <EditInformations user={user} />
+          <EditInformations user={user} data-superjson />
         </div>
       </div>
 
@@ -57,7 +57,7 @@ const Profil = async () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <EditPassword user={user} />
+            <EditPassword user={user} data-superjson />
           </div>
         </div>
       </div>
