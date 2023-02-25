@@ -8,7 +8,7 @@ import prisma from "server/prisma/client";
 const Profil = async () => {
   const session = await getServerSession();
   const user = await prisma.user.findUnique({
-    where: { email: session?.user.email },
+    where: { email: session?.user.email || "" },
   });
 
   //useSetTitle("Profil");
