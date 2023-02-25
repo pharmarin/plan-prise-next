@@ -9,7 +9,7 @@ const seeder = async () => {
         if (data.name === "users") {
           await prisma.user.createMany({
             data: data.data.map((user) => ({
-              admin: Boolean(user.admin),
+              admin: user.admin === "1",
               displayName: user.fullname,
               student: user.status === "2",
               rpps: Number(user.rpps),
