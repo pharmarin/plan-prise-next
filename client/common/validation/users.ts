@@ -3,6 +3,4 @@ import * as yup from "yup";
 
 setLanguage();
 
-export const approveUserSchema = yup.string().required();
-
-export const queryUserSchema = yup.string().required();
+export const requireIdSchema = yup.string().required();

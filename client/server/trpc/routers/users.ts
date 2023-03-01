@@ -1,4 +1,4 @@
-import { approveUserSchema, queryUserSchema } from "common/validation/users";
+import { requireIdSchema } from "common/validation/users";
 import { adminProcedure, router } from "server/trpc/trpc";
 
 const exclude = <User, Key extends keyof User>(
@@ -12,13 +12,13 @@ const exclude = <User, Key extends keyof User>(
 };
 
 const usersRouter = router({
-  approve: adminProcedure.input(approveUserSchema).mutation(
-    async ({ ctx, input }) =>
-      await ctx.prisma.user.update({
-        where: { id: input },
-        data: { approvedAt: new Date() },
-      })
-  ),
+  /**
+   * Get all users
+   *
+   * @argument {never}
+   *
+   * @returns {User[]} Users
+   */
   all: adminProcedure.query(
     async ({ ctx }) =>
       await ctx.prisma.user.findMany({
@@ -35,8 +35,53 @@ const usersRouter = router({
         orderBy: { createdAt: "desc" },
       })
   ),
+  /**
+   * Approves user
+   *
+   * @argument {string} id
+   *
+   * @returns {User & { password: never }} Updated user
+   */
+  approve: adminProcedure
+    .input(requireIdSchema)
+    .mutation(async ({ ctx, input }) =>
+      exclude(
+        await ctx.prisma.user.update({
+          where: { id: input },
+          data: { approvedAt: new Date() },
+        }),
+        ["password"]
+      )
+    ),
+  /**
+   * Count users
+   *
+   * @argument {never}
+   *
+   * @returns {number} User count
+   */
   count: adminProcedure.query(async ({ ctx }) => await ctx.prisma.user.count()),
-  unique: adminProcedure.input(queryUserSchema).query(async ({ ctx, input }) =>
+  /**
+   * Delete user
+   *
+   * @argument {string} User id
+   *
+   * @returns {undefined}
+   */
+  delete: adminProcedure
+    .input(requireIdSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.user.delete({ where: { id: input } });
+    }),
+  /**
+   * Get unique user
+   *
+   * @argument {string} User id
+   *
+   * @returns {User} Found user
+   * @throws If not found
+   */
+  unique: adminProcedure.input(requireIdSchema).query(async ({ ctx, input }) =>
     exclude(
       await ctx.prisma.user.findUniqueOrThrow({
         where: { id: input },

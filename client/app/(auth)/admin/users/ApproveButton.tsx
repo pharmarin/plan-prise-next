@@ -9,7 +9,7 @@ import { User } from "next-auth";
 import React from "react";
 
 const ApproveButton: React.FC<{
-  user: User;
+  user: Partial<User> & { id: User["id"] };
   onSuccess: () => void;
 }> = ({ user, onSuccess }) => {
   const { mutateAsync, isLoading } = trpc.users.approve.useMutation();
