@@ -42,7 +42,8 @@ const FormikField: React.FC<
                   setFieldValue(props.name, event.currentTarget.files?.[0]);
                   setFieldTouched(
                     props.name,
-                    (event.currentTarget.files || []).length > 0
+                    (event.currentTarget.files || []).length > 0,
+                    false
                   );
                 }}
               />
