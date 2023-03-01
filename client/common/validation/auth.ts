@@ -54,6 +54,7 @@ export const registerSchema = yup.object({
   displayName: yup
     .string()
     .notRequired()
+    .transform((value) => (value === "" ? undefined : value))
     .min(3)
     .max(50)
     .label("Nom de la structure"),
