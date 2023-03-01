@@ -24,10 +24,10 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { AppRouter } from "server/trpc/routers/app";
 
-type User = inferRouterOutputs<AppRouter>["users"]["findMany"][0];
+type User = inferRouterOutputs<AppRouter>["users"]["all"][0];
 
 const Users = () => {
-  const { data, isLoading, isLoadingError } = trpc.users.findMany.useQuery(
+  const { data, isLoading, isLoadingError } = trpc.users.all.useQuery(
     undefined,
     { initialData: [] }
   );
@@ -56,7 +56,10 @@ const Users = () => {
             !props.row.original.approvedAt
           ) {
             return (
-              <Link href={`/admin/users/${props.row.original.id}/certificat`}>
+              <Link
+                href={`/admin/users/${props.row.original.id}/certificate`}
+                prefetch={false}
+              >
                 Justificatif
               </Link>
             );

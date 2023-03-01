@@ -1,8 +1,11 @@
+"use client";
+// Because of the use of tRPC (useMutation)
+
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { User } from "@prisma/client";
 import { trpc } from "common/trpc";
 import Button from "components/forms/inputs/Button";
 import Spinner from "components/icons/Spinner";
+import { User } from "next-auth";
 import React from "react";
 
 const ApproveButton: React.FC<{
