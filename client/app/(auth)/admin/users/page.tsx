@@ -2,7 +2,7 @@
 
 import {
   ChevronDownIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import {
@@ -13,7 +13,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  useReactTable
+  useReactTable,
 } from "@tanstack/react-table";
 import { inferRouterOutputs } from "@trpc/server";
 import ApproveButton from "app/(auth)/admin/users/ApproveButton";
@@ -31,7 +31,7 @@ import TableFooter from "components/table/TableFooter";
 import TableHead from "components/table/TableHead";
 import TableHeadCell from "components/table/TableHeadCell";
 import TableRow from "components/table/TableRow";
-import { debounce } from "lodash";
+import { debounce, startCase, upperCase } from "lodash";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AppRouter } from "server/trpc/routers/app";
@@ -81,9 +81,18 @@ const Users = () => {
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor("lastName", { header: "Nom" }),
-      columnHelper.accessor("firstName", { header: "Prénom" }),
-      columnHelper.accessor("displayName", { header: "Affichage" }),
+      columnHelper.accessor("lastName", {
+        cell: (props) => upperCase(props.getValue() || ""),
+        header: "Nom",
+      }),
+      columnHelper.accessor("firstName", {
+        cell: (props) => startCase(props.getValue()?.toLowerCase() || ""),
+        header: "Prénom",
+      }),
+      columnHelper.accessor("displayName", {
+        cell: (props) => startCase(props.getValue()?.toLowerCase() || ""),
+        header: "Affichage",
+      }),
       columnHelper.accessor("student", {
         cell: (props) =>
           props.row.original.admin ? (

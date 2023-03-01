@@ -5,6 +5,7 @@ import checkRecaptcha from "common/check-recaptcha";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
 import { registerServerSchema } from "common/validation/auth";
+import { startCase, upperCase } from "lodash";
 import { guestProcedure, router } from "server/trpc/trpc";
 
 const authRouter = router({
@@ -25,9 +26,11 @@ const authRouter = router({
         await ctx.prisma.user.create({
           data: {
             email: input.email,
-            firstName: input.firstName,
-            lastName: input.lastName,
-            displayName: input.displayName,
+            firstName: startCase(input.firstName.toLowerCase()),
+            lastName: upperCase(input.lastName),
+            displayName: input.displayName
+              ? startCase(input.displayName.toLowerCase())
+              : undefined,
             student: input.student || false,
             certificate: input.certificate,
             rpps: BigInt(input.rpps),
