@@ -4,7 +4,7 @@ import checkRecaptcha from "common/check-recaptcha";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
 import UserNotApproved from "common/errors/UserNotApproved";
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prisma from "server/prisma/client";
 
@@ -41,7 +41,7 @@ export default NextAuth({
   },
   providers: [
     Credentials({
-      authorize: async (credentials, req) => {
+      authorize: async (credentials, req): Promise<User | null> => {
         if (
           !credentials?.email ||
           !credentials.password ||
@@ -76,9 +76,11 @@ export default NextAuth({
             user.password.replace(/^\$2y/, "$2a")
           )
         ) {
+          const { password, ...sessionUser } = user;
+
           // Credentials match with records
-          // Returning user
-          return user;
+          // Returning user without password field
+          return sessionUser;
         }
 
         return null;

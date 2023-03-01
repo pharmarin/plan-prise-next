@@ -1,11 +1,12 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ContextType } from "server/trpc/context";
+import SuperJSON from "superjson";
 import { setLocale } from "yup";
 import { fr } from "yup-locales";
 
 setLocale(fr);
 
-const tRPC = initTRPC.context<ContextType>().create();
+const tRPC = initTRPC.context<ContextType>().create({ transformer: SuperJSON });
 
 export const router = tRPC.router;
 
