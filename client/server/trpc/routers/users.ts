@@ -26,6 +26,7 @@ const usersRouter = router({
           id: true,
           lastName: true,
           firstName: true,
+          displayName: true,
           student: true,
           admin: true,
           rpps: true,

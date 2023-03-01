@@ -16,7 +16,8 @@ const seeder = async () => {
               email: user.mail,
               password: user.password,
               createdAt: new Date(user.inscription),
-              approvedAt: new Date(user.inscription),
+              approvedAt:
+                user.active === "1" ? new Date(user.inscription) : null,
             })),
           });
         }
