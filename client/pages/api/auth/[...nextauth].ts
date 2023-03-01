@@ -26,11 +26,9 @@ export default NextAuth({
       return token;
     },
     session: ({ session, user, token }) => {
-      if (token && token.user) {
-        session.user.firstName = token.user.firstName;
-        session.user.lastName = token.user.lastName;
-        session.user.admin = token.user.admin;
-      }
+      session.user.firstName = token?.user?.firstName ?? user.firstName;
+      session.user.lastName = token?.user?.lastName ?? user.lastName;
+      session.user.admin = token?.user?.admin ?? user.admin;
 
       return session;
     },
