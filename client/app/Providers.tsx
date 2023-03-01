@@ -5,7 +5,6 @@ import { httpBatchLink } from "@trpc/react-query";
 import { getBaseUrl, trpc } from "common/trpc";
 import { SessionProvider } from "next-auth/react";
 import { PropsWithChildren, useState } from "react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
 
 const Providers: React.FC<PropsWithChildren> = ({ children }) => {
@@ -25,17 +24,7 @@ const Providers: React.FC<PropsWithChildren> = ({ children }) => {
     <SessionProvider>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          <GoogleReCaptchaProvider
-            reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
-            scriptProps={{
-              async: false,
-              defer: false,
-              appendTo: "head",
-              nonce: undefined,
-            }}
-          >
-            {children}
-          </GoogleReCaptchaProvider>
+          {children}
         </QueryClientProvider>
       </trpc.Provider>
     </SessionProvider>
