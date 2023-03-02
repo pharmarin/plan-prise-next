@@ -1,4 +1,4 @@
-import RoundedIcon from "components/icons/RoundedIcon";
+import RoundedIcon from "@/components/icons/RoundedIcon";
 import React from "react";
 
 const Avatar: React.FC<{ firstName: string; lastName: string }> = ({

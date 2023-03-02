@@ -1,5 +1,5 @@
-import { getRegisterSchema } from "common/validation/auth";
-import setLanguage from "common/validation/locale";
+import { getRegisterSchema } from "@/common/validation/auth";
+import setLanguage from "@/common/validation/locale";
 import * as yup from "yup";
 
 setLanguage();

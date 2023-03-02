@@ -1,16 +1,16 @@
-import { Prisma } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
-import bcrypt from "bcrypt";
-import checkRecaptcha from "common/check-recaptcha";
-import PasswordMismatch from "common/errors/PasswordMismatch";
-import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
-import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
+import checkRecaptcha from "@/common/check-recaptcha";
+import PasswordMismatch from "@/common/errors/PasswordMismatch";
+import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
+import ReCaptchaVerificationError from "@/common/errors/ReCaptchaVerificationError";
 import {
   getRegisterSchema,
   passwordVerifySchema,
-} from "common/validation/auth";
+} from "@/common/validation/auth";
+import { authProcedure, guestProcedure, router } from "@/server/trpc/trpc";
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
-import { authProcedure, guestProcedure, router } from "server/trpc/trpc";
 
 const authRouter = router({
   /**

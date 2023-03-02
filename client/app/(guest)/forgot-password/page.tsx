@@ -1,9 +1,9 @@
 "use client";
 
-import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
-import Form from "components/forms/Form";
-import Button from "components/forms/inputs/Button";
-import FormikField from "components/forms/inputs/FormikField";
+import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
+import Form from "@/components/forms/Form";
+import Button from "@/components/forms/inputs/Button";
+import FormikField from "@/components/forms/inputs/FormikField";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import * as yup from "yup";

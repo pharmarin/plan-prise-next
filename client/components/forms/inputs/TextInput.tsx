@@ -1,5 +1,5 @@
-import FormInfo from "components/forms/FormInfo";
-import FormLabel from "components/forms/FormLabel";
+import FormInfo from "@/components/forms/FormInfo";
+import FormLabel from "@/components/forms/FormLabel";
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 

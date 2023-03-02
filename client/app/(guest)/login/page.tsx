@@ -1,11 +1,11 @@
 "use client";
 
-import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
-import { loginSchema } from "common/validation/auth";
-import Form from "components/forms/Form";
-import FormInfo from "components/forms/FormInfo";
-import Button from "components/forms/inputs/Button";
-import FormikField from "components/forms/inputs/FormikField";
+import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
+import { loginSchema } from "@/common/validation/auth";
+import Form from "@/components/forms/Form";
+import FormInfo from "@/components/forms/FormInfo";
+import Button from "@/components/forms/inputs/Button";
+import FormikField from "@/components/forms/inputs/FormikField";
 import { Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";

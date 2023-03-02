@@ -1,12 +1,12 @@
 "use client";
 
+import { trpc } from "@/common/trpc";
+import { updateUserPasswordSchema } from "@/common/validation/users";
+import Form from "@/components/forms/Form";
+import FormInfo from "@/components/forms/FormInfo";
+import Button from "@/components/forms/inputs/Button";
+import FormikField from "@/components/forms/inputs/FormikField";
 import { User } from "@prisma/client";
-import { trpc } from "common/trpc";
-import { updateUserPasswordSchema } from "common/validation/users";
-import Form from "components/forms/Form";
-import FormInfo from "components/forms/FormInfo";
-import Button from "components/forms/inputs/Button";
-import FormikField from "components/forms/inputs/FormikField";
 import { Formik } from "formik";
 
 const EditPassword: React.FC<

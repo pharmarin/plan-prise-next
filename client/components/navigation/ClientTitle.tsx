@@ -1,7 +1,7 @@
 "use client";
 
-import { useNavigationDispatch } from "components/NavigationContextProvider";
-import { NavigationActionKind } from "types";
+import { useNavigationDispatch } from "@/components/NavigationContextProvider";
+import { NavigationActionKind } from "@/types";
 
 const ClientTitle: React.FC<{ title: string }> = ({ title }) => {
   const dispatch = useNavigationDispatch();

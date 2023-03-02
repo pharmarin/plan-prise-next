@@ -1,18 +1,18 @@
 "use client";
 
-import { CheckBadgeIcon } from "@heroicons/react/20/solid";
-import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
-import convertToBase64 from "common/file-to-base64";
-import { trpc } from "common/trpc";
+import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
+import convertToBase64 from "@/common/file-to-base64";
+import { trpc } from "@/common/trpc";
 import {
   ALLOWED_UPLOADED_FILE_TYPES,
   getRegisterSchema,
   MAX_UPLOADED_FILE_SIZE,
-} from "common/validation/auth";
-import Form from "components/forms/Form";
-import FormInfo from "components/forms/FormInfo";
-import Button from "components/forms/inputs/Button";
-import FormikField from "components/forms/inputs/FormikField";
+} from "@/common/validation/auth";
+import Form from "@/components/forms/Form";
+import FormInfo from "@/components/forms/FormInfo";
+import Button from "@/components/forms/inputs/Button";
+import FormikField from "@/components/forms/inputs/FormikField";
+import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

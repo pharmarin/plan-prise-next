@@ -1,6 +1,6 @@
 "use client";
 
-import AdminGuardError from "common/errors/AdminGuardError";
+import AdminGuardError from "@/common/errors/AdminGuardError";
 import { useSession } from "next-auth/react";
 import { PropsWithChildren, useEffect } from "react";
 

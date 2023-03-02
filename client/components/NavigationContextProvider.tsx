@@ -1,17 +1,17 @@
 "use client";
 
 import {
+  NavigationActionKind,
+  type NavigationAction,
+  type NavigationState,
+} from "@/types";
+import {
   createContext,
   Dispatch,
   PropsWithChildren,
   useContext,
   useReducer,
 } from "react";
-import {
-  NavigationActionKind,
-  type NavigationAction,
-  type NavigationState,
-} from "types";
 
 const NavigationContext = createContext<NavigationState>({ title: "" });
 const NavigationDispatchContext = createContext<

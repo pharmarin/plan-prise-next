@@ -1,5 +1,5 @@
+import type { AppRouter } from "@/server/trpc/routers/app";
 import { createTRPCReact } from "@trpc/react-query";
-import type { AppRouter } from "server/trpc/routers/app";
 
 export const getBaseUrl = () => {
   if (typeof window !== "undefined")

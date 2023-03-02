@@ -1,11 +1,11 @@
-import DeleteUser from "app/(auth)/profil/DeleteUser";
-import EditInformations from "app/(auth)/profil/EditInformations";
-import EditPassword from "app/(auth)/profil/EditPassword";
-import UserNotLoaded from "common/errors/UserNotLoaded";
-import Title from "components/navigation/Title";
+import DeleteUser from "@/app/(auth)/profil/DeleteUser";
+import EditInformations from "@/app/(auth)/profil/EditInformations";
+import EditPassword from "@/app/(auth)/profil/EditPassword";
+import UserNotLoaded from "@/common/errors/UserNotLoaded";
+import Title from "@/components/navigation/Title";
+import { nextAuthOptions } from "@/pages/api/auth/[...nextauth]";
+import prisma from "@/server/prisma/client";
 import { getServerSession } from "next-auth";
-import { nextAuthOptions } from "pages/api/auth/[...nextauth]";
-import prisma from "server/prisma/client";
 
 const PAGE_TITLE = "Profil";
 

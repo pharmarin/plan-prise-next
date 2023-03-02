@@ -1,12 +1,12 @@
+import checkRecaptcha from "@/common/check-recaptcha";
+import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
+import ReCaptchaVerificationError from "@/common/errors/ReCaptchaVerificationError";
+import UserNotApproved from "@/common/errors/UserNotApproved";
+import prisma from "@/server/prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
-import checkRecaptcha from "common/check-recaptcha";
-import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
-import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
-import UserNotApproved from "common/errors/UserNotApproved";
 import NextAuth, { AuthOptions, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import prisma from "server/prisma/client";
 
 export const nextAuthOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),

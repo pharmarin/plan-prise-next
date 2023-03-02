@@ -1,4 +1,4 @@
-import FormLabel from "components/forms/FormLabel";
+import FormLabel from "@/components/forms/FormLabel";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 

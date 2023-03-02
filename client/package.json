@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
     "cypress": "cypress open"
   },
   "dependencies": {
@@ -64,6 +65,11 @@
     "tailwindcss": "^3.2.7",
     "ts-node": "^10.9.1",
     "turbo": "^1.8.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals"
+    ]
   },
   "prisma": {
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} server/prisma/seed.ts",

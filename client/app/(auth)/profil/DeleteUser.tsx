@@ -1,10 +1,10 @@
 "use client";
 
+import { trpc } from "@/common/trpc";
+import FormInfo from "@/components/forms/FormInfo";
+import Button from "@/components/forms/inputs/Button";
+import ConfirmPasswordModal from "@/components/overlays/modals/ConfirmPasswordModal";
 import { User } from "@prisma/client";
-import { trpc } from "common/trpc";
-import FormInfo from "components/forms/FormInfo";
-import Button from "components/forms/inputs/Button";
-import ConfirmPasswordModal from "components/overlays/modals/ConfirmPasswordModal";
 import React, { useState } from "react";
 
 const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {

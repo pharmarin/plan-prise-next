@@ -1,7 +1,7 @@
+import prisma from "@/server/prisma/client";
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { getSession } from "next-auth/react";
-import prisma from "server/prisma/client";
 
 export const createContext = async (ctx: trpcNext.CreateNextContextOptions) => {
   const { req, res } = ctx;

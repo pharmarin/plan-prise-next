@@ -1,6 +1,6 @@
-import { AuthProviders } from "app/Providers";
-import AuthGuard from "components/guards/AuthGuard";
-import Navbar from "components/navigation/Navbar";
+import { AuthProviders } from "@/app/Providers";
+import AuthGuard from "@/components/guards/AuthGuard";
+import Navbar from "@/components/navigation/Navbar";
 import { PropsWithChildren } from "react";
 
 const AuthLayout: React.FC<PropsWithChildren> = ({ children }) => {

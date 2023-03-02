@@ -1,6 +1,6 @@
-import CheckboxInput from "components/forms/inputs/CheckboxInput";
-import FileInput from "components/forms/inputs/FileInput";
-import TextInput from "components/forms/inputs/TextInput";
+import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
+import FileInput from "@/components/forms/inputs/FileInput";
+import TextInput from "@/components/forms/inputs/TextInput";
 import { FieldAttributes, useField, useFormikContext } from "formik";
 import React from "react";
 

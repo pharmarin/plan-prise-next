@@ -1,4 +1,4 @@
-import setLanguage from "common/validation/locale";
+import setLanguage from "@/common/validation/locale";
 import * as yup from "yup";
 
 export const ALLOWED_UPLOADED_FILE_TYPES = [

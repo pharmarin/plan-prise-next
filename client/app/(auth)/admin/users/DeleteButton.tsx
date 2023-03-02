@@ -1,7 +1,7 @@
+import { trpc } from "@/common/trpc";
+import Button from "@/components/forms/inputs/Button";
+import Spinner from "@/components/icons/Spinner";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import { trpc } from "common/trpc";
-import Button from "components/forms/inputs/Button";
-import Spinner from "components/icons/Spinner";
 import { User } from "next-auth";
 
 const DeleteButton: React.FC<{

@@ -1,3 +1,5 @@
+import Button from "@/components/forms/inputs/Button";
+import Select from "@/components/forms/inputs/Select";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
@@ -5,8 +7,6 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 import { CoreInstance, PaginationInstance } from "@tanstack/react-table";
-import Button from "components/forms/inputs/Button";
-import Select from "components/forms/inputs/Select";
 import React from "react";
 
 const Pagination: React.FC<{

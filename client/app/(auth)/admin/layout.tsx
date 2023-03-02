@@ -1,4 +1,4 @@
-import AdminGuard from "components/guards/AdminGuard";
+import AdminGuard from "@/components/guards/AdminGuard";
 import { PropsWithChildren } from "react";
 
 const AdminLayout: React.FC<PropsWithChildren> = ({ children }) => {

@@ -1,12 +1,12 @@
-import { User } from "@prisma/client";
-import bcrypt from "bcrypt";
-import PasswordMismatch from "common/errors/PasswordMismatch";
+import PasswordMismatch from "@/common/errors/PasswordMismatch";
 import {
   getUpdateUserSchema,
   requireIdSchema,
   updateUserPasswordSchema,
-} from "common/validation/users";
-import { adminProcedure, authProcedure, router } from "server/trpc/trpc";
+} from "@/common/validation/users";
+import { adminProcedure, authProcedure, router } from "@/server/trpc/trpc";
+import { User } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const exclude = <User, Key extends keyof User>(
   user: User,

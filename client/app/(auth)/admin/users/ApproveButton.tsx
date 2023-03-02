@@ -1,10 +1,10 @@
 "use client";
 // Because of the use of tRPC (useMutation)
 
+import { trpc } from "@/common/trpc";
+import Button from "@/components/forms/inputs/Button";
+import Spinner from "@/components/icons/Spinner";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { trpc } from "common/trpc";
-import Button from "components/forms/inputs/Button";
-import Spinner from "components/icons/Spinner";
 import { User } from "next-auth";
 import React from "react";
 

@@ -1,4 +1,4 @@
-import CustomError from "common/errors/CustomError";
+import CustomError from "@/common/errors/CustomError";
 
 export default class UnexpectedMethod extends CustomError {
   constructor() {

@@ -1,5 +1,5 @@
-import AuthLayout from "app/(auth)/layout";
-import Home from "app/Home";
+import AuthLayout from "@/app/(auth)/layout";
+import Home from "@/app/Home";
 
 const Index = () => {
   return (
