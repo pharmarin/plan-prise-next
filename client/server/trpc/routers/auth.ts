@@ -2,13 +2,26 @@ import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import checkRecaptcha from "common/check-recaptcha";
+import PasswordMismatch from "common/errors/PasswordMismatch";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
-import { registerServerSchema } from "common/validation/auth";
+import {
+  passwordVerifySchema,
+  registerServerSchema,
+} from "common/validation/auth";
 import { startCase, upperCase } from "lodash";
-import { guestProcedure, router } from "server/trpc/trpc";
+import { authProcedure, guestProcedure, router } from "server/trpc/trpc";
 
 const authRouter = router({
+  /**
+   * Registers the user
+   *
+   * @argument {typeof User} RegisterForm values
+   *
+   * @returns {string} "success" on succeed
+   *
+   * @throws Error on fail
+   */
   register: guestProcedure
     .input(registerServerSchema)
     .mutation(async ({ ctx, input }) => {
@@ -54,6 +67,20 @@ const authRouter = router({
       }
 
       return "success";
+    }),
+  passwordVerify: authProcedure
+    .input(passwordVerifySchema)
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findUniqueOrThrow({
+        where: { id: input.id },
+        select: { password: true },
+      });
+
+      if (await bcrypt.compare(input.password, user.password)) {
+        return "success";
+      }
+
+      throw new PasswordMismatch();
     }),
 });
 

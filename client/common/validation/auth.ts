@@ -79,5 +79,10 @@ export const registerServerSchema = registerSchema.shape({
   }),
 });
 
+export const passwordVerifySchema = yup.object({
+  id: yup.string().required(),
+  password: registerSchema.fields.password,
+});
+
 export type ILogin = typeof loginSchema;
 export type ISignUp = typeof registerSchema;
