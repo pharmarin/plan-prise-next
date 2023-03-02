@@ -1,21 +1,17 @@
-import { Errors, ResourceObject } from "jsonapi-typescript";
 import { NavbarIcons } from "lib/redux/navigation/slice";
 
-/**
- * REDUX
- */
+// NAVIGATION
 
-// AUTH
+export enum NavigationActionKind {
+  SET_TITLE = "SET_TITLE",
+}
 
-export type AuthState = {
-  user: { isLoading: boolean; data?: UserObject };
-  login: {
-    isLoading: boolean;
-    error?: Errors;
-  };
+type NavigationSetTitleAction = {
+  type: NavigationActionKind.SET_TITLE;
+  payload: string;
 };
 
-// NAVIGATION
+export type NavigationAction = NavigationSetTitleAction;
 
 export type NavigationItem = {
   icon: NavbarIcons;
@@ -27,26 +23,3 @@ export type NavigationState = {
   returnTo?: NavigationItem;
   title: string;
 };
-
-export type ResourcesState = {
-  [type: string]: { [id: string]: ResourceObject };
-};
-
-/**
- * MODELS
- */
-
-type UserAttributes = {
-  admin: boolean;
-  active: boolean;
-  firstName: string;
-  lastName: string;
-  name: string;
-  displayName?: string;
-  email: string;
-  rpps?: number;
-  student: boolean;
-  createdAt?: string;
-};
-
-export type UserObject = ResourceObject<"users", UserAttributes>;

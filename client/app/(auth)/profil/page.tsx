@@ -2,16 +2,18 @@ import DeleteUser from "app/(auth)/profil/DeleteUser";
 import EditInformations from "app/(auth)/profil/EditInformations";
 import EditPassword from "app/(auth)/profil/EditPassword";
 import UserNotLoaded from "common/errors/UserNotLoaded";
+import Title from "components/navigation/Title";
 import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "pages/api/auth/[...nextauth]";
 import prisma from "server/prisma/client";
 
-const Profil = async () => {
-  const session = await getServerSession();
-  const user = await prisma.user.findUnique({
-    where: { email: session?.user.email || "" },
-  });
+const PAGE_TITLE = "Profil";
 
-  //useSetTitle("Profil");
+const Profil = async () => {
+  const session = await getServerSession(nextAuthOptions);
+  const user = await prisma.user.findUnique({
+    where: { id: session?.user.id || "" },
+  });
 
   if (!user) {
     throw new UserNotLoaded();
@@ -19,6 +21,8 @@ const Profil = async () => {
 
   return (
     <>
+      <Title title={PAGE_TITLE} />
+
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
@@ -90,3 +94,5 @@ const Profil = async () => {
 };
 
 export default Profil;
+
+export const metadata = { title: PAGE_TITLE };

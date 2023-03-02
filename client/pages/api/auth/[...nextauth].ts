@@ -4,11 +4,11 @@ import checkRecaptcha from "common/check-recaptcha";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
 import UserNotApproved from "common/errors/UserNotApproved";
-import NextAuth, { User } from "next-auth";
+import NextAuth, { AuthOptions, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prisma from "server/prisma/client";
 
-export default NextAuth({
+export const nextAuthOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     jwt: ({ token, user }) => {
@@ -98,4 +98,6 @@ export default NextAuth({
     }),
   ],
   session: { strategy: "jwt" },
-});
+};
+
+export default NextAuth(nextAuthOptions);

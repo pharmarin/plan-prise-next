@@ -1,21 +1,10 @@
-"use client";
-// Because of the GoogleRecaptchaProvider
-
+import { GuestProviders } from "app/Providers";
 import AuthGuard from "components/guards/AuthGuard";
 import { PropsWithChildren } from "react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
-      scriptProps={{
-        async: false,
-        defer: false,
-        appendTo: "head",
-        nonce: undefined,
-      }}
-    >
+    <GuestProviders>
       <AuthGuard guest>
         <div className="flex min-h-screen items-center p-4">
           <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white sm:flex-row">
@@ -50,7 +39,7 @@ const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
           </div>
         </div>
       </AuthGuard>
-    </GoogleReCaptchaProvider>
+    </GuestProviders>
   );
 };
 

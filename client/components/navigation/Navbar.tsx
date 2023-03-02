@@ -2,6 +2,7 @@ import { trpc } from "common/trpc";
 import Avatar from "components/icons/Avatar";
 import Spinner from "components/icons/Spinner";
 import NavbarLink from "components/navigation/NavbarLink";
+import { useNavigation } from "components/NavigationContextProvider";
 import Dropdown from "components/overlays/Dropdown";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -10,9 +11,9 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
   const { data } = useSession();
+  const { title } = useNavigation();
   const { data: user } = trpc.users.current.useQuery();
 
-  //const navTitle = useSelector(selectTitle);
   const isHome = pathname === "/";
 
   return (
@@ -37,7 +38,7 @@ const Navbar = () => {
         id="navbar-center"
         className="flex w-fit items-center text-xl font-semibold text-teal-900"
       >
-        <div>{/* TODO: navTitle */}</div>
+        <div>{title}</div>
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">
