@@ -1,6 +1,4 @@
-import { NavbarIcons } from "lib/redux/navigation/slice";
-
-// NAVIGATION
+import { navbarIcons } from "components/navigation/NavbarLink";
 
 export enum NavigationActionKind {
   SET_TITLE = "SET_TITLE",
@@ -13,10 +11,15 @@ type NavigationSetTitleAction = {
 
 export type NavigationAction = NavigationSetTitleAction;
 
+export type NavbarIcons = keyof typeof navbarIcons;
+
 export type NavigationItem = {
   icon: NavbarIcons;
   className?: string;
-} & ({ path: string } | { event: string });
+} & (
+  | { path: __next_route_internal_types__.RouteImpl<string> }
+  | { event: string }
+);
 
 export type NavigationState = {
   options?: NavigationItem[];
