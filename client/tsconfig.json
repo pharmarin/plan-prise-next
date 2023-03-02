@@ -8,11 +8,7 @@
     "isolatedModules": true,
     "incremental": true,
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -24,7 +20,8 @@
         "name": "next"
       }
     ],
-    "target": "es2017"
+    "target": "es2017",
+    "types": ["cypress", "node"]
   },
   "include": [
     "next-env.d.ts",
@@ -33,7 +30,5 @@
     ".next/types/**/*.ts",
     "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
