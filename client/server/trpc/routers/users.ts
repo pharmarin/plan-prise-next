@@ -1,5 +1,11 @@
 import { User } from "@prisma/client";
-import { getUpdateUserSchema, requireIdSchema } from "common/validation/users";
+import bcrypt from "bcrypt";
+import PasswordMismatch from "common/errors/PasswordMismatch";
+import {
+  getUpdateUserSchema,
+  requireIdSchema,
+  updateUserPasswordSchema,
+} from "common/validation/users";
 import { adminProcedure, authProcedure, router } from "server/trpc/trpc";
 
 const exclude = <User, Key extends keyof User>(
@@ -125,6 +131,30 @@ const usersRouter = router({
         })
       )
     ),
+  /**
+   * Updates user password
+   *
+   * @argument {string} password New password
+   */
+  updatePassword: authProcedure
+    .input(updateUserPasswordSchema)
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findUniqueOrThrow({
+        where: { id: ctx.user.id },
+        select: { password: true },
+      });
+
+      if (await bcrypt.compare(input.current_password, user.password)) {
+        await ctx.prisma.user.update({
+          where: { id: ctx.user.id },
+          data: { password: await bcrypt.hash(input.password, 10) },
+        });
+
+        return "success";
+      }
+
+      throw new PasswordMismatch();
+    }),
 });
 
 export default usersRouter;

@@ -1,15 +1,19 @@
 "use client";
 
 import { User } from "@prisma/client";
+import { trpc } from "common/trpc";
+import { updateUserPasswordSchema } from "common/validation/users";
 import Form from "components/forms/Form";
+import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import { Formik } from "formik";
-import * as yup from "yup";
 
 const EditPassword: React.FC<
   { user: User } | { email: string; token: string }
 > = (props) => {
+  const { mutateAsync, error } = trpc.users.updatePassword.useMutation();
+
   return (
     <Formik
       initialValues={{
@@ -20,47 +24,13 @@ const EditPassword: React.FC<
         token: "token" in props ? props.token : "",
       }}
       onSubmit={async (values) => {
-        /* // TODO
-        "user" in props
-          ? await props.user
-              .patch(
-                {
-                  ...props.user.identifier,
-                  attributes: {
-                    current_password: values.current_password,
-                    password: values.password,
-                    password_confirmation: values.password_confirmation,
-                  },
-                },
-                "/users/update-password"
-              )
-              .catch((error: AxiosError<DocWithErrors>) => {
-                setErrors(error.response?.data.errors);
-              })
-          : new User().post({
-              type: "users",
-              attributes: {
-                email: values.email,
-                password: values.password,
-                password_confirmation: values.password_confirmation,
-                token: values.token,
-              },
-            }); */
+        await mutateAsync({
+          current_password: values.current_password,
+          password: values.password,
+          password_confirmation: values.password_confirmation,
+        });
       }}
-      validationSchema={yup.object().shape({
-        current_password: yup.string().required().label("Mot de passe actuel"),
-        password: yup
-          .string()
-          .min(8)
-          .max(20)
-          .required()
-          .label("Nouveau mot de passe"),
-        password_confirmation: yup
-          .string()
-          .oneOf([yup.ref("password")])
-          .required()
-          .label("Confirmation du nouveau mot de passe"),
-      })}
+      validationSchema={updateUserPasswordSchema}
     >
       {({ handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
@@ -97,7 +67,14 @@ const EditPassword: React.FC<
             placeholder="Confirmation du nouveau mot de passe"
             type="password"
           />
-          {/* <ServerErrors errors={errors} /> */}
+
+          {error && (
+            <FormInfo color="red">
+              Une erreur est survenue pendant l&apos;enregistrement. Veuillez
+              vérifier le mot de passe fourni.{" "}
+            </FormInfo>
+          )}
+
           <Button color="primary" loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe
           </Button>
