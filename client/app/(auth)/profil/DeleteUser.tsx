@@ -5,12 +5,10 @@ import { trpc } from "common/trpc";
 import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import ConfirmPasswordModal from "components/overlays/modals/ConfirmPasswordModal";
-import { Errors } from "jsonapi-typescript";
 import React, { useState } from "react";
 
 const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
   const [showForm, setShowForm] = useState(false);
-  const [errors, setErrors] = useState<Errors | undefined>(undefined);
 
   const { mutateAsync: passwordVerify, error } =
     trpc.auth.passwordVerify.useMutation();

@@ -1,3 +1,5 @@
+"use client";
+
 import { trpc } from "common/trpc";
 import Avatar from "components/icons/Avatar";
 import Spinner from "components/icons/Spinner";
@@ -70,7 +72,7 @@ const Navbar = () => {
                 ? [
                     {
                       label: "Utilisateurs",
-                      path: "/admin/users",
+                      path: "/admin/users" as const,
                     },
                   ]
                 : []),

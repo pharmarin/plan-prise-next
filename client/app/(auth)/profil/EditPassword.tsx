@@ -4,17 +4,12 @@ import { User } from "@prisma/client";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
-import ServerErrors from "components/forms/ServerErrors";
 import { Formik } from "formik";
-import { Errors } from "jsonapi-typescript";
-import { useState } from "react";
 import * as yup from "yup";
 
 const EditPassword: React.FC<
   { user: User } | { email: string; token: string }
 > = (props) => {
-  const [errors, setErrors] = useState<Errors | undefined>(undefined);
-
   return (
     <Formik
       initialValues={{
@@ -25,9 +20,8 @@ const EditPassword: React.FC<
         token: "token" in props ? props.token : "",
       }}
       onSubmit={async (values) => {
-        setErrors(undefined);
-
-        /* "user" in props
+        /* // TODO
+        "user" in props
           ? await props.user
               .patch(
                 {
@@ -103,7 +97,7 @@ const EditPassword: React.FC<
             placeholder="Confirmation du nouveau mot de passe"
             type="password"
           />
-          <ServerErrors errors={errors} />
+          {/* <ServerErrors errors={errors} /> */}
           <Button color="primary" loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe
           </Button>

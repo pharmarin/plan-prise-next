@@ -7,8 +7,8 @@ import { useSearchParams } from "next/navigation";
 const PasswordReset = () => {
   const searchParams = useSearchParams();
 
-  const email = searchParams.get("email");
-  const token = searchParams.get("token");
+  const email = searchParams?.get("email");
+  const token = searchParams?.get("token");
 
   if (!email || !token) {
     throw new PasswordResetErrorMissingParam();

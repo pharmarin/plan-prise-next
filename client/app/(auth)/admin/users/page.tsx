@@ -310,21 +310,6 @@ const Users = () => {
           </TableRow>
         </TableFooter>
       </Table>
-
-      {/* <AsyncTable
-        filters={{
-          pending: {
-            label: "Utilisateurs à approuver",
-            filter: {
-              field: "approvedAt",
-              value: "",
-            },
-          },
-          all: { label: "Tous les utilisateurs", filter: undefined },
-        }}
-        searchKey="lastName"
-        sortBy="createdAt"
-      /> */}
     </div>
   );
 };

@@ -6,8 +6,8 @@ import convertToBase64 from "common/file-to-base64";
 import { trpc } from "common/trpc";
 import {
   ALLOWED_UPLOADED_FILE_TYPES,
+  getRegisterSchema,
   MAX_UPLOADED_FILE_SIZE,
-  registerSchema,
 } from "common/validation/auth";
 import Form from "components/forms/Form";
 import FormInfo from "components/forms/FormInfo";
@@ -83,7 +83,7 @@ const Register = () => {
           });
         }}
         validateOnMount
-        validationSchema={registerSchema}
+        validationSchema={getRegisterSchema}
       >
         {({ errors, handleSubmit, isSubmitting, values }) => (
           <Form className="flex flex-col" onSubmit={handleSubmit}>

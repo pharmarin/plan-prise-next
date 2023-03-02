@@ -9,7 +9,10 @@ const Dropdown: React.FC<{
   buttonContent: React.ReactElement | string;
   buttonProps?: any;
   className?: string;
-  items: ({ label: string } & ({ path: string } | { action: () => void }))[];
+  items: ({ label: string } & (
+    | { path: __next_route_internal_types__.RouteImpl<string> }
+    | { action: () => void }
+  ))[];
 }> = ({ buttonContent, buttonProps, className, items }) => {
   return (
     <Menu>

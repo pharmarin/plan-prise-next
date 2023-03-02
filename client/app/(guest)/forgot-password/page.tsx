@@ -1,15 +1,15 @@
 "use client";
 
+import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import Form from "components/forms/Form";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import { Formik } from "formik";
-import { useRef } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import * as yup from "yup";
 
 const ForgotPassword = () => {
-  const reCaptchaRef = useRef<ReCAPTCHA>(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   return (
     <Formik
@@ -18,13 +18,11 @@ const ForgotPassword = () => {
         email: "",
       }}
       onSubmit={async (values, { setSubmitting }) => {
-        if (!reCaptchaRef) {
-          throw new Error("Le service ReCAPTCHA n'a pas pu être chargé");
+        if (!executeRecaptcha) {
+          throw new ReCaptchaNotLoaded();
         }
 
-        if (!reCaptchaRef.current?.getValue()) {
-          await (reCaptchaRef.current as ReCAPTCHA).executeAsync();
-        }
+        const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
         try {
           /* TODO
@@ -35,8 +33,6 @@ const ForgotPassword = () => {
         } catch (error) {
           setSubmitting(false);
         }
-
-        reCaptchaRef.current?.reset();
       }}
       validationSchema={yup.object().shape({
         email: yup.string().email().required().label("Adresse mail"),
@@ -47,12 +43,6 @@ const ForgotPassword = () => {
           <h3 className="mb-4 text-center text-lg font-bold">
             Mot de passe oublié
           </h3>
-
-          <ReCAPTCHA
-            ref={reCaptchaRef}
-            size="invisible"
-            sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
-          />
 
           <FormikField
             id="reset_email"
