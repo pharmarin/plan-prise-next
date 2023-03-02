@@ -1,25 +1,6 @@
 import { Errors, ResourceObject } from "jsonapi-typescript";
 import { NavbarIcons } from "lib/redux/navigation/slice";
 
-export type LoginAttributes = {
-  email: string;
-  password: string;
-  remember?: boolean;
-};
-
-export type RegisterAttributes = {
-  recaptcha: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  rpps?: string;
-  certificate?: Blob;
-  student: boolean;
-  displayName: string;
-  password: string;
-  password_confirmation: string;
-};
-
 /**
  * REDUX
  */
