@@ -1,4 +1,6 @@
+import { trpc } from "common/trpc";
 import Avatar from "components/icons/Avatar";
+import Spinner from "components/icons/Spinner";
 import NavbarLink from "components/navigation/NavbarLink";
 import Dropdown from "components/overlays/Dropdown";
 import { signOut, useSession } from "next-auth/react";
@@ -8,6 +10,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
   const { data } = useSession();
+  const { data: user } = trpc.users.current.useQuery();
 
   //const navTitle = useSelector(selectTitle);
   const isHome = pathname === "/";
@@ -41,15 +44,19 @@ const Navbar = () => {
           <Dropdown
             buttonProps={{
               className:
-                "bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mx-3",
+                "bg-white flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mx-3",
             }}
             buttonContent={
               <>
                 <span className="sr-only">Ouvrir le menu utilisateur</span>
-                <Avatar
-                  firstName={data?.user?.firstName || "P"}
-                  lastName={data?.user?.lastName || "P"}
-                />
+                {user ? (
+                  <Avatar
+                    firstName={user.firstName || "P"}
+                    lastName={user.lastName || "P"}
+                  />
+                ) : (
+                  <Spinner className="text-gray-800" />
+                )}
               </>
             }
             className="z-20"

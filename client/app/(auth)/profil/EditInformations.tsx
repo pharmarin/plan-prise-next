@@ -1,25 +1,27 @@
 "use client";
 
 import { User } from "@prisma/client";
+import { trpc } from "common/trpc";
+import { getUpdateUserSchema } from "common/validation/users";
 import Form from "components/forms/Form";
+import FormInfo from "components/forms/FormInfo";
 import Button from "components/forms/inputs/Button";
 import FormikField from "components/forms/inputs/FormikField";
 import TextInput from "components/forms/inputs/TextInput";
-import ServerErrors from "components/forms/ServerErrors";
 import InfosModal from "components/overlays/modals/InfosModal";
 import { Formik } from "formik";
-import { Errors } from "jsonapi-typescript";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import * as yup from "yup";
 
 const EditInformations: React.FC<{
   user: User;
 }> = ({ user }) => {
-  const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [showModal, setShowModal] = useState<true | false | undefined>(
     undefined
   );
+
+  const trpcContext = trpc.useContext();
+  const { error, mutateAsync } = trpc.users.update.useMutation();
 
   useEffect(() => {
     if (showModal === undefined && user) {
@@ -44,7 +46,7 @@ const EditInformations: React.FC<{
     firstName: user.firstName || "",
     lastName: user.lastName || "",
     rpps: user.rpps || "",
-    student: user.student || "",
+    student: user.student || false,
   };
 
   return (
@@ -78,51 +80,12 @@ const EditInformations: React.FC<{
         enableReinitialize
         initialValues={initialValues}
         onSubmit={async (values) => {
-          setErrors(undefined);
+          await mutateAsync({ id: user.id, ...values });
 
-          /* await prisma.user
-            .update({ where: { id: user.id }, data: values })
-            .then((response) => {
-              if ("data" in response) {
-                // TODO: return dispatch(setUser(response.data as UserObject));
-              }
-
-              setErrors([
-                {
-                  title:
-                    "Une erreur inconnue est survenue lors de la mise à jour l'utilisateur. ",
-                },
-              ]);
-            })
-            .catch((error: AxiosError<DocWithErrors>) =>
-              setErrors(error.response?.data.errors)
-            ); */
+          trpcContext.users.current.invalidate();
         }}
         validateOnMount
-        validationSchema={yup.object().shape({
-          firstName: yup.string().required().min(3).max(50).label("Prénom"),
-          lastName: yup.string().required().min(3).max(50).label("Nom"),
-          student: yup.boolean().required().label("Étudiant"),
-          rpps: yup
-            .mixed()
-            .when("student", {
-              is: false,
-              then: yup
-                .string()
-                .matches(/^[0-9]+$/, "RPPS ne doit contenir que des chiffres")
-                .required()
-                .min(11)
-                .max(11),
-            })
-            .label("RPPS"),
-          displayName: yup
-            .string()
-            .notRequired()
-            .min(3)
-            .max(50)
-            .label("Nom de la structure"),
-          email: yup.string().email().required().label("Adresse mail"),
-        })}
+        validationSchema={getUpdateUserSchema()}
       >
         {({ handleSubmit, isSubmitting, setFieldValue, values }) => (
           <Form onSubmit={handleSubmit}>
@@ -188,7 +151,14 @@ const EditInformations: React.FC<{
               placeholder="Adresse mail"
               type="email"
             />
-            <ServerErrors errors={errors} />
+
+            {error && (
+              <FormInfo color="red">
+                Une erreur est survenue lors de l&apos;enregistrement. Veuillez
+                réessayer.
+              </FormInfo>
+            )}
+
             <Button loading={isSubmitting} type="submit">
               Mettre à jour les informations
             </Button>

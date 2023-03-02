@@ -6,8 +6,8 @@ import PasswordMismatch from "common/errors/PasswordMismatch";
 import ReCaptchaNotLoaded from "common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "common/errors/ReCaptchaVerificationError";
 import {
+  getRegisterSchema,
   passwordVerifySchema,
-  registerServerSchema,
 } from "common/validation/auth";
 import { startCase, upperCase } from "lodash";
 import { authProcedure, guestProcedure, router } from "server/trpc/trpc";
@@ -16,14 +16,14 @@ const authRouter = router({
   /**
    * Registers the user
    *
-   * @argument {typeof User} RegisterForm values
+   * @argument {typeof User} input RegisterForm values
    *
    * @returns {string} "success" on succeed
    *
    * @throws Error on fail
    */
   register: guestProcedure
-    .input(registerServerSchema)
+    .input(getRegisterSchema(true))
     .mutation(async ({ ctx, input }) => {
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
 
@@ -68,6 +68,16 @@ const authRouter = router({
 
       return "success";
     }),
+  /**
+   * Verify that password matches records
+   *
+   * @argument {string} id User id
+   * @argument {string} password Password value
+   *
+   * @returns {string} "success" on succeed
+   *
+   * @throws {PasswordMismatch}
+   */
   passwordVerify: authProcedure
     .input(passwordVerifySchema)
     .mutation(async ({ ctx, input }) => {

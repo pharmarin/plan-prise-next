@@ -1,5 +1,6 @@
 "use client";
 
+import { trpc } from "common/trpc";
 import LoadingScreen from "components/overlays/screens/LoadingScreen";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -13,14 +14,15 @@ const AuthGuard: React.FC<PropsWithChildren<{ guest?: boolean }>> = ({
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { data: user } = trpc.users.current.useQuery();
 
   const isUnauthenticatedAuth = !guest && session.status === "unauthenticated";
   const isAuthenticatedGuestWithRedirect =
     guest && session.status === "authenticated";
   const isIncompleteProfile =
     session.status === "authenticated" &&
-    session.data.user &&
-    (!session.data.user.firstName || !session.data.user.lastName);
+    user &&
+    (!user.firstName || !user.lastName);
 
   useEffect(() => {
     if (isIncompleteProfile) {
@@ -37,7 +39,7 @@ const AuthGuard: React.FC<PropsWithChildren<{ guest?: boolean }>> = ({
       );
     }
     if (isAuthenticatedGuestWithRedirect) {
-      router.push(searchParams.get("redirectTo") || "/");
+      router.push(searchParams?.get("redirectTo") || "/");
     }
   }, [
     isAuthenticatedGuestWithRedirect,

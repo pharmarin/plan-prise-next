@@ -1,5 +1,6 @@
-import { requireIdSchema } from "common/validation/users";
-import { adminProcedure, router } from "server/trpc/trpc";
+import { User } from "@prisma/client";
+import { getUpdateUserSchema, requireIdSchema } from "common/validation/users";
+import { adminProcedure, authProcedure, router } from "server/trpc/trpc";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -11,16 +12,22 @@ const exclude = <User, Key extends keyof User>(
   return user;
 };
 
+const excludePassword = <User extends { password?: string }>(
+  user: User
+): Omit<User, "password"> => exclude(user, ["password"]);
+
+type UserSafe = Partial<User> & { password?: never };
+
 const usersRouter = router({
   /**
    * Get all users
    *
    * @argument {never}
    *
-   * @returns {User[]} Users
+   * @returns {UserSafe[]} Users
    */
   all: adminProcedure.query(
-    async ({ ctx }) =>
+    async ({ ctx }): Promise<UserSafe[]> =>
       await ctx.prisma.user.findMany({
         select: {
           id: true,
@@ -41,31 +48,44 @@ const usersRouter = router({
    *
    * @argument {string} id
    *
-   * @returns {User & { password: never }} Updated user
+   * @returns {UserSafe} Updated user
    */
-  approve: adminProcedure
-    .input(requireIdSchema)
-    .mutation(async ({ ctx, input }) =>
-      exclude(
+  approve: adminProcedure.input(requireIdSchema).mutation(
+    async ({ ctx, input }): Promise<UserSafe> =>
+      excludePassword(
         await ctx.prisma.user.update({
           where: { id: input },
           data: { approvedAt: new Date() },
-        }),
-        ["password"]
+        })
       )
-    ),
+  ),
   /**
    * Count users
    *
-   * @argument {never}
+   * @argument {void}
    *
    * @returns {number} User count
    */
   count: adminProcedure.query(async ({ ctx }) => await ctx.prisma.user.count()),
   /**
+   * Get current logged in user details
+   *
+   * @argument {void} (Uses user id stored in JWT/session)
+   *
+   * @returns {UserSafe}
+   */
+  current: authProcedure.query(
+    async ({ ctx }): Promise<UserSafe> =>
+      excludePassword(
+        await ctx.prisma.user.findUniqueOrThrow({
+          where: { id: ctx.user.id },
+        })
+      )
+  ),
+  /**
    * Delete user
    *
-   * @argument {string} User id
+   * @argument {string} id User id
    *
    * @returns {undefined}
    */
@@ -77,18 +97,35 @@ const usersRouter = router({
   /**
    * Get unique user
    *
-   * @argument {string} User id
+   * @argument {string} id User id
    *
-   * @returns {User} Found user
+   * @returns {UserSafe} Found user
    * @throws If not found
    */
-  unique: adminProcedure.input(requireIdSchema).query(async ({ ctx, input }) =>
-    exclude(
-      await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: input },
-      }),
-      ["password"]
-    )
+  unique: adminProcedure.input(requireIdSchema).query(
+    async ({ ctx, input }): Promise<UserSafe> =>
+      excludePassword(
+        await ctx.prisma.user.findUniqueOrThrow({
+          where: { id: input },
+        })
+      )
+  ),
+  /**
+   * Updates user
+   *
+   * @argument {Partial<UserSafe>} input EditInformations values
+   */
+  update: authProcedure.input(getUpdateUserSchema(true)).mutation(
+    async ({ ctx, input: { id, ...values } }): Promise<UserSafe> =>
+      excludePassword(
+        await ctx.prisma.user.update({
+          where: { id },
+          data: {
+            ...values,
+            rpps: values.rpps ? BigInt(values.rpps) : undefined,
+          },
+        })
+      )
   ),
 });
 

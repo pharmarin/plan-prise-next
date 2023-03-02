@@ -1,3 +1,6 @@
+"use client";
+// Because of the GoogleRecaptchaProvider
+
 import AuthGuard from "components/guards/AuthGuard";
 import { PropsWithChildren } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
@@ -52,7 +55,3 @@ const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default GuestLayout;
-
-export const metadata = {
-  title: "Plan de prise",
-};

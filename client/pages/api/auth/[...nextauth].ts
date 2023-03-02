@@ -11,13 +11,11 @@ import prisma from "server/prisma/client";
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user && user.email) {
+    jwt: ({ token, user }) => {
+      if (user && user.approvedAt) {
         if (!token.user) {
           token.user = {
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            id: user.id,
             admin: user.admin,
           };
         }
@@ -26,8 +24,7 @@ export default NextAuth({
       return token;
     },
     session: ({ session, user, token }) => {
-      session.user.firstName = token?.user?.firstName ?? user.firstName;
-      session.user.lastName = token?.user?.lastName ?? user.lastName;
+      session.user.id = token?.user?.id ?? user.id;
       session.user.admin = token?.user?.admin ?? user.admin;
 
       return session;
