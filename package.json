@@ -1,10 +1,26 @@
 {
+  "name": "plan-prise",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
+    "dev": "turbo dev --parallel",
+    "build": "turbo build",
+    "lint": "turbo lint && manypkg check",
+    "lint:fix": "turbo lint:fix && manypkg fix",
     "proxy": "valet proxy node.plan-prise http://localhost:3000"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@manypkg/cli": "^0.20.0",
     "@prettier/plugin-php": "^0.19.3",
+    "@types/node": "18.11.17",
+    "@types/prettier": "^2.7.2",
+    "eslint": "^8.34.0",
+    "eslint-config-plan-prise": "0.1.0",
     "prettier": "^2.8.4",
-    "prettier-plugin-tailwindcss": "^0.2.3"
+    "prettier-plugin-tailwindcss": "^0.2.3",
+    "turbo": "^1.8.3",
+    "typescript": "^4.9.5"
   }
 }

@@ -6,7 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import { CoreInstance, PaginationInstance } from "@tanstack/react-table";
+import { type CoreInstance, type PaginationInstance } from "@tanstack/react-table";
 import React from "react";
 
 const Pagination: React.FC<{

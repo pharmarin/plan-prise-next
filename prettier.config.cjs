@@ -9,11 +9,13 @@ const config = {
     },
   ],
   plugins: [
+    // @ts-ignore
     require("@prettier/plugin-php"),
+    // @ts-ignore
     require("prettier-plugin-tailwindcss"),
   ],
   tabWidth: 2,
-  tailwindConfig: "./client/tailwind.config.js",
+  tailwindConfig: "./packages/config/tailwindcss",
   useTabs: false,
 };
 

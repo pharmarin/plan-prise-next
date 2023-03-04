@@ -17,12 +17,12 @@ const ForgotPassword = () => {
         recaptcha: "",
         email: "",
       }}
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting }) => {
         if (!executeRecaptcha) {
           throw new ReCaptchaNotLoaded();
         }
 
-        const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+        //const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
         try {
           /* TODO

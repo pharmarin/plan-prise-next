@@ -6,8 +6,8 @@ import FormikField from "@/components/forms/inputs/FormikField";
 import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
-import { AppRouter } from "@/server/trpc/routers/app";
-import { TRPCClientErrorLike } from "@trpc/react-query";
+import { type AppRouter } from "@/server/trpc/routers/app";
+import { type TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
 import React from "react";
 

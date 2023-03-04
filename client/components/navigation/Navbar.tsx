@@ -78,7 +78,7 @@ const Navbar = () => {
                 : []),
               {
                 label: "Déconnexion",
-                action: () => signOut({ redirect: false }),
+                action: () => void signOut({ redirect: false }),
               },
             ]}
           />

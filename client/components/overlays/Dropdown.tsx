@@ -7,11 +7,11 @@ import { twMerge } from "tailwind-merge";
 
 const Dropdown: React.FC<{
   buttonContent: React.ReactElement | string;
-  buttonProps?: any;
+  buttonProps?: { className?: string };
   className?: string;
   items: ({ label: string } & (
     | { path: __next_route_internal_types__.RouteImpl<string> }
-    | { action: () => void }
+    | { action: () => void | Promise<() => void> }
   ))[];
 }> = ({ buttonContent, buttonProps, className, items }) => {
   return (

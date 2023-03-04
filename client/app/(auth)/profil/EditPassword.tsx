@@ -6,7 +6,7 @@ import Form from "@/components/forms/Form";
 import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 import { Formik } from "formik";
 
 const EditPassword: React.FC<

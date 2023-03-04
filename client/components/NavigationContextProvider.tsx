@@ -7,8 +7,8 @@ import {
 } from "@/types";
 import {
   createContext,
-  Dispatch,
-  PropsWithChildren,
+  type Dispatch,
+  type PropsWithChildren,
   useContext,
   useReducer,
 } from "react";

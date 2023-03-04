@@ -1,5 +1,5 @@
 import { styled, tw } from "classname-variants/react";
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 const RoundedIconBase: React.FC<PropsWithChildren<{ className?: string }>> = ({
