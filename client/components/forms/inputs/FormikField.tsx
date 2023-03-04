@@ -25,6 +25,7 @@ const FormikField: React.FC<
     ...field,
     ...props,
     disabled: (disableOnSubmit && isSubmitting) || disabled,
+    id: props.name,
     label,
   };
 
