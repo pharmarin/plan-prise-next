@@ -5,14 +5,13 @@ import {
   updateUserPasswordSchema,
 } from "@/common/validation/users";
 import { adminProcedure, authProcedure, router } from "@/server/trpc/trpc";
-import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
   keys: Key[]
 ): Omit<User, Key> => {
-  for (let key of keys) {
+  for (const key of keys) {
     delete user[key];
   }
   return user;

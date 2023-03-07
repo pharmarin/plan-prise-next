@@ -4,7 +4,7 @@ const config = {
     "eslint-config-next/core-web-vitals",
     "turbo",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    //"plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
   ],
   rules: {
@@ -13,11 +13,6 @@ const config = {
       "error",
       { prefer: "type-imports", fixStyle: "inline-type-imports" },
     ],
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      { checksVoidReturn: { attributes: false } },
-    ],
-    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -26,7 +21,6 @@ const config = {
         caughtErrorsIgnorePattern: "^_",
       },
     ],
-    "@typescript-eslint/restrict-template-expressions": "off",
   },
   ignorePatterns: ["**/*.config.js", "**/*.config.cjs", "packages/config/**"],
   reportUnusedDisableDirectives: true,

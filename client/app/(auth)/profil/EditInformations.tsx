@@ -8,7 +8,7 @@ import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
 import InfosModal from "@/components/overlays/modals/InfosModal";
-import { type User } from "@prisma/client";
+import { type User } from "@plan-prise/prisma";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";

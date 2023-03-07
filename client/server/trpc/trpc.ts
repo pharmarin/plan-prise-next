@@ -1,4 +1,4 @@
-import { ContextType } from "@/server/trpc/context";
+import { type ContextType } from "@/server/trpc/context";
 import { initTRPC, TRPCError } from "@trpc/server";
 import SuperJSON from "superjson";
 import { setLocale } from "yup";

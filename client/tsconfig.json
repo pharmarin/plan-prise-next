@@ -1,36 +1,20 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
     "paths": {
       "@/*": ["./*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "target": "es2017",
-    "types": ["cypress", "node"]
+    "plugins": [{ "name": "next" }],
+    "strictNullChecks": true
   },
+  "types": ["cypress", "node"],
+  "exclude": [],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+    "**/*.cjs",
+    "**/*.mjs",
+    ".next/types/**/*.ts"
+  ]
 }

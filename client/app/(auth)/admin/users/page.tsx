@@ -71,7 +71,7 @@ const Users = () => {
   );
   const columnHelper = createColumnHelper<User>();
   const [columnFilter, setColumnFilter] = useState<keyof typeof filters>(
-    Object.keys(filters)[0]
+    Object.keys(filters)[0] as keyof typeof filters
   );
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -165,7 +165,7 @@ const Users = () => {
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,
     state: {
-      columnFilters: filters[columnFilter].filter,
+      columnFilters: filters[columnFilter]?.filter,
       columnVisibility: {
         approvedAt: false,
       },
@@ -209,7 +209,7 @@ const Users = () => {
           <Dropdown
             buttonContent={
               <span className="flex align-middle">
-                {filters[columnFilter].label}
+                {filters[columnFilter]?.label}
                 <ChevronDownIcon className="ml-1 mt-1 h-4 w-4" />
               </span>
             }
@@ -218,7 +218,7 @@ const Users = () => {
                 "py-2 px-3 bg-white shadow-md rounded-lg text-gray-600 font-medium",
             }}
             items={Object.keys(filters).map((key) => ({
-              label: filters[key].label,
+              label: filters[key]?.label || "",
               action: () => {
                 setColumnFilter(key);
                 table.setPageIndex(0);

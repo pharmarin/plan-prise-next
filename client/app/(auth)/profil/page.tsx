@@ -4,7 +4,7 @@ import EditPassword from "@/app/(auth)/profil/EditPassword";
 import UserNotLoaded from "@/common/errors/UserNotLoaded";
 import Title from "@/components/navigation/Title";
 import { nextAuthOptions } from "@/pages/api/auth/[...nextauth]";
-import prisma from "@/server/prisma/client";
+import prisma from "@plan-prise/prisma";
 import { getServerSession } from "next-auth";
 
 const PAGE_TITLE = "Profil";

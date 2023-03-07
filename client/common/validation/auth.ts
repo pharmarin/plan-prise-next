@@ -44,13 +44,13 @@ export const getRegisterSchema = (server = false) =>
             .test(
               "fileName",
               "Certificat de scolarité est obligatoire",
-              (value) =>
+              (value: { name: string }) =>
                 "name" in (value || {}) ? (value.name || "").length > 0 : false
             )
             .test(
               "fileSize",
               "Le fichier envoyé est trop volumineux",
-              (value) =>
+              (value: { size: number }) =>
                 "size" in (value || {})
                   ? value.size <= MAX_UPLOADED_FILE_SIZE
                   : false
@@ -58,7 +58,7 @@ export const getRegisterSchema = (server = false) =>
             .test(
               "fileType",
               "Le fichier envoyé doit être de type pdf, jpg ou png. ",
-              (value) =>
+              (value: { type: "string" }) =>
                 "type" in (value || {})
                   ? ALLOWED_UPLOADED_FILE_TYPES.includes(value.type)
                   : false
@@ -68,7 +68,9 @@ export const getRegisterSchema = (server = false) =>
     displayName: yup
       .string()
       .notRequired()
-      .transform((value) => (value === "" ? undefined : value))
+      .transform((value): string | undefined =>
+        value === "" ? undefined : value
+      )
       .min(3)
       .max(50)
       .label("Nom de la structure"),

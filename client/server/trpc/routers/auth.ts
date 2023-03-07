@@ -7,7 +7,7 @@ import {
   passwordVerifySchema,
 } from "@/common/validation/auth";
 import { authProcedure, guestProcedure, router } from "@/server/trpc/trpc";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@plan-prise/prisma";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
@@ -45,7 +45,7 @@ const authRouter = router({
               ? startCase(input.displayName.toLowerCase())
               : undefined,
             student: input.student || false,
-            certificate: input.certificate,
+            certificate: input.certificate as string,
             rpps: BigInt(input.rpps),
             password: await bcrypt.hash(input.password, 10),
           },
