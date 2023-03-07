@@ -3,18 +3,12 @@
   "globalDependencies": ["**/.env"],
   "pipeline": {
     "db:generate": {
-      "dependsOn": ["^db:start"],
       "inputs": ["schema.prisma"],
       "cache": false
     },
     "db:push": {
-      "dependsOn": ["^db:start"],
       "inputs": ["schema.prisma"],
       "cache": false
-    },
-    "db:start": {
-      "cache": false,
-      "persistent": true
     },
     "dev": {
       "persistent": true,
@@ -25,7 +19,11 @@
       "outputs": [".next/**"]
     },
     "lint": {},
-    "lint:fix": {}
+    "lint:fix": {},
+    "type-check": {
+      "dependsOn": ["^db:generate"],
+      "cache": false
+    }
   },
   "globalEnv": [
     "NEXT_PUBLIC_APP_URL",
