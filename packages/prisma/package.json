@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "db:start": "pscale connect plan-prise main",
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate",
     "studio": "prisma studio --port 5556"

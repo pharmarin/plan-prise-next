@@ -5,17 +5,23 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "turbo dev --parallel",
-    "build": "turbo build",
+    "build": "pnpm with-env turbo build",
+    "db:start": "pscale connect plan-prise main",
+    "db:generate": "pnpm with-env turbo db:generate",
+    "db:push": "pnpm with-env turbo db:push db:generate",
+    "dev": "pnpm with-env turbo dev --parallel",
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",
-    "proxy": "valet proxy node.plan-prise http://localhost:3000"
+    "proxy": "valet proxy node.plan-prise http://localhost:3000",
+    "type-check": "turbo type-check",
+    "with-env": "dotenv -e .env --"
   },
   "dependencies": {
     "@manypkg/cli": "^0.20.0",
     "@prettier/plugin-php": "^0.19.3",
     "@types/node": "^18.14.6",
     "@types/prettier": "^2.7.2",
+    "dotenv-cli": "^7.0.0",
     "eslint": "^8.35.0",
     "eslint-config-plan-prise": "workspace:0.1.0",
     "prettier": "^2.8.4",

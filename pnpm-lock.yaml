@@ -8,6 +8,7 @@ importers:
       '@prettier/plugin-php': ^0.19.3
       '@types/node': ^18.14.6
       '@types/prettier': ^2.7.2
+      dotenv-cli: ^7.0.0
       eslint: ^8.35.0
       eslint-config-plan-prise: workspace:0.1.0
       prettier: ^2.8.4
@@ -19,6 +20,7 @@ importers:
       '@prettier/plugin-php': 0.19.3_prettier@2.8.4
       '@types/node': 18.14.6
       '@types/prettier': 2.7.2
+      dotenv-cli: 7.0.0
       eslint: 8.35.0
       eslint-config-plan-prise: link:packages/config/eslint
       prettier: 2.8.4
@@ -1745,6 +1747,26 @@ packages:
   /dommatrix/1.0.3:
     resolution: {integrity: sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==}
     deprecated: dommatrix is no longer maintained. Please use @thednp/dommatrix.
+
+  /dotenv-cli/7.0.0:
+    resolution: {integrity: sha512-XfMzVdpdDTRnlcgvFLg3lSyiLXqFxS4tH7RbK5IxkC4XIUuxPyrGoDufkfLjy/dA28EILzEu+mros6h8aQmyGg==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
+    dev: false
+
+  /dotenv-expand/10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /duplexer3/0.1.5:
     resolution: {integrity: sha512-1A8za6ws41LQgv9HrE/66jyC5yuSjQ3L/KOpFtoBilsAK2iA2wuS5rTt1OCzIvtS2V7nVmedsUU+DGRcjBmOYA==}
