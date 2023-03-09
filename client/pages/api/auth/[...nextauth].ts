@@ -1,4 +1,3 @@
-import UserNotApproved from "@/common/errors/UserNotApproved";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@plan-prise/prisma";
 import PP_Error from "@plan-prise/utils/errors";
@@ -60,7 +59,7 @@ export const nextAuthOptions: AuthOptions = {
         });
 
         if (user && !user.approvedAt) {
-          throw new UserNotApproved();
+          throw new PP_Error("USER_NOT_APPROVED");
         }
 
         if (

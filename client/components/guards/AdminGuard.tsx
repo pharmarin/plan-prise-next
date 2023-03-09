@@ -1,5 +1,6 @@
 "use client";
 
+import PP_Error from "@plan-prise/utils/errors";
 import { useSession } from "next-auth/react";
 import { useEffect, type PropsWithChildren } from "react";
 
@@ -8,7 +9,7 @@ const AdminGuard: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (!data?.user?.admin) {
-      // FIXME: throw new AdminGuardError();
+      throw new PP_Error("UNAUTHORIZED_ADMIN");
     }
   }, [data?.user]);
 

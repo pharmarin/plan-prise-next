@@ -15,7 +15,16 @@
     "message": "Type de fichier non géré",
     "infos": "Le certificat est dans un format de fichier non géré pour le moment"
   },
+  "USER_LOADING_ERROR": "Les données de l'utilisateur n'ont pas pu être chargées",
   "USER_LOGIN_ERROR": "Ces identifiants nous ont pas permis de vous connecter",
+  "USER_NOT_APPROVED": {
+    "message": "Inscription non validée",
+    "infos": "Vous recevrez un mail dès que votre compte sera activé"
+  },
   "USER_REGISTER_CONFLICT": "Un utilisateur est déjà inscrit avec cette adresse email",
-  "USER_REGISTER_ERROR": "Une erreur est survenue lors de l'inscription"
+  "USER_REGISTER_ERROR": "Une erreur est survenue lors de l'inscription",
+  "USER_RESET_PASSWORD_MISSING_PARAMS": {
+    "message": "Impossible de réinitialiser le mot de passe",
+    "infos": "Des paramètres manquent à l'URL fourni, veuillez utiliser le lien fourni dans le mail de demande de réinitialisation du mot de passe"
+  }
 }

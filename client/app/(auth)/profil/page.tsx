@@ -1,10 +1,10 @@
 import DeleteUser from "@/app/(auth)/profil/DeleteUser";
 import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
-import UserNotLoaded from "@/common/errors/UserNotLoaded";
 import Title from "@/components/navigation/Title";
 import { nextAuthOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@plan-prise/prisma";
+import PP_Error from "@plan-prise/utils/errors";
 import { getServerSession } from "next-auth";
 
 const PAGE_TITLE = "Profil";
@@ -16,7 +16,7 @@ const Profil = async () => {
   });
 
   if (!user) {
-    throw new UserNotLoaded();
+    throw new PP_Error("USER_LOADING_ERROR");
   }
 
   return (
