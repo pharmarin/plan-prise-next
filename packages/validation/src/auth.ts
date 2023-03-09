@@ -1,5 +1,7 @@
-import setLanguage from "@/common/validation/locale";
 import * as yup from "yup";
+import setLanguage from "./locale";
+
+setLanguage();
 
 export const ALLOWED_UPLOADED_FILE_TYPES = [
   "image/png",
@@ -9,8 +11,6 @@ export const ALLOWED_UPLOADED_FILE_TYPES = [
 ];
 
 export const MAX_UPLOADED_FILE_SIZE = 2000000;
-
-setLanguage();
 
 export const loginSchema = yup.object({
   email: yup.string().email().required().label("Adresse mail"),

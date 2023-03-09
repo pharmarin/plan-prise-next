@@ -1,11 +1,11 @@
-import PasswordMismatch from "@/common/errors/PasswordMismatch";
+import PP_Error from "@plan-prise/utils/errors";
 import {
   getUpdateUserSchema,
   requireIdSchema,
   updateUserPasswordSchema,
-} from "@/common/validation/users";
-import { adminProcedure, authProcedure, router } from "@/server/trpc/trpc";
+} from "@plan-prise/validation";
 import bcrypt from "bcrypt";
+import { adminProcedure, authProcedure, router } from "../trpc";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -152,7 +152,7 @@ const usersRouter = router({
         return "success";
       }
 
-      throw new PasswordMismatch();
+      throw new PP_Error("PASSWORD_MISMATCH");
     }),
 });
 

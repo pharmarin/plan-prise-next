@@ -15,11 +15,11 @@ import TableFooter from "@/components/table/TableFooter";
 import TableHead from "@/components/table/TableHead";
 import TableHeadCell from "@/components/table/TableHeadCell";
 import TableRow from "@/components/table/TableRow";
-import { type AppRouter } from "@/server/trpc/routers/app";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+import type { RouterOutputs } from "@plan-prise/trpc";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import {
   createColumnHelper,
@@ -31,12 +31,11 @@ import {
   type ColumnFiltersState,
   type FilterFn,
 } from "@tanstack/react-table";
-import { type inferRouterOutputs } from "@trpc/server";
 import { debounce, startCase, upperCase } from "lodash";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-type User = inferRouterOutputs<AppRouter>["users"]["all"][0];
+type User = RouterOutputs["users"]["all"][0];
 
 const fuzzyFilter: FilterFn<User> = (row, columnId, value, addMeta) => {
   // Rank the item

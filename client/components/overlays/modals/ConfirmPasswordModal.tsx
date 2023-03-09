@@ -1,12 +1,12 @@
-import { passwordVerifySchema } from "@/common/validation/auth";
 import Form from "@/components/forms/Form";
-import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
+import ServerError from "@/components/forms/ServerError";
 import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
-import { type AppRouter } from "@/server/trpc/routers/app";
+import { type AppRouter } from "@plan-prise/trpc";
+import { passwordVerifySchema } from "@plan-prise/validation";
 import { type TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
 import React from "react";
@@ -52,11 +52,7 @@ const ConfirmPasswordModal: React.FC<{
                   type="password"
                 />
 
-                {error && (
-                  <FormInfo color="red">
-                    Une erreur est survenue. Vérifiez le mot de passe entré.
-                  </FormInfo>
-                )}
+                {error && <ServerError error={error} />}
               </div>
             </ModalContent>
             <ModalFooter>

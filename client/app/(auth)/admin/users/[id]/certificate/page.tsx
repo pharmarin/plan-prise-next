@@ -2,10 +2,10 @@
 
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
-import UnexpectedFileType from "@/common/errors/UnexpectedFileType";
 import { trpc } from "@/common/trpc";
 import Button from "@/components/forms/inputs/Button";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import PP_Error from "@plan-prise/utils/errors";
 import { useRouter } from "next/navigation";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
@@ -62,7 +62,7 @@ const ApproveStudent = ({ params }: { params: { id: string } }) => {
           return <ShowPDF file={user.certificate} />;
         }
 
-        throw new UnexpectedFileType();
+        throw new PP_Error("UNEXPECTED_FILE_TYPE");
       })()}
     </div>
   );

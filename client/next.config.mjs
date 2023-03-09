@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 // @ts-ignore
 import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
@@ -14,7 +11,7 @@ const nextConfig = {
     typedRoutes: true,
   },
   reactStrictMode: true,
-  transpilePackages: ["@plan-prise/prisma"],
+  transpilePackages: ["@plan-prise/prisma", "@plan-prise/trpc"],
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()];

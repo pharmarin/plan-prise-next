@@ -1,12 +1,12 @@
 "use client";
 
 import { trpc } from "@/common/trpc";
-import { updateUserPasswordSchema } from "@/common/validation/users";
 import Form from "@/components/forms/Form";
-import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
+import ServerError from "@/components/forms/ServerError";
 import { type User } from "@plan-prise/prisma";
+import { updateUserPasswordSchema } from "@plan-prise/validation";
 import { Formik } from "formik";
 
 const EditPassword: React.FC<
@@ -68,12 +68,7 @@ const EditPassword: React.FC<
             type="password"
           />
 
-          {error && (
-            <FormInfo color="red">
-              Une erreur est survenue pendant l&apos;enregistrement. Veuillez
-              vérifier le mot de passe fourni.{" "}
-            </FormInfo>
-          )}
+          {error && <ServerError error={error} />}
 
           <Button color="primary" loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe

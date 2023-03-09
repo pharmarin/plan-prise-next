@@ -1,6 +1,7 @@
-import prisma from "@plan-prise/prisma";
+import prisma, { type UserSession } from "@plan-prise/prisma";
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+// TODO: Change to @plan-prise/auth
 import { getSession } from "next-auth/react";
 
 export const createContext = async (ctx: CreateNextContextOptions) => {
@@ -12,7 +13,7 @@ export const createContext = async (ctx: CreateNextContextOptions) => {
     req,
     res,
     prisma,
-    user: session?.user,
+    user: session?.user as UserSession | undefined,
   };
 };
 

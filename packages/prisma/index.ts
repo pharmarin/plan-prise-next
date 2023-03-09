@@ -1,6 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, type User } from "@prisma/client";
 
 export * from "@prisma/client";
+
+export type UserSafe = Omit<User, "password">;
+export type UserSession = Pick<User, "admin" | "id">;
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 

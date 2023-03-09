@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "name": "@plan-prise/utils",
+  "main": "./index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@trpc/client": "^10.14.0"
+  }
+}

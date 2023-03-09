@@ -1,12 +1,27 @@
-import { type ContextType } from "@/server/trpc/context";
+import PP_Error from "@plan-prise/utils/errors";
 import { initTRPC, TRPCError } from "@trpc/server";
 import SuperJSON from "superjson";
-import { setLocale } from "yup";
-import { fr } from "yup-locales";
+import { type ContextType } from "./context";
 
-setLocale(fr);
+const tRPC = initTRPC.context<ContextType>().create({
+  errorFormatter: ({ shape, error }) => {
+    if (error.cause instanceof PP_Error) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          code: error.cause.code,
+          message: error.cause.message,
+          infos: error.cause.infos,
+          type: "PP_Error",
+        },
+      };
+    }
 
-const tRPC = initTRPC.context<ContextType>().create({ transformer: SuperJSON });
+    return shape;
+  },
+  transformer: SuperJSON,
+});
 
 export const router = tRPC.router;
 
@@ -18,7 +33,7 @@ export const authProcedure = tRPC.procedure.use((opts) => {
   if (!opts.ctx.user) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "Vous devez être connecté pour effectuer cette action. ",
+      cause: new PP_Error("UNAUTHORIZED_AUTH"),
     });
   }
 
@@ -33,7 +48,7 @@ export const adminProcedure = authProcedure.use((opts) => {
   if (!opts.ctx.user.admin) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "Vous devez être administrateur pour effectuer cette action. ",
+      cause: new PP_Error("UNAUTHORIZED_ADMIN"),
     });
   }
 

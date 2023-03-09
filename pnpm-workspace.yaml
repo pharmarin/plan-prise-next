@@ -1,4 +1,7 @@
 packages:
   - client
   - packages/prisma
+  - packages/trpc
+  - packages/utils
+  - packages/validation
   - packages/config/*

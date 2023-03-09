@@ -1,18 +1,19 @@
 "use client";
 
-import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
-import convertToBase64 from "@/common/file-to-base64";
 import { trpc } from "@/common/trpc";
-import {
-  ALLOWED_UPLOADED_FILE_TYPES,
-  getRegisterSchema,
-  MAX_UPLOADED_FILE_SIZE,
-} from "@/common/validation/auth";
 import Form from "@/components/forms/Form";
 import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
+import ServerError from "@/components/forms/ServerError";
 import { CheckBadgeIcon } from "@heroicons/react/20/solid";
+import convertToBase64 from "@plan-prise/utils/base64";
+import PP_Error from "@plan-prise/utils/errors";
+import {
+  ALLOWED_UPLOADED_FILE_TYPES,
+  getRegisterSchema,
+  MAX_UPLOADED_FILE_SIZE,
+} from "@plan-prise/validation";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -64,7 +65,7 @@ const Register = () => {
           let convertedCertificate: string | null = null;
 
           if (!executeRecaptcha) {
-            throw new ReCaptchaNotLoaded();
+            throw new PP_Error("RECAPTCHA_LOADING_ERROR");
           }
 
           const recaptcha = await executeRecaptcha("enquiryFormSubmit");
@@ -214,10 +215,7 @@ const Register = () => {
                   type="password"
                 />
 
-                {error &&
-                  ["CONFLICT", "INTERNAL_SERVER_ERROR"].includes(
-                    error.data?.code || ""
-                  ) && <FormInfo color="red">{error.message}</FormInfo>}
+                {error && <ServerError error={error} />}
 
                 <div className="flex gap-4">
                   <Button

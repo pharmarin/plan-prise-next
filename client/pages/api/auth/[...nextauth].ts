@@ -1,9 +1,8 @@
-import checkRecaptcha from "@/common/check-recaptcha";
-import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
-import ReCaptchaVerificationError from "@/common/errors/ReCaptchaVerificationError";
 import UserNotApproved from "@/common/errors/UserNotApproved";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@plan-prise/prisma";
+import PP_Error from "@plan-prise/utils/errors";
+import checkRecaptcha from "@plan-prise/utils/recaptcha";
 import bcrypt from "bcrypt";
 import NextAuth, { type AuthOptions, type User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -48,11 +47,11 @@ export const nextAuthOptions: AuthOptions = {
         const recaptcha = await checkRecaptcha(credentials.recaptcha);
 
         if (!recaptcha) {
-          throw new ReCaptchaNotLoaded();
+          throw new PP_Error("RECAPTCHA_LOADING_ERROR");
         }
 
         if (recaptcha <= 0.5) {
-          throw new ReCaptchaVerificationError();
+          throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
         }
 
         // Add logic here to look up the user from the credentials supplied

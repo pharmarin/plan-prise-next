@@ -33,8 +33,12 @@ importers:
       '@headlessui/react': ^1.7.13
       '@heroicons/react': ^2.0.16
       '@next-auth/prisma-adapter': ^1.0.5
-      '@plan-prise/prisma': workspace:^0.1.0
-      '@plan-prise/tailwind-config': workspace:^0.1.0
+      '@plan-prise/prisma': '*'
+      '@plan-prise/tailwind-config': '*'
+      '@plan-prise/trpc': '*'
+      '@plan-prise/utils': '*'
+      '@plan-prise/validation': '*'
+      '@prisma/client': ^4.11.0
       '@prisma/nextjs-monorepo-workaround-plugin': ^4.11.0
       '@tailwindcss/forms': ^0.5.3
       '@tanstack/match-sorter-utils': ^8.7.6
@@ -46,6 +50,7 @@ importers:
       '@trpc/server': ^10.14.0
       '@types/bcrypt': ^5.0.0
       '@types/lodash': ^4.14.191
+      '@types/node': ^18.14.6
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
       '@types/react-google-recaptcha': ^2.1.5
@@ -81,9 +86,13 @@ importers:
     dependencies:
       '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
       '@heroicons/react': 2.0.16_react@18.2.0
-      '@next-auth/prisma-adapter': 1.0.5_next-auth@4.20.1
+      '@next-auth/prisma-adapter': 1.0.5_knaw3qxw4zwoiwojd3fn43zthi
       '@plan-prise/prisma': link:../packages/prisma
       '@plan-prise/tailwind-config': link:../packages/config/tailwindcss
+      '@plan-prise/trpc': link:../packages/trpc
+      '@plan-prise/utils': link:../packages/utils
+      '@plan-prise/validation': link:../packages/validation
+      '@prisma/client': 4.11.0_prisma@4.11.0
       '@tanstack/match-sorter-utils': 8.7.6
       '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-table': 8.7.9_biqbaboplfbrettd7655fr4n2y
@@ -116,6 +125,7 @@ importers:
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
       '@types/bcrypt': 5.0.0
       '@types/lodash': 4.14.191
+      '@types/node': 18.14.6
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       '@types/react-google-recaptcha': 2.1.5
@@ -127,7 +137,7 @@ importers:
       prettier-plugin-tailwindcss: 0.2.4_prettier@2.8.4
       prisma: 4.11.0
       tailwindcss: 3.2.7_aesdjsunmf4wiehhujt67my7tu
-      ts-node: 10.9.1_typescript@4.9.5
+      ts-node: 10.9.1_alpjt73dvgv6kni625hu7f2l4m
 
   packages/config/eslint:
     specifiers:
@@ -174,6 +184,58 @@ importers:
       '@prisma/client': 4.11.0_prisma@4.11.0
     devDependencies:
       prisma: 4.11.0
+      typescript: 4.9.5
+
+  packages/trpc:
+    specifiers:
+      '@plan-prise/prisma': '*'
+      '@plan-prise/utils': '*'
+      '@plan-prise/validation': '*'
+      '@trpc/server': ^10.14.0
+      '@types/bcrypt': ^5.0.0
+      '@types/lodash': ^4.14.191
+      bcrypt: ^5.1.0
+      eslint: ^8.34.0
+      eslint-config-plan-prise: '*'
+      lodash: ^4.17.21
+      next-auth: ^4.20.1
+      superjson: ^1.12.2
+      typescript: ^4.9.5
+    dependencies:
+      '@plan-prise/prisma': link:../prisma
+      '@plan-prise/utils': link:../utils
+      '@plan-prise/validation': link:../validation
+      '@trpc/server': 10.14.0
+      bcrypt: 5.1.0
+      lodash: 4.17.21
+      next-auth: 4.20.1
+      superjson: 1.12.2
+    devDependencies:
+      '@types/bcrypt': 5.0.0
+      '@types/lodash': 4.14.191
+      eslint: 8.35.0
+      eslint-config-plan-prise: link:../config/eslint
+      typescript: 4.9.5
+
+  packages/utils:
+    specifiers:
+      '@trpc/client': ^10.14.0
+    dependencies:
+      '@trpc/client': 10.14.0
+
+  packages/validation:
+    specifiers:
+      eslint: ^8.34.0
+      eslint-config-plan-prise: '*'
+      typescript: ^4.9.5
+      yup: ^0.32.11
+      yup-locales: ^1.2.12
+    dependencies:
+      yup: 0.32.11
+      yup-locales: 1.2.12
+    devDependencies:
+      eslint: 8.35.0
+      eslint-config-plan-prise: link:../config/eslint
       typescript: 4.9.5
 
 packages:
@@ -367,12 +429,13 @@ packages:
       - supports-color
     dev: false
 
-  /@next-auth/prisma-adapter/1.0.5_next-auth@4.20.1:
+  /@next-auth/prisma-adapter/1.0.5_knaw3qxw4zwoiwojd3fn43zthi:
     resolution: {integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
+      '@prisma/client': 4.11.0_prisma@4.11.0
       next-auth: 4.20.1_nvzgbose6yf6w7ijjprgspqefi
     dev: false
 
@@ -650,6 +713,12 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /@trpc/client/10.14.0:
+    resolution: {integrity: sha512-fi7i+Av3ARGyWwlbuGD+ZeqF5HxomGG8hBB89dWHAc4WlBnDV6g0GQQgDaMKZqXbGt0sYeJucym6WPI6kO7HCQ==}
+    peerDependencies:
+      '@trpc/server': 10.14.0
+    dev: false
+
   /@trpc/client/10.14.0_@trpc+server@10.14.0:
     resolution: {integrity: sha512-fi7i+Av3ARGyWwlbuGD+ZeqF5HxomGG8hBB89dWHAc4WlBnDV6g0GQQgDaMKZqXbGt0sYeJucym6WPI6kO7HCQ==}
     peerDependencies:
@@ -820,7 +889,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 14.18.37
+      '@types/node': 18.14.6
     dev: true
     optional: true
 
@@ -3310,6 +3379,28 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
+  /next-auth/4.20.1:
+    resolution: {integrity: sha512-ZcTUN4qzzZ/zJYgOW0hMXccpheWtAol8QOMdMts+LYRcsPGsqf2hEityyaKyECQVw1cWInb9dF3wYwI5GZdEmQ==}
+    peerDependencies:
+      next: ^12.2.5 || ^13
+      nodemailer: ^6.6.5
+      react: ^17.0.2 || ^18
+      react-dom: ^17.0.2 || ^18
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@panva/hkdf': 1.0.4
+      cookie: 0.5.0
+      jose: 4.13.1
+      oauth: 0.9.15
+      openid-client: 5.4.0
+      preact: 10.13.0
+      preact-render-to-string: 5.2.6_preact@10.13.0
+      uuid: 8.3.2
+    dev: false
+
   /next-auth/4.20.1_nvzgbose6yf6w7ijjprgspqefi:
     resolution: {integrity: sha512-ZcTUN4qzzZ/zJYgOW0hMXccpheWtAol8QOMdMts+LYRcsPGsqf2hEityyaKyECQVw1cWInb9dF3wYwI5GZdEmQ==}
     peerDependencies:
@@ -3742,7 +3833,7 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.21
-      ts-node: 10.9.1_typescript@4.9.5
+      ts-node: 10.9.1_alpjt73dvgv6kni625hu7f2l4m
       yaml: 1.10.2
 
   /postcss-load-config/3.1.4_postcss@8.4.21:
@@ -4660,7 +4751,7 @@ packages:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: false
 
-  /ts-node/10.9.1_typescript@4.9.5:
+  /ts-node/10.9.1_alpjt73dvgv6kni625hu7f2l4m:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -4679,6 +4770,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
+      '@types/node': 18.14.6
       acorn: 8.8.2
       acorn-walk: 8.2.0
       arg: 4.1.3

@@ -1,4 +1,4 @@
-import type { AppRouter } from "@/server/trpc/routers/app";
+import type { AppRouter } from "@plan-prise/trpc";
 import { createTRPCReact } from "@trpc/react-query";
 
 export const getBaseUrl = () => {

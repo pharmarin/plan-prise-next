@@ -1,0 +1,20 @@
+{
+  "name": "@plan-prise/validation",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "yup": "^0.32.11",
+    "yup-locales": "^1.2.12"
+  },
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-plan-prise": "*",
+    "typescript": "^4.9.5"
+  }
+}
