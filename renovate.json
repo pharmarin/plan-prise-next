@@ -4,10 +4,11 @@
         "config:base"
     ],
     "baseBranches": ["with-prisma"],
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["^@plan-prise/", "eslint-config-plan-prise"],
-      "enabled": false
-    }
-  ],
+    "packageRules": [
+      {
+        "matchPackagePatterns": ["^@plan-prise/", "eslint-config-plan-prise"],
+        "enabled": false
+      }
+    ],
+    "automerge": true
 }
