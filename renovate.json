@@ -8,6 +8,10 @@
       {
         "matchPackagePatterns": ["^@plan-prise/", "eslint-config-plan-prise"],
         "enabled": false
+      },
+      {
+        "paths": ["composer.json"],
+        "enabled": false
       }
     ],
     "automerge": true
