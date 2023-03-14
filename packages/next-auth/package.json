@@ -1,5 +1,5 @@
 {
-  "name": "@plan-prise/trpc",
+  "name": "@plan-prise/next-auth",
   "version": "0.1.0",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -9,18 +9,18 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@plan-prise/next-auth": "*",
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@plan-prise/prisma": "*",
     "@plan-prise/utils": "*",
-    "@plan-prise/validation": "*",
-    "@trpc/server": "^10.14.0",
+    "@prisma/client": "^4.11.0",
     "bcrypt": "^5.1.0",
-    "lodash": "^4.17.21",
-    "superjson": "^1.12.2"
+    "next": "^13.2.3",
+    "next-auth": "^4.20.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
-    "@types/lodash": "^4.14.191",
     "eslint": "^8.34.0",
     "eslint-config-plan-prise": "*",
     "typescript": "^4.9.5"

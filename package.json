@@ -6,6 +6,7 @@
   },
   "scripts": {
     "build": "pnpm with-env turbo build",
+    "clean": "turbo clean && rm -rf .turbo node_modules",
     "db:start": "pscale connect plan-prise main",
     "db:generate": "pnpm with-env turbo db:generate",
     "db:push": "pnpm with-env turbo db:push db:generate",

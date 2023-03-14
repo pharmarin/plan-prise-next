@@ -11,7 +11,11 @@ const nextConfig = {
     typedRoutes: true,
   },
   reactStrictMode: true,
-  transpilePackages: ["@plan-prise/prisma", "@plan-prise/trpc"],
+  transpilePackages: [
+    "@plan-prise/next-auth",
+    "@plan-prise/prisma",
+    "@plan-prise/trpc",
+  ],
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()];
