@@ -1,6 +1,10 @@
+export * from "@prisma/client";
+
 import { PrismaClient, type User } from "@prisma/client";
 
-export * from "@prisma/client";
+declare global {
+  let prisma: PrismaClient;
+}
 
 export type UserSafe = Omit<User, "password">;
 export type UserSession = Pick<User, "admin" | "id">;
