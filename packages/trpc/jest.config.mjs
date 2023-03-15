@@ -1,4 +1,6 @@
+/** @type {import('jest').Config} */
 const jestConfig = {
+  setupFiles: ["@plan-prise/jest-config"],
   transform: {
     "^.+\\.(t|j)sx?$": "ts-jest",
   },

@@ -2,7 +2,7 @@
 const jestConfig = {
   clearMocks: true,
   preset: "ts-jest",
-  setupFiles: ["<rootDir>/jest.setup.cjs"],
+  setupFiles: ["@plan-prise/jest-config"],
   // Use mock in other packages
   // setupFilesAfterEnv: ["<rootDir>/mock-client.ts"],
   testEnvironment: "node",
