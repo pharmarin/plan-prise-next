@@ -27,10 +27,12 @@
     }
   },
   "globalEnv": [
+    "APP_NAME",
     "FRONTEND_URL",
     "NEXTAUTH_URL",
     "NEXT_PUBLIC_APP_URL",
     "NEXT_PUBLIC_CAPTCHA_SITE_KEY",
+    "NTFY_URL_ADMIN",
     "NODE_ENV",
     "PORT",
     "PRISMA_DATABASE_URL",

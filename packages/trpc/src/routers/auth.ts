@@ -56,6 +56,19 @@ const authRouter = router({
         throw new PP_Error("USER_REGISTER_ERROR");
       }
 
+      fetch(process.env.NTFY_URL_ADMIN || "", {
+        method: "POST",
+        body: `${(
+          await ctx.prisma.user.count({ where: { approvedAt: null } })
+        ).toString()} en attente`,
+        headers: {
+          Actions: `view, Approuver, ${process.env.FRONTEND_URL}/admin/users`,
+          Click: `${process.env.FRONTEND_URL}/admin/users`,
+          Tags: "+1",
+          Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+        },
+      });
+
       return "success";
     }),
   /**
