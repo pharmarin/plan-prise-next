@@ -6,6 +6,8 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
+    "test": "jest --watch",
+    "test:ci": "jest --ci",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,9 +22,13 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/jest": "^29.4.2",
     "@types/lodash": "^4.14.191",
     "eslint": "^8.34.0",
     "eslint-config-plan-prise": "*",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "ts-jest": "^29.0.5",
     "typescript": "^4.9.5"
   }
 }
