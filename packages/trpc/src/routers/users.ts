@@ -1,4 +1,5 @@
 import PP_Error from "@plan-prise/utils/errors";
+import sendMail from "@plan-prise/utils/mail";
 import {
   getUpdateUserSchema,
   requireIdSchema,
@@ -55,14 +56,22 @@ const usersRouter = router({
    */
   approve: adminProcedure
     .input(requireIdSchema)
-    .mutation(async ({ ctx, input }) =>
-      excludePassword(
+    .mutation(async ({ ctx, input }) => {
+      const user = excludePassword(
         await ctx.prisma.user.update({
           where: { id: input },
           data: { approvedAt: new Date() },
         })
-      )
-    ),
+      );
+
+      await sendMail(
+        { email: user.email, name: `${user.firstName} ${user.lastName}` },
+        "Votre compte a été validé !",
+        "351ndgwr91d4zqx8"
+      );
+
+      return "success";
+    }),
   /**
    * Count users
    *
