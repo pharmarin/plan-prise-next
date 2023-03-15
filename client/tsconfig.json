@@ -7,7 +7,7 @@
     "plugins": [{ "name": "next" }],
     "strictNullChecks": true
   },
-  "types": ["cypress", "node"],
+  "types": ["node"],
   "exclude": [],
   "include": [
     "next-env.d.ts",
