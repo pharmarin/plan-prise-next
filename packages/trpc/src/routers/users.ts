@@ -1,12 +1,20 @@
+import { Prisma } from "@plan-prise/prisma";
 import PP_Error from "@plan-prise/utils/errors";
 import sendMail from "@plan-prise/utils/mail";
+import checkRecaptcha from "@plan-prise/utils/recaptcha";
 import {
+  forgotPasswordSchema,
+  getRegisterSchema,
   getUpdateUserSchema,
+  passwordVerifySchema,
   requireIdSchema,
   updateUserPasswordSchema,
 } from "@plan-prise/validation";
 import bcrypt from "bcrypt";
-import { adminProcedure, authProcedure, router } from "../trpc";
+import jwt from "jsonwebtoken";
+import startCase from "lodash/startCase";
+import upperCase from "lodash/upperCase";
+import { adminProcedure, authProcedure, guestProcedure, router } from "../trpc";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -105,6 +113,144 @@ const usersRouter = router({
     .input(requireIdSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.user.delete({ where: { id: input } });
+    }),
+  /**
+   * Verify that password matches records
+   *
+   * @argument {string} id User id
+   * @argument {string} password Password value
+   *
+   * @returns {string} "success" on succeed
+   *
+   * @throws {PasswordMismatch}
+   */ passwordVerify: authProcedure
+    .input(passwordVerifySchema)
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findUniqueOrThrow({
+        where: { id: input.id },
+        select: { password: true },
+      });
+
+      if (await bcrypt.compare(input.password, user.password)) {
+        return "success";
+      }
+
+      throw new PP_Error("PASSWORD_MISMATCH");
+    }),
+  /**
+   * Registers the user
+   *
+   * @argument {typeof User} input RegisterForm values
+   *
+   * @returns {string} "success" on succeed
+   *
+   * @throws Error on fail
+   */ register: guestProcedure
+    .input(getRegisterSchema(true))
+    .mutation(async ({ ctx, input }) => {
+      const recaptcha = await checkRecaptcha(input.recaptcha || "");
+
+      if (!recaptcha) {
+        throw new PP_Error("RECAPTCHA_LOADING_ERROR");
+      }
+
+      if (recaptcha <= 0.5) {
+        throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
+      }
+
+      const firstName = startCase(input.firstName.toLowerCase());
+      const lastName = upperCase(input.lastName);
+      const displayName = input.displayName
+        ? startCase(input.displayName.toLowerCase())
+        : undefined;
+
+      try {
+        await ctx.prisma.user.create({
+          data: {
+            email: input.email,
+            firstName,
+            lastName,
+            displayName,
+            student: input.student || false,
+            certificate: input.certificate as string,
+            rpps: BigInt(input.rpps),
+            password: await bcrypt.hash(input.password, 10),
+          },
+        });
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === "P2002") {
+            throw new PP_Error("USER_REGISTER_CONFLICT");
+          }
+        }
+        throw new PP_Error("USER_REGISTER_ERROR");
+      }
+
+      sendMail(
+        { email: input.email, name: `${firstName} ${lastName}` },
+        "Bienvenue sur plandeprise.fr !",
+        "pq3enl6xr8rl2vwr"
+      );
+
+      fetch(process.env.NTFY_URL_ADMIN || "", {
+        method: "POST",
+        body: `${(
+          await ctx.prisma.user.count({ where: { approvedAt: null } })
+        ).toString()} en attente`,
+        headers: {
+          Actions: `view, Approuver, ${process.env.FRONTEND_URL}/admin/users`,
+          Click: `${process.env.FRONTEND_URL}/admin/users`,
+          Tags: "+1",
+          Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+        },
+      });
+
+      return "success";
+    }),
+  /**
+   * Sends a reset password mail if the user exists
+   *
+   * @argument {string} email User email
+   * @argument {string} recaptcha Recaptcha from the form
+   *
+   * @returns {string} "success" on succeed
+   *
+   * @throws Error on fail
+   */
+  sendPasswordResetLink: guestProcedure
+    .input(forgotPasswordSchema)
+    .mutation(async ({ ctx, input }) => {
+      const recaptcha = await checkRecaptcha(input.recaptcha || "");
+
+      if (!recaptcha) {
+        throw new PP_Error("RECAPTCHA_LOADING_ERROR");
+      }
+
+      if (recaptcha <= 0.5) {
+        throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
+      }
+
+      const user = await ctx.prisma.user.findUniqueOrThrow({
+        where: { email: input.email },
+      });
+
+      const token = jwt.sign(user.id, process.env.NEXTAUTH_SECRET || "", {
+        expiresIn: "2h",
+      });
+
+      await sendMail(
+        {
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
+        },
+        "Réinitialisez votre mot de passe... ",
+        "jy7zpl95vjo45vx6",
+        {
+          link: `${process.env.FRONTEND_URL}/reset-password?email=${user.email}&token=${token}`,
+        }
+      );
+
+      return "success";
     }),
   /**
    * Get unique user

@@ -25,7 +25,7 @@ const Register = () => {
   const [step, setStep] = useState(1);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const { mutateAsync, error, data } = trpc.auth.register.useMutation();
+  const { mutateAsync, error, data } = trpc.users.register.useMutation();
 
   if (data === "success") {
     return (

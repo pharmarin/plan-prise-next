@@ -16,7 +16,8 @@ const sendMail = async (
     name: string;
   },
   subject: string,
-  templateId?: string
+  templateId?: string,
+  variables?: { [key: string]: string }
 ) => {
   const emailParams = new EmailParams()
     .setFrom(sentFrom)
@@ -26,6 +27,12 @@ const sendMail = async (
 
   if (templateId) {
     emailParams.setTemplateId(templateId);
+
+    if (variables) {
+      emailParams.setPersonalization([
+        { data: variables, email: recipient.email },
+      ]);
+    }
   }
 
   return await mailerSend.email.send(emailParams);

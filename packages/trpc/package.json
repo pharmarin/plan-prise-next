@@ -17,6 +17,7 @@
     "@plan-prise/validation": "*",
     "@trpc/server": "^10.14.0",
     "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "superjson": "^1.12.2"
   },
@@ -24,6 +25,7 @@
     "@plan-prise/jest-config": "*",
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "^29.4.2",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/lodash": "^4.14.191",
     "eslint": "^8.34.0",
     "eslint-config-plan-prise": "*",

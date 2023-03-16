@@ -21,6 +21,8 @@ const nextConfig = {
       config.plugins = [...config.plugins, new PrismaPlugin()];
     }
 
+    config.externals = ["nock", "mock-aws-s3", "aws-sdk"];
+
     return config;
   },
 };
