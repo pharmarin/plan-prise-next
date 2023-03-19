@@ -1,14 +1,14 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
 import ServerError from "@/components/forms/ServerError";
 import InfosModal from "@/components/overlays/modals/InfosModal";
-import { type User } from "@plan-prise/prisma";
-import { getUpdateUserSchema } from "@plan-prise/validation";
+import { type User } from "@/prisma/client";
+import trpc from "@/trpc/client";
+import { getUpdateUserSchema } from "@/validation/users";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";

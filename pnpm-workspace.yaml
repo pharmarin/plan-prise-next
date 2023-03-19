@@ -1,8 +1,0 @@
-packages:
-  - client
-  - packages/next-auth
-  - packages/prisma
-  - packages/trpc
-  - packages/utils
-  - packages/validation
-  - packages/config/*

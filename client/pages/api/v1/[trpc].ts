@@ -1,4 +1,5 @@
-import { appRouter, createContext } from "@plan-prise/trpc";
+import { createContext } from "@/trpc/context";
+import { appRouter } from "@/trpc/routers/app";
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 
 // export API handler

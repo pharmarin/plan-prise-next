@@ -4,7 +4,7 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
-  ChevronRightIcon,
+  ChevronRightIcon
 } from "@heroicons/react/20/solid";
 import { type CoreInstance, type PaginationInstance } from "@tanstack/react-table";
 import React from "react";

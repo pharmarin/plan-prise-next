@@ -2,10 +2,10 @@
 
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
-import { trpc } from "@/common/trpc";
 import Button from "@/components/forms/inputs/Button";
+import trpc from "@/trpc/client";
+import PP_Error from "@/utils/errors";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import PP_Error from "@plan-prise/utils/errors";
 import { useRouter } from "next/navigation";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";

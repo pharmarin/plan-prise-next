@@ -1,11 +1,11 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import Avatar from "@/components/icons/Avatar";
 import Spinner from "@/components/icons/Spinner";
 import NavbarLink from "@/components/navigation/NavbarLink";
 import { useNavigation } from "@/components/NavigationContextProvider";
 import Dropdown from "@/components/overlays/Dropdown";
+import trpc from "@/trpc/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

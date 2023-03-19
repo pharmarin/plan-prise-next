@@ -2,9 +2,9 @@ import DeleteUser from "@/app/(auth)/profil/DeleteUser";
 import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
 import Title from "@/components/navigation/Title";
-import { getServerSession } from "@plan-prise/next-auth";
-import prisma from "@plan-prise/prisma";
-import PP_Error from "@plan-prise/utils/errors";
+import { getServerSession } from "@/next-auth/session";
+import prisma from "@/prisma/client";
+import PP_Error from "@/utils/errors";
 
 const PAGE_TITLE = "Profil";
 

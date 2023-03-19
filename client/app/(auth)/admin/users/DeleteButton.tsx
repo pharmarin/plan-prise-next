@@ -1,6 +1,6 @@
-import { trpc } from "@/common/trpc";
 import Button from "@/components/forms/inputs/Button";
 import Spinner from "@/components/icons/Spinner";
+import trpc from "@/trpc/client";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { type User } from "next-auth";
 

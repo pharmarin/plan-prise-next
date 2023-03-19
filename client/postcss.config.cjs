@@ -1,2 +1,6 @@
-// @ts-ignore
-module.exports = require("@plan-prise/tailwind-config/postcss");
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};

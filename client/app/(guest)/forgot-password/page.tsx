@@ -1,11 +1,11 @@
 "use client";
 
-import { forgotPasswordSchema } from "@/../packages/validation";
-import { trpc } from "@/common/trpc";
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
-import PP_Error from "@plan-prise/utils/errors";
+import trpc from "@/trpc/client";
+import PP_Error from "@/utils/errors";
+import { forgotPasswordSchema } from "@/validation/users";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 

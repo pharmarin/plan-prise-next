@@ -1,7 +1,7 @@
 "use client";
 
-import { getBaseUrl, trpc } from "@/common/trpc";
 import NavigationContextProvider from "@/components/NavigationContextProvider";
+import trpc, { getBaseUrl } from "@/trpc/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
 import { SessionProvider } from "next-auth/react";

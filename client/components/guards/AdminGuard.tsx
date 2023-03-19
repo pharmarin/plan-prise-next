@@ -1,6 +1,6 @@
 "use client";
 
-import PP_Error from "@plan-prise/utils/errors";
+import PP_Error from "@/utils/errors";
 import { useSession } from "next-auth/react";
 import { useEffect, type PropsWithChildren } from "react";
 

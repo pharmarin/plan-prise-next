@@ -1,12 +1,12 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
-import { type User } from "@plan-prise/prisma";
-import { updateUserPasswordSchema } from "@plan-prise/validation";
+import { type User } from "@/prisma/client";
+import trpc from "@/trpc/client";
+import { updateUserPasswordSchema } from "@/validation/users";
 import { Formik } from "formik";
 
 const EditPassword: React.FC<

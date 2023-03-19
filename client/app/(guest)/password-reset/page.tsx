@@ -1,5 +1,5 @@
 import EditPassword from "@/app/(auth)/profil/EditPassword";
-import PP_Error from "@plan-prise/utils/errors";
+import PP_Error from "@/utils/errors";
 import jwt from "jsonwebtoken";
 import { notFound } from "next/navigation";
 

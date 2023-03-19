@@ -1,7 +1,7 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
+import trpc from "@/trpc/client";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, type PropsWithChildren } from "react";

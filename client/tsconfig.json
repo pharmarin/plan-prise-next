@@ -1,15 +1,38 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/app/*": ["./app/*"],
+      "@/components/*": ["./components/*"],
+      "@/next-auth/*": ["./next-auth/*"],
+      "@/prisma/*": ["./prisma/*"],
+      "@/trpc/*": ["./trpc/*"],
+      "@/types": ["./types.ts"],
+      "@/utils/*": ["./utils/*"],
+      "@/validation/*": ["./validation/*"]
     },
     "plugins": [{ "name": "next" }],
-    "strictNullChecks": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es2017"
   },
   "types": ["node"],
   "exclude": [],
   "include": [
+    ".eslintrc.js",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

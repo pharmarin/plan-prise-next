@@ -2,7 +2,6 @@
 
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import DeleteButton from "@/app/(auth)/admin/users/DeleteButton";
-import { trpc } from "@/common/trpc";
 import TextInput from "@/components/forms/inputs/TextInput";
 import Spinner from "@/components/icons/Spinner";
 import Pagination from "@/components/navigation/Pagination";
@@ -15,11 +14,12 @@ import TableFooter from "@/components/table/TableFooter";
 import TableHead from "@/components/table/TableHead";
 import TableHeadCell from "@/components/table/TableHeadCell";
 import TableRow from "@/components/table/TableRow";
+import trpc from "@/trpc/client";
+import type { RouterOutputs } from "@/trpc/types";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import type { RouterOutputs } from "@plan-prise/trpc";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import {
   createColumnHelper,

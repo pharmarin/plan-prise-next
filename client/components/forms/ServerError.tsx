@@ -1,6 +1,6 @@
 import FormInfo from "@/components/forms/FormInfo";
-import type { AppRouter } from "@plan-prise/trpc";
-import { DEFAULT_ERROR } from "@plan-prise/utils/errors";
+import type { AppRouter } from "@/trpc/routers/app";
+import { DEFAULT_ERROR } from "@/utils/errors";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
 const ServerError: React.FC<{

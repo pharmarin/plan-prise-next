@@ -1,19 +1,19 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import Form from "@/components/forms/Form";
 import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
-import { CheckBadgeIcon } from "@heroicons/react/20/solid";
-import convertToBase64 from "@plan-prise/utils/base64";
-import PP_Error from "@plan-prise/utils/errors";
+import trpc from "@/trpc/client";
+import convertToBase64 from "@/utils/base64";
+import PP_Error from "@/utils/errors";
 import {
   ALLOWED_UPLOADED_FILE_TYPES,
   getRegisterSchema,
   MAX_UPLOADED_FILE_SIZE,
-} from "@plan-prise/validation";
+} from "@/validation/users";
+import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
