@@ -46,7 +46,7 @@
     "reapop": "^4.2.1",
     "superjson": "^1.12.2",
     "tailwind-merge": "^1.10.0",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.0",
     "yup": "^0.32.11",
     "yup-locales": "^1.2.12"
   },
