@@ -9,7 +9,7 @@ specifiers:
   '@prisma/nextjs-monorepo-workaround-plugin': ^4.11.0
   '@tailwindcss/forms': ^0.5.3
   '@tanstack/match-sorter-utils': ^8.7.6
-  '@tanstack/react-query': 4.24.10
+  '@tanstack/react-query': 4.28.0
   '@tanstack/react-table': ^8.7.9
   '@trpc/client': 10.13.2
   '@trpc/next': 10.13.2
@@ -67,11 +67,11 @@ dependencies:
   '@next-auth/prisma-adapter': 1.0.5_knaw3qxw4zwoiwojd3fn43zthi
   '@prisma/client': 4.11.0_prisma@4.11.0
   '@tanstack/match-sorter-utils': 8.7.6
-  '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
+  '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
   '@tanstack/react-table': 8.7.9_biqbaboplfbrettd7655fr4n2y
   '@trpc/client': 10.13.2_@trpc+server@10.13.2
-  '@trpc/next': 10.13.2_ksxvnacv7m4xnsdybedevecyxm
-  '@trpc/react-query': 10.13.2_4d7irbdidsmzpcceffzhg76qwi
+  '@trpc/next': 10.13.2_ex5s5m4dzofqg6wr7ebwp7craa
+  '@trpc/react-query': 10.13.2_tth2nswmnt2oiaujo53qskqcoy
   '@trpc/server': 10.13.2
   bcrypt: 5.1.0
   classname-variants: github.com/pharmarin/classname-variants/35d5b981e3d585f5b1927d7e2444b4b235c5799e
@@ -1109,12 +1109,12 @@ packages:
       remove-accents: 0.4.2
     dev: false
 
-  /@tanstack/query-core/4.24.10:
-    resolution: {integrity: sha512-2QywqXEAGBIUoTdgn1lAB4/C8QEqwXHj2jrCLeYTk2xVGtLiPEUD8jcMoeB2noclbiW2mMt4+Fq7fZStuz3wAQ==}
+  /@tanstack/query-core/4.27.0:
+    resolution: {integrity: sha512-sm+QncWaPmM73IPwFlmWSKPqjdTXZeFf/7aEmWh00z7yl2FjqophPt0dE1EHW9P1giMC5rMviv7OUbSDmWzXXA==}
     dev: false
 
-  /@tanstack/react-query/4.24.10_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-FY1DixytOcNNCydPQXLxuKEV7VSST32CAuJ55BjhDNqASnMLZn+6c30yQBMrODjmWMNwzfjMZnq0Vw7C62Fwow==}
+  /@tanstack/react-query/4.28.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8cGBV5300RHlvYdS4ea+G1JcZIt5CIuprXYFnsWggkmGoC0b5JaqG0fIX3qwDL9PTNkKvG76NGThIWbpXivMrQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -1125,7 +1125,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 4.24.10
+      '@tanstack/query-core': 4.27.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
@@ -1161,7 +1161,7 @@ packages:
       '@trpc/server': 10.13.2
     dev: false
 
-  /@trpc/next/10.13.2_ksxvnacv7m4xnsdybedevecyxm:
+  /@trpc/next/10.13.2_ex5s5m4dzofqg6wr7ebwp7craa:
     resolution: {integrity: sha512-0GV9JanTY6PqWVd4W/OWIy8SI4qQD0F2ak4OgxLLothqB+ARzHpYkoZO+E3Y13/O+NV5RhWF6sIXXXX6doNghQ==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
@@ -1172,9 +1172,9 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.13.2_@trpc+server@10.13.2
-      '@trpc/react-query': 10.13.2_4d7irbdidsmzpcceffzhg76qwi
+      '@trpc/react-query': 10.13.2_tth2nswmnt2oiaujo53qskqcoy
       '@trpc/server': 10.13.2
       next: 13.2.3_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -1182,7 +1182,7 @@ packages:
       react-ssr-prepass: 1.5.0_react@18.2.0
     dev: false
 
-  /@trpc/react-query/10.13.2_4d7irbdidsmzpcceffzhg76qwi:
+  /@trpc/react-query/10.13.2_tth2nswmnt2oiaujo53qskqcoy:
     resolution: {integrity: sha512-wLNDZKe5yQ2AYs/uoymxyRn5jNdYNpbOX17tHirnDDPKDRJojooGuL6uIDS1kvm70QJiNR/UKjKfwLDgZdGcqw==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
@@ -1191,7 +1191,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.13.2_@trpc+server@10.13.2
       '@trpc/server': 10.13.2
       react: 18.2.0
