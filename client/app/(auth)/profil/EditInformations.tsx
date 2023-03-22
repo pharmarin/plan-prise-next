@@ -45,7 +45,7 @@ const EditInformations: React.FC<{
     email: user.email || "",
     firstName: user.firstName || "",
     lastName: user.lastName || "",
-    rpps: user.rpps || "",
+    rpps: user.rpps?.toString() || "",
     student: user.student || false,
   };
 
