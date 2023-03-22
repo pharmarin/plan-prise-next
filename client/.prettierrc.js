@@ -13,7 +13,7 @@ const config = {
     require("prettier-plugin-tailwindcss"),
   ],
   tabWidth: 2,
-  tailwindConfig: "./client/tailwind.config.js",
+  tailwindConfig: "./tailwind.config.js",
   useTabs: false,
 };
 

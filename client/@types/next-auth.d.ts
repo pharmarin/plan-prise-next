@@ -1,4 +1,4 @@
-import { User as PrismaUser } from "@prisma/client";
+import { type User as PrismaUser } from "@prisma/client";
 import "next-auth";
 
 declare module "next-auth" {
@@ -6,6 +6,7 @@ declare module "next-auth" {
     user: Pick<PrismaUser, "id" | "admin">;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface User extends Omit<PrismaUser, "password" | "updatedAt"> {}
 }
 

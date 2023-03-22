@@ -22,7 +22,7 @@ const ForgotPassword = () => {
           throw new ReCaptchaNotLoaded();
         }
 
-        const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+        const _recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
         try {
           /* TODO

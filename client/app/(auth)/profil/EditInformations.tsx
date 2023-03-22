@@ -8,7 +8,7 @@ import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
 import InfosModal from "@/components/overlays/modals/InfosModal";
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -82,7 +82,7 @@ const EditInformations: React.FC<{
         onSubmit={async (values) => {
           await mutateAsync({ id: user.id, ...values });
 
-          trpcContext.users.current.invalidate();
+          await trpcContext.users.current.invalidate();
         }}
         validateOnMount
         validationSchema={getUpdateUserSchema()}

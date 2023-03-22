@@ -15,30 +15,30 @@ import TableFooter from "@/components/table/TableFooter";
 import TableHead from "@/components/table/TableHead";
 import TableHeadCell from "@/components/table/TableHeadCell";
 import TableRow from "@/components/table/TableRow";
-import { AppRouter } from "@/server/trpc/routers/app";
+import { type AppRouter } from "@/server/trpc/routers/app";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import {
-  ColumnFiltersState,
   createColumnHelper,
-  FilterFn,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  type ColumnFiltersState,
+  type FilterFn,
 } from "@tanstack/react-table";
-import { inferRouterOutputs } from "@trpc/server";
+import { type inferRouterOutputs } from "@trpc/server";
 import { debounce, startCase, upperCase } from "lodash";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type User = inferRouterOutputs<AppRouter>["users"]["all"][0];
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<User> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value);
 
@@ -148,7 +148,7 @@ const Users = () => {
             {columnFilter === "pending" && (
               <ApproveButton user={props.row.original} onSuccess={refetch} />
             )}
-            <DeleteButton user={props.row.original} onSuccess={() => {}} />
+            <DeleteButton user={props.row.original} onSuccess={refetch} />
           </div>
         ),
       }),

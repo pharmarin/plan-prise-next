@@ -6,18 +6,21 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import { CoreInstance, PaginationInstance } from "@tanstack/react-table";
+import {
+  type CoreInstance,
+  type PaginationInstance,
+} from "@tanstack/react-table";
 import React from "react";
 
 const Pagination: React.FC<{
-  getCanNextPage: PaginationInstance<any>["getCanNextPage"];
-  getCanPreviousPage: PaginationInstance<any>["getCanPreviousPage"];
-  getPageCount: PaginationInstance<any>["getPageCount"];
-  getState: CoreInstance<any>["getState"];
-  nextPage: PaginationInstance<any>["nextPage"];
-  previousPage: PaginationInstance<any>["previousPage"];
-  setPageIndex: PaginationInstance<any>["setPageIndex"];
-  setPageSize: PaginationInstance<any>["setPageSize"];
+  getCanNextPage: PaginationInstance<never>["getCanNextPage"];
+  getCanPreviousPage: PaginationInstance<never>["getCanPreviousPage"];
+  getPageCount: PaginationInstance<never>["getPageCount"];
+  getState: CoreInstance<never>["getState"];
+  nextPage: PaginationInstance<never>["nextPage"];
+  previousPage: PaginationInstance<never>["previousPage"];
+  setPageIndex: PaginationInstance<never>["setPageIndex"];
+  setPageSize: PaginationInstance<never>["setPageSize"];
 }> = ({
   getCanNextPage,
   getCanPreviousPage,

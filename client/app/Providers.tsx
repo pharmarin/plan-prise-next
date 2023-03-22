@@ -5,7 +5,7 @@ import NavigationContextProvider from "@/components/NavigationContextProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
 import { SessionProvider } from "next-auth/react";
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
 

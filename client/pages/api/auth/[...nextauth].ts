@@ -5,7 +5,7 @@ import UserNotApproved from "@/common/errors/UserNotApproved";
 import prisma from "@/server/prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
-import NextAuth, { AuthOptions, User } from "next-auth";
+import NextAuth, { type AuthOptions, type User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 export const nextAuthOptions: AuthOptions = {
@@ -36,7 +36,7 @@ export const nextAuthOptions: AuthOptions = {
   },
   providers: [
     Credentials({
-      authorize: async (credentials, req): Promise<User | null> => {
+      authorize: async (credentials): Promise<User | null> => {
         if (
           !credentials?.email ||
           !credentials.password ||
@@ -71,7 +71,7 @@ export const nextAuthOptions: AuthOptions = {
             user.password.replace(/^\$2y/, "$2a")
           )
         ) {
-          const { password, ...sessionUser } = user;
+          const { password: _password, ...sessionUser } = user;
 
           // Credentials match with records
           // Returning user without password field

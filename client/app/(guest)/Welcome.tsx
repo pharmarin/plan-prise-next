@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 const Welcome: React.FC<PropsWithChildren> = ({ children }) => {
   return (
