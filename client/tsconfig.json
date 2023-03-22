@@ -23,7 +23,7 @@
       }
     ],
     "target": "es2017",
-    "types": ["cypress", "node"]
+    "types": ["node"]
   },
   "include": [
     "next-env.d.ts",
