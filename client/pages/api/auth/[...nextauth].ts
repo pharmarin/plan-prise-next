@@ -2,7 +2,7 @@ import checkRecaptcha from "@/common/check-recaptcha";
 import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
 import ReCaptchaVerificationError from "@/common/errors/ReCaptchaVerificationError";
 import UserNotApproved from "@/common/errors/UserNotApproved";
-import prisma from "@/server/prisma/client";
+import prisma from "@/prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import NextAuth, { type AuthOptions, type User } from "next-auth";

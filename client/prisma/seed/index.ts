@@ -1,6 +1,6 @@
-import prisma from "./client";
-import { MySQLExport } from "./database";
-import database from "./plandepr_medics.json";
+import prisma from "@/prisma/client";
+import { type MySQLExport } from "@/prisma/seed/database";
+import database from "@/prisma/seed/plandepr_medics.json";
 
 const seeder = async () => {
   await Promise.all(
