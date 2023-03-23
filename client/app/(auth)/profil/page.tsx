@@ -2,15 +2,14 @@ import DeleteUser from "@/app/(auth)/profil/DeleteUser";
 import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
 import Title from "@/components/navigation/Title";
-import { nextAuthOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";
 import PP_Error from "@/utils/errors";
-import { getServerSession } from "next-auth";
 
 const PAGE_TITLE = "Profil";
 
 const Profil = async () => {
-  const session = await getServerSession(nextAuthOptions);
+  const session = await getServerSession();
   const user = await prisma.user.findUnique({
     where: { id: session?.user.id || "" },
   });
