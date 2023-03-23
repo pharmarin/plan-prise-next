@@ -1,6 +1,7 @@
 import { authProcedure, guestProcedure, router } from "@/trpc/trpc";
 import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
+import sendMail from "@/utils/mail";
 import {
   getRegisterSchema,
   passwordVerifySchema,
@@ -32,15 +33,19 @@ const authRouter = router({
         throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
       }
 
+      const firstName = startCase(input.firstName.toLowerCase());
+      const lastName = upperCase(input.lastName);
+      const displayName = input.displayName
+        ? startCase(input.displayName.toLowerCase())
+        : undefined;
+
       try {
         await ctx.prisma.user.create({
           data: {
             email: input.email,
-            firstName: startCase(input.firstName.toLowerCase()),
-            lastName: upperCase(input.lastName),
-            displayName: input.displayName
-              ? startCase(input.displayName.toLowerCase())
-              : undefined,
+            firstName,
+            lastName,
+            displayName,
             student: input.student || false,
             certificate: input.certificate,
             rpps: BigInt(input.rpps),
@@ -55,6 +60,12 @@ const authRouter = router({
         }
         throw new PP_Error("USER_REGISTER_ERROR");
       }
+
+      sendMail(
+        { email: input.email, name: `${firstName} ${lastName}` },
+        "Bienvenue sur plandeprise.fr !",
+        "pq3enl6xr8rl2vwr"
+      );
 
       fetch(process.env.NTFY_URL_ADMIN || "", {
         method: "POST",
