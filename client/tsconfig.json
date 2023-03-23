@@ -23,7 +23,7 @@
       }
     ],
     "target": "es2017",
-    "types": ["node"]
+    "types": ["node", "jest", "testing-library__jest-dom"]
   },
   "include": [
     "next-env.d.ts",
