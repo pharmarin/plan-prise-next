@@ -1,4 +1,3 @@
-import { passwordVerifySchema } from "@/common/validation/auth";
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
@@ -7,6 +6,7 @@ import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
 import { type AppRouter } from "@/trpc/routers/app";
+import { passwordVerifySchema } from "@/utils/validation/auth";
 import { type TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
 import React from "react";

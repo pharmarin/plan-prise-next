@@ -1,11 +1,11 @@
 "use client";
 
-import { updateUserPasswordSchema } from "@/common/validation/users";
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { trpc } from "@/trpc/client";
+import { updateUserPasswordSchema } from "@/utils/validation/users";
 import { type User } from "@prisma/client";
 import { Formik } from "formik";
 

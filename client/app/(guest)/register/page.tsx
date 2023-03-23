@@ -1,11 +1,5 @@
 "use client";
 
-import convertToBase64 from "@/common/file-to-base64";
-import {
-  ALLOWED_UPLOADED_FILE_TYPES,
-  getRegisterSchema,
-  MAX_UPLOADED_FILE_SIZE,
-} from "@/common/validation/auth";
 import Form from "@/components/forms/Form";
 import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
@@ -13,6 +7,12 @@ import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { trpc } from "@/trpc/client";
 import PP_Error from "@/utils/errors";
+import convertToBase64 from "@/utils/file-to-base64";
+import {
+  ALLOWED_UPLOADED_FILE_TYPES,
+  getRegisterSchema,
+  MAX_UPLOADED_FILE_SIZE,
+} from "@/utils/validation/auth";
 import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";

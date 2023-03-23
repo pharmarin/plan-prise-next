@@ -1,10 +1,10 @@
-import checkRecaptcha from "@/common/check-recaptcha";
+import { authProcedure, guestProcedure, router } from "@/trpc/trpc";
+import checkRecaptcha from "@/utils/check-recaptcha";
+import PP_Error from "@/utils/errors";
 import {
   getRegisterSchema,
   passwordVerifySchema,
-} from "@/common/validation/auth";
-import { authProcedure, guestProcedure, router } from "@/trpc/trpc";
-import PP_Error from "@/utils/errors";
+} from "@/utils/validation/auth";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";

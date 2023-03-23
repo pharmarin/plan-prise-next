@@ -1,5 +1,5 @@
-import checkRecaptcha from "@/common/check-recaptcha";
 import prisma from "@/prisma";
+import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";

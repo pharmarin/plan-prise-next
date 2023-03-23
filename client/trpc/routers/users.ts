@@ -1,10 +1,10 @@
+import { adminProcedure, authProcedure, router } from "@/trpc/trpc";
+import PP_Error from "@/utils/errors";
 import {
   getUpdateUserSchema,
   requireIdSchema,
   updateUserPasswordSchema,
-} from "@/common/validation/users";
-import { adminProcedure, authProcedure, router } from "@/trpc/trpc";
-import PP_Error from "@/utils/errors";
+} from "@/utils/validation/users";
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 
