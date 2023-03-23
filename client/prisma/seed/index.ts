@@ -1,4 +1,4 @@
-import prisma from "@/prisma/client";
+import prisma from "@/prisma";
 import { type MySQLExport } from "@/prisma/seed/database";
 import database from "@/prisma/seed/plandepr_medics.json";
 

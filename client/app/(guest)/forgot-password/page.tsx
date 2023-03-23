@@ -1,9 +1,9 @@
 "use client";
 
-import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
+import PP_Error from "@/utils/errors";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import * as yup from "yup";
@@ -19,7 +19,7 @@ const ForgotPassword = () => {
       }}
       onSubmit={async (values, { setSubmitting }) => {
         if (!executeRecaptcha) {
-          throw new ReCaptchaNotLoaded();
+          throw new PP_Error("RECAPTCHA_LOADING_ERROR");
         }
 
         const _recaptcha = await executeRecaptcha("enquiryFormSubmit");

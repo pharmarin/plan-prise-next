@@ -1,11 +1,13 @@
 "use client";
 
-import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
 import { loginSchema } from "@/common/validation/auth";
 import Form from "@/components/forms/Form";
-import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
+import ServerError from "@/components/forms/ServerError";
+import { AppRouter } from "@/trpc/routers/app";
+import PP_Error from "@/utils/errors";
+import { TRPCClientErrorLike } from "@trpc/client";
 import { Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -17,7 +19,9 @@ const Login = () => {
   const searchParams = useSearchParams();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const [errorStatus, setErrorStatus] = useState<number | undefined>(undefined);
+  const [error, setError] = useState<
+    TRPCClientErrorLike<AppRouter> | undefined
+  >(undefined);
 
   return (
     <>
@@ -28,7 +32,7 @@ const Login = () => {
         }}
         onSubmit={async (values) => {
           if (!executeRecaptcha) {
-            throw new ReCaptchaNotLoaded();
+            throw new PP_Error("RECAPTCHA_LOADING_ERROR");
           }
 
           const recaptcha = await executeRecaptcha("enquiryFormSubmit");
@@ -40,10 +44,18 @@ const Login = () => {
             redirect: false,
           });
 
+          console.error("error: ", signInResponse?.error);
+
           if (signInResponse?.ok) {
             router.push(searchParams?.get("redirectTo") ?? "/");
           } else {
-            setErrorStatus(signInResponse?.status);
+            setError(
+              new PP_Error(
+                signInResponse?.error === "CredentialsSignin"
+                  ? "USER_LOGIN_ERROR"
+                  : "SERVER_ERROR"
+              ).toTRPCError()
+            );
           }
         }}
         validateOnMount
@@ -94,13 +106,7 @@ const Login = () => {
               Se connecter
             </Button>
 
-            {errorStatus && (
-              <FormInfo color="red">
-                {errorStatus === 401
-                  ? "Ces identifiants nous ont pas permis de vous connecter."
-                  : "Un problème est survenu lors de la connexion."}
-              </FormInfo>
-            )}
+            {error && <ServerError error={error} />}
           </Form>
         )}
       </Formik>

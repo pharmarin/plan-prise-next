@@ -1,14 +1,11 @@
 import checkRecaptcha from "@/common/check-recaptcha";
-import PasswordMismatch from "@/common/errors/PasswordMismatch";
-import ReCaptchaNotLoaded from "@/common/errors/ReCaptchaNotLoaded";
-import ReCaptchaVerificationError from "@/common/errors/ReCaptchaVerificationError";
 import {
   getRegisterSchema,
   passwordVerifySchema,
 } from "@/common/validation/auth";
-import { authProcedure, guestProcedure, router } from "@/server/trpc/trpc";
+import { authProcedure, guestProcedure, router } from "@/trpc/trpc";
+import PP_Error from "@/utils/errors";
 import { Prisma } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
 
@@ -28,11 +25,11 @@ const authRouter = router({
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
 
       if (!recaptcha) {
-        throw new ReCaptchaNotLoaded();
+        throw new PP_Error("RECAPTCHA_LOADING_ERROR");
       }
 
       if (recaptcha <= 0.5) {
-        throw new ReCaptchaVerificationError();
+        throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
       }
 
       try {
@@ -53,17 +50,10 @@ const authRouter = router({
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === "P2002") {
-            throw new TRPCError({
-              code: "CONFLICT",
-              message:
-                "Un utilisateur est déjà inscrit avec cette adresse email. ",
-            });
+            throw new PP_Error("USER_REGISTER_CONFLICT");
           }
         }
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Une erreur est survenue lors de l'inscription. ",
-        });
+        throw new PP_Error("USER_REGISTER_ERROR");
       }
 
       return "success";
@@ -90,7 +80,7 @@ const authRouter = router({
         return "success";
       }
 
-      throw new PasswordMismatch();
+      throw new PP_Error("PASSWORD_MISMATCH");
     }),
 });
 

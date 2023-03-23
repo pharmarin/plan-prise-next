@@ -1,9 +1,9 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import ConfirmPasswordModal from "@/components/overlays/modals/ConfirmPasswordModal";
+import { trpc } from "@/trpc/client";
 import { type User } from "@prisma/client";
 import React, { useState } from "react";
 

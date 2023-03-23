@@ -1,10 +1,10 @@
-import PasswordMismatch from "@/common/errors/PasswordMismatch";
 import {
   getUpdateUserSchema,
   requireIdSchema,
   updateUserPasswordSchema,
 } from "@/common/validation/users";
-import { adminProcedure, authProcedure, router } from "@/server/trpc/trpc";
+import { adminProcedure, authProcedure, router } from "@/trpc/trpc";
+import PP_Error from "@/utils/errors";
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 
@@ -153,7 +153,7 @@ const usersRouter = router({
         return "success";
       }
 
-      throw new PasswordMismatch();
+      throw new PP_Error("PASSWORD_MISMATCH");
     }),
 });
 

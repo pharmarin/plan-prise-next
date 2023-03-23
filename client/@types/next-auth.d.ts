@@ -1,17 +1,17 @@
-import { type User as PrismaUser } from "@prisma/client";
+import { UserSafe, UserSession } from "@/prisma/types";
 import "next-auth";
 
 declare module "next-auth" {
   interface Session {
-    user: Pick<PrismaUser, "id" | "admin">;
+    user: UserSession;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface User extends Omit<PrismaUser, "password" | "updatedAt"> {}
+  interface User extends UserSafe {}
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
-    user: Pick<PrismaUser, "id" | "admin">;
+    user: UserSession;
   }
 }

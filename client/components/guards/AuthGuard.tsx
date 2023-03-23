@@ -1,10 +1,10 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
+import { trpc } from "@/trpc/client";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { type PropsWithChildren, useEffect } from "react";
+import React, { useEffect, type PropsWithChildren } from "react";
 
 const AuthGuard: React.FC<PropsWithChildren<{ guest?: boolean }>> = ({
   children,

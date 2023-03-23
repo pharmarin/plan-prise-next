@@ -1,13 +1,13 @@
 "use client";
 
-import { trpc } from "@/common/trpc";
 import { getUpdateUserSchema } from "@/common/validation/users";
 import Form from "@/components/forms/Form";
-import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
+import ServerError from "@/components/forms/ServerError";
 import InfosModal from "@/components/overlays/modals/InfosModal";
+import { trpc } from "@/trpc/client";
 import { type User } from "@prisma/client";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
@@ -152,12 +152,7 @@ const EditInformations: React.FC<{
               type="email"
             />
 
-            {error && (
-              <FormInfo color="red">
-                Une erreur est survenue lors de l&apos;enregistrement. Veuillez
-                réessayer.
-              </FormInfo>
-            )}
+            {error && <ServerError error={error} />}
 
             <Button loading={isSubmitting} type="submit">
               Mettre à jour les informations
