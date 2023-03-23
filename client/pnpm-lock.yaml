@@ -39,7 +39,6 @@ specifiers:
   prettier-plugin-tailwindcss: ^0.2.5
   prisma: ^4.11.0
   react: 18.2.0
-  react-async-hook: ^4.0.0
   react-dom: 18.2.0
   react-google-recaptcha-v3: ^1.10.1
   react-pdf: ^6.2.2
@@ -75,7 +74,6 @@ dependencies:
   next-auth: 4.20.1_nvzgbose6yf6w7ijjprgspqefi
   next-superjson-plugin: 0.5.6_bybiisvvvxj62fig2dzdxxp2ea
   react: 18.2.0
-  react-async-hook: 4.0.0_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-google-recaptcha-v3: 1.10.1_biqbaboplfbrettd7655fr4n2y
   react-pdf: 6.2.2_biqbaboplfbrettd7655fr4n2y
@@ -2801,15 +2799,6 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
     dev: true
-
-  /react-async-hook/4.0.0_react@18.2.0:
-    resolution: {integrity: sha512-97lgjFkOcHCTYSrsKBpsXg3iVWM0LnzedB749iP76sb3/8Ouu4nHIkCLEOrQWHVYqrYxjF05NN6GHoXWFkB3Kw==}
-    engines: {node: '>=8', npm: '>=5'}
-    peerDependencies:
-      react: '>=16.8'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
