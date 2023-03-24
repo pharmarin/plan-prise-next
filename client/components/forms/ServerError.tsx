@@ -4,7 +4,7 @@ import { DEFAULT_ERROR } from "@/utils/errors";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
 const ServerError: React.FC<{
-  error: TRPCClientErrorLike<AppRouter["auth"]["passwordVerify"]>;
+  error: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]>;
 }> = ({ error }) => {
   if (error?.data && "type" in error.data && error.data.type === "PP_Error") {
     return (

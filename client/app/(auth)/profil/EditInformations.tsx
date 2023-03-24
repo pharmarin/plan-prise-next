@@ -7,7 +7,7 @@ import TextInput from "@/components/forms/inputs/TextInput";
 import ServerError from "@/components/forms/ServerError";
 import InfosModal from "@/components/overlays/modals/InfosModal";
 import { trpc } from "@/trpc/client";
-import { getUpdateUserSchema } from "@/utils/validation/users";
+import { getUpdateUserSchema } from "@/validation/users";
 import { type User } from "@prisma/client";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";

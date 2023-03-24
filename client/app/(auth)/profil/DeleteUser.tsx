@@ -11,7 +11,7 @@ const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
   const [showForm, setShowForm] = useState(false);
 
   const { mutateAsync: passwordVerify, error } =
-    trpc.auth.passwordVerify.useMutation();
+    trpc.users.passwordVerify.useMutation();
   const { mutateAsync: deleteUser } = trpc.users.delete.useMutation();
 
   return (

@@ -6,13 +6,13 @@ import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
 import { type AppRouter } from "@/trpc/routers/app";
-import { passwordVerifySchema } from "@/utils/validation/auth";
+import { passwordVerifySchema } from "@/validation/users";
 import { type TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
 import React from "react";
 
 const ConfirmPasswordModal: React.FC<{
-  error?: TRPCClientErrorLike<AppRouter["auth"]["passwordVerify"]> | null;
+  error?: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]> | null;
   onCancel: () => void;
   onSubmit: (password: string) => Promise<boolean>;
   show: boolean;

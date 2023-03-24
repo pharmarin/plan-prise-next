@@ -1,5 +1,7 @@
-import setLanguage from "@/utils/validation/locale";
+import setLanguage from "@/validation/locale";
 import * as yup from "yup";
+
+setLanguage();
 
 export const ALLOWED_UPLOADED_FILE_TYPES = [
   "image/png",
@@ -10,7 +12,7 @@ export const ALLOWED_UPLOADED_FILE_TYPES = [
 
 export const MAX_UPLOADED_FILE_SIZE = 2000000;
 
-setLanguage();
+export const requireIdSchema = yup.string().required();
 
 export const loginSchema = yup.object({
   email: yup.string().email().required().label("Adresse mail"),
@@ -88,4 +90,33 @@ export const getRegisterSchema = (server = false) =>
 export const passwordVerifySchema = yup.object({
   id: yup.string().required(),
   password: getRegisterSchema().fields.password,
+});
+
+export const getUpdateUserSchema = (server = false) => {
+  const registerSchema = getRegisterSchema(server);
+
+  return yup.object({
+    id: server ? requireIdSchema : yup.string().notRequired(),
+    email: registerSchema.fields.email,
+    firstName: registerSchema.fields.firstName,
+    lastName: registerSchema.fields.lastName,
+    displayName: registerSchema.fields.displayName,
+    rpps: registerSchema.fields.rpps,
+    student: registerSchema.fields.student,
+  });
+};
+
+export const updateUserPasswordSchema = yup.object({
+  current_password: yup.string().required().label("Mot de passe actuel"),
+  password: yup
+    .string()
+    .min(8)
+    .max(20)
+    .required()
+    .label("Nouveau mot de passe"),
+  password_confirmation: yup
+    .string()
+    .oneOf([yup.ref("password")])
+    .required()
+    .label("Confirmation du nouveau mot de passe"),
 });

@@ -6,7 +6,7 @@ import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { AppRouter } from "@/trpc/routers/app";
 import PP_Error from "@/utils/errors";
-import { loginSchema } from "@/utils/validation/auth";
+import { loginSchema } from "@/validation/users";
 import { TRPCClientErrorLike } from "@trpc/client";
 import { Formik } from "formik";
 import { signIn } from "next-auth/react";

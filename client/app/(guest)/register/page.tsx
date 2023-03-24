@@ -12,7 +12,7 @@ import {
   ALLOWED_UPLOADED_FILE_TYPES,
   getRegisterSchema,
   MAX_UPLOADED_FILE_SIZE,
-} from "@/utils/validation/auth";
+} from "@/validation/users";
 import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ const Register = () => {
   const [step, setStep] = useState(1);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const { mutateAsync, error, data } = trpc.auth.register.useMutation();
+  const { mutateAsync, error, data } = trpc.users.register.useMutation();
 
   if (data === "success") {
     return (
