@@ -92,6 +92,11 @@ export const passwordVerifySchema = yup.object({
   password: getRegisterSchema().fields.password,
 });
 
+export const forgotPasswordSchema = yup.object({
+  email: yup.string().email().required().label("Adresse mail"),
+  recaptcha: yup.string().required(),
+});
+
 export const getUpdateUserSchema = (server = false) => {
   const registerSchema = getRegisterSchema(server);
 

@@ -8,6 +8,7 @@ import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import sendMail from "@/utils/mail";
 import {
+  forgotPasswordSchema,
   getRegisterSchema,
   getUpdateUserSchema,
   passwordVerifySchema,
@@ -16,6 +17,7 @@ import {
 } from "@/validation/users";
 import { Prisma, User } from "@prisma/client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { startCase, upperCase } from "lodash";
 
 const exclude = <User, Key extends keyof User>(
@@ -208,6 +210,51 @@ const usersRouter = router({
           Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
         },
       });
+
+      return "success";
+    }),
+  /**
+   * Sends a reset password mail if the user exists
+   *
+   * @argument {string} email User email
+   * @argument {string} recaptcha Recaptcha from the form
+   *
+   * @returns {string} "success" on succeed
+   *
+   * @throws Error on fail
+   */
+  sendPasswordResetLink: guestProcedure
+    .input(forgotPasswordSchema)
+    .mutation(async ({ ctx, input }) => {
+      const recaptcha = await checkRecaptcha(input.recaptcha || "");
+
+      if (!recaptcha) {
+        throw new PP_Error("RECAPTCHA_LOADING_ERROR");
+      }
+
+      if (recaptcha <= 0.5) {
+        throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
+      }
+
+      const user = await ctx.prisma.user.findUniqueOrThrow({
+        where: { email: input.email },
+      });
+
+      const token = jwt.sign(user.id, process.env.NEXTAUTH_SECRET || "", {
+        expiresIn: "2h",
+      });
+
+      await sendMail(
+        {
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
+        },
+        "Réinitialisez votre mot de passe... ",
+        "jy7zpl95vjo45vx6",
+        {
+          link: `${process.env.FRONTEND_URL}/reset-password?email=${user.email}&token=${token}`,
+        }
+      );
 
       return "success";
     }),

@@ -3,13 +3,15 @@
 import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
+import { trpc } from "@/trpc/client";
 import PP_Error from "@/utils/errors";
+import { forgotPasswordSchema } from "@/validation/users";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import * as yup from "yup";
 
 const ForgotPassword = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const { mutateAsync } = trpc.users.sendPasswordResetLink.useMutation();
 
   return (
     <Formik
@@ -17,26 +19,19 @@ const ForgotPassword = () => {
         recaptcha: "",
         email: "",
       }}
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={async (values) => {
         if (!executeRecaptcha) {
           throw new PP_Error("RECAPTCHA_LOADING_ERROR");
         }
 
-        const _recaptcha = await executeRecaptcha("enquiryFormSubmit");
+        const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
-        try {
-          /* TODO
-          await new User().forgotPassword({
-            email: values.email,
-            recaptcha: reCaptchaRef.current?.getValue() || "",
-          }); */
-        } catch (error) {
-          setSubmitting(false);
-        }
+        await mutateAsync({
+          email: values.email,
+          recaptcha,
+        });
       }}
-      validationSchema={yup.object().shape({
-        email: yup.string().email().required().label("Adresse mail"),
-      })}
+      validationSchema={forgotPasswordSchema}
     >
       {({ errors, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
