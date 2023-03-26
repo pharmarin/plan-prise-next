@@ -15,7 +15,7 @@ import TableHead from "@/components/table/TableHead";
 import TableHeadCell from "@/components/table/TableHeadCell";
 import TableRow from "@/components/table/TableRow";
 import { trpc } from "@/trpc/client";
-import { RouterOutputs } from "@/trpc/types";
+import { type RouterOutputs } from "@/trpc/types";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,

@@ -1,5 +1,5 @@
 import FormInfo from "@/components/forms/FormInfo";
-import { AppRouter } from "@/trpc/routers/app";
+import { type AppRouter } from "@/trpc/routers/app";
 import { DEFAULT_ERROR } from "@/utils/errors";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
