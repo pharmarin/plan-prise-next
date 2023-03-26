@@ -11,6 +11,7 @@
     "start": "next start",
     "test": "jest --watch",
     "test:ci": "jest --ci",
+    "test:e2e": "playwright test",
     "type-check": "tsc --noEmit",
     "postinstall": "prisma generate"
   },
@@ -50,6 +51,8 @@
     "yup-locales": "^1.2.12"
   },
   "devDependencies": {
+    "@next/env": "^13.2.4",
+    "@playwright/test": "^1.32.1",
     "@prettier/plugin-php": "^0.19.4",
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",
