@@ -22,9 +22,6 @@ jobs:
     name: Playwright tests
     timeout-minutes: 5
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./client
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,8 +31,12 @@ jobs:
         with:
           node-version: 18
 
+      - run: cd client
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2
+        with:
+          run_install: true
 
       - name: Get pnpm store directory
         id: pnpm-cache
