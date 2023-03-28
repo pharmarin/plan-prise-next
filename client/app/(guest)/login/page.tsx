@@ -44,8 +44,6 @@ const Login = () => {
             redirect: false,
           });
 
-          console.error("error: ", signInResponse?.error);
-
           if (signInResponse?.ok) {
             router.push(searchParams?.get("redirectTo") ?? "/");
           } else {

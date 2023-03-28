@@ -1,4 +1,4 @@
-import { nextAuthOptions } from "@/next-auth";
+import { nextAuthOptions } from "@/next-auth/options";
 import type {
   GetServerSidePropsContext,
   NextApiRequest,

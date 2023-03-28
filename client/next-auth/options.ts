@@ -1,28 +1,13 @@
 import prisma from "@/prisma";
-import { UserSafe, UserSession } from "@/prisma/types";
+import { type UserSafe } from "@/prisma/types";
 import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
-import { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { type NextAuthOptions } from "node_modules/next-auth";
 
-declare module "next-auth" {
-  interface Session {
-    user: UserSession;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface User extends UserSafe {}
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    user: UserSession;
-  }
-}
-
-export const nextAuthOptions: AuthOptions = {
+export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     jwt: ({ token, user }) => {
@@ -60,6 +45,7 @@ export const nextAuthOptions: AuthOptions = {
         }
 
         const recaptcha = await checkRecaptcha(credentials.recaptcha);
+        console.log("recaptcha: ", recaptcha);
 
         if (!recaptcha) {
           throw new PP_Error("RECAPTCHA_LOADING_ERROR");

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
@@ -31,7 +32,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts"
+    "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts",
+    "next-auth/index"
   ],
   "exclude": ["node_modules"]
 }

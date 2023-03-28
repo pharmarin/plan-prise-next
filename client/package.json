@@ -51,6 +51,7 @@
     "yup-locales": "^1.2.12"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@next/env": "^13.2.4",
     "@playwright/test": "^1.32.1",
     "@prettier/plugin-php": "^0.19.4",

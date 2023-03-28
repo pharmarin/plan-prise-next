@@ -1,4 +1,4 @@
-import { navbarIcons } from "@/components/navigation/NavbarLink";
+import { type navbarIcons } from "@/components/navigation/NavbarLink";
 
 export enum NavigationActionKind {
   SET_TITLE = "SET_TITLE",

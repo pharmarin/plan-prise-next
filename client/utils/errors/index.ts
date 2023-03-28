@@ -67,6 +67,16 @@ class PP_Error extends Error {
   public toTRPCError() {
     return new TRPCClientError(this.message, {
       cause: this,
+      result: {
+        error: {
+          data: {
+            code: this.code,
+            message: this.message,
+            infos: this.infos,
+            type: "PP_Error",
+          },
+        },
+      },
     });
   }
 }
