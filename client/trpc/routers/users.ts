@@ -252,7 +252,9 @@ const usersRouter = router({
         "Réinitialisez votre mot de passe... ",
         "jy7zpl95vjo45vx6",
         {
-          link: `${process.env.FRONTEND_URL}/reset-password?email=${user.email}&token=${token}`,
+          link: `${
+            process.env.VERCEL_URL || process.env.FRONTEND_URL
+          }/reset-password?email=${user.email}&token=${token}`,
         }
       );
 
