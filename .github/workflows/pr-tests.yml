@@ -36,9 +36,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
-        with:
-          run_install:
-            - "cd client && pnpm install"
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -53,6 +50,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm ci
 
       - name: Install playwright and dependencies
         run: pnpx playwright install --with-deps
