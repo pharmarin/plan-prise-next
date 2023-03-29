@@ -12,14 +12,33 @@ export const ALLOWED_UPLOADED_FILE_TYPES = [
 
 export const MAX_UPLOADED_FILE_SIZE = 2000000;
 
-export const requireIdSchema = yup.string().required();
+const requiredIfServer = (schema: yup.AnySchema, server = false) =>
+  server ? schema.required() : schema;
+
+const password = yup.string().min(8).max(20).required().label("Mot de passe");
+
+export const approveUserSchema = yup.string().required();
+
+export const deleteUserSchema = yup.string().required();
+
+export const forgotPasswordSchema = yup.object({
+  email: yup.string().email().required().label("Adresse mail"),
+  recaptcha: yup.string(),
+});
+
+export const getUniqueUserSchema = yup.string().required();
 
 export const loginSchema = yup.object({
   email: yup.string().email().required().label("Adresse mail"),
   password: yup.string().required(),
 });
 
-export const getRegisterSchema = (server = false) =>
+export const passwordVerifySchema = yup.object({
+  id: yup.string().required(),
+  password,
+});
+
+export const registerSchema = (server = false) =>
   yup.object({
     firstName: yup.string().required().max(50).label("Prénom"),
     lastName: yup.string().required().max(50).label("Nom"),
@@ -75,7 +94,7 @@ export const getRegisterSchema = (server = false) =>
       .max(50)
       .label("Nom de la structure"),
     email: yup.string().email().required().label("Email"),
-    password: yup.string().min(8).max(20).required().label("Mot de passe"),
+    password,
     password_confirmation: yup
       .string()
       .oneOf(
@@ -84,30 +103,20 @@ export const getRegisterSchema = (server = false) =>
       )
       .required()
       .label("Confirmation du mot de passe"),
-    recaptcha: yup.string(),
+    recaptcha: requiredIfServer(yup.string(), server),
   });
 
-export const passwordVerifySchema = yup.object({
-  id: yup.string().required(),
-  password: getRegisterSchema().fields.password,
-});
-
-export const forgotPasswordSchema = yup.object({
-  email: yup.string().email().required().label("Adresse mail"),
-  recaptcha: yup.string(),
-});
-
-export const getUpdateUserSchema = (server = false) => {
-  const registerSchema = getRegisterSchema(server);
+export const updateUserSchema = (server = false) => {
+  const _registerSchema = registerSchema(server);
 
   return yup.object({
-    id: server ? requireIdSchema : yup.string().notRequired(),
-    email: registerSchema.fields.email,
-    firstName: registerSchema.fields.firstName,
-    lastName: registerSchema.fields.lastName,
-    displayName: registerSchema.fields.displayName,
-    rpps: registerSchema.fields.rpps,
-    student: registerSchema.fields.student,
+    id: requiredIfServer(yup.string(), server),
+    email: _registerSchema.fields.email,
+    firstName: _registerSchema.fields.firstName,
+    lastName: _registerSchema.fields.lastName,
+    displayName: _registerSchema.fields.displayName,
+    rpps: _registerSchema.fields.rpps,
+    student: _registerSchema.fields.student,
   });
 };
 

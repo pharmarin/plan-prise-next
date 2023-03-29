@@ -8,12 +8,14 @@ import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import sendMail from "@/utils/mail";
 import {
+  approveUserSchema,
+  deleteUserSchema,
   forgotPasswordSchema,
-  getRegisterSchema,
-  getUpdateUserSchema,
+  getUniqueUserSchema,
   passwordVerifySchema,
-  requireIdSchema,
+  registerSchema,
   updateUserPasswordSchema,
+  updateUserSchema,
 } from "@/validation/users";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
@@ -67,7 +69,7 @@ const usersRouter = router({
    * @returns {User} Updated user
    */
   approve: adminProcedure
-    .input(requireIdSchema)
+    .input(approveUserSchema)
     .mutation(async ({ ctx, input }) => {
       const user = excludePassword(
         await ctx.prisma.user.update({
@@ -114,7 +116,7 @@ const usersRouter = router({
    * @returns {undefined}
    */
   delete: adminProcedure
-    .input(requireIdSchema)
+    .input(deleteUserSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.user.delete({ where: { id: input } });
     }),
@@ -152,7 +154,7 @@ const usersRouter = router({
    * @throws Error on fail
    */
   register: guestProcedure
-    .input(getRegisterSchema(true))
+    .input(registerSchema(true))
     .mutation(async ({ ctx, input }) => {
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
 
@@ -278,20 +280,22 @@ const usersRouter = router({
    * @returns {User} Found user
    * @throws If not found
    */
-  unique: adminProcedure.input(requireIdSchema).query(async ({ ctx, input }) =>
-    excludePassword(
-      await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: input },
-      })
-    )
-  ),
+  unique: adminProcedure
+    .input(getUniqueUserSchema)
+    .query(async ({ ctx, input }) =>
+      excludePassword(
+        await ctx.prisma.user.findUniqueOrThrow({
+          where: { id: input },
+        })
+      )
+    ),
   /**
    * Updates user
    *
    * @argument {Partial<User>} input EditInformations values
    */
   update: authProcedure
-    .input(getUpdateUserSchema(true))
+    .input(updateUserSchema(true))
     .mutation(async ({ ctx, input: { id, ...values } }) =>
       excludePassword(
         await ctx.prisma.user.update({

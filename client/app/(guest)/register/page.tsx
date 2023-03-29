@@ -10,8 +10,8 @@ import PP_Error from "@/utils/errors";
 import convertToBase64 from "@/utils/file-to-base64";
 import {
   ALLOWED_UPLOADED_FILE_TYPES,
-  getRegisterSchema,
   MAX_UPLOADED_FILE_SIZE,
+  registerSchema,
 } from "@/validation/users";
 import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
@@ -84,7 +84,7 @@ const Register = () => {
           });
         }}
         validateOnMount
-        validationSchema={getRegisterSchema}
+        validationSchema={registerSchema()}
       >
         {({ errors, handleSubmit, isSubmitting, values }) => (
           <Form className="flex flex-col" onSubmit={handleSubmit}>
