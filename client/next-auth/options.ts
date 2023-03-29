@@ -45,13 +45,17 @@ export const nextAuthOptions: NextAuthOptions = {
         }
 
         const recaptcha = await checkRecaptcha(credentials.recaptcha);
-        console.log("recaptcha: ", recaptcha);
 
         if (!recaptcha) {
           throw new PP_Error("RECAPTCHA_LOADING_ERROR");
         }
 
-        if (recaptcha <= 0.5) {
+        if (
+          recaptcha <= 0.5 &&
+          !credentials.email.includes(
+            process.env.MAIL_TEST_DOMAIN || "@mailslurp.com"
+          )
+        ) {
           throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
         }
 

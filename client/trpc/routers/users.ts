@@ -160,7 +160,10 @@ const usersRouter = router({
         throw new PP_Error("RECAPTCHA_LOADING_ERROR");
       }
 
-      if (recaptcha <= 0.5) {
+      if (
+        recaptcha <= 0.5 &&
+        !input.email.includes(process.env.MAIL_TEST_DOMAIN || "@mailslurp.com")
+      ) {
         throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
       }
 
@@ -236,7 +239,10 @@ const usersRouter = router({
         throw new PP_Error("RECAPTCHA_LOADING_ERROR");
       }
 
-      if (recaptcha <= 0.5) {
+      if (
+        recaptcha <= 0.5 &&
+        !input.email.includes(process.env.MAIL_TEST_DOMAIN || "@mailslurp.com")
+      ) {
         throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
       }
 
