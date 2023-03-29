@@ -18,6 +18,7 @@ test.describe("auth", () => {
     loginPage,
     page,
   }) => {
+    await loginPage.goto();
     await loginPage.populateForm("fake.mail@mail.com", "fake_password");
     await loginPage.submitForm();
     await expect(page.getByText(errors.USER_LOGIN_ERROR)).toBeVisible();

@@ -15,4 +15,15 @@ export class ForgotPasswordPage {
   async populateForm(email: string) {
     await this.page.fill('input[name="email"]', email);
   }
+
+  async submitForm() {
+    const response = this.page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname ===
+        "/api/v1/users.sendPasswordResetLink"
+    );
+
+    await this.page.click('button[type="submit"]');
+    await response;
+  }
 }

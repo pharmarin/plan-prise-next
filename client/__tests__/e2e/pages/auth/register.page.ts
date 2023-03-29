@@ -37,11 +37,12 @@ export class RegisterPage {
   }
 
   async submitForm() {
-    this.page.waitForResponse(
+    const response = this.page.waitForResponse(
       (response) =>
         new URL(response.url()).pathname === `/api/v1/users.register`
     );
+
     await this.page.click('button[type="submit"]');
-    await this.page.waitForResponse("/api/v1/users.register");
+    await response;
   }
 }

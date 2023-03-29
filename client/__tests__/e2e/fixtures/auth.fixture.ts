@@ -8,7 +8,7 @@ import { type User } from "@prisma/client";
 export type FakeUser = Omit<
   User,
   "id" | "approvedAt" | "createdAt" | "updatedAt" | "certificate"
->;
+>; //& { mailSlurpInboxId: string };
 
 type AuthFixtures = {
   forgotPasswordPage: ForgotPasswordPage;
@@ -30,13 +30,20 @@ export const test = base.extend<AuthFixtures>({
   fakeUser: async ({}, use) => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-    const email = faker.internet.email(firstName, lastName);
+    /* const { emailAddress: email, id: mailSlurpInboxId } =
+      await mailslurp.createInbox(); */
+    const email = faker.internet.email(
+      firstName,
+      lastName,
+      (process.env.MAIL_TEST_DOMAIN || "").replace(/^./, "")
+    );
 
     await use({
       firstName,
       lastName,
       displayName: `${firstName} ${lastName} Display`,
       email,
+      //mailSlurpInboxId,
       password: faker.internet.password(),
       admin: false,
       student: false,
