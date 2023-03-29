@@ -17,6 +17,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 300
+
+      - run: echo "vercel_url = ${{ steps.waitForVercelPreviewDeployment.outputs.url }}\n" >> $GITHUB_OUTPUT
   test_e2e:
     needs: test_setup
     name: Playwright tests
