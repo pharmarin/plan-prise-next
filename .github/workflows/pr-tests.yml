@@ -35,7 +35,7 @@ jobs:
           node-version: 18
 
       - name: Install pnpm
-        run: npm i -g pnpm
+        run: npm install -g pnpm
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install
 
       - name: Install playwright and dependencies
         run: pnpx playwright install --with-deps
