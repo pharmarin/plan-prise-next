@@ -49,7 +49,7 @@ const ForgotPassword = () => {
           />
 
           <Button
-            className="mt-4"
+            className="mt-4 w-full"
             color="gradient"
             disabled={"email" in errors}
             loading={isSubmitting}
