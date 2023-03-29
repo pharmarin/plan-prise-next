@@ -210,11 +210,15 @@ const usersRouter = router({
           await ctx.prisma.user.count({ where: { approvedAt: null } })
         ).toString()} en attente`,
         headers: {
-          Actions: `view, Approuver, https://${
-            process.env.VERCEL_URL || process.env.FRONTEND_URL
+          Actions: `view, Approuver, ${
+            process.env.VERCEL_URL
+              ? "https://" + process.env.VERCEL_URL
+              : process.env.FRONTEND_URL
           }/admin/users`,
-          Click: `https://${
-            process.env.VERCEL_URL || process.env.FRONTEND_URL
+          Click: `${
+            process.env.VERCEL_URL
+              ? "https://" + process.env.VERCEL_URL
+              : process.env.FRONTEND_URL
           }/admin/users`,
           Tags: "+1",
           Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
@@ -269,8 +273,10 @@ const usersRouter = router({
         "Réinitialisez votre mot de passe... ",
         "jy7zpl95vjo45vx6",
         {
-          link: `https://${
-            process.env.VERCEL_URL || process.env.FRONTEND_URL
+          link: `${
+            process.env.VERCEL_URL
+              ? "https://" + process.env.VERCEL_URL
+              : process.env.FRONTEND_URL
           }/reset-password?email=${user.email}&token=${token}`,
         }
       );
