@@ -35,9 +35,7 @@ jobs:
           node-version: 18
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          dest: "client"
+        run: npm i -g pnpm
 
       - name: Get pnpm store directory
         id: pnpm-cache
