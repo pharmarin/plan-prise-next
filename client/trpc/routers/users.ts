@@ -1,3 +1,4 @@
+import { MUTATION_SUCCESS } from "@/trpc/responses";
 import {
   adminProcedure,
   authProcedure,
@@ -84,7 +85,7 @@ const usersRouter = router({
         "351ndgwr91d4zqx8"
       );
 
-      return "success";
+      return MUTATION_SUCCESS;
     }),
   /**
    * Count users
@@ -126,7 +127,7 @@ const usersRouter = router({
    * @argument {string} id User id
    * @argument {string} password Password value
    *
-   * @returns {string} "success" on succeed
+   * @returns {string} MUTATION_SUCCESS on succeed
    *
    * @throws {PasswordMismatch}
    */
@@ -139,7 +140,7 @@ const usersRouter = router({
       });
 
       if (await bcrypt.compare(input.password, user.password)) {
-        return "success";
+        return MUTATION_SUCCESS;
       }
 
       throw new PP_Error("PASSWORD_MISMATCH");
@@ -149,7 +150,7 @@ const usersRouter = router({
    *
    * @argument {typeof User} input RegisterForm values
    *
-   * @returns {string} "success" on succeed
+   * @returns {string} MUTATION_SUCCESS on succeed
    *
    * @throws Error on fail
    */
@@ -220,7 +221,7 @@ const usersRouter = router({
         },
       });
 
-      return "success";
+      return MUTATION_SUCCESS;
     }),
   /**
    * Sends a reset password mail if the user exists
@@ -228,7 +229,7 @@ const usersRouter = router({
    * @argument {string} email User email
    * @argument {string} recaptcha Recaptcha from the form
    *
-   * @returns {string} "success" on succeed
+   * @returns {string} MUTATION_SUCCESS on succeed
    *
    * @throws Error on fail
    */
@@ -252,9 +253,13 @@ const usersRouter = router({
         where: { email: input.email },
       });
 
-      const token = jwt.sign(user.id, process.env.NEXTAUTH_SECRET || "", {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(
+        { id: user.id },
+        process.env.NEXTAUTH_SECRET || "",
+        {
+          expiresIn: "2h",
+        }
+      );
 
       await sendMail(
         {
@@ -270,7 +275,7 @@ const usersRouter = router({
         }
       );
 
-      return "success";
+      return MUTATION_SUCCESS;
     }),
   /**
    * Get unique user
@@ -326,7 +331,7 @@ const usersRouter = router({
           data: { password: await bcrypt.hash(input.password, 10) },
         });
 
-        return "success";
+        return MUTATION_SUCCESS;
       }
 
       throw new PP_Error("PASSWORD_MISMATCH");

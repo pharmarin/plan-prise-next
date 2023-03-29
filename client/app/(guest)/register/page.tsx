@@ -2,10 +2,12 @@
 
 import Form from "@/components/forms/Form";
 import FormInfo from "@/components/forms/FormInfo";
+import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { trpc } from "@/trpc/client";
+import { MUTATION_SUCCESS } from "@/trpc/responses";
 import PP_Error from "@/utils/errors";
 import convertToBase64 from "@/utils/file-to-base64";
 import {
@@ -13,12 +15,10 @@ import {
   MAX_UPLOADED_FILE_SIZE,
   registerSchema,
 } from "@/validation/users";
-import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { twMerge } from "tailwind-merge";
 
 const Register = () => {
   const router = useRouter();
@@ -27,23 +27,24 @@ const Register = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const { mutateAsync, error, data } = trpc.users.register.useMutation();
 
-  if (data === "success") {
+  if (data === MUTATION_SUCCESS) {
     return (
-      <div className={twMerge("space-y-2 text-gray-900")}>
-        <h4 className="mt-2 flex items-center font-medium">
-          <CheckBadgeIcon className="mr-1 h-4 w-4 text-teal-500" />
-          <span>Demande d&apos;inscription terminée</span>
-        </h4>
-        <p>
-          Votre demande d&apos;inscription sur plandeprise.fr est maintenant
-          terminée. Nous allons examiner votre demande dans les plus brefs
-          délais.
-        </p>
-        <p className="text-gray-700">
-          Vous recevrez prochainement un mail vous informant de
-          l&apos;activation de votre compte.
-        </p>
-      </div>
+      <FormSubmitSuccess
+        content={
+          <>
+            <p>
+              Votre demande d&apos;inscription sur plandeprise.fr est maintenant
+              terminée. Nous allons examiner votre demande dans les plus brefs
+              délais.
+            </p>
+            <p className="text-gray-700">
+              Vous recevrez prochainement un mail vous informant de
+              l&apos;activation de votre compte.
+            </p>
+          </>
+        }
+        title="Demande d'inscription terminée"
+      />
     );
   }
 
