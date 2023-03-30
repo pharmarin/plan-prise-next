@@ -5,6 +5,7 @@ import { type PropsWithChildren } from "react";
 
 const AuthLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
+    /* @ts-expect-error Async Server Component */
     <AuthGuard>
       <AuthProviders>
         <Navbar />

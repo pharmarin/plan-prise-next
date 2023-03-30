@@ -5,6 +5,7 @@ import { type PropsWithChildren } from "react";
 const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <GuestProviders>
+      {/* @ts-expect-error Async Server Component */}
       <AuthGuard guest>
         <div className="flex min-h-screen items-center p-4">
           <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white sm:flex-row">
