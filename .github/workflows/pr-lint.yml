@@ -6,7 +6,6 @@ on:
 
 jobs:
   lint:
-    needs: test_setup
     name: Lint tests
     timeout-minutes: 5
     runs-on: ubuntu-latest
