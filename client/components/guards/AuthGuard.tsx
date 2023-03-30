@@ -1,62 +1,40 @@
-"use client";
+import IncompleteProfileGuard from "@/components/guards/IncompleteProfileGuard";
+import { getServerSession } from "@/next-auth/get-session";
+import { redirect } from "next/navigation";
 
-import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
-import { trpc } from "@/trpc/client";
-import { useSession } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, type PropsWithChildren } from "react";
-
-const AuthGuard: React.FC<PropsWithChildren<{ guest?: boolean }>> = ({
+const AuthGuard = async ({
   children,
   guest,
+  searchParams,
+}: {
+  children: React.ReactNode;
+  guest?: boolean;
+  searchParams?: {
+    redirectTo?: string;
+  };
 }) => {
-  const session = useSession();
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const { data: user } = trpc.users.current.useQuery();
+  const session = await getServerSession();
+  //const pathname = window.location.pathname;
 
-  const isUnauthenticatedAuth = !guest && session.status === "unauthenticated";
-  const isAuthenticatedGuestWithRedirect =
-    guest && session.status === "authenticated";
-  const isIncompleteProfile =
-    session.status === "authenticated" &&
-    user &&
-    (!user.firstName || !user.lastName);
-
-  useEffect(() => {
-    if (isIncompleteProfile) {
-      router.push("/profil");
-    }
-  }, [isIncompleteProfile, router]);
-
-  useEffect(() => {
-    if (isUnauthenticatedAuth) {
-      router.push(
-        `/login${
-          (pathname && pathname !== "/" && `?redirectTo=${pathname}`) || ""
-        }`
-      );
-    }
-    if (isAuthenticatedGuestWithRedirect) {
-      router.push(searchParams?.get("redirectTo") || "/");
-    }
-  }, [
-    isAuthenticatedGuestWithRedirect,
-    isUnauthenticatedAuth,
-    pathname,
-    router,
-    searchParams,
-  ]);
-
-  if (
-    (!guest && session.status === "authenticated") ||
-    (guest && session.status !== "authenticated")
-  ) {
-    return <>{children}</>;
+  if (!guest && !session) {
+    redirect(
+      `/login${
+        "" // (pathname && pathname !== "/" && `?redirectTo=${pathname}`) || ""
+      }`
+    );
   }
 
-  return <LoadingScreen />;
+  if (guest && session) {
+    redirect(searchParams?.redirectTo || "/");
+  }
+
+  if (!guest && session) {
+    return <IncompleteProfileGuard>{children}</IncompleteProfileGuard>;
+  }
+
+  if (guest && !session) {
+    return children;
+  }
 };
 
 export default AuthGuard;
