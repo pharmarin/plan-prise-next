@@ -1,5 +1,5 @@
-import IncompleteProfileGuard from "@/components/guards/IncompleteProfileGuard";
 import { getServerSession } from "@/next-auth/get-session";
+import prisma from "@/prisma";
 import { redirect } from "next/navigation";
 
 const AuthGuard = async ({
@@ -14,9 +14,12 @@ const AuthGuard = async ({
   };
 }) => {
   const session = await getServerSession();
+  const user = await prisma.user.findUnique({
+    where: { id: session?.user.id || "" },
+  });
   //const pathname = window.location.pathname;
 
-  if (!guest && !session) {
+  if (!user || (!guest && !session)) {
     redirect(
       `/login${
         "" // (pathname && pathname !== "/" && `?redirectTo=${pathname}`) || ""
@@ -28,13 +31,11 @@ const AuthGuard = async ({
     redirect(searchParams?.redirectTo || "/");
   }
 
-  if (!guest && session) {
-    return <IncompleteProfileGuard>{children}</IncompleteProfileGuard>;
+  if (!user.firstName || !user.lastName) {
+    return redirect("/profil" as __next_route_internal_types__.StaticRoutes);
   }
 
-  if (guest && !session) {
-    return children;
-  }
+  return children;
 };
 
 export default AuthGuard;
