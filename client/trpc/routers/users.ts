@@ -15,6 +15,7 @@ import {
   getUniqueUserSchema,
   passwordVerifySchema,
   registerSchema,
+  resetPasswordSchema,
   updateUserPasswordSchema,
   updateUserSchema,
 } from "@/validation/users";
@@ -228,6 +229,34 @@ const usersRouter = router({
       return MUTATION_SUCCESS;
     }),
   /**
+   * Resets user password
+   *
+   * @argument {string} password Form password
+   * @argument {string} token Token sent via mail (payload = User.id)
+   *
+   * @returns {string} MUTATION_SUCCESS
+   * @throws {PP_Error} If invalid token
+   * @throws {PrismaError} If unknown User.id
+   */
+  resetPassword: guestProcedure
+    .input(resetPasswordSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { password, token } = input;
+
+      if (jwt.verify(token, process.env.NEXTAUTH_SECRET || "")) {
+        const payload = jwt.decode(token, { json: true });
+
+        await ctx.prisma.user.update({
+          where: { id: payload?.id },
+          data: { password: await bcrypt.hash(password, 10) },
+        });
+
+        return MUTATION_SUCCESS;
+      }
+
+      throw new PP_Error("SERVER_ERROR");
+    }),
+  /**
    * Sends a reset password mail if the user exists
    *
    * @argument {string} email User email
@@ -277,7 +306,7 @@ const usersRouter = router({
             process.env.VERCEL_URL
               ? "https://" + process.env.VERCEL_URL
               : process.env.FRONTEND_URL
-          }/reset-password?email=${user.email}&token=${token}`,
+          }/password-reset?email=${user.email}&token=${token}`,
         }
       );
 
@@ -322,6 +351,10 @@ const usersRouter = router({
    * Updates user password
    *
    * @argument {string} password New password
+   *
+   * @returns {string} MUTATION_SUCCESS
+   * @throws {PP_Error} PASSWORD_MISMATCH
+   * @throws {PrismaError} If unknown User.id
    */
   updatePassword: authProcedure
     .input(updateUserPasswordSchema)

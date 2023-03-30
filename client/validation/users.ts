@@ -106,6 +106,20 @@ export const registerSchema = (server = false) =>
     recaptcha: requiredIfServer(yup.string(), server),
   });
 
+export const resetPasswordSchema = yup.object({
+  token: yup.string().required(),
+  email: yup.string().email().required(),
+  password,
+  password_confirmation: yup
+    .string()
+    .oneOf(
+      [yup.ref("password")],
+      "Les deux mots de passe ne correspondent pas. "
+    )
+    .required()
+    .label("Confirmation du mot de passe"),
+});
+
 export const updateUserSchema = (server = false) => {
   const _registerSchema = registerSchema(server);
 
