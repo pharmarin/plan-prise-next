@@ -7,10 +7,10 @@ import {
 } from "@/types";
 import {
   createContext,
-  type Dispatch,
-  type PropsWithChildren,
   useContext,
   useReducer,
+  type Dispatch,
+  type PropsWithChildren,
 } from "react";
 
 const NavigationContext = createContext<NavigationState>({ title: "" });
@@ -33,6 +33,8 @@ const navigationReducer = (
   switch (action.type) {
     case NavigationActionKind.SET_TITLE:
       return { ...state, title: action.payload };
+    case NavigationActionKind.SET_RETURNTO:
+      return { ...state, returnTo: action.payload };
     default:
       throw new Error("Action invalide");
   }

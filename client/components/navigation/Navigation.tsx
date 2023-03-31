@@ -1,10 +1,13 @@
 "use client";
 
 import { useNavigationDispatch } from "@/components/NavigationContextProvider";
-import { NavigationActionKind } from "@/types";
+import { NavigationActionKind, type NavigationState } from "@/types";
 import { useEffect } from "react";
 
-const ClientTitle: React.FC<{ title: string }> = ({ title }) => {
+const Navigation: React.FC<{
+  returnTo?: NavigationState["returnTo"];
+  title: NavigationState["title"];
+}> = ({ returnTo, title }) => {
   const dispatch = useNavigationDispatch();
 
   useEffect(() => {
@@ -13,9 +16,10 @@ const ClientTitle: React.FC<{ title: string }> = ({ title }) => {
     }
 
     dispatch({ type: NavigationActionKind.SET_TITLE, payload: title });
+    dispatch({ type: NavigationActionKind.SET_RETURNTO, payload: returnTo });
   });
 
   return null;
 };
 
-export default ClientTitle;
+export default Navigation;

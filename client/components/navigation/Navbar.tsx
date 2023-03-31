@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
   const { data } = useSession();
-  const { title } = useNavigation();
+  const { returnTo, title } = useNavigation();
   const { data: user } = trpc.users.current.useQuery();
 
   const isHome = pathname === "/";
@@ -34,6 +34,7 @@ const Navbar = () => {
             </div>
           </Link>
           {!isHome && <NavbarLink icon="home" path="/" />}
+          {returnTo && <NavbarLink icon="arrowLeft" path={returnTo} />}
         </div>
       </div>
       <div

@@ -1,9 +1,10 @@
 import { type NavigationItem } from "@/types";
-import { HomeIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftIcon, HomeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import React from "react";
 
 export const navbarIcons = {
+  arrowLeft: ArrowLeftIcon,
   home: HomeIcon,
 } as const;
 

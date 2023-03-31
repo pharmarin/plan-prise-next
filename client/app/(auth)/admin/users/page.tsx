@@ -1,21 +1,19 @@
 import UsersTable from "@/app/(auth)/admin/users/UsersTable";
+import Navigation from "@/components/navigation/Navigation";
+
+const PAGE_TITLE = "Utilisateurs";
 
 const Users = () => {
-  return <UsersTable />;
-
-  /* useEffect(() => {
-     // TODO: useContext
-    dispatch(
-      setNavigation("Utilisateurs", {
-        component: { name: "arrowLeft" },
-        path: "/admin",
-      })
-    ); 
-  }); */
+  return (
+    <>
+      <Navigation title={PAGE_TITLE} returnTo="/admin" />
+      <UsersTable />
+    </>
+  );
 };
 
 export default Users;
 
 export const metadata = {
-  title: "Utilisateurs",
+  title: PAGE_TITLE,
 };
