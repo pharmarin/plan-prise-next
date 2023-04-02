@@ -4,6 +4,7 @@ import Form from "@/components/forms/Form";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
+import Link from "@/components/navigation/Link";
 import { type AppRouter } from "@/trpc/routers/app";
 import PP_Error from "@/utils/errors";
 import { loginSchema } from "@/validation/users";
@@ -22,6 +23,8 @@ const LoginForm = () => {
   const [error, setError] = useState<
     TRPCClientErrorLike<AppRouter> | undefined
   >(undefined);
+
+  console.log("login form");
 
   return (
     <>
@@ -85,13 +88,9 @@ const LoginForm = () => {
                 slideLabel
                 type="password"
               />
-              <Button
-                className="!mt-1 px-0 py-0 text-xs"
-                color="link"
-                onClick={() => router.push("/forgot-password")}
-              >
+              <Link className="!mt-1 px-0 py-0 text-xs" href="/forgot-password">
                 Mot de passe oublié ?
-              </Button>
+              </Link>
             </div>
 
             <Button
@@ -108,13 +107,9 @@ const LoginForm = () => {
           </Form>
         )}
       </Formik>
-      <Button
-        className="mt-4"
-        color="link"
-        onClick={() => router.push("/register")}
-      >
+      <Link className="mt-4" href="/register">
         Je n&apos;ai pas de compte : S&apos;inscrire
-      </Button>
+      </Link>
     </>
   );
 };

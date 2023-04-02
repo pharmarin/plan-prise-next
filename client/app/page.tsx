@@ -2,13 +2,11 @@ import AuthLayout from "@/app/(auth)/layout";
 import Home from "@/app/Home";
 import Title from "@/components/navigation/Navigation";
 
-const Index = () => {
-  return (
-    <AuthLayout>
-      <Title title="Bienvenue" />
-      <Home />
-    </AuthLayout>
-  );
-};
+const Index = () => (
+  <AuthLayout>
+    <Title title="Bienvenue" />
+    <Home />
+  </AuthLayout>
+);
 
 export default Index;

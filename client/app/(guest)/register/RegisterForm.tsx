@@ -6,6 +6,7 @@ import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
+import Link from "@/components/navigation/Link";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import PP_Error from "@/utils/errors";
@@ -16,12 +17,10 @@ import {
   registerSchema,
 } from "@/validation/users";
 import { Formik } from "formik";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const RegisterForm = () => {
-  const router = useRouter();
   const [step, setStep] = useState(1);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -240,13 +239,9 @@ const RegisterForm = () => {
           </Form>
         )}
       </Formik>
-      <Button
-        className="mt-4"
-        color="link"
-        onClick={() => router.push("/login")}
-      >
+      <Link className="mt-4" href="/login">
         J&apos;ai déjà un compte : Se connecter
-      </Button>
+      </Link>
     </>
   );
 };
