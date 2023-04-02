@@ -1,8 +1,6 @@
 import LoginForm from "@/app/(guest)/login/LoginForm";
 
-const LoginPage = () => {
-  return <LoginForm />;
-};
+const LoginPage = () => <LoginForm />;
 
 export default LoginPage;
 

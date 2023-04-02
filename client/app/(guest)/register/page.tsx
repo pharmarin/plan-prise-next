@@ -1,8 +1,6 @@
 import RegisterForm from "@/app/(guest)/register/RegisterForm";
 
-const Register = () => {
-  return <RegisterForm />;
-};
+const Register = () => <RegisterForm />;
 
 export default Register;
 
