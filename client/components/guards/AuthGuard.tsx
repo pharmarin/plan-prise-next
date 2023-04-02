@@ -19,8 +19,8 @@ const AuthGuard = async ({
   });
   //const pathname = window.location.pathname;
 
-  if (!user || (!guest && !session)) {
-    redirect(
+  if (!guest && (!session || !user)) {
+    return redirect(
       `/login${
         "" // (pathname && pathname !== "/" && `?redirectTo=${pathname}`) || ""
       }`
@@ -28,11 +28,11 @@ const AuthGuard = async ({
   }
 
   if (guest && session) {
-    redirect(searchParams?.redirectTo || "/");
-  }
+    if (!user?.firstName || !user?.lastName) {
+      return redirect("/profil" as __next_route_internal_types__.StaticRoutes);
+    }
 
-  if (!user.firstName || !user.lastName) {
-    return redirect("/profil" as __next_route_internal_types__.StaticRoutes);
+    return redirect(searchParams?.redirectTo || "/");
   }
 
   return children;
