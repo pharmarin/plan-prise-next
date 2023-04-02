@@ -3,7 +3,7 @@
     "extends": [
         "config:base"
     ],
-    "baseBranches": ["with-prisma"],
+    "baseBranches": ["with-prisma-fix"],
     "packageRules": [
       {
         "matchPackagePatterns": ["^@plan-prise/", "eslint-config-plan-prise"],
