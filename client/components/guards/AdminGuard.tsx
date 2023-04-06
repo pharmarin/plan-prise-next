@@ -1,17 +1,13 @@
-"use client";
-
+import { getServerSession } from "@/next-auth/get-session";
 import PP_Error from "@/utils/errors";
-import { useSession } from "next-auth/react";
-import { useEffect, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
-const AdminGuard: React.FC<PropsWithChildren> = ({ children }) => {
-  const { data } = useSession();
+const AdminGuard = async ({ children }: PropsWithChildren) => {
+  const session = await getServerSession();
 
-  useEffect(() => {
-    if (!data?.user?.admin) {
-      throw new PP_Error("UNAUTHORIZED_ADMIN");
-    }
-  }, [data?.user]);
+  if (!session?.user?.admin) {
+    throw new PP_Error("UNAUTHORIZED_ADMIN");
+  }
 
   return <>{children}</>;
 };
