@@ -1,5 +1,5 @@
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 
-const AppLoading = () => <LoadingScreen fullscreen />;
+const AppLoading = () => <LoadingScreen />;
 
 export default AppLoading;

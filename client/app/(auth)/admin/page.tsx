@@ -1,5 +1,5 @@
+import Link from "@/components/navigation/Link";
 import Navigation from "@/components/navigation/Navigation";
-import Link from "next/link";
 
 const AdminDashboard = () => {
   return (
@@ -10,4 +10,5 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
 export default AdminDashboard;

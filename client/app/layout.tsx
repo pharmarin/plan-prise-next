@@ -7,7 +7,7 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="fr">
       <body
-        className="min-h-screen w-screen bg-white/30  bg-cover backdrop-blur-sm"
+        className="min-h-screen w-screen bg-white/30  bg-cover px-2 backdrop-blur-sm"
         style={{ backgroundImage: `url(${background.src})` }}
       >
         <GlobalProviders>{children}</GlobalProviders>
