@@ -21,8 +21,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -58,4 +57,49 @@ model User {
   sessions    Session[]
 
   @@map("users")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model calendriers_old {
+  id   Int      @id @default(autoincrement())
+  user String   @db.Text
+  data String   @db.Text
+  TIME DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model medics_simple {
+  id                 Int     @id @default(autoincrement())
+  nomMedicament      String? @db.VarChar(200)
+  nomGenerique       String? @db.VarChar(100)
+  indication         String? @db.Text
+  frigo              Boolean @default(false)
+  dureeConservation  String? @db.Text
+  voieAdministration String? @db.VarChar(50)
+  matin              String? @db.VarChar(20)
+  midi               String? @db.VarChar(20)
+  soir               String? @db.VarChar(20)
+  coucher            String? @db.VarChar(20)
+  commentaire        String? @db.Text
+  modifie            String? @default("NOW()") @db.VarChar(20)
+  precaution         String? @db.VarChar(50)
+  qui                String? @db.VarChar(10)
+  relecture          Int?    @default(0)
+  stat               Int     @default(0)
+}
+
+model plans_old {
+  id      Int      @id @default(autoincrement())
+  user    String   @db.VarChar(50)
+  data    String   @db.MediumText
+  options String   @db.Text
+  TIME    DateTime @default(now()) @db.Timestamp(0)
+}
+
+model precautions_old {
+  id      Int    @id @default(autoincrement())
+  mot_cle String @db.VarChar(50)
+  titre   String @db.VarChar(200)
+  contenu String @db.Text
+  couleur String @db.VarChar(10)
 }

@@ -1,0 +1,53 @@
+model Medic {
+  id                   String     @id @default(cuid())
+  name                 String
+  composition          Json
+  indications          Json
+  preservationFridge   Boolean    @default(false)
+  preservationDuration Json
+  route                Json
+  comment              Json
+  precautionId         String
+  precaution           Precaution @relation(fields: [precautionId], references: [id], onDelete: NoAction)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime?
+
+  @@index([precautionId])
+  @@map("medics_simple")
+}
+
+model Plan {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  data      Json
+  options   Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  @@index([userId])
+  @@map("plans")
+}
+
+model Calendar {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  data      Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  @@index([userId])
+  @@map("calendars")
+}
+
+model Precaution {
+  id      String  @id @default(cuid())
+  keyword String
+  title   String
+  comment String
+  color   String
+  medics  Medic[]
+
+  @@map("precautions")
+}

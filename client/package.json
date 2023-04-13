@@ -82,6 +82,6 @@
     "ts-node": "^10.9.1"
   },
   "prisma": {
-    "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} server/prisma/seed.ts"
+    "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} ./prisma/migration/index.ts"
   }
 }
