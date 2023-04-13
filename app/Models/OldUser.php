@@ -11,7 +11,7 @@ class OldUser extends Model
 {
   use HasFactory;
 
-  protected $table = "old_users";
+  protected $table = "users";
 
   protected $primaryKey = "Id";
 
@@ -19,7 +19,7 @@ class OldUser extends Model
 
   static function authenticate(string $ulogin, string $upassword)
   {
-    $user = OldUser::firstWhere("mail", $ulogin);
+    $user = OldUser::firstWhere("email", $ulogin);
 
     if ($user->active !== 1) {
       throw new ApprobationException();

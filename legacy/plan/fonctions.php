@@ -13,7 +13,7 @@ function plan_list()
 
   $sth = $dbh->prepare("SELECT id FROM plans_old WHERE user = ? ORDER BY id");
   try {
-    $sth->execute([Auth::user()->old_user->login]);
+    $sth->execute([Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -28,14 +28,14 @@ function plan_read($id = null)
       "SELECT id, data FROM plans_old WHERE id = ? && user = ?"
     );
     try {
-      $sth->execute([$id, Auth::user()->old_user->login]);
+      $sth->execute([$id, Auth::user()->id]);
     } catch (PDOException $e) {
       echo $e->getMessage();
     }
   } else {
     $sth = $dbh->prepare("SELECT id, data FROM plans_old WHERE user = ?");
     try {
-      $sth->execute([Auth::user()->old_user->login]);
+      $sth->execute([Auth::user()->id]);
     } catch (PDOException $e) {
       echo $e->getMessage();
     }
@@ -72,7 +72,7 @@ function plan_read_options($id)
   $sth = $dbh->prepare(
     "SELECT options FROM plans_old WHERE id = ? && user = ?"
   );
-  $sth->execute([$id, Auth::user()->old_user->login]);
+  $sth->execute([$id, Auth::user()->id]);
   $options = $sth->fetch(PDO::FETCH_ASSOC);
   $options = json_decode($options["options"] ?? "", true);
 
@@ -93,8 +93,8 @@ function plan_insert($id_medic)
     $temp[]["nomMedicament"] = $id_medic;
   }
   try {
-    $sth = $dbh->prepare("INSERT INTO plans_old (user, data) VALUES (?, ?)");
-    $sth->execute([Auth::user()->old_user->login, json_encode($temp)]);
+    $sth = $dbh->prepare("INSERT INTO plans (user, data) VALUES (?, ?)");
+    $sth->execute([Auth::user()->id, json_encode($temp)]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -123,12 +123,12 @@ function plan_update($id_medic, $id_plan)
   }
   try {
     $sth = $dbh->prepare(
-      "UPDATE plans_old SET data = ? WHERE id = ? && user = ?"
+      "UPDATE plans SET data = ? WHERE id = ? && user = ?"
     );
     $sth->execute([
       json_encode($data),
       $id_plan,
-      Auth::user()->old_user->login,
+      Auth::user()->id,
     ]);
   } catch (PDOException $e) {
     echo $e->getMessage();
@@ -144,12 +144,12 @@ function plan_remove($row, $id_plan)
     global $dbh;
     try {
       $sth = $dbh->prepare(
-        "UPDATE plans_old SET data = ? WHERE id = ? && user = ?"
+        "UPDATE plans SET data = ? WHERE id = ? && user = ?"
       );
       $sth->execute([
         json_encode($data),
         $id_plan,
-        Auth::user()->old_user->login,
+        Auth::user()->id,
       ]);
     } catch (PDOException $e) {
       echo $e->getMessage();
@@ -165,12 +165,12 @@ function plan_update_row($data, $id_plan)
   global $dbh;
   try {
     $sth = $dbh->prepare(
-      "UPDATE plans_old SET data = ? WHERE id = ? && user = ?"
+      "UPDATE plans SET data = ? WHERE id = ? && user = ?"
     );
     $sth->execute([
       json_encode($data),
       $id_plan,
-      Auth::user()->old_user->login,
+      Auth::user()->id,
     ]);
   } catch (PDOException $e) {
     echo $e->getMessage();
@@ -188,12 +188,12 @@ function plan_update_option($type, $key, $id_plan)
     }
     try {
       $sth = $dbh->prepare(
-        "UPDATE plans_old SET options = ? WHERE id = ? && user = ?"
+        "UPDATE plans SET options = ? WHERE id = ? && user = ?"
       );
       $sth->execute([
         json_encode($options),
         $id_plan,
-        Auth::user()->old_user->login,
+        Auth::user()->id,
       ]);
     } catch (PDOException $e) {
       echo $e->getMessage();
@@ -207,7 +207,7 @@ function plan_delete($id)
   global $dbh;
   try {
     $sth = $dbh->prepare("DELETE FROM plans_old WHERE id = ? AND user = ?");
-    $sth->execute([$id, Auth::user()->old_user->login]);
+    $sth->execute([$id, Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }

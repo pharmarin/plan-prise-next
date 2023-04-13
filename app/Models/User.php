@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
   use HasFactory, Notifiable;
 
-  private OldUser $old_user;
+  //private OldUser $old_user;
 
   const CREATED_AT = "createdAt";
   const UPDATED_AT = "updatedAt";
@@ -69,12 +69,12 @@ class User extends Authenticatable
     return Attribute::make(fn () => $this->approvedAt !== null);
   }
 
-  public function old_user()
+  /* public function old_user()
   {
     return $this->hasOne(OldUser::class, "mail", "email");
-  }
+  } */
 
-  static function fromOldUser(OldUser $old_user, string $password)
+  /* static function fromOldUser(OldUser $old_user, string $password)
   {
     $user = User::create([
       "email" => $old_user->mail,
@@ -93,5 +93,5 @@ class User extends Authenticatable
     // TODO: Later we will delete OldUser, but for now we need it for legacy
 
     return $user;
-  }
+  } */
 }

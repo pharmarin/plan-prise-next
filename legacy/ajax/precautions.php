@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 session_start();
 
 if ($_GET["precaution"] == "valproate") {
-  $nom_table = "PP_" . Auth::user()->old_user->login;
+  $nom_table = "PP_" . Auth::user()->id;
   $precaution = "Il est important d\'avoir une contraception efficace car ce médicament peut entrainer des effets graves sur l\'enfant à naître (troubles du développement, malformations). 
 En cas de désir de grossesse, consultez votre médecin spécialiste. 
 Le médecin vous a fait lire et signer un accord de soin que vous devez présenter pour toute délivrance de votre médicament. 

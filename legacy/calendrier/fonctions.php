@@ -11,9 +11,9 @@ function calendar_list()
   if (!is_object($dbh)) {
     require_once LEGACY_PATH . "/connexion.php";
   }
-  $sth = $dbh->prepare("SELECT id FROM calendriers WHERE user = ?");
+  $sth = $dbh->prepare("SELECT id FROM calendriers_old WHERE user = ?");
   try {
-    $sth->execute([Auth::user()->old_user->login]);
+    $sth->execute([Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -26,15 +26,15 @@ function calendar_read($id = null)
 
   if (isset($id)) {
     $query =
-      "SELECT id, data FROM calendriers WHERE id = '" .
+      "SELECT id, data FROM calendriers_old WHERE id = '" .
       $id .
       "' AND user = '" .
-      Auth::user()->old_user->login .
+      Auth::user()->id .
       "'";
   } else {
     $query =
-      "SELECT id, data FROM calendriers WHERE user = '" .
-      Auth::user()->old_user->login .
+      "SELECT id, data FROM calendriers_old WHERE user = '" .
+      Auth::user()->id .
       "'";
   }
 
@@ -66,10 +66,10 @@ function calendar_update($post, $id)
 {
   global $dbh;
   $query =
-    "UPDATE calendriers SET data = '" .
+    "UPDATE calendriers_old SET data = '" .
     json_encode($post) .
     "' WHERE user = '" .
-    Auth::user()->old_user->login .
+    Auth::user()->id .
     "' AND id = '" .
     $id .
     "'";
@@ -84,8 +84,8 @@ function calendar_insert($post)
 {
   global $dbh;
   $query =
-    "INSERT INTO calendriers (user, data) VALUES ('" .
-    Auth::user()->old_user->login .
+    "INSERT INTO calendriers_old (user, data) VALUES ('" .
+    Auth::user()->id .
     "', '" .
     json_encode($post) .
     "')";
@@ -100,8 +100,8 @@ function calendar_delete($id)
 {
   global $dbh;
   try {
-    $sth = $dbh->prepare("DELETE FROM calendriers WHERE id = ? AND user = ?");
-    $sth->execute([$id, Auth::user()->old_user->login]);
+    $sth = $dbh->prepare("DELETE FROM calendriers_old WHERE id = ? AND user = ?");
+    $sth->execute([$id, Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -233,7 +233,7 @@ function calendar_draw_vertical($month, $year, $events = [])
   $calendar .= "<tbody>";
 
   /* keep going with days.... */
-  for ($list_day = 1; $list_day <= $days_in_month; $list_day++):
+  for ($list_day = 1; $list_day <= $days_in_month; $list_day++) :
     $calendar .= "<tr>";
 
     /* add in the day number */
@@ -361,14 +361,14 @@ function calendar_draw_horizontal($month, $year, $events = [])
 
   $calendar .= "<tbody>";
   $calendar .= '<tr class="calendar-row">';
-  for ($x = 0; $x < $running_day; $x++):
+  for ($x = 0; $x < $running_day; $x++) :
     $calendar .=
       '<td class="calendar-day-np" style="border-color:black;">&nbsp;</td>';
     $days_in_this_week++;
   endfor;
 
   /* keep going with days.... */
-  for ($list_day = 1; $list_day <= $days_in_month; $list_day++):
+  for ($list_day = 1; $list_day <= $days_in_month; $list_day++) :
     $calendar .=
       '<td class="calendar-day" style="border-color:black;vertical-align: top;height: 100px;padding:1mm;">';
     /* add in the day number */
@@ -403,10 +403,10 @@ function calendar_draw_horizontal($month, $year, $events = [])
     }
     $calendar .= "</td>";
 
-    if ($running_day == 6):
+    if ($running_day == 6) :
       $calendar .= "</tr>";
       $line_counter++;
-      if ($day_counter + 1 != $days_in_month):
+      if ($day_counter + 1 != $days_in_month) :
         $calendar .= '<tr class="calendar-row">';
       endif;
       $running_day = -1;
@@ -418,8 +418,8 @@ function calendar_draw_horizontal($month, $year, $events = [])
   endfor;
 
   /* finish the rest of the days in the week */
-  if ($days_in_this_week < 8):
-    for ($x = 1; $x <= 8 - $days_in_this_week; $x++):
+  if ($days_in_this_week < 8) :
+    for ($x = 1; $x <= 8 - $days_in_this_week; $x++) :
       $calendar .=
         '<td class="calendar-day-np" style="border-color:black;">&nbsp;</td>';
     endfor;
