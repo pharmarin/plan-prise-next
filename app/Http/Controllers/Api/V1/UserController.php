@@ -25,17 +25,6 @@ use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
 class UserController extends Controller
 {
-  use Actions\FetchMany;
-  use Actions\FetchOne;
-  use Actions\Store;
-  use Actions\Update;
-  use Actions\Destroy;
-  use Actions\FetchRelated;
-  use Actions\FetchRelationship;
-  use Actions\UpdateRelationship;
-  use Actions\AttachRelationship;
-  use Actions\DetachRelationship;
-
   public function current(Route $route, Store $store)
   {
     $request = ResourceQuery::queryOne($resourceType = $route->resourceType());

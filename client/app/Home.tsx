@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Home = () => {
   //useSetTitle("Bienvenue");
 
@@ -7,22 +9,22 @@ const Home = () => {
         Que souhaitez-vous créer ?
       </h1>
       <div className="flex w-full flex-row justify-center text-center">
-        <a
+        <Link
           className="m-4 h-48 flex-1 overflow-hidden rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-xl hover:bg-opacity-90"
-          href={`${process.env.NEXT_PUBLIC_APP_URL}/plan`}
+          href={"/plan" as never}
         >
           <div className="flex h-full w-full cursor-pointer items-center justify-center font-bold text-white hover:bg-white hover:bg-opacity-10">
             <span>Plan de prise</span>
           </div>
-        </a>
-        <a
+        </Link>
+        <Link
           className="m-4 h-48 flex-1 overflow-hidden rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-xl hover:bg-opacity-90"
-          href={`${process.env.NEXT_PUBLIC_APP_URL}/plan`}
+          href={"/calendrier" as never}
         >
           <div className="flex h-full w-full cursor-pointer items-center justify-center font-bold text-white hover:bg-white hover:bg-opacity-10">
             <span>Calendrier de prise</span>
           </div>
-        </a>
+        </Link>
       </div>
     </div>
   );

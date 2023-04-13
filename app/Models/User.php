@@ -9,16 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-  use HasApiTokens, HasFactory, Notifiable;
+  use HasFactory, Notifiable;
 
   private OldUser $old_user;
 
   const CREATED_AT = "createdAt";
   const UPDATED_AT = "updatedAt";
+
+  public $incrementing = false;
 
   /**
    * The attributes that are mass assignable.
@@ -57,7 +58,7 @@ class User extends Authenticatable
   protected function name(): Attribute
   {
     return Attribute::make(
-      fn() => $this->firstName && $this->lastName
+      fn () => $this->firstName && $this->lastName
         ? $this->firstName . " " . $this->lastName
         : ""
     );
@@ -65,7 +66,7 @@ class User extends Authenticatable
 
   protected function active(): Attribute
   {
-    return Attribute::make(fn() => $this->approvedAt !== null);
+    return Attribute::make(fn () => $this->approvedAt !== null);
   }
 
   public function old_user()

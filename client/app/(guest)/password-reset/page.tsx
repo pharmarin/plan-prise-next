@@ -1,11 +1,13 @@
 import PasswordResetForm from "@/app/(guest)/password-reset/PasswordResetForm";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
-import jwt from "jsonwebtoken";
+import { verifyJWT } from "@/utils/json-web-token";
 import { notFound } from "next/navigation";
 
-const PasswordReset: React.FC<{
+const PasswordReset = async ({
+  searchParams,
+}: {
   searchParams?: { email?: string; success?: string; token?: string };
-}> = ({ searchParams }) => {
+}) => {
   const email = searchParams?.email;
   const token = searchParams?.token;
 
@@ -23,7 +25,7 @@ const PasswordReset: React.FC<{
     );
   }
 
-  if (email && token && jwt.verify(token, process.env.NEXTAUTH_SECRET || "")) {
+  if (email && token && (await verifyJWT(token))) {
     return <PasswordResetForm email={email} token={token} />;
   }
 

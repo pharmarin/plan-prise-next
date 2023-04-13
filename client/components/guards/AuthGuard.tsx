@@ -22,7 +22,7 @@ const AuthGuard = async ({
   if (!guest && (!session || !user)) {
     return redirect(
       `/login${
-        "" // (pathname && pathname !== "/" && `?redirectTo=${pathname}`) || ""
+        "" // (pathname && pathname !== "/" && `?callbackUrl=${pathname}`) || ""
       }`
     );
   }

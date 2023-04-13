@@ -20,13 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Auth::login(User::find(8));
-
-Route::get("/", function () {
-  return "Hello world !";
+Route::get("/plan/{file?}", function ($file = "index.php") {
+  include LEGACY_PATH . "/plan/" . $file;
 });
 
-Route::get("/{assets}/{stylesheet}", function ($assets, $stylesheet) {
+/* Route::get("/{assets}/{stylesheet}", function ($assets, $stylesheet) {
   return Response::file(LEGACY_PATH . "/" . $assets . "/" . $stylesheet);
 })
   ->whereIn("assets", ["css", "js", "img", "fonts"])
@@ -37,7 +35,6 @@ Route::get("/plan/{file}", function ($file) {
 })->whereIn("file", ["select2.css", "edit.js", "select.js", "load.js"]);
 
 Route::middleware("auth")->group(function () {
-  /* Plan de prise */
   Route::get("/plan/{file?}", function ($file = "index.php") {
     include LEGACY_PATH . "/plan/" . $file;
   });
@@ -50,7 +47,6 @@ Route::middleware("auth")->group(function () {
     include LEGACY_PATH . "/plan/actions.php";
   })->withoutMiddleware(VerifyCsrfToken::class);
 
-  /* Calendrier */
   Route::get("/calendrier/{file?}", function ($file = "index.php") {
     include LEGACY_PATH . "/calendrier/" . $file;
   });
@@ -59,8 +55,7 @@ Route::middleware("auth")->group(function () {
     include LEGACY_PATH . "/calendrier/index.php";
   })->withoutMiddleware(VerifyCsrfToken::class);
 
-  /* AJAX */
   Route::get("/ajax/{file}", function ($file) {
     include LEGACY_PATH . "/ajax/" . $file;
   });
-});
+}); */

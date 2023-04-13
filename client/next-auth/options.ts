@@ -1,9 +1,10 @@
+import { NEXT_AUTH_PAGES } from "@/next-auth/config";
 import prisma from "@/prisma";
 import { type UserSafe } from "@/prisma/types";
 import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
+import { checkPassword } from "@/utils/password-utils";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import bcrypt from "bcrypt";
 import Credentials from "next-auth/providers/credentials";
 import { type NextAuthOptions } from "node_modules/next-auth";
 
@@ -29,10 +30,7 @@ export const nextAuthOptions: NextAuthOptions = {
       return session;
     },
   },
-  pages: {
-    signIn: "/login",
-    signOut: "/logout",
-  },
+  pages: NEXT_AUTH_PAGES,
   providers: [
     Credentials({
       authorize: async (credentials): Promise<UserSafe | null> => {
@@ -70,7 +68,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
         if (
           user &&
-          bcrypt.compareSync(
+          checkPassword(
             credentials.password,
             user.password.replace(/^\$2y/, "$2a")
           )

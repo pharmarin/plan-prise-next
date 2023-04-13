@@ -7,7 +7,9 @@ import {
 } from "@/trpc/trpc";
 import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
+import { signJWT, verifyJWT } from "@/utils/json-web-token";
 import sendMail from "@/utils/mail";
+import { hashPassword } from "@/utils/password-utils";
 import {
   approveUserSchema,
   deleteUserSchema,
@@ -21,7 +23,6 @@ import {
 } from "@/validation/users";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { startCase, upperCase } from "lodash";
 
 const exclude = <User, Key extends keyof User>(
@@ -243,18 +244,22 @@ const usersRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { password, token } = input;
 
-      if (jwt.verify(token, process.env.NEXTAUTH_SECRET || "")) {
-        const payload = jwt.decode(token, { json: true });
+      try {
+        const { payload } = await verifyJWT(token);
 
-        await ctx.prisma.user.update({
-          where: { id: payload?.id },
-          data: { password: await bcrypt.hash(password, 10) },
-        });
+        if (payload?.user_id && typeof payload.user_id === "string") {
+          await ctx.prisma.user.update({
+            where: { id: payload.user_id },
+            data: { password: await hashPassword(password) },
+          });
 
-        return MUTATION_SUCCESS;
+          return MUTATION_SUCCESS;
+        }
+
+        throw new Error();
+      } catch (error) {
+        throw new PP_Error("SERVER_ERROR");
       }
-
-      throw new PP_Error("SERVER_ERROR");
     }),
   /**
    * Sends a reset password mail if the user exists
@@ -286,13 +291,7 @@ const usersRouter = router({
         where: { email: input.email },
       });
 
-      const token = jwt.sign(
-        { id: user.id },
-        process.env.NEXTAUTH_SECRET || "",
-        {
-          expiresIn: "2h",
-        }
-      );
+      const token = signJWT({ user_id: user.id });
 
       await sendMail(
         {
