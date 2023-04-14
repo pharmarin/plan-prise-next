@@ -46,7 +46,7 @@ function submitOnChange() {
 			}
 			toggleLoader('on');
 			$.ajax({
-				url: 'actions.php',
+				url: '/plan/actions.php',
 				type: 'POST',
 				data: "add=&id_medic=" + escape($(this).val()) + "&id_plan=" + id_plan,
 				dataType : 'json',

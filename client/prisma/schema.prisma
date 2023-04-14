@@ -92,7 +92,7 @@ model plans_old {
   id      Int      @id @default(autoincrement())
   user    String   @db.VarChar(50)
   data    String   @db.MediumText
-  options String   @db.Text
+  options String?  @db.Text
   TIME    DateTime @default(now()) @db.Timestamp(0)
 }
 

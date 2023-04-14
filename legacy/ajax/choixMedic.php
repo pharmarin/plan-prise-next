@@ -34,5 +34,3 @@ if (count($list) > 0) {
 
 // return the result in json
 echo json_encode($data);
-
-?>

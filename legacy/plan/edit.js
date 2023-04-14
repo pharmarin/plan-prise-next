@@ -36,7 +36,7 @@ function initEditTable () {
 			}
 			//console.log('EDIT: UPDATE ' + type + ' VALUE: ' + value);
 			$.ajax({
-				url: 'actions.php',
+				url: '/plan/actions.php',
 				type: 'POST',
 				data: ajaxData,
 				dataType : 'text',
@@ -80,7 +80,7 @@ function initEditTable () {
 			ajaxData += '&rang=' + rang;
 		}
 		$.ajax({
-			url: 'actions.php',
+			url: '/plan/actions.php',
 			type: 'POST',
 			data: ajaxData,
 			dataType : 'text',
@@ -126,7 +126,7 @@ function initEditTable () {
 		});
 		var ajaxData = 'option=&type=' + type + '&value=' + value + '&id_plan=' + id_plan;
 		$.ajax({
-			url: 'actions.php',
+			url: '/plan/actions.php',
 			type: 'POST',
 			data: ajaxData,
 			dataType : 'text',
@@ -160,7 +160,7 @@ function initEditTable () {
 		}
 		var ajaxData = 'update=&type=' + type + '&value=' + value + '&row=' + row + '&id_plan=' + id_plan;
 		$.ajax({
-			url: 'actions.php',
+			url: '/plan/actions.php',
 			type: 'POST',
 			data: ajaxData,
 			dataType : 'text',
@@ -189,7 +189,7 @@ function initEditTable () {
 			id_plan = $('table').data('id_plan');
 		var ajaxData = 'remove=&row=' + row + '&id_plan=' + id_plan;
 		$.ajax({
-			url: 'actions.php',
+			url: '/plan/actions.php',
 			type: 'POST',
 			data: ajaxData,
 			dataType : 'text',
@@ -197,7 +197,7 @@ function initEditTable () {
 			tryCount : 0,
 			retryLimit : 1,
 			success: function() {
-				loadBox(id_plan);
+				location.reload();
 			},
 			error: function (xhr, textStatus, errorThrown) {
 				if (textStatus) {

@@ -295,7 +295,7 @@ class plandeprise
             } else {
               $print .= '<div class="col-xs-' . $col . '">';
             }
-            $query = "SELECT * FROM precautions WHERE mot_cle = '$value'";
+            $query = "SELECT * FROM precautions_old WHERE mot_cle = '$value'";
             $sth = $dbh->query($query);
             $resultat = $sth->fetchall(PDO::FETCH_ASSOC);
             $titre = $resultat[0]["titre"];

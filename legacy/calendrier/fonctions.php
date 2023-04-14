@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 
@@ -119,7 +120,7 @@ function calendar_print($id, $type = "horizontal", $patient = "")
   if ($type == "vertical") {
     $mpdf = new Mpdf([
       "mode" => "UTF-8",
-      "format" => "A4-L",
+      "format" => "A4-P",
       "margin_left" => $print["margin"]["left"],
       "margin_right" => $print["margin"]["right"],
       "margin_top" => $print["margin"]["top"],
@@ -162,6 +163,7 @@ function calendar_print($id, $type = "horizontal", $patient = "")
 		</tr></table>
 	'
   );
+
   ob_start();
   require "print.php";
   $html = ob_get_contents();
@@ -418,7 +420,7 @@ function calendar_draw_horizontal($month, $year, $events = [])
   endfor;
 
   /* finish the rest of the days in the week */
-  if ($days_in_this_week < 8) :
+  if ($days_in_this_week > 1 && $days_in_this_week < 8) :
     for ($x = 1; $x <= 8 - $days_in_this_week; $x++) :
       $calendar .=
         '<td class="calendar-day-np" style="border-color:black;">&nbsp;</td>';

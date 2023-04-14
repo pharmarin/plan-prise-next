@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 
@@ -92,10 +93,12 @@ function plan_insert($id_medic)
   } else {
     $temp[]["nomMedicament"] = $id_medic;
   }
+
   try {
-    $sth = $dbh->prepare("INSERT INTO plans (user, data) VALUES (?, ?)");
+    $sth = $dbh->prepare("INSERT INTO plans_old (user, data) VALUES (?, ?)");
     $sth->execute([Auth::user()->id, json_encode($temp)]);
   } catch (PDOException $e) {
+    Debugbar::error($e);
     echo $e->getMessage();
   }
   $lastid = $dbh->lastInsertId();
@@ -123,7 +126,7 @@ function plan_update($id_medic, $id_plan)
   }
   try {
     $sth = $dbh->prepare(
-      "UPDATE plans SET data = ? WHERE id = ? && user = ?"
+      "UPDATE plans_old SET data = ? WHERE id = ? && user = ?"
     );
     $sth->execute([
       json_encode($data),
@@ -144,7 +147,7 @@ function plan_remove($row, $id_plan)
     global $dbh;
     try {
       $sth = $dbh->prepare(
-        "UPDATE plans SET data = ? WHERE id = ? && user = ?"
+        "UPDATE plans_old SET data = ? WHERE id = ? && user = ?"
       );
       $sth->execute([
         json_encode($data),
@@ -165,7 +168,7 @@ function plan_update_row($data, $id_plan)
   global $dbh;
   try {
     $sth = $dbh->prepare(
-      "UPDATE plans SET data = ? WHERE id = ? && user = ?"
+      "UPDATE plans_old SET data = ? WHERE id = ? && user = ?"
     );
     $sth->execute([
       json_encode($data),
@@ -188,7 +191,7 @@ function plan_update_option($type, $key, $id_plan)
     }
     try {
       $sth = $dbh->prepare(
-        "UPDATE plans SET options = ? WHERE id = ? && user = ?"
+        "UPDATE plans_old SET options = ? WHERE id = ? && user = ?"
       );
       $sth->execute([
         json_encode($options),
@@ -441,7 +444,7 @@ function plan_precautions($printable = false)
       $print .= '<div class="col-xs-' . $col . '" ' . $style . ">";
     }
     $sth = $dbh->query(
-      "SELECT * FROM precautions WHERE mot_cle = '" . $prec[$i] . "'"
+      "SELECT * FROM precautions_old WHERE mot_cle = '" . $prec[$i] . "'"
     );
     $resultat = $sth->fetch(PDO::FETCH_ASSOC);
     $titre = $resultat["titre"];
