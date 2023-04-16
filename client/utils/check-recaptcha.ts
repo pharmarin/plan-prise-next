@@ -1,4 +1,6 @@
-const checkRecaptcha = async (gRecaptchaToken: string) => {
+const checkRecaptcha = async (
+  gRecaptchaToken: string
+): Promise<number | undefined> => {
   return process.env.NODE_ENV === "test"
     ? await new Promise((resolve) => resolve(0.9))
     : await fetch("https://www.google.com/recaptcha/api/siteverify", {
