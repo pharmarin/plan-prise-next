@@ -140,7 +140,7 @@ VALUES (
   $precaution .
   "',
 	'" .
-  Auth::user()->old_user->login .
+  Auth::user()->id .
   "'
 	)";
 

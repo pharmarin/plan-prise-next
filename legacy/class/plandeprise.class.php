@@ -15,7 +15,7 @@ class plandeprise
 
   public function __construct()
   {
-    $this->nom_PP = "PP_" . Auth::user()->old_user->login;
+    $this->nom_PP = "PP_" . Auth::user()->id;
   }
 
   public function prepare()
@@ -69,7 +69,7 @@ class plandeprise
     require LEGACY_PATH . "/connexion.php";
     $query =
       'SELECT PPcoucher FROM users WHERE login="' .
-      Auth::user()->old_user->login .
+      Auth::user()->id .
       '"';
     $sth = $dbh->query($query);
     $coucher = $sth->fetch(PDO::FETCH_ASSOC);
@@ -295,7 +295,7 @@ class plandeprise
             } else {
               $print .= '<div class="col-xs-' . $col . '">';
             }
-            $query = "SELECT * FROM precautions WHERE mot_cle = '$value'";
+            $query = "SELECT * FROM precautions_old WHERE mot_cle = '$value'";
             $sth = $dbh->query($query);
             $resultat = $sth->fetchall(PDO::FETCH_ASSOC);
             $titre = $resultat[0]["titre"];

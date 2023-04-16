@@ -28,7 +28,7 @@ if (isset($_GET["ajout"]) && isset($_GET["id_medic"])) {
   require LEGACY_PATH . "/connexion.php";
   $query =
     "UPDATE users SET PPcoucher = !PPcoucher WHERE login = '" .
-    Auth::user()->old_user->login .
+    Auth::user()->id .
     "'";
   $sth = $dbh->exec($query);
   echo $query;

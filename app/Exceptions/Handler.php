@@ -21,9 +21,7 @@ class Handler extends ExceptionHandler
    *
    * @var array<int, class-string<\Throwable>>
    */
-  protected $dontReport = [
-    \LaravelJsonApi\Core\Exceptions\JsonApiException::class,
-  ];
+  protected $dontReport = [];
 
   /**
    * A list of the inputs that are never flashed to the session on validation exceptions.
@@ -43,11 +41,5 @@ class Handler extends ExceptionHandler
    */
   public function register()
   {
-    $this->renderable(
-      \LaravelJsonApi\Exceptions\ExceptionParser::make()
-        ->acceptsMiddleware("api")
-        ->acceptsJson()
-        ->renderable()
-    );
   }
 }

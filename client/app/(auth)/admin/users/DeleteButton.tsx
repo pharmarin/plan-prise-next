@@ -1,24 +1,22 @@
+import Button from "@/components/forms/inputs/Button";
+import Spinner from "@/components/icons/Spinner";
+import { trpc } from "@/trpc/client";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import Button from "components/forms/inputs/Button";
-import Spinner from "components/icons/Spinner";
-import User from "lib/redux/models/User";
-import { useAsyncCallback } from "react-async-hook";
+import { type User } from "next-auth";
 
 const DeleteButton: React.FC<{
-  user: User;
+  user: Partial<User> & { id: User["id"] };
   onSuccess: () => void;
 }> = ({ user, onSuccess }) => {
-  const { loading, execute: deleteUser } = useAsyncCallback(() =>
-    user.delete()
-  );
+  const { isLoading, mutateAsync } = trpc.users.delete.useMutation();
 
   return (
     <Button
       color="red"
-      disabled={loading}
+      disabled={isLoading}
       onClick={async () => {
         try {
-          await deleteUser();
+          await mutateAsync(user.id);
           onSuccess();
         } catch {
           console.error(
@@ -27,7 +25,7 @@ const DeleteButton: React.FC<{
         }
       }}
     >
-      {loading ? <Spinner /> : <TrashIcon className="h-4 w-4" />}
+      {isLoading ? <Spinner /> : <TrashIcon className="h-4 w-4" />}
     </Button>
   );
 };

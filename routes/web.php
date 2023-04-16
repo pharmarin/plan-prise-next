@@ -20,37 +20,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Auth::login(User::find(8));
+Auth::onceUsingId(User::first()->id);
 
-Route::get("/", function () {
-  return "Hello world !";
-});
-
-Route::get("/{assets}/{stylesheet}", function ($assets, $stylesheet) {
-  return Response::file(LEGACY_PATH . "/" . $assets . "/" . $stylesheet);
+Route::get("/{assets}/{file}", function ($assets, $file) {
+  return Response::file(LEGACY_PATH . "/" . $assets . "/" . $file);
 })
   ->whereIn("assets", ["css", "js", "img", "fonts"])
-  ->where("stylesheet", ".*");
+  ->where("file", ".*");
 
-Route::get("/plan/{file}", function ($file) {
-  return Response::file(LEGACY_PATH . "/plan/" . $file);
-})->whereIn("file", ["select2.css", "edit.js", "select.js", "load.js"]);
+Route::get("/calendrier/image.php", function () {
+  include LEGACY_PATH . "/calendrier/image.php";
+});
 
-Route::middleware("auth")->group(function () {
-  /* Plan de prise */
+Route::middleware("token")->group(function () {
+  Route::get("/ajax/{file}", function ($file) {
+    include LEGACY_PATH . "/ajax/" . $file;
+  });
+
   Route::get("/plan/{file?}", function ($file = "index.php") {
+    if (in_array($file, ["select2.css", "edit.js", "select.js", "load.js"])) {
+      return Response::file(LEGACY_PATH . "/plan/" . $file);
+    }
+
     include LEGACY_PATH . "/plan/" . $file;
   });
 
-  Route::post("/plan", function () {
-    include LEGACY_PATH . "/plan/index.php";
+  Route::post("/plan/{file?}", function ($file = "index.php") {
+    include LEGACY_PATH . "/plan/" . $file;
   })->withoutMiddleware(VerifyCsrfToken::class);
 
-  Route::post("/plan/actions.php", function () {
-    include LEGACY_PATH . "/plan/actions.php";
-  })->withoutMiddleware(VerifyCsrfToken::class);
-
-  /* Calendrier */
   Route::get("/calendrier/{file?}", function ($file = "index.php") {
     include LEGACY_PATH . "/calendrier/" . $file;
   });
@@ -58,9 +56,4 @@ Route::middleware("auth")->group(function () {
   Route::post("/calendrier", function () {
     include LEGACY_PATH . "/calendrier/index.php";
   })->withoutMiddleware(VerifyCsrfToken::class);
-
-  /* AJAX */
-  Route::get("/ajax/{file}", function ($file) {
-    include LEGACY_PATH . "/ajax/" . $file;
-  });
 });

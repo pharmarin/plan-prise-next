@@ -9,13 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-  use HasApiTokens, HasFactory, Notifiable;
+  use HasFactory, Notifiable;
 
-  private OldUser $old_user;
+  //private OldUser $old_user;
+
+  const CREATED_AT = "createdAt";
+  const UPDATED_AT = "updatedAt";
+
+  public $incrementing = false;
 
   /**
    * The attributes that are mass assignable.
@@ -25,12 +29,12 @@ class User extends Authenticatable
   protected $fillable = [
     "email",
     "password",
-    "first_name",
-    "last_name",
-    "display_name",
+    "firstName",
+    "lastName",
+    "displayName",
     "student",
     "rpps",
-    "approved_at",
+    "approvedAt",
   ];
 
   /**
@@ -46,7 +50,7 @@ class User extends Authenticatable
    * @var array<string, string>
    */
   protected $casts = [
-    "approved_at" => "datetime",
+    "approvedAt" => "datetime",
     "admin" => "boolean",
     "student" => "boolean",
   ];
@@ -54,40 +58,40 @@ class User extends Authenticatable
   protected function name(): Attribute
   {
     return Attribute::make(
-      fn() => $this->first_name && $this->last_name
-        ? $this->first_name . " " . $this->last_name
+      fn () => $this->firstName && $this->lastName
+        ? $this->firstName . " " . $this->lastName
         : ""
     );
   }
 
   protected function active(): Attribute
   {
-    return Attribute::make(fn() => $this->approved_at !== null);
+    return Attribute::make(fn () => $this->approvedAt !== null);
   }
 
-  public function old_user()
+  /* public function old_user()
   {
     return $this->hasOne(OldUser::class, "mail", "email");
-  }
+  } */
 
-  static function fromOldUser(OldUser $old_user, string $password)
+  /* static function fromOldUser(OldUser $old_user, string $password)
   {
     $user = User::create([
       "email" => $old_user->mail,
       "password" => Hash::make($password),
-      "display_name" => $old_user->fullname,
+      "displayName" => $old_user->fullname,
       "student" => $old_user->status === 2,
       "rpps" => $old_user->rpps,
     ]);
 
     $user->admin = $old_user->admin;
-    $user->approved_at = $old_user->inscription;
-    $user->created_at = $old_user->inscription;
+    $user->approvedAt = $old_user->inscription;
+    $user->createdAt = $old_user->inscription;
 
     $user->save();
 
     // TODO: Later we will delete OldUser, but for now we need it for legacy
 
     return $user;
-  }
+  } */
 }

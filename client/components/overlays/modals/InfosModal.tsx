@@ -1,6 +1,6 @@
-import Modal from "components/overlays/modals/Modal";
-import ModalContent from "components/overlays/modals/ModalContent";
-import ModalFooter from "components/overlays/modals/ModalFooter";
+import Modal from "@/components/overlays/modals/Modal";
+import ModalContent from "@/components/overlays/modals/ModalContent";
+import ModalFooter from "@/components/overlays/modals/ModalFooter";
 import React from "react";
 
 const InfosModal: React.FC<{

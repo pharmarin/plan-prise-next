@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 
@@ -13,7 +14,7 @@ function plan_list()
 
   $sth = $dbh->prepare("SELECT id FROM plans_old WHERE user = ? ORDER BY id");
   try {
-    $sth->execute([Auth::user()->old_user->login]);
+    $sth->execute([Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -28,14 +29,14 @@ function plan_read($id = null)
       "SELECT id, data FROM plans_old WHERE id = ? && user = ?"
     );
     try {
-      $sth->execute([$id, Auth::user()->old_user->login]);
+      $sth->execute([$id, Auth::user()->id]);
     } catch (PDOException $e) {
       echo $e->getMessage();
     }
   } else {
     $sth = $dbh->prepare("SELECT id, data FROM plans_old WHERE user = ?");
     try {
-      $sth->execute([Auth::user()->old_user->login]);
+      $sth->execute([Auth::user()->id]);
     } catch (PDOException $e) {
       echo $e->getMessage();
     }
@@ -72,7 +73,7 @@ function plan_read_options($id)
   $sth = $dbh->prepare(
     "SELECT options FROM plans_old WHERE id = ? && user = ?"
   );
-  $sth->execute([$id, Auth::user()->old_user->login]);
+  $sth->execute([$id, Auth::user()->id]);
   $options = $sth->fetch(PDO::FETCH_ASSOC);
   $options = json_decode($options["options"] ?? "", true);
 
@@ -92,10 +93,12 @@ function plan_insert($id_medic)
   } else {
     $temp[]["nomMedicament"] = $id_medic;
   }
+
   try {
     $sth = $dbh->prepare("INSERT INTO plans_old (user, data) VALUES (?, ?)");
-    $sth->execute([Auth::user()->old_user->login, json_encode($temp)]);
+    $sth->execute([Auth::user()->id, json_encode($temp)]);
   } catch (PDOException $e) {
+    Debugbar::error($e);
     echo $e->getMessage();
   }
   $lastid = $dbh->lastInsertId();
@@ -128,7 +131,7 @@ function plan_update($id_medic, $id_plan)
     $sth->execute([
       json_encode($data),
       $id_plan,
-      Auth::user()->old_user->login,
+      Auth::user()->id,
     ]);
   } catch (PDOException $e) {
     echo $e->getMessage();
@@ -149,7 +152,7 @@ function plan_remove($row, $id_plan)
       $sth->execute([
         json_encode($data),
         $id_plan,
-        Auth::user()->old_user->login,
+        Auth::user()->id,
       ]);
     } catch (PDOException $e) {
       echo $e->getMessage();
@@ -170,7 +173,7 @@ function plan_update_row($data, $id_plan)
     $sth->execute([
       json_encode($data),
       $id_plan,
-      Auth::user()->old_user->login,
+      Auth::user()->id,
     ]);
   } catch (PDOException $e) {
     echo $e->getMessage();
@@ -193,7 +196,7 @@ function plan_update_option($type, $key, $id_plan)
       $sth->execute([
         json_encode($options),
         $id_plan,
-        Auth::user()->old_user->login,
+        Auth::user()->id,
       ]);
     } catch (PDOException $e) {
       echo $e->getMessage();
@@ -207,7 +210,7 @@ function plan_delete($id)
   global $dbh;
   try {
     $sth = $dbh->prepare("DELETE FROM plans_old WHERE id = ? AND user = ?");
-    $sth->execute([$id, Auth::user()->old_user->login]);
+    $sth->execute([$id, Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -260,7 +263,7 @@ function plan_print($id, $patient = "")
     '
 		<table width="100%" style="vertical-align: center; font-size: 8pt; font-weight: bold;"><tr>
 			<td width="33%"><span>Créé par ' .
-      ucwords(strtolower(Auth::user()->display_name)) .
+      ucwords(strtolower(Auth::user()->displayName)) .
       ' le {DATE j/m/Y}</span></td>
 			<td width="33%" style="text-align: center;"><span>Plan n°' .
       $id .
@@ -441,7 +444,7 @@ function plan_precautions($printable = false)
       $print .= '<div class="col-xs-' . $col . '" ' . $style . ">";
     }
     $sth = $dbh->query(
-      "SELECT * FROM precautions WHERE mot_cle = '" . $prec[$i] . "'"
+      "SELECT * FROM precautions_old WHERE mot_cle = '" . $prec[$i] . "'"
     );
     $resultat = $sth->fetch(PDO::FETCH_ASSOC);
     $titre = $resultat["titre"];

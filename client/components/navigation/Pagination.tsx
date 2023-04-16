@@ -1,138 +1,171 @@
+import Button from "@/components/forms/inputs/Button";
+import Select from "@/components/forms/inputs/Select";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import Button from "components/forms/inputs/Button";
-import Select from "components/forms/inputs/Select";
+import {
+  type CoreInstance,
+  type PaginationInstance,
+} from "@tanstack/react-table";
 import React from "react";
 
 const Pagination: React.FC<{
-  data: {
-    currentPage?: number;
-    from?: number;
-    lastPage?: number;
-    perPage?: number;
-    to?: number;
-    total?: number;
-  };
-  setPage: (pageNumber: number) => void;
-}> = ({ data, setPage }) => {
-  const { currentPage, from, lastPage, to, total } = data;
-
+  getCanNextPage: PaginationInstance<never>["getCanNextPage"];
+  getCanPreviousPage: PaginationInstance<never>["getCanPreviousPage"];
+  getPageCount: PaginationInstance<never>["getPageCount"];
+  getState: CoreInstance<never>["getState"];
+  nextPage: PaginationInstance<never>["nextPage"];
+  previousPage: PaginationInstance<never>["previousPage"];
+  setPageIndex: PaginationInstance<never>["setPageIndex"];
+  setPageSize: PaginationInstance<never>["setPageSize"];
+}> = ({
+  getCanNextPage,
+  getCanPreviousPage,
+  getPageCount,
+  getState,
+  nextPage,
+  previousPage,
+  setPageIndex,
+  setPageSize,
+}) => {
   const ICON_CLASSNAME = "h-4 w-4";
+
+  const currentPage = getState().pagination.pageIndex + 1;
+  const lastPage = getPageCount();
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 justify-start space-x-1 sm:hidden">
-        {(currentPage || 0) > 1 && (
-          <Button
-            color="white"
-            onClick={() => setPage((currentPage || 2) - 1)}
-            size="sm"
-          >
-            Précédent
-          </Button>
-        )}
-        {(currentPage || 0) !== (lastPage || 0) && (
-          <Button
-            color="white"
-            onClick={() => setPage((currentPage || 1) + 1)}
-            size="sm"
-          >
-            Suivant
-          </Button>
-        )}
+        <Button
+          color="white"
+          disabled={!getCanPreviousPage()}
+          onClick={previousPage}
+          size="sm"
+        >
+          Précédent
+        </Button>
+        <Button
+          color="white"
+          disabled={!getCanNextPage()}
+          onClick={nextPage}
+          size="sm"
+        >
+          Suivant
+        </Button>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        {from && to && total && (
-          <div>
-            <p className="text-sm text-gray-700">
-              Affichage de <span className="font-medium">{from}</span> à{" "}
-              <span className="font-medium">{to}</span> sur{" "}
-              <span className="font-medium">{total}</span> resultats
-            </p>
-          </div>
-        )}
-        {currentPage && lastPage && (
-          <div>
-            <nav className="flex space-x-1" aria-label="Pagination">
-              <Button color="white" onClick={() => setPage(1)} size="sm">
-                <ChevronDoubleLeftIcon className={ICON_CLASSNAME} />
-              </Button>
+        <div>
+          <p className="text-sm text-gray-700">
+            Affichage de la page{" "}
+            <span className="font-medium">{currentPage}</span> sur{" "}
+            <span className="font-medium">{lastPage}</span>
+          </p>
+        </div>
+        <nav className="flex space-x-1" aria-label="Pagination">
+          <Button
+            color="white"
+            disabled={!getCanPreviousPage()}
+            onClick={() => setPageIndex(1)}
+            size="sm"
+          >
+            <ChevronDoubleLeftIcon className={ICON_CLASSNAME} />
+          </Button>
+          <Button
+            color="white"
+            disabled={!getCanPreviousPage()}
+            onClick={previousPage}
+            size="sm"
+          >
+            <span className="sr-only">Précédent</span>
+            <ChevronLeftIcon className={ICON_CLASSNAME} />
+          </Button>
+          {[3, 2, 1].map((key) =>
+            currentPage - key > 0 && currentPage - key < lastPage ? (
               <Button
+                key={`end_${currentPage - key}`}
                 color="white"
-                disabled={currentPage === 1}
                 onClick={() =>
-                  currentPage > 1 ? setPage(currentPage - 1) : null
+                  setPageIndex(getState().pagination.pageIndex - key)
                 }
                 size="sm"
               >
-                <span className="sr-only">Précédent</span>
-                <ChevronLeftIcon className={ICON_CLASSNAME} />
+                {currentPage - key}
               </Button>
-              {[3, 2, 1].map((key) =>
-                currentPage - key > 0 && currentPage - key < lastPage ? (
-                  <Button
-                    key={`end_${currentPage - key}`}
-                    color="white"
-                    onClick={() => setPage(currentPage - key)}
-                    size="sm"
-                  >
-                    {currentPage - key}
-                  </Button>
-                ) : undefined
-              )}
-              <Select
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setPage(Number(e.target.value))
-                }
-                size="sm"
-                value={currentPage}
-              >
-                {[
-                  ...Array(Math.floor((lastPage - 10) / 10) + 1)
-                    .fill(0)
-                    .map((_, idx) => 10 + idx * 10),
-                  currentPage,
-                ]
-                  .sort((a, b) => a - b)
-                  .map((page) => (
-                    <option key={page} value={page}>
-                      {page}
-                    </option>
-                  ))}
-              </Select>
-              {[1, 2, 3].map((key) =>
-                currentPage + key > 0 && currentPage + key <= lastPage ? (
-                  <Button
-                    key={`start_${currentPage + key}`}
-                    color="white"
-                    onClick={() => setPage(currentPage + key)}
-                    size="sm"
-                  >
-                    {currentPage + key}
-                  </Button>
-                ) : undefined
-              )}
+            ) : undefined
+          )}
+          <Select
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setPageIndex(Number(e.target.value))
+            }
+            size="sm"
+            value={currentPage - 1}
+          >
+            {[
+              ...new Set([
+                ...(lastPage > 10
+                  ? Array(Math.floor(lastPage / 10))
+                      .fill(0)
+                      .map((_, idx) => 10 + idx * 10)
+                  : Array(lastPage)
+                      .fill(0)
+                      .map((_, idx) => idx + 1)),
+                currentPage,
+              ]),
+            ]
+              .sort((a, b) => a - b)
+              .map((page) => (
+                <option key={page} value={page - 1}>
+                  {page}
+                </option>
+              ))}
+          </Select>
+          {[1, 2, 3].map((key) =>
+            currentPage + key > 0 && currentPage + key <= lastPage ? (
               <Button
+                key={`start_${currentPage + key}`}
                 color="white"
-                disabled={currentPage === lastPage}
                 onClick={() =>
-                  currentPage < lastPage ? setPage(currentPage + 1) : null
+                  setPageIndex(getState().pagination.pageIndex + key)
                 }
                 size="sm"
               >
-                <span className="sr-only">Suivant</span>
-                <ChevronRightIcon className={ICON_CLASSNAME} />
+                {currentPage + key}
               </Button>
-              <Button color="white" onClick={() => setPage(lastPage)} size="sm">
-                <ChevronDoubleRightIcon className={ICON_CLASSNAME} />
-              </Button>
-            </nav>
-          </div>
-        )}
+            ) : undefined
+          )}
+          <Button
+            color="white"
+            disabled={!getCanNextPage()}
+            onClick={nextPage}
+            size="sm"
+          >
+            <span className="sr-only">Suivant</span>
+            <ChevronRightIcon className={ICON_CLASSNAME} />
+          </Button>
+          <Button
+            color="white"
+            disabled={!getCanNextPage()}
+            onClick={() => setPageIndex(lastPage)}
+            size="sm"
+          >
+            <ChevronDoubleRightIcon className={ICON_CLASSNAME} />
+          </Button>
+          <Select
+            value={getState().pagination.pageSize}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize} par page
+              </option>
+            ))}
+          </Select>
+        </nav>
       </div>
     </div>
   );

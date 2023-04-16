@@ -1,16 +1,18 @@
-import FormInfo from "components/forms/FormInfo";
-import Button from "components/forms/inputs/Button";
-import ConfirmPasswordModal from "components/overlays/modals/ConfirmPasswordModal";
-import { Errors } from "jsonapi-typescript";
-import { fetchUserAction } from "lib/redux/auth/actions";
-import User from "lib/redux/models/User";
-import { useDispatch } from "lib/redux/store";
+"use client";
+
+import FormInfo from "@/components/forms/FormInfo";
+import Button from "@/components/forms/inputs/Button";
+import ConfirmPasswordModal from "@/components/overlays/modals/ConfirmPasswordModal";
+import { trpc } from "@/trpc/client";
+import { type User } from "@prisma/client";
 import React, { useState } from "react";
 
-const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
-  const dispatch = useDispatch();
+const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
   const [showForm, setShowForm] = useState(false);
-  const [errors, setErrors] = useState<Errors | undefined>(undefined);
+
+  const { mutateAsync: passwordVerify, error } =
+    trpc.users.passwordVerify.useMutation();
+  const { mutateAsync: deleteUser } = trpc.users.delete.useMutation();
 
   return (
     <div>
@@ -22,19 +24,20 @@ const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
         annulée.
       </FormInfo>
       <ConfirmPasswordModal
-        errors={errors}
+        error={error}
         onCancel={() => setShowForm(false)}
         onSubmit={async (password) => {
-          return user
-            .delete({ meta: { password_confirmation: password } })
-            .then(() => {
-              dispatch(fetchUserAction());
+          try {
+            if ((await passwordVerify({ id, password })) === "success") {
+              await deleteUser(id);
+
               return true;
-            })
-            .catch((errors) => {
-              setErrors(errors);
-              return false;
-            });
+            }
+          } catch (error) {
+            return false;
+          }
+
+          return false;
         }}
         show={showForm}
       />

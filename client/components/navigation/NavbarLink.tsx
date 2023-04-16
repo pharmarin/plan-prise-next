@@ -1,7 +1,12 @@
-import { navbarIcons } from "lib/redux/navigation/slice";
-import { NavigationItem } from "lib/types";
+import { type NavigationItem } from "@/types";
+import { ArrowLeftIcon, HomeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import React from "react";
+
+export const navbarIcons = {
+  arrowLeft: ArrowLeftIcon,
+  home: HomeIcon,
+} as const;
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   const NavbarIcon = navbarIcons[icon];

@@ -1,30 +1,29 @@
-import Form from "components/forms/Form";
-import Button from "components/forms/inputs/Button";
-import FormikField from "components/forms/inputs/FormikField";
-import ServerErrors from "components/forms/ServerErrors";
-import Modal from "components/overlays/modals/Modal";
-import ModalContent from "components/overlays/modals/ModalContent";
-import ModalFooter from "components/overlays/modals/ModalFooter";
+import Form from "@/components/forms/Form";
+import Button from "@/components/forms/inputs/Button";
+import FormikField from "@/components/forms/inputs/FormikField";
+import ServerError from "@/components/forms/ServerError";
+import Modal from "@/components/overlays/modals/Modal";
+import ModalContent from "@/components/overlays/modals/ModalContent";
+import ModalFooter from "@/components/overlays/modals/ModalFooter";
+import { type AppRouter } from "@/trpc/routers/app";
+import { passwordVerifySchema } from "@/validation/users";
+import { type TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
-import { Errors } from "jsonapi-typescript";
 import React from "react";
-import * as yup from "yup";
 
 const ConfirmPasswordModal: React.FC<{
-  errors?: Errors;
+  error?: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]> | null;
   onCancel: () => void;
   onSubmit: (password: string) => Promise<boolean>;
   show: boolean;
-}> = ({ errors, onCancel, onSubmit, show }) => {
+}> = ({ error, onCancel, onSubmit, show }) => {
   return (
     <Formik
       initialValues={{ password: "" }}
       onSubmit={async ({ password }) => {
         await onSubmit(password);
       }}
-      validationSchema={yup.object().shape({
-        password: yup.string().required().label("Mot de passe"),
-      })}
+      validationSchema={passwordVerifySchema.fields.password}
     >
       {({ handleSubmit, isSubmitting }) => (
         <Modal show={show}>
@@ -52,7 +51,8 @@ const ConfirmPasswordModal: React.FC<{
                   name="password"
                   type="password"
                 />
-                <ServerErrors errors={errors} />
+
+                {error && <ServerError error={error} />}
               </div>
             </ModalContent>
             <ModalFooter>

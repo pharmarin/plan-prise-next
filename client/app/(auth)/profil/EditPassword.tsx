@@ -1,20 +1,18 @@
 "use client";
 
-import { AxiosError } from "axios";
-import Form from "components/forms/Form";
-import Button from "components/forms/inputs/Button";
-import FormikField from "components/forms/inputs/FormikField";
-import ServerErrors from "components/forms/ServerErrors";
+import Form from "@/components/forms/Form";
+import Button from "@/components/forms/inputs/Button";
+import FormikField from "@/components/forms/inputs/FormikField";
+import ServerError from "@/components/forms/ServerError";
+import { trpc } from "@/trpc/client";
+import { updateUserPasswordSchema } from "@/validation/users";
+import { type User } from "@prisma/client";
 import { Formik } from "formik";
-import { DocWithErrors, Errors } from "jsonapi-typescript";
-import User from "lib/redux/models/User";
-import { useState } from "react";
-import * as yup from "yup";
 
 const EditPassword: React.FC<
   { user: User } | { email: string; token: string }
 > = (props) => {
-  const [errors, setErrors] = useState<Errors | undefined>(undefined);
+  const { mutateAsync, error } = trpc.users.updatePassword.useMutation();
 
   return (
     <Formik
@@ -26,48 +24,13 @@ const EditPassword: React.FC<
         token: "token" in props ? props.token : "",
       }}
       onSubmit={async (values) => {
-        setErrors(undefined);
-
-        "user" in props
-          ? await props.user
-              .patch(
-                {
-                  ...props.user.identifier,
-                  attributes: {
-                    current_password: values.current_password,
-                    password: values.password,
-                    password_confirmation: values.password_confirmation,
-                  },
-                },
-                "/users/update-password"
-              )
-              .catch((error: AxiosError<DocWithErrors>) => {
-                setErrors(error.response?.data.errors);
-              })
-          : new User().post({
-              type: "users",
-              attributes: {
-                email: values.email,
-                password: values.password,
-                password_confirmation: values.password_confirmation,
-                token: values.token,
-              },
-            });
+        await mutateAsync({
+          current_password: values.current_password,
+          password: values.password,
+          password_confirmation: values.password_confirmation,
+        });
       }}
-      validationSchema={yup.object().shape({
-        current_password: yup.string().required().label("Mot de passe actuel"),
-        password: yup
-          .string()
-          .min(8)
-          .max(20)
-          .required()
-          .label("Nouveau mot de passe"),
-        password_confirmation: yup
-          .string()
-          .oneOf([yup.ref("password")])
-          .required()
-          .label("Confirmation du nouveau mot de passe"),
-      })}
+      validationSchema={updateUserPasswordSchema}
     >
       {({ handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
@@ -104,7 +67,9 @@ const EditPassword: React.FC<
             placeholder="Confirmation du nouveau mot de passe"
             type="password"
           />
-          <ServerErrors errors={errors} />
+
+          {error && <ServerError error={error} />}
+
           <Button color="primary" loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe
           </Button>

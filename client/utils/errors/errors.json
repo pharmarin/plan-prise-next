@@ -1,0 +1,26 @@
+{
+  "PASSWORD_MISMATCH": "Le mot de passe entré ne correspond pas au mot de passe enregistré",
+  "RECAPTCHA_LOADING_ERROR": "Le service ReCAPTCHA n'a pas pu être chargé",
+  "RECAPTCHA_VALIDATION_ERROR": "Le ReCAPTCHA n'a pas pu être validé",
+  "SERVER_ERROR": "Une erreur est survenue",
+  "UNAUTHORIZED_AUTH": {
+    "message": "Accès non autorisé",
+    "infos": "Vous devez être connecté pour effectuer cette action"
+  },
+  "UNAUTHORIZED_ADMIN": {
+    "message": "Accès non autorisé",
+    "infos": "Vous tentez de charger une page réservée aux administrateurs du site, cet accès ne vous est pas autorisé"
+  },
+  "UNEXPECTED_FILE_TYPE": {
+    "message": "Type de fichier non géré",
+    "infos": "Le certificat est dans un format de fichier non géré pour le moment"
+  },
+  "USER_LOADING_ERROR": "Les données de l'utilisateur n'ont pas pu être chargées",
+  "USER_LOGIN_ERROR": "Ces identifiants nous ont pas permis de vous connecter",
+  "USER_NOT_APPROVED": {
+    "message": "Inscription non validée",
+    "infos": "Vous recevrez un mail dès que votre compte sera activé"
+  },
+  "USER_REGISTER_CONFLICT": "Un utilisateur est déjà inscrit avec cette adresse email",
+  "USER_REGISTER_ERROR": "Une erreur est survenue lors de l'inscription"
+}

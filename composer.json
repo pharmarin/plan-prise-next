@@ -9,22 +9,19 @@
   "license": "MIT",
   "require": {
     "php": "^8.0.2",
-    "anhskohbo/no-captcha": "^3.4",
     "doctrine/dbal": "^3.5",
+    "firebase/php-jwt": "*",
     "google/recaptcha": "^1.2",
     "guzzlehttp/guzzle": "^7.2",
-    "laravel-json-api/laravel": "^2.4",
     "laravel/framework": "^9.0",
-    "laravel/sanctum": "^3.0",
     "laravel/tinker": "^2.7",
+    "lcobucci/clock": "*",
     "mpdf/mpdf": "^8.1.3",
-    "phpmailer/phpmailer": "^6.7",
-    "wijourdil/ntfy-notification-channel": "^1.0"
+    "phpmailer/phpmailer": "^6.7"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.7",
     "barryvdh/laravel-ide-helper": "^2.12",
-    "fakerphp/faker": "^1.9.1",
     "laravel-lang/attributes": "^2.0",
     "laravel-lang/lang": "^12.8",
     "laravel-lang/publisher": "^14.4",

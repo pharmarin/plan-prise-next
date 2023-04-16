@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model User {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  admin       Boolean   @default(false)
+  firstName   String?
+  lastName    String?
+  displayName String?
+  student     Boolean
+  certificate String?   @db.LongText
+  rpps        BigInt?
+  password    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime?
+  approvedAt  DateTime?
+  accounts    Account[]
+  sessions    Session[]
+
+  @@map("users")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model calendriers_old {
+  id   Int      @id @default(autoincrement())
+  user String   @db.Text
+  data String   @db.Text
+  TIME DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model medics_simple {
+  id                 Int     @id @default(autoincrement())
+  nomMedicament      String? @db.VarChar(200)
+  nomGenerique       String? @db.VarChar(100)
+  indication         String? @db.Text
+  frigo              Boolean @default(false)
+  dureeConservation  String? @db.Text
+  voieAdministration String? @db.VarChar(50)
+  matin              String? @db.VarChar(20)
+  midi               String? @db.VarChar(20)
+  soir               String? @db.VarChar(20)
+  coucher            String? @db.VarChar(20)
+  commentaire        String? @db.Text
+  modifie            String? @default("NOW()") @db.VarChar(20)
+  precaution         String? @db.VarChar(50)
+  qui                String? @db.VarChar(10)
+  relecture          Int?    @default(0)
+  stat               Int     @default(0)
+}
+
+model plans_old {
+  id      Int      @id @default(autoincrement())
+  user    String   @db.VarChar(50)
+  data    String   @db.MediumText
+  options String?  @db.Text
+  TIME    DateTime @default(now()) @db.Timestamp(0)
+}
+
+model precautions_old {
+  id      Int    @id @default(autoincrement())
+  mot_cle String @db.VarChar(50)
+  titre   String @db.VarChar(200)
+  contenu String @db.Text
+  couleur String @db.VarChar(10)
+}

@@ -1,25 +1,26 @@
+"use client";
+// Because of the use of tRPC (useMutation)
+
+import Button from "@/components/forms/inputs/Button";
+import Spinner from "@/components/icons/Spinner";
+import { trpc } from "@/trpc/client";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import Button from "components/forms/inputs/Button";
-import Spinner from "components/icons/Spinner";
-import User from "lib/redux/models/User";
+import { type User } from "next-auth";
 import React from "react";
-import { useAsyncCallback } from "react-async-hook";
 
 const ApproveButton: React.FC<{
-  user: User;
+  user: Partial<User> & { id: User["id"] };
   onSuccess: () => void;
 }> = ({ user, onSuccess }) => {
-  const { loading, execute: approveUser } = useAsyncCallback(() => {
-    return user.approve();
-  });
+  const { mutateAsync, isLoading } = trpc.users.approve.useMutation();
 
   return (
     <Button
       color="primary"
-      disabled={loading}
+      disabled={isLoading}
       onClick={async () => {
         try {
-          await approveUser();
+          await mutateAsync(user.id);
           onSuccess();
         } catch {
           console.error(
@@ -28,7 +29,7 @@ const ApproveButton: React.FC<{
         }
       }}
     >
-      {loading ? <Spinner /> : <CheckIcon className="h-4 w-4" />}
+      {isLoading ? <Spinner /> : <CheckIcon className="h-4 w-4" />}
     </Button>
   );
 };

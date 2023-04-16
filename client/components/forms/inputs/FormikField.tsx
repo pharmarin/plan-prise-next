@@ -1,7 +1,7 @@
-import CheckboxInput from "components/forms/inputs/CheckboxInput";
-import FileInput from "components/forms/inputs/FileInput";
-import TextInput from "components/forms/inputs/TextInput";
-import { FieldAttributes, useField, useFormikContext } from "formik";
+import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
+import FileInput from "@/components/forms/inputs/FileInput";
+import TextInput from "@/components/forms/inputs/TextInput";
+import { type FieldAttributes, useField, useFormikContext } from "formik";
 import React from "react";
 
 const FormikField: React.FC<
@@ -18,18 +18,19 @@ const FormikField: React.FC<
         } & typeof TextInput.defaultProps)
     )
 > = ({ disabled, disableOnSubmit, displayErrors, label, ...props }) => {
-  const [field, meta, helpers] = useField(props);
-  const { isSubmitting, setFieldValue } = useFormikContext();
+  const [field, meta] = useField(props);
+  const { isSubmitting, setFieldTouched, setFieldValue } = useFormikContext();
 
   const inputProps = {
     ...field,
     ...props,
     disabled: (disableOnSubmit && isSubmitting) || disabled,
+    id: props.name,
     label,
   };
 
   return (
-    <>
+    <div>
       {(() => {
         switch (props.type) {
           case "checkbox":
@@ -38,9 +39,14 @@ const FormikField: React.FC<
             return (
               <FileInput
                 {...inputProps}
-                onChange={(event) =>
-                  setFieldValue(props.name, event.currentTarget.files?.[0])
-                }
+                onChange={(event) => {
+                  setFieldValue(props.name, event.currentTarget.files?.[0]);
+                  setFieldTouched(
+                    props.name,
+                    (event.currentTarget.files || []).length > 0,
+                    false
+                  );
+                }}
               />
             );
           default:
@@ -50,7 +56,7 @@ const FormikField: React.FC<
       {displayErrors && meta.touched && meta.error && (
         <div className="mt-1 text-xs text-red-600">{meta.error}</div>
       )}
-    </>
+    </div>
   );
 };
 

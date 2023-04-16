@@ -1,11 +1,11 @@
-import HeadDefaults from "components/head/HeadDefaults";
+import HeadDefaults from "@/components/head/HeadDefaults";
 
 const Head = () => {
-    return (
-        <>
-            <HeadDefaults />
-        </>
-    );
+  return (
+    <>
+      <HeadDefaults />
+    </>
+  );
 };
 
 export default Head;

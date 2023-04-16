@@ -1,5 +1,5 @@
 import { styled, tw } from "classname-variants/react";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 const SelectBase: React.FC<
   PropsWithChildren<Omit<JSX.IntrinsicElements["select"], "size">>

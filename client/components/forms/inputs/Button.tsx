@@ -1,5 +1,5 @@
+import Spinner from "@/components/icons/Spinner";
 import { styled, tw } from "classname-variants/react";
-import Spinner from "components/icons/Spinner";
 import React from "react";
 
 const ButtonBase: React.FC<

@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, PropsWithChildren } from "react";
+import React, { Fragment, type PropsWithChildren } from "react";
 
 const Modal: React.FC<
   PropsWithChildren<{

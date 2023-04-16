@@ -10,7 +10,7 @@ const FormInfoBase: React.FC<
   </div>
 );
 
-const FormInfo = styled("div", {
+const FormInfo = styled(FormInfoBase, {
   base: tw`mt-1 text-xs`,
   variants: {
     color: {

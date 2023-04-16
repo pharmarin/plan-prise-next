@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 
@@ -11,9 +12,9 @@ function calendar_list()
   if (!is_object($dbh)) {
     require_once LEGACY_PATH . "/connexion.php";
   }
-  $sth = $dbh->prepare("SELECT id FROM calendriers WHERE user = ?");
+  $sth = $dbh->prepare("SELECT id FROM calendriers_old WHERE user = ?");
   try {
-    $sth->execute([Auth::user()->old_user->login]);
+    $sth->execute([Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -26,15 +27,15 @@ function calendar_read($id = null)
 
   if (isset($id)) {
     $query =
-      "SELECT id, data FROM calendriers WHERE id = '" .
+      "SELECT id, data FROM calendriers_old WHERE id = '" .
       $id .
       "' AND user = '" .
-      Auth::user()->old_user->login .
+      Auth::user()->id .
       "'";
   } else {
     $query =
-      "SELECT id, data FROM calendriers WHERE user = '" .
-      Auth::user()->old_user->login .
+      "SELECT id, data FROM calendriers_old WHERE user = '" .
+      Auth::user()->id .
       "'";
   }
 
@@ -66,10 +67,10 @@ function calendar_update($post, $id)
 {
   global $dbh;
   $query =
-    "UPDATE calendriers SET data = '" .
+    "UPDATE calendriers_old SET data = '" .
     json_encode($post) .
     "' WHERE user = '" .
-    Auth::user()->old_user->login .
+    Auth::user()->id .
     "' AND id = '" .
     $id .
     "'";
@@ -84,8 +85,8 @@ function calendar_insert($post)
 {
   global $dbh;
   $query =
-    "INSERT INTO calendriers (user, data) VALUES ('" .
-    Auth::user()->old_user->login .
+    "INSERT INTO calendriers_old (user, data) VALUES ('" .
+    Auth::user()->id .
     "', '" .
     json_encode($post) .
     "')";
@@ -100,8 +101,8 @@ function calendar_delete($id)
 {
   global $dbh;
   try {
-    $sth = $dbh->prepare("DELETE FROM calendriers WHERE id = ? AND user = ?");
-    $sth->execute([$id, Auth::user()->old_user->login]);
+    $sth = $dbh->prepare("DELETE FROM calendriers_old WHERE id = ? AND user = ?");
+    $sth->execute([$id, Auth::user()->id]);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
@@ -119,7 +120,7 @@ function calendar_print($id, $type = "horizontal", $patient = "")
   if ($type == "vertical") {
     $mpdf = new Mpdf([
       "mode" => "UTF-8",
-      "format" => "A4-L",
+      "format" => "A4-P",
       "margin_left" => $print["margin"]["left"],
       "margin_right" => $print["margin"]["right"],
       "margin_top" => $print["margin"]["top"],
@@ -153,7 +154,7 @@ function calendar_print($id, $type = "horizontal", $patient = "")
     '
 		<table width="100%" style="vertical-align: center; font-size: 8pt; font-weight: bold;"><tr>
 			<td width="33%"><span>Créé par ' .
-      ucwords(strtolower(Auth::user()->display_name)) .
+      ucwords(strtolower(Auth::user()->displayName)) .
       ' le {DATE j/m/Y}</span></td>
 			<td width="33%" style="text-align: center;"><span>Calendrier n°' .
       $id .
@@ -162,6 +163,7 @@ function calendar_print($id, $type = "horizontal", $patient = "")
 		</tr></table>
 	'
   );
+
   ob_start();
   require "print.php";
   $html = ob_get_contents();
@@ -233,7 +235,7 @@ function calendar_draw_vertical($month, $year, $events = [])
   $calendar .= "<tbody>";
 
   /* keep going with days.... */
-  for ($list_day = 1; $list_day <= $days_in_month; $list_day++):
+  for ($list_day = 1; $list_day <= $days_in_month; $list_day++) :
     $calendar .= "<tr>";
 
     /* add in the day number */
@@ -325,8 +327,6 @@ function calendar_draw_horizontal($month, $year, $events = [])
     " " .
     strftime("%Y", mktime(0, 0, 0, $month, 1, $year)) .
     "</div>";
-  $calendar .=
-    '<table class="table table-bordered horizontal" cellpadding="8" style="border-color: black; font-size: 80%; margin-bottom:0;">';
 
   /* table headings */
   $liste_jours = [
@@ -338,105 +338,88 @@ function calendar_draw_horizontal($month, $year, $events = [])
     "Samedi",
     "Dimanche",
   ];
-  $calendar .= "<thead>";
-  $calendar .=
-    '<tr><th class="calendar-day-head" style="border-color:black; text-align: center; width: ' .
-    100 / 7 .
-    '%; padding: 1mm; font-size: 110%;">' .
-    implode(
-      '</th><th class="calendar-day-head" style="border-color:black; text-align: center; width: ' .
-        100 / 7 .
-        '%;">',
-      $liste_jours
-    ) .
-    "</th></tr></thead>";
 
-  /* days and weeks vars now ... */
-  $running_day = date("w", mktime(0, 0, 0, $month, 0, $year));
-  $days_in_month = date("t", mktime(0, 0, 0, $month, 1, $year));
-  $days_in_this_week = 1;
-  $day_counter = 0;
-  $dates_array = [];
-  $line_counter = 1;
+  $nb_days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+  $first_day = new DateTime("$year-$month-01");
+  $first_day_in_week = $first_day->format('N');
+  $width = 7 / 100;
 
-  $calendar .= "<tbody>";
-  $calendar .= '<tr class="calendar-row">';
-  for ($x = 0; $x < $running_day; $x++):
-    $calendar .=
-      '<td class="calendar-day-np" style="border-color:black;">&nbsp;</td>';
-    $days_in_this_week++;
-  endfor;
+  $document = new DOMDocument();
 
-  /* keep going with days.... */
-  for ($list_day = 1; $list_day <= $days_in_month; $list_day++):
-    $calendar .=
-      '<td class="calendar-day" style="border-color:black;vertical-align: top;height: 100px;padding:1mm;">';
-    /* add in the day number */
-    $calendar .= '<div class="day-number"><b>' . $list_day . "</b></div>";
+  $calendar_table = $document->createElement('table');
+  $calendar_table->setAttribute("class", "table table-bordered horizontal");
+  $calendar_table->setAttribute("cellpadding", 8);
+  $calendar_table->setAttribute("style", "border-color: black; font-size: 80%; margin-bottom:0;");
+  $document->appendChild($calendar_table);
 
-    $event_day = $year . "-" . $month . "-" . $list_day;
+  $tr = $document->createElement('tr');
+  $calendar_table->appendChild($tr);
 
-    if (isset($events[$event_day])) {
-      $nbevent = 0;
-      foreach ($events[$event_day] as $event) {
-        $nbevent++;
-        if (!array_key_exists($event["id_medic"], $listmedic)) {
-          $listmedic[$event["id_medic"]] = $color[count($listmedic)];
-        }
-        if (ctype_digit($event["id_medic"])) {
-          $medic = calendar_request($event["id_medic"]);
-          $title = $medic["nomMedicament"];
-        } else {
-          $title = $event["id_medic"];
-        }
-        $titre =
-          '<img src="/calendrier/image.php?color="' .
-          $listmedic[$event["id_medic"]] .
-          '" style="margin: 1mm;"> ' .
-          $event["nombre"] .
-          " x " .
-          preg_replace("/[ ]+(?=\D)/", "&nbsp;", $title);
-        $calendar .= '<div class="event">' . $titre . "</div>";
-        /*$titre = '<img src="image.php?color=000000" style="margin: 1mm;"> '.$event['nombre'].' x '.preg_replace ('/[ ]+(?=\D)/', '&nbsp;', $medic['nomMedicament']);
-         $calendar.= '<div class="event">'.$titre.'</div>';*/
-      }
-    }
-    $calendar .= "</td>";
-
-    if ($running_day == 6):
-      $calendar .= "</tr>";
-      $line_counter++;
-      if ($day_counter + 1 != $days_in_month):
-        $calendar .= '<tr class="calendar-row">';
-      endif;
-      $running_day = -1;
-      $days_in_this_week = 0;
-    endif;
-    $days_in_this_week++;
-    $running_day++;
-    $day_counter++;
-  endfor;
-
-  /* finish the rest of the days in the week */
-  if ($days_in_this_week < 8):
-    for ($x = 1; $x <= 8 - $days_in_this_week; $x++):
-      $calendar .=
-        '<td class="calendar-day-np" style="border-color:black;">&nbsp;</td>';
-    endfor;
-  endif;
-
-  /* final row */
-  $calendar .= "</tr>";
-
-  /* end the table */
-  $calendar .= "</table>";
-
-  if ($line_counter < 6) {
-    $calendar .= "<br/><br/>";
+  foreach ($liste_jours as $week_day) {
+    $th = $document->createElement('th', $week_day);
+    $th->setAttribute("style", "border-color:black; text-align: center; width: {$width}%; padding: 1mm; font-size: 110%;");
+    $th->setAttribute("class", "calendar-day-head");
+    $tr->appendChild($th);
   }
 
-  /* all done, return result */
-  return $calendar;
+  for ($semaine = 1; $semaine <= ceil($nb_days / 7); $semaine++) {
+    $tr = $document->createElement('tr');
+    $calendar_table->appendChild($tr);
+
+    // boucle pour afficher les jours de la semaine
+    for ($day = 1; $day <= 7; $day++) {
+      $jour_calendrier = ($semaine - 1) * 7 + $day - $first_day_in_week + 1;
+      $event_day = $year . "-" . $month . "-" . $jour_calendrier;
+
+      $td = $document->createElement('td');
+      $td->setAttribute("style", "border-color:black;vertical-align: top;height: 100px;padding:1mm;");
+
+      $day_number = $document->createElement('div', $jour_calendrier);
+      $day_number->setAttribute("style", "font-weight: bold;margin-left: 1mm;");
+      $day_number->setAttribute("class", "day-number");
+      $td->appendChild($day_number);
+
+      if (isset($events[$event_day])) {
+        foreach ($events[$event_day] as $event) {
+          if (!array_key_exists($event["id_medic"], $listmedic)) {
+            $listmedic[$event["id_medic"]] = $color[count($listmedic)];
+          }
+
+          if (ctype_digit($event["id_medic"])) {
+            $medic = calendar_request($event["id_medic"]);
+            $title = $medic["nomMedicament"];
+          } else {
+            $title = $event["id_medic"];
+          }
+
+          $event_div = $document->createElement("div");
+          $event_div->setAttribute("class", "event");
+          $td->appendChild($event_div);
+
+          $image = $document->createElement("img");
+          $image->setAttribute("src", "/calendrier/image.php?color={$listmedic[$event['id_medic']]}");
+          $image->setAttribute("style", "margin: 1mm;");
+
+          $event_title = $document->createElement("span", $event["nombre"] .
+            " x " .
+            preg_replace("/[ ]+(?=\D)/", "&nbsp;", $title));
+
+          $event_div->append($image, $event_title);
+        }
+      }
+
+      if ($jour_calendrier < 1 || $jour_calendrier > $nb_days) {
+        $td->nodeValue = '';
+        $td->setAttribute("class", "calendar-day-np");
+      } else {
+        $td->setAttribute("class", "calendar-day");
+      }
+
+      $tr->appendChild($td);
+    }
+  }
+
+  return $calendar . $document->saveHTML();
 }
 
 function diff_en_mois_entre_deux_date($start, $end)

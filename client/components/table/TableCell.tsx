@@ -2,7 +2,9 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 const TableCell: React.FC<
-  React.ComponentPropsWithoutRef<"td"> & { link?: string }
+  React.ComponentPropsWithoutRef<"td"> & {
+    link?: __next_route_internal_types__.RouteImpl<string>;
+  }
 > = ({ children, className, link, ...props }) => {
   return (
     <td

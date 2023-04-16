@@ -1,23 +1,27 @@
-"use client";
+import DeleteUser from "@/app/(auth)/profil/DeleteUser";
+import EditInformations from "@/app/(auth)/profil/EditInformations";
+import EditPassword from "@/app/(auth)/profil/EditPassword";
+import Title from "@/components/navigation/Navigation";
+import { getServerSession } from "@/next-auth/get-session";
+import prisma from "@/prisma";
+import PP_Error from "@/utils/errors";
 
-import DeleteUser from "app/(auth)/profil/DeleteUser";
-import EditInformations from "app/(auth)/profil/EditInformations";
-import EditPassword from "app/(auth)/profil/EditPassword";
-import { selectUser } from "lib/redux/auth/selectors";
-import { useSetTitle } from "lib/redux/navigation/actions";
-import { useSelector } from "react-redux";
+const PAGE_TITLE = "Profil";
 
-const Profil = () => {
-  const user = useSelector(selectUser);
-
-  useSetTitle("Profil");
+const Profil = async () => {
+  const session = await getServerSession();
+  const user = await prisma.user.findUnique({
+    where: { id: session?.user.id || "" },
+  });
 
   if (!user) {
-    throw new Error("L'utilisateur n'a pas pu être chargé");
+    throw new PP_Error("USER_LOADING_ERROR");
   }
 
   return (
     <>
+      <Title title={PAGE_TITLE} />
+
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
@@ -33,7 +37,7 @@ const Profil = () => {
           </div>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
-          <EditInformations user={user} />
+          <EditInformations user={user} data-superjson />
         </div>
       </div>
 
@@ -56,7 +60,7 @@ const Profil = () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <EditPassword user={user} />
+            <EditPassword user={user} data-superjson />
           </div>
         </div>
       </div>
@@ -80,7 +84,7 @@ const Profil = () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <DeleteUser user={user} />
+            <DeleteUser id={user.id} />
           </div>
         </div>
       </div>
@@ -89,3 +93,5 @@ const Profil = () => {
 };
 
 export default Profil;
+
+export const metadata = { title: PAGE_TITLE };

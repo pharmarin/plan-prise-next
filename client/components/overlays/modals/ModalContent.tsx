@@ -1,7 +1,7 @@
+import RoundedIcon from "@/components/icons/RoundedIcon";
 import { Dialog } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
-import RoundedIcon from "components/icons/RoundedIcon";
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 
 const ModalContent: React.FC<PropsWithChildren<{ title?: string }>> = ({
   children,
