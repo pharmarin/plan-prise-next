@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import prisma from "../index";
 import type {
   CalendarsTable,
@@ -9,11 +10,13 @@ import type {
 } from "./database";
 import database from "./plandepr_medics.json";
 
-const usersMapCache: { [email: string]: { username: string; newId: string } } =
-  {};
-let usersMap: { [username: string]: string };
+type UsersMap = { [username: string]: string };
 
-const seeder = async () => {
+const migrateUsers = async (): Promise<UsersMap> => {
+  const usersMap: {
+    [email: string]: { username: string; newId: string };
+  } = {};
+
   const usersTable =
     (database as MySQLExport).find(
       (data): data is UsersTable =>
@@ -22,7 +25,7 @@ const seeder = async () => {
 
   await prisma.user.createMany({
     data: usersTable.map((user) => {
-      usersMapCache[user.mail] = { username: user.login, newId: "" };
+      usersMap[user.mail] = { username: user.login, newId: "" };
 
       return {
         admin: user.admin === "1",
@@ -42,13 +45,27 @@ const seeder = async () => {
       select: { id: true, email: true },
     })
   ).map((user) => {
-    usersMapCache[user.email].newId = user.id;
+    usersMap[user.email].newId = user.id;
   });
 
-  usersMap = Object.fromEntries(
-    Object.values(usersMapCache).map((value) => [value.username, value.newId])
+  return Object.fromEntries(
+    Object.values(usersMap).map((value) => [value.username, value.newId])
   );
+};
 
+const migratePrecautions = async () => {
+  const precautionsTable =
+    (database as MySQLExport).find(
+      (data): data is PrecautionsTable =>
+        data.type === "table" && data.name === "precautions"
+    )?.data || [];
+
+  await prisma.precautions_old.createMany({
+    data: precautionsTable.map(({ id: _id, ...precaution }) => precaution),
+  });
+};
+
+const migrateMedics = async () => {
   const medicsTable =
     (database as MySQLExport).find(
       (data): data is MedicsTable =>
@@ -67,17 +84,9 @@ const seeder = async () => {
       precaution: medic.precaution || null,
     })),
   });
+};
 
-  const precautionsTable =
-    (database as MySQLExport).find(
-      (data): data is PrecautionsTable =>
-        data.type === "table" && data.name === "precautions"
-    )?.data || [];
-
-  await prisma.precautions_old.createMany({
-    data: precautionsTable.map(({ id: _id, ...precaution }) => precaution),
-  });
-
+const migrateCalendars = async (users: UsersMap) => {
   const calendarsTable =
     (database as MySQLExport).find(
       (data): data is CalendarsTable =>
@@ -87,11 +96,13 @@ const seeder = async () => {
   await prisma.calendriers_old.createMany({
     data: calendarsTable.map(({ id: _id, ...calendar }) => ({
       ...calendar,
-      user: usersMap[calendar.user] || "",
+      user: users[calendar.user] || "",
       TIME: new Date(calendar.TIME),
     })),
   });
+};
 
+const migratePlans = async (users: UsersMap) => {
   const plansTable =
     (database as MySQLExport).find(
       (data): data is PlansTable =>
@@ -101,10 +112,18 @@ const seeder = async () => {
   await prisma.plans_old.createMany({
     data: plansTable.map(({ id: _id, ...plan }) => ({
       ...plan,
-      user: usersMap[plan.user] || "",
+      user: users[plan.user] || "",
       TIME: new Date(plan.TIME),
     })),
   });
+};
+
+const seeder = async () => {
+  const users = await migrateUsers();
+  // await migrateMedics();
+  await migratePrecautions();
+  await migrateCalendars(users);
+  await migratePlans(users);
 };
 
 seeder()
