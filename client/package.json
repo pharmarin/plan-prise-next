@@ -47,7 +47,7 @@
     "tailwind-merge": "^1.10.0",
     "typescript": "4.9.5",
     "windstitch": "^0.3.0",
-    "yup": "^0.32.11",
+    "yup": "^1.0.0",
     "yup-locales": "^1.2.12"
   },
   "devDependencies": {
