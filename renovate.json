@@ -1,18 +1,16 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:base"
-    ],
-    "baseBranches": ["with-prisma-fix"],
-    "packageRules": [
-      {
-        "matchPackagePatterns": ["^@plan-prise/", "eslint-config-plan-prise"],
-        "enabled": false
-      },
-      {
-        "paths": ["composer.json"],
-        "enabled": false
-      }
-    ],
-    "automerge": true
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "baseBranches": ["master"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^@plan-prise/", "eslint-config-plan-prise"],
+      "enabled": false
+    },
+    {
+      "paths": ["composer.json"],
+      "enabled": false
+    }
+  ],
+  "automerge": true
 }
