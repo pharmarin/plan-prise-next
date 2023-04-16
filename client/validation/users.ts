@@ -12,7 +12,7 @@ export const ALLOWED_UPLOADED_FILE_TYPES = [
 
 export const MAX_UPLOADED_FILE_SIZE = 2000000;
 
-const requiredIfServer = (schema: yup.AnySchema, server = false) =>
+const requiredIfServer = (schema: yup.Schema, server = false) =>
   server ? schema.required() : schema;
 
 const password = yup.string().min(8).max(20).required().label("Mot de passe");
@@ -43,49 +43,58 @@ export const registerSchema = (server = false) =>
     firstName: yup.string().required().max(50).label("Prénom"),
     lastName: yup.string().required().max(50).label("Nom"),
     student: yup.boolean(),
-    rpps: yup.mixed().when("student", {
+    rpps: yup.string().when("student", {
       is: false,
-      then: yup
-        .string()
-        .required()
-        .min(11)
-        .max(11)
-        .matches(/^\d+$/, "RPPS doit être un numéro")
-        .label("RPPS"),
+      then: (rpps) =>
+        rpps
+          .required()
+          .min(11)
+          .max(11)
+          .matches(/^\d+$/, "RPPS doit être un numéro")
+          .label("RPPS"),
     }),
     certificate: server
-      ? yup.mixed().when("student", {
+      ? yup.string().when("student", {
           is: true,
-          then: yup.string().required().label("Certificat de scolarité"),
+          then: (certificate) =>
+            certificate.required().label("Certificat de scolarité"),
         })
-      : yup.mixed().when("student", {
-          is: true,
-          then: yup
-            .mixed()
-            .test(
-              "fileName",
-              "Certificat de scolarité est obligatoire",
-              (value: { name: string }) =>
-                "name" in (value || {}) ? (value.name || "").length > 0 : false
-            )
-            .test(
-              "fileSize",
-              "Le fichier envoyé est trop volumineux",
-              (value: { size: number }) =>
-                "size" in (value || {})
-                  ? value.size <= MAX_UPLOADED_FILE_SIZE
-                  : false
-            )
-            .test(
-              "fileType",
-              "Le fichier envoyé doit être de type pdf, jpg ou png. ",
-              (value: { type: string }) =>
-                "type" in (value || {})
-                  ? ALLOWED_UPLOADED_FILE_TYPES.includes(value.type)
-                  : false
-            )
-            .label("Certificat de scolarité"),
-        }),
+      : yup
+          .object({
+            name: yup.string().required(),
+            size: yup.number().required(),
+            type: yup.string().oneOf(ALLOWED_UPLOADED_FILE_TYPES).required(),
+          })
+          .when("student", {
+            is: true,
+            then: (certificate) =>
+              certificate
+                .test(
+                  "fileName",
+                  "Certificat de scolarité est obligatoire",
+                  (value) =>
+                    "name" in (value || {})
+                      ? (value.name || "").length > 0
+                      : false
+                )
+                .test(
+                  "fileSize",
+                  "Le fichier envoyé est trop volumineux",
+                  (value) =>
+                    "size" in (value || {})
+                      ? value.size <= MAX_UPLOADED_FILE_SIZE
+                      : false
+                )
+                .test(
+                  "fileType",
+                  "Le fichier envoyé doit être de type pdf, jpg ou png. ",
+                  (value) =>
+                    "type" in (value || {})
+                      ? ALLOWED_UPLOADED_FILE_TYPES.includes(value.type)
+                      : false
+                )
+                .label("Certificat de scolarité"),
+          }),
     displayName: yup
       .string()
       .notRequired()
@@ -121,17 +130,20 @@ export const resetPasswordSchema = yup.object({
 });
 
 export const updateUserSchema = (server = false) => {
-  const _registerSchema = registerSchema(server);
-
-  return yup.object({
-    id: requiredIfServer(yup.string(), server),
-    email: _registerSchema.fields.email,
-    firstName: _registerSchema.fields.firstName,
-    lastName: _registerSchema.fields.lastName,
-    displayName: _registerSchema.fields.displayName,
-    rpps: _registerSchema.fields.rpps,
-    student: _registerSchema.fields.student,
-  });
+  return yup
+    .object({
+      id: requiredIfServer(yup.string(), server),
+    })
+    .concat(
+      registerSchema(server).pick([
+        "email",
+        "firstName",
+        "lastName",
+        "displayName",
+        "rpps",
+        "student",
+      ])
+    );
 };
 
 export const updateUserPasswordSchema = yup.object({
