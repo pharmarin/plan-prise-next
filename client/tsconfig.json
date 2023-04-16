@@ -35,5 +35,5 @@
     "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts",
     "next-auth/index"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./prisma/migration"]
 }
