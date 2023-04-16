@@ -21,7 +21,6 @@ specifiers:
   '@trpc/server': ^10.13.2
   '@types/bcrypt': ^5.0.0
   '@types/jest': ^29.5.0
-  '@types/jsonwebtoken': ^9.0.1
   '@types/lodash': ^4.14.191
   '@types/node': 18.11.17
   '@types/react': 18.0.26
@@ -110,7 +109,6 @@ devDependencies:
   '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
   '@types/bcrypt': 5.0.0
   '@types/jest': 29.5.0
-  '@types/jsonwebtoken': 9.0.1
   '@types/lodash': 4.14.191
   '@types/node': 18.11.17
   '@types/react': 18.0.26
@@ -1368,12 +1366,6 @@ packages:
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
-
-  /@types/jsonwebtoken/9.0.1:
-    resolution: {integrity: sha512-c5ltxazpWabia/4UzhIoaDcIza4KViOQhdbjRlfcIGVnsE3c3brkz9Z+F/EeJIECOQP7W7US2hNE930cWWkPiw==}
-    dependencies:
-      '@types/node': 18.11.17
-    dev: true
 
   /@types/lodash/4.14.191:
     resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
