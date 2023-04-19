@@ -1,12 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "baseBranches": ["master"],
-  "packageRules": [
-    {
-      "paths": ["composer.json"],
-      "enabled": false
-    }
+  "extends": [
+    "config:base",
+    ":automergeBranch",
+    ":automergeMinor",
+    ":automergeTypes",
+    ":onlyNpm",
+    ":pinVersions",
+    ":prConcurrentLimitNone",
+    ":separateMajorReleases"
   ],
-  "automerge": true
+  "baseBranches": ["master"],
+  "enabledManagers": ["npm"]
 }
