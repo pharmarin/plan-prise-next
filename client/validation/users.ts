@@ -65,6 +65,7 @@ export const registerSchema = (server = false) =>
             size: yup.number().required(),
             type: yup.string().oneOf(ALLOWED_UPLOADED_FILE_TYPES).required(),
           })
+          .nullable()
           .when("student", {
             is: true,
             then: (certificate) =>
@@ -73,7 +74,7 @@ export const registerSchema = (server = false) =>
                   "fileName",
                   "Certificat de scolarité est obligatoire",
                   (value) =>
-                    "name" in (value || {})
+                    value && "name" in (value || {})
                       ? (value.name || "").length > 0
                       : false
                 )
@@ -81,7 +82,7 @@ export const registerSchema = (server = false) =>
                   "fileSize",
                   "Le fichier envoyé est trop volumineux",
                   (value) =>
-                    "size" in (value || {})
+                    value && "size" in (value || {})
                       ? value.size <= MAX_UPLOADED_FILE_SIZE
                       : false
                 )
@@ -89,7 +90,7 @@ export const registerSchema = (server = false) =>
                   "fileType",
                   "Le fichier envoyé doit être de type pdf, jpg ou png. ",
                   (value) =>
-                    "type" in (value || {})
+                    value && "type" in (value || {})
                       ? ALLOWED_UPLOADED_FILE_TYPES.includes(value.type)
                       : false
                 )
