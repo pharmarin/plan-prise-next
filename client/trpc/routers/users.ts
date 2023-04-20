@@ -16,7 +16,7 @@ import {
   forgotPasswordSchema,
   getUniqueUserSchema,
   passwordVerifySchema,
-  registerSchema,
+  registerSchemaServer,
   resetPasswordSchema,
   updateUserPasswordSchema,
   updateUserSchema,
@@ -157,7 +157,7 @@ const usersRouter = router({
    * @throws Error on fail
    */
   register: guestProcedure
-    .input(registerSchema(true))
+    .input(registerSchemaServer)
     .mutation(async ({ ctx, input }) => {
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
 
@@ -187,7 +187,7 @@ const usersRouter = router({
             displayName,
             student: input.student || false,
             certificate: input.certificate,
-            rpps: BigInt(input.rpps),
+            rpps: input.rpps ? BigInt(input.rpps) : undefined,
             password: await bcrypt.hash(input.password, 10),
           },
         });
