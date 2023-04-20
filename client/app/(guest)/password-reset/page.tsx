@@ -1,3 +1,4 @@
+import LinkExpired from "@/app/(guest)/password-reset/LinkExpired";
 import PasswordResetForm from "@/app/(guest)/password-reset/PasswordResetForm";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
 import { verifyJWT } from "@/utils/json-web-token";
@@ -25,8 +26,12 @@ const PasswordReset = async ({
     );
   }
 
-  if (email && token && (await verifyJWT(token))) {
-    return <PasswordResetForm email={email} token={token} />;
+  try {
+    if (email && token && (await verifyJWT(token))) {
+      return <PasswordResetForm email={email} token={token} />;
+    }
+  } catch (error) {
+    return <LinkExpired />;
   }
 
   return notFound();
