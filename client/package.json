@@ -7,13 +7,14 @@
     "dev:database": "pscale connect plan-prise main",
     "dev:turbo": "next dev --turbo --show-all",
     "dev": "next dev",
+    "env:generate": "gen-env-types .env",
     "lint": "next lint",
     "start": "next start",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "test:e2e": "playwright test",
     "type-check": "tsc --noEmit",
-    "postinstall": "prisma generate && gen-env-types .env"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@headlessui/react": "1.7.14",
