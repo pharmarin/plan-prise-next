@@ -30,7 +30,7 @@
     "@trpc/server": "10.21.1",
     "bcrypt": "5.1.0",
     "classname-variants": "github:pharmarin/classname-variants",
-    "eslint": "8.38.0",
+    "eslint": "8.39.0",
     "eslint-config-next": "13.0.7",
     "formik": "2.2.9",
     "jose": "4.14.1",
