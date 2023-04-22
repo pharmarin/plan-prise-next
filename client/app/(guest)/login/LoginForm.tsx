@@ -25,8 +25,6 @@ const LoginForm = () => {
     TRPCClientErrorLike<AppRouter> | undefined
   >(undefined);
 
-  console.log("login form");
-
   return (
     <>
       <Formik

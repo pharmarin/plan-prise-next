@@ -18,9 +18,7 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
   const { data, error, mutateAsync } = trpc.users.resetPassword.useMutation();
 
   if (data === MUTATION_SUCCESS) {
-    router.push(
-      "/password-reset?success" as __next_route_internal_types__.StaticRoutes
-    );
+    router.push("/password-reset?success");
   }
 
   return (
