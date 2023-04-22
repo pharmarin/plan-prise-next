@@ -24,8 +24,6 @@ const LoginForm = () => {
     TRPCClientErrorLike<AppRouter> | undefined
   >(undefined);
 
-  console.log("login form");
-
   return (
     <>
       <Formik
@@ -48,7 +46,10 @@ const LoginForm = () => {
           });
 
           if (signInResponse?.ok) {
-            router.push(searchParams?.get("redirectTo") ?? "/");
+            router.push(
+              (searchParams?.get("redirectTo") ??
+                "/") as __next_route_internal_types__.RouteImpl<string>
+            );
           } else {
             setError(
               new PP_Error(

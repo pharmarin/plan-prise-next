@@ -29,7 +29,7 @@ const AuthGuard = async ({
 
   if (guest && session) {
     if (!user?.firstName || !user?.lastName) {
-      return redirect("/profil" as __next_route_internal_types__.StaticRoutes);
+      return redirect("/profil");
     }
 
     return redirect(searchParams?.redirectTo || "/");
