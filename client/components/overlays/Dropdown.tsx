@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu, Transition, type MenuButtonProps } from "@headlessui/react";
+import type { Route } from "next";
 import Link from "next/link";
 import React, { type ElementType } from "react";
 import { twMerge } from "tailwind-merge";
@@ -10,7 +11,7 @@ const Dropdown: React.FC<{
   buttonProps?: MenuButtonProps<ElementType>;
   className?: string;
   items: ({ label: string } & (
-    | { path: __next_route_internal_types__.RouteImpl<string> }
+    | { path: Route<string> | URL }
     | { action: () => void }
   ))[];
 }> = ({ buttonContent, buttonProps, className, items }) => {

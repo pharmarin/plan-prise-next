@@ -5,11 +5,12 @@ import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import Link from "@/components/navigation/Link";
-import { type AppRouter } from "@/trpc/routers/app";
+import type { AppRouter } from "@/trpc/routers/app";
 import PP_Error from "@/utils/errors";
 import { loginSchema } from "@/validation/users";
-import { type TRPCClientErrorLike } from "@trpc/client";
+import type { TRPCClientErrorLike } from "@trpc/client";
 import { Formik } from "formik";
+import type { Route } from "next";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -46,10 +47,7 @@ const LoginForm = () => {
           });
 
           if (signInResponse?.ok) {
-            router.push(
-              (searchParams?.get("redirectTo") ??
-                "/") as __next_route_internal_types__.RouteImpl<string>
-            );
+            router.push((searchParams?.get("redirectTo") ?? "/") as Route);
           } else {
             setError(
               new PP_Error(
