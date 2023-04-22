@@ -1,4 +1,5 @@
-import { type navbarIcons } from "@/components/navigation/NavbarLink";
+import type { navbarIcons } from "@/components/navigation/NavbarLink";
+import type { Route } from "next";
 
 export enum NavigationActionKind {
   SET_TITLE = "SET_TITLE",
@@ -24,13 +25,10 @@ export type NavbarIcons = keyof typeof navbarIcons;
 export type NavigationItem = {
   icon: NavbarIcons;
   className?: string;
-} & (
-  | { path: __next_route_internal_types__.RouteImpl<string> }
-  | { event: string }
-);
+} & ({ path: Route<string> | URL } | { event: string });
 
 export type NavigationState = {
   options?: NavigationItem[];
-  returnTo?: __next_route_internal_types__.RouteImpl<string>;
+  returnTo?: Route<string> | URL;
   title: string;
 };
