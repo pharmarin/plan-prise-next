@@ -33,7 +33,7 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
     "formik": "2.2.9",
-    "jose": "4.14.1",
+    "jose": "4.14.2",
     "lodash": "4.17.21",
     "mailersend": "2.0.5",
     "next": "13.3.1",
