@@ -4,7 +4,7 @@ import Button from "@/components/forms/inputs/Button";
 
 const Error = ({ reset }: { error: Error; reset: () => void }) => {
   return (
-    <div>
+    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-4">
       <h2 className="text-bold text-xl">Une erreur est survenue</h2>
       <Button onClick={() => reset()}>Réessayer</Button>
     </div>
