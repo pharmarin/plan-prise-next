@@ -14,7 +14,7 @@ loadEnvConfig(projectDir);
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "./__tests__/e2e",
+  testDir: "./__tests__",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

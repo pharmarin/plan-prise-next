@@ -33,7 +33,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts",
-    "next-auth/index"
+    "next-auth/index",
+    "__tests__"
   ],
   "exclude": ["node_modules", "./prisma/migration"]
 }
