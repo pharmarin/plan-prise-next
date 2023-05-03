@@ -28,7 +28,10 @@ jobs:
           cache-dependency-path: "client/pnpm-lock.yaml"
 
       - name: Install dependencies
-        run: pnpm install && pnpm playwright install
+        run: pnpm install
+
+      - name: Install Playwright
+        run: pnpm playwright install --with-deps
 
       - name: Run base tests
         run: pnpm test:base
