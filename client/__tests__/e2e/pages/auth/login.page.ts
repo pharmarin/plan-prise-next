@@ -1,4 +1,4 @@
-import { type Page } from "@playwright/experimental-ct-react";
+import { type Page } from "@playwright/test";
 
 export class LoginPage {
   readonly page: Page;

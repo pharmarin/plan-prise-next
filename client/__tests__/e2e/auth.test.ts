@@ -1,6 +1,6 @@
 import { test } from "@/__tests__/e2e/fixtures/auth.fixture";
 import errors from "@/utils/errors/errors.json";
-import { expect } from "@playwright/experimental-ct-react";
+import { expect } from "@playwright/test";
 
 test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({

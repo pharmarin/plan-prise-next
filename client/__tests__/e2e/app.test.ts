@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/experimental-ct-react";
+import { expect, test } from "@playwright/test";
 
 test("is loading", async ({ page }) => {
   await page.goto("/");
