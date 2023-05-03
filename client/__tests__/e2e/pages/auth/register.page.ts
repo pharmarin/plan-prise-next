@@ -1,5 +1,5 @@
 import { type FakeUser } from "@/__tests__/e2e/fixtures/auth.fixture";
-import { type Page } from "@playwright/experimental-ct-react";
+import { type Page } from "@playwright/test";
 
 export class RegisterPage {
   readonly page: Page;

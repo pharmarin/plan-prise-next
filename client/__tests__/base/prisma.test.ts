@@ -1,5 +1,5 @@
 import prisma from "@/prisma";
-import { expect, test } from "@playwright/experimental-ct-react";
+import { expect, test } from "@playwright/test";
 
 test.describe("database", () => {
   test("should connect to database", async () => {

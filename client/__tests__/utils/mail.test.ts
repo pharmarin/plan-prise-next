@@ -1,7 +1,8 @@
 import sendMail from "@/utils/mail";
+import { expect, test } from "@playwright/test";
 
-describe("registration", () => {
-  it("should send mail without error", () => {
+test.describe("registration", () => {
+  test("should send mail without error", () => {
     expect(
       sendMail(
         { email: "marin@plandeprise.fr", name: "Marin ROUX" },

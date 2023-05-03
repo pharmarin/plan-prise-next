@@ -1,6 +1,6 @@
 import test from "@/__tests__/e2e/fixtures/auth:registered.fixture";
 import errors from "@/utils/errors/errors.json";
-import { expect } from "@playwright/experimental-ct-react";
+import { expect } from "@playwright/test";
 
 test.describe("auth:registered", () => {
   test("should display error message if user not approved", async ({
