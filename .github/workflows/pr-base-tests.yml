@@ -1,6 +1,7 @@
 name: Base tests
 on:
   pull_request:
+  push:
 
 permissions:
   contents: read
