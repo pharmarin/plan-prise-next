@@ -56,8 +56,8 @@ dependencies:
     specifier: 4.17.21
     version: 4.17.21
   mailersend:
-    specifier: 2.1.0
-    version: 2.1.0
+    specifier: 2.1.1
+    version: 2.1.1
   next:
     specifier: 13.3.4
     version: 13.3.4(react-dom@18.2.0)(react@18.2.0)
@@ -2269,8 +2269,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /mailersend@2.1.0:
-    resolution: {integrity: sha512-BDEwBo9ETCFxvobLs1QGHeqUQ80JibLhvLVj6/lYl3EOMgpgFFqOjUf39NAYZnKm0PffUzQ7I4+idaaBreRK5g==}
+  /mailersend@2.1.1:
+    resolution: {integrity: sha512-HSsWY6XJgTBzhZTFfio4B/PqNWU4xHpAIhflwQC3ol+8vbNCFB9i0Pl3CTtRDGv8AXs62cCTFAJACmyL+lnnNw==}
     dependencies:
       gaxios: 5.1.0
       isomorphic-unfetch: 3.1.0
