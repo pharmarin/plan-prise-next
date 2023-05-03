@@ -32,3 +32,5 @@ jobs:
 
       - name: Run base tests
         run: pnpm test:base
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
