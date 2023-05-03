@@ -10,7 +10,14 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
 
 export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: { retry: process.env.NODE_ENV === "test" ? false : 3 },
+        },
+      })
+  );
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [

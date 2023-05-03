@@ -2,7 +2,7 @@ import prisma from "@/__tests__/e2e/helpers/prisma";
 import { ForgotPasswordPage } from "@/__tests__/e2e/pages/auth/forgot-password.page";
 import { LoginPage } from "@/__tests__/e2e/pages/auth/login.page";
 import { faker } from "@faker-js/faker";
-import { test as base } from "@playwright/test";
+import { test as base } from "@playwright/experimental-ct-react";
 import { type User } from "@prisma/client";
 
 export type FakeUser = Omit<
