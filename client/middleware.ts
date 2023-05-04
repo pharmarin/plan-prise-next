@@ -4,7 +4,7 @@ import { withAuth, type NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 const toLegacy = (path: string, destination?: string) =>
-  process.env.APP_URL + (destination || path);
+  process.env.BACKEND_URL + (destination || path);
 
 export const middleware = withAuth(
   async (request: NextRequestWithAuth) => {
