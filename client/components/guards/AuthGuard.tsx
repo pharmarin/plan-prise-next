@@ -28,12 +28,10 @@ const AuthGuard = async ({
   }
 
   if (guest && session) {
-    if (!user?.firstName || !user?.lastName) {
-      return redirect("/profil");
-    }
-
     return redirect(searchParams?.redirectTo || "/");
   }
+
+  // INFO: Redirect to profil page if incomplete is handled in Navbar.tsx
 
   return children;
 };
