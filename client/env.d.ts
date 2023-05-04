@@ -44,6 +44,7 @@ declare global {
       MAILSLURP_API_KEY: string;
       MAIL_TEST_DOMAIN: string;
       CROSS_SITE_SECRET: string;
+      BACKEND_URL: string;
     }
   }
 }
