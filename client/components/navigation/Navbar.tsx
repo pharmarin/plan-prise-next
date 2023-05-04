@@ -20,8 +20,13 @@ const Navbar = () => {
 
   const isHome = pathname === "/";
 
+  // Redirect user to profil page if incomplete informations after migration
+  if (pathname !== "/profil" && (!user?.firstName || !user?.lastName)) {
+    router.push("/profil");
+  }
+
   return (
-    <div className="container mx-auto mt-2 mb-4 flex items-center justify-between rounded-lg bg-white p-4 py-2 shadow">
+    <div className="container mx-auto mb-4 mt-2 flex items-center justify-between rounded-lg bg-white p-4 py-2 shadow">
       <div id="navbar-left" className="flex-1">
         <div className="flex w-fit flex-row items-center sm:space-x-8">
           <Link href="/">
@@ -74,7 +79,7 @@ const Navbar = () => {
               {
                 label: "Déconnexion",
                 action: async () => {
-                  await signOut({ redirect: false })
+                  await signOut({ redirect: false });
                   router.refresh();
                 },
               },
