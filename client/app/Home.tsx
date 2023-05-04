@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 const Home = () => {
-  //useSetTitle("Bienvenue");
-
   return (
     <div className="flex h-[80vh] flex-col justify-center">
       <h1 className="mb-4 text-center text-xl font-bold">

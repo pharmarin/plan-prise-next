@@ -9,10 +9,11 @@ import Dropdown from "@/components/overlays/Dropdown";
 import { trpc } from "@/trpc/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const { data } = useSession();
   const { returnTo, title } = useNavigation();
   const { data: user } = trpc.users.current.useQuery();
@@ -72,7 +73,10 @@ const Navbar = () => {
                 : []),
               {
                 label: "Déconnexion",
-                action: () => void signOut({ redirect: false }),
+                action: async () => {
+                  await signOut({ redirect: false })
+                  router.refresh();
+                },
               },
             ]}
           />

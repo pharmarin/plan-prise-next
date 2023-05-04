@@ -12,7 +12,12 @@ const LoadingScreen: React.FC<{ fullscreen?: boolean }> = ({ fullscreen }) => {
       )}
     >
       <div className="m-auto flex max-w-5xl flex-col content-center items-center">
-        <div className="m-0 ml-4 flex flex-row items-center space-x-4 text-5xl text-gray-700">
+        <div
+          className={twMerge(
+            "m-0 flex flex-row items-center space-x-4 text-5xl text-gray-700",
+            !fullscreen && "ml-4"
+          )}
+        >
           <Logo className="animate-pulse text-lg" />
           <span className="hidden pr-4 font-light xl:block">
             Chargement en cours...
