@@ -33,7 +33,7 @@ const AuthGuard = async ({
 
   // INFO: Redirect to profil page if incomplete is handled in Navbar.tsx
 
-  return children;
+  return <>{children}</>;
 };
 
 export default AuthGuard;
