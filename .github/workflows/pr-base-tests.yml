@@ -2,7 +2,8 @@ name: Base tests
 on:
   pull_request:
   push:
-    branch: "github-actions"
+    branches:
+      - github-actions
 
 permissions:
   contents: read
