@@ -35,7 +35,7 @@ const AuthGuard = async ({
     return redirect(searchParams?.redirectTo || "/");
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default AuthGuard;
