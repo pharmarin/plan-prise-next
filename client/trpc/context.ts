@@ -1,8 +1,8 @@
 import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";
-import { UserSession } from "@/prisma/types";
-import * as trpc from "@trpc/server";
-import * as trpcNext from "@trpc/server/adapters/next";
+import type { UserSession } from "@/prisma/types";
+import type * as trpc from "@trpc/server";
+import type * as trpcNext from "@trpc/server/adapters/next";
 
 export const createContext = async (ctx: trpcNext.CreateNextContextOptions) => {
   const session = await getServerSession(ctx);
