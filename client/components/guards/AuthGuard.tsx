@@ -28,10 +28,6 @@ const AuthGuard = async ({
   }
 
   if (guest && session) {
-    if (!user?.firstName || !user?.lastName) {
-      return redirect("/profil");
-    }
-
     return redirect(searchParams?.redirectTo || "/");
   }
 
