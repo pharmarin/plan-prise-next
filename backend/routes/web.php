@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::onceUsingId(User::first()->id);
-
 Route::get("/{assets}/{file}", function ($assets, $file) {
   return Response::file(LEGACY_PATH . "/" . $assets . "/" . $file);
 })
