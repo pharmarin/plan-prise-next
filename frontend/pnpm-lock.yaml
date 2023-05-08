@@ -124,8 +124,8 @@ devDependencies:
     specifier: 4.14.194
     version: 4.14.194
   '@types/node':
-    specifier: 18.16.5
-    version: 18.16.5
+    specifier: 18.16.6
+    version: 18.16.6
   '@types/react':
     specifier: 18.2.6
     version: 18.2.6
@@ -170,7 +170,7 @@ devDependencies:
     version: 3.3.2(ts-node@10.9.1)
   ts-node:
     specifier: 10.9.1
-    version: 10.9.1(@types/node@18.16.5)(typescript@5.0.4)
+    version: 10.9.1(@types/node@18.16.6)(typescript@5.0.4)
 
 packages:
 
@@ -470,7 +470,7 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@types/node': 18.16.5
+      '@types/node': 18.16.6
       playwright-core: 1.33.0
     optionalDependencies:
       fsevents: 2.3.2
@@ -642,7 +642,7 @@ packages:
   /@types/bcrypt@5.0.0:
     resolution: {integrity: sha512-agtcFKaruL8TmcvqbndlqHPSJgsolhf/qPWchFlgnW1gECTN/nKbFcoFnvKAQRFfKbh+BO6A3SWdJu9t+xF3Lw==}
     dependencies:
-      '@types/node': 18.16.5
+      '@types/node': 18.16.6
     dev: true
 
   /@types/json-schema@7.0.11:
@@ -657,8 +657,8 @@ packages:
     resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
     dev: true
 
-  /@types/node@18.16.5:
-    resolution: {integrity: sha512-seOA34WMo9KB+UA78qaJoCO20RJzZGVXQ5Sh6FWu0g/hfT44nKXnej3/tCQl7FL97idFpBhisLYCTB50S0EirA==}
+  /@types/node@18.16.6:
+    resolution: {integrity: sha512-N7KINmeB8IN3vRR8dhgHEp+YpWvGFcpDoh5XZ8jB5a00AdFKCKEyyGTOPTddUf4JqU1ZKTVxkOxakDvchNVI2Q==}
     dev: true
 
   /@types/prop-types@15.7.5:
@@ -2765,7 +2765,7 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.23
-      ts-node: 10.9.1(@types/node@18.16.5)(typescript@5.0.4)
+      ts-node: 10.9.1(@types/node@18.16.6)(typescript@5.0.4)
       yaml: 2.2.2
     dev: true
 
@@ -3387,7 +3387,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-node@10.9.1(@types/node@18.16.5)(typescript@5.0.4):
+  /ts-node@10.9.1(@types/node@18.16.6)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -3406,7 +3406,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.16.5
+      '@types/node': 18.16.6
       acorn: 8.8.1
       acorn-walk: 8.2.0
       arg: 4.1.3
