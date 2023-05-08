@@ -55,3 +55,7 @@ Route::middleware("token")->group(function () {
     include LEGACY_PATH . "/calendrier/index.php";
   })->withoutMiddleware(VerifyCsrfToken::class);
 });
+
+Route::fallback(function () {
+  return response()->redirectTo(env("FRONTEND_URL"), 301);
+});
