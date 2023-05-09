@@ -44,7 +44,7 @@ jobs:
         run: pnpm install
 
       - name: Run php server
-        run: php artisan serve
+        run: php artisan serve &
         working-directory: backend
 
       - name: Install Playwright
