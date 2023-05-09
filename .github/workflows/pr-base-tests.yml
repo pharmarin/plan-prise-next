@@ -43,12 +43,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install Playwright
+        run: pnpm playwright install --with-deps
+
       - name: Run php server
         run: php artisan serve &
         working-directory: backend
-
-      - name: Install Playwright
-        run: pnpm playwright install --with-deps
 
       - name: Run base tests
         run: pnpm test:base
