@@ -21,7 +21,7 @@ const Navbar = () => {
   const isHome = pathname === "/";
 
   // Redirect user to profil page if incomplete informations after migration
-  if (pathname !== "/profil" && (!user?.firstName || !user?.lastName)) {
+  if (pathname !== "/profil" && user && (!user?.firstName || !user?.lastName)) {
     router.push("/profil");
   }
 
