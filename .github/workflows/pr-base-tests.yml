@@ -18,6 +18,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+
+      - name: Run composer install
+        run: composer install -n --prefer-dist
+        working-directory: backend
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
@@ -32,6 +43,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Run php server
+        run: php artisan serve
+        working-directory: backend
+
       - name: Install Playwright
         run: pnpm playwright install --with-deps
 
@@ -39,3 +54,5 @@ jobs:
         run: pnpm test:base
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BACKEND_URL: http://localhost:8000
+          FRONTEND_URL: http://localhost:3000
