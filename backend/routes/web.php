@@ -56,6 +56,10 @@ Route::middleware("token")->group(function () {
   })->withoutMiddleware(VerifyCsrfToken::class);
 });
 
-Route::fallback(function () {
+Route::get('/', function () {
   return response()->redirectTo(env("FRONTEND_URL"), 301);
+});
+
+Route::fallback(function () {
+  return response("Not found", 404);
 });
