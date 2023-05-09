@@ -40,7 +40,7 @@ class JwtMiddleware
       throw new Error();
     } catch (\Exception $e) {
       // Retourne une erreur si le token est invalide ou expiré
-      return response()->redirectTo(env('FRONTEND_URL'));
+      return response("Unauthorized", 401);
     }
   }
 }
