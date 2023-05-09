@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::onceUsingId(User::first()->id);
-
 Route::get("/{assets}/{file}", function ($assets, $file) {
   return Response::file(LEGACY_PATH . "/" . $assets . "/" . $file);
 })
@@ -56,4 +54,12 @@ Route::middleware("token")->group(function () {
   Route::post("/calendrier", function () {
     include LEGACY_PATH . "/calendrier/index.php";
   })->withoutMiddleware(VerifyCsrfToken::class);
+});
+
+Route::get('/', function () {
+  return response()->redirectTo(env("FRONTEND_URL"), 301);
+});
+
+Route::fallback(function () {
+  return response("Not found", 404);
 });
