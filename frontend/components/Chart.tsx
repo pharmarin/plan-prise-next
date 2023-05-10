@@ -8,8 +8,10 @@ import {
   LinearScale,
   PointElement,
   Tooltip,
+  type ChartArea,
   type ChartData,
 } from "chart.js";
+import { useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -21,23 +23,15 @@ ChartJS.register(
   Filler
 );
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const Chart: React.FC<{
+  color: "blue" | "pink";
+  data: ChartData<"line">["datasets"][0]["data"];
+  labels: ChartData<"line">["labels"];
+}> = ({ color, data, labels }) => {
+  const [gradient, setGradient] = useState<CanvasGradient | undefined>();
+  const [width, setWidth] = useState<number | undefined>();
+  const [height, setHeight] = useState<number | undefined>();
 
-export const data: ChartData<"line"> = {
-  labels,
-  datasets: [
-    {
-      fill: true,
-      label: "Dataset 2",
-      data: [2, 5, 1, 6, 9, 3, 5],
-      borderColor: "rgb(29, 78, 216)",
-      backgroundColor: "rgba(59, 130, 246, 0.5)",
-      tension: 0.2,
-    },
-  ],
-};
-
-const Chart: React.FC<{ color: "blue" | "pink" }> = ({ color }) => {
   const graphColor = (opacity: number) => {
     switch (color) {
       case "pink":
@@ -48,8 +42,48 @@ const Chart: React.FC<{ color: "blue" | "pink" }> = ({ color }) => {
     }
   };
 
+  const getGradient = (ctx: CanvasRenderingContext2D, chartArea: ChartArea) => {
+    const chartWidth = chartArea.right - chartArea.left;
+    const chartHeight = chartArea.bottom - chartArea.top;
+    if (!gradient || width !== chartWidth || height !== chartHeight) {
+      const tempGradient = ctx.createLinearGradient(
+        0,
+        chartArea.bottom,
+        0,
+        chartArea.top
+      );
+      tempGradient.addColorStop(0, graphColor(0.75));
+      tempGradient.addColorStop(1, graphColor(0));
+
+      setGradient(tempGradient);
+      setWidth(chartWidth);
+      setHeight(chartHeight);
+    }
+
+    return gradient;
+  };
+
   return (
     <Line
+      data={{
+        labels,
+        datasets: [
+          {
+            backgroundColor: ({ chart: { ctx, chartArea } }) => {
+              if (!chartArea) {
+                // This case happens on initial chart load
+                return;
+              }
+
+              return getGradient(ctx, chartArea);
+            },
+            borderColor: graphColor(1),
+            data,
+            fill: true,
+            tension: 0.2,
+          },
+        ],
+      }}
       options={{
         aspectRatio: 4,
         plugins: {
@@ -81,7 +115,6 @@ const Chart: React.FC<{ color: "blue" | "pink" }> = ({ color }) => {
           },
         },
       }}
-      data={data}
     />
   );
 };

@@ -15,7 +15,19 @@ const AdminDashboard = async () => {
           {/* @ts-expect-error Server Component */}
           <UsercountCard />
           <Card className="col-span-2 flex h-44 items-center justify-center">
-            <Chart color="blue" />
+            <Chart
+              color="blue"
+              data={[2, 5, 1, 6, 9, 3, 5]}
+              labels={[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+              ]}
+            />
           </Card>
         </div>
       </div>
