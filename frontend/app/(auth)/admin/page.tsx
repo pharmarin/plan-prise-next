@@ -1,12 +1,35 @@
-import Link from "@/components/navigation/Link";
+import ChartCard from "@/app/(auth)/admin/_components/ChartCard";
+import PlansCountCard from "@/app/(auth)/admin/_components/PlansCountCard";
+import UsersCountCard from "@/app/(auth)/admin/_components/UsersCountCard";
 import Navigation from "@/components/navigation/Navigation";
 
-const AdminDashboard = () => {
+const AdminDashboard = async () => {
   return (
-    <div>
+    <div className="space-y-6">
       <Navigation title="Administration" />
-      <div>AdminDashboard</div>
-      <Link href={"/admin/users"}>Utilisateurs</Link>
+      <div>
+        <div className="mb-2 text-2xl font-bold text-blue-600">
+          Utilisateurs
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {/* @ts-expect-error Server Component */}
+          <UsersCountCard />
+          {/* @ts-expect-error Server Component */}
+          <ChartCard type="users" />
+        </div>
+      </div>
+
+      <div>
+        <div className="mb-2 text-2xl font-bold text-pink-600">
+          Plans de prise
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {/* @ts-expect-error Server Component */}
+          <PlansCountCard />
+          {/* @ts-expect-error Server Component */}
+          <ChartCard type="plans" />
+        </div>
+      </div>
     </div>
   );
 };
