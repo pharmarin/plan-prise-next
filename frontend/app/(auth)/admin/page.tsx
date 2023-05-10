@@ -1,5 +1,6 @@
 import UsercountCard from "@/app/(auth)/admin/_components/UsercountCard";
 import Card from "@/components/Card";
+import Chart from "@/components/Chart";
 import Navigation from "@/components/navigation/Navigation";
 
 const AdminDashboard = async () => {
@@ -13,7 +14,9 @@ const AdminDashboard = async () => {
         <div className="grid grid-cols-3 gap-4">
           {/* @ts-expect-error Server Component */}
           <UsercountCard />
-          <Card className="col-span-2 h-44">Chart</Card>
+          <Card className="col-span-2 flex h-44 items-center justify-center">
+            <Chart color="blue" />
+          </Card>
         </div>
       </div>
 
