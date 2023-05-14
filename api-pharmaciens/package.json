@@ -1,0 +1,11 @@
+{
+  "name": "@plan-prise/api-pharmaciens",
+  "devDependencies": {
+    "@types/node": "18.16.8",
+    "@types/node-fetch": "^2.6.3",
+    "@types/unzipper": "^0.10.6",
+    "node-fetch": "^2.6.6",
+    "ts-node": "10.9.1",
+    "unzipper": "^0.10.14"
+  }
+}
