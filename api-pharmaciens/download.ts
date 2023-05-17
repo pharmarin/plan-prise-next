@@ -11,11 +11,10 @@ type CSVRecord = {
   profession: string;
 };
 
-type ParsedRecord = {
+export type ParsedRecord = {
   rpps: number;
   lastName: string;
   firstName: string;
-  profession?: never;
 };
 
 const allowedHeader = {
