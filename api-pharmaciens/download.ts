@@ -33,7 +33,7 @@ const parser = parse({
   columns: (header: string[]) =>
     header.map((column) =>
       Object.keys(allowedHeader).includes(column)
-        ? allowedHeader[column]
+        ? allowedHeader[column as keyof typeof allowedHeader]
         : undefined
     ),
 });
