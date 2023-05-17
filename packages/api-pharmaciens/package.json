@@ -11,6 +11,7 @@
     "unzipper": "^0.10.14"
   },
   "scripts": {
-    "download": "ts-node download.ts"
+    "download": "ts-node download.ts",
+    "type-check": "tsc --noEmit"
   }
 }

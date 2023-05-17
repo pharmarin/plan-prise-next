@@ -4,33 +4,6 @@ importers:
 
   .: {}
 
-  api-pharmaciens:
-    devDependencies:
-      '@types/node':
-        specifier: 18.16.8
-        version: 18.16.8
-      '@types/node-fetch':
-        specifier: ^2.6.3
-        version: 2.6.3
-      '@types/unzipper':
-        specifier: ^0.10.6
-        version: 0.10.6
-      csv-parse:
-        specifier: 5.3.10
-        version: 5.3.10
-      node-fetch:
-        specifier: ^2.6.6
-        version: 2.6.6
-      ts-node:
-        specifier: 10.9.1
-        version: 10.9.1(@types/node@18.16.8)(typescript@5.0.4)
-      typescript:
-        specifier: 5.0.4
-        version: 5.0.4
-      unzipper:
-        specifier: ^0.10.14
-        version: 0.10.14
-
   frontend:
     dependencies:
       '@headlessui/react':
@@ -44,7 +17,7 @@ importers:
         version: 1.0.6(@prisma/client@4.14.0)(next-auth@4.22.1)
       '@plan-prise/api-pharmaciens':
         specifier: workspace:*
-        version: link:../api-pharmaciens
+        version: link:../packages/api-pharmaciens
       '@prisma/client':
         specifier: 4.14.0
         version: 4.14.0(prisma@4.14.0)
@@ -211,6 +184,33 @@ importers:
       ts-node:
         specifier: 10.9.1
         version: 10.9.1(@types/node@18.16.8)(typescript@5.0.4)
+
+  packages/api-pharmaciens:
+    devDependencies:
+      '@types/node':
+        specifier: 18.16.8
+        version: 18.16.8
+      '@types/node-fetch':
+        specifier: ^2.6.3
+        version: 2.6.3
+      '@types/unzipper':
+        specifier: ^0.10.6
+        version: 0.10.6
+      csv-parse:
+        specifier: 5.3.10
+        version: 5.3.10
+      node-fetch:
+        specifier: ^2.6.6
+        version: 2.6.6
+      ts-node:
+        specifier: 10.9.1
+        version: 10.9.1(@types/node@18.16.8)(typescript@5.0.4)
+      typescript:
+        specifier: 5.0.4
+        version: 5.0.4
+      unzipper:
+        specifier: ^0.10.14
+        version: 0.10.14
 
 packages:
 
@@ -2467,8 +2467,10 @@ packages:
   /isomorphic-unfetch@3.1.0:
     resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
     dependencies:
-      node-fetch: 2.6.6
+      node-fetch: 2.6.11
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /jiti@1.18.2:
@@ -2846,6 +2848,7 @@ packages:
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
+    dev: true
 
   /node-releases@2.0.10:
     resolution: {integrity: sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==}
