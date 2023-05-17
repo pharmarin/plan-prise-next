@@ -42,6 +42,9 @@ importers:
       '@next-auth/prisma-adapter':
         specifier: 1.0.6
         version: 1.0.6(@prisma/client@4.14.0)(next-auth@4.22.1)
+      '@plan-prise/api-pharmaciens':
+        specifier: workspace:*
+        version: link:../api-pharmaciens
       '@prisma/client':
         specifier: 4.14.0
         version: 4.14.0(prisma@4.14.0)

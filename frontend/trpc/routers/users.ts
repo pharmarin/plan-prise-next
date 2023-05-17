@@ -1,3 +1,4 @@
+import { findOne } from "@/../api-pharmaciens";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import {
   adminProcedure,
@@ -21,7 +22,7 @@ import {
   updateUserPasswordSchema,
   updateUserSchema,
 } from "@/validation/users";
-import { Prisma } from "@prisma/client";
+import { Prisma, type User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
 
@@ -38,6 +39,44 @@ const exclude = <User, Key extends keyof User>(
 const excludePassword = <User extends { password?: string }>(
   user: User
 ): Omit<User, "password"> => exclude(user, ["password"]);
+
+const sendMailApproved = async (
+  user: Pick<User, "email" | "firstName" | "lastName">
+) =>
+  await sendMail(
+    { email: user.email, name: `${user.firstName} ${user.lastName}` },
+    "Votre compte a été validé !",
+    "351ndgwr91d4zqx8"
+  );
+
+const sendMailRegistered = async (
+  user: Pick<User, "email" | "firstName" | "lastName">
+) =>
+  sendMail(
+    { email: user.email, name: `${user.firstName} ${user.lastName}` },
+    "Bienvenue sur plandeprise.fr !",
+    "pq3enl6xr8rl2vwr"
+  );
+
+const sendMailReinitPassword = async (
+  user: Pick<User, "email" | "firstName" | "lastName">,
+  token: string
+) =>
+  await sendMail(
+    {
+      email: user.email,
+      name: `${user.firstName} ${user.lastName}`,
+    },
+    "Réinitialisez votre mot de passe... ",
+    "jy7zpl95vjo45vx6",
+    {
+      link: `${
+        process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL
+          : process.env.FRONTEND_URL
+      }/password-reset?email=${user.email}&token=${token}`,
+    }
+  );
 
 const usersRouter = router({
   /**
@@ -81,11 +120,7 @@ const usersRouter = router({
         })
       );
 
-      await sendMail(
-        { email: user.email, name: `${user.firstName} ${user.lastName}` },
-        "Votre compte a été validé !",
-        "351ndgwr91d4zqx8"
-      );
+      await sendMailApproved(user);
 
       return MUTATION_SUCCESS;
     }),
@@ -197,32 +232,53 @@ const usersRouter = router({
         throw new PP_Error("USER_REGISTER_ERROR");
       }
 
-      sendMail(
-        { email: input.email, name: `${firstName} ${lastName}` },
-        "Bienvenue sur plandeprise.fr !",
-        "pq3enl6xr8rl2vwr"
-      );
+      const userFromRPPS = await findOne(Number(input.rpps));
 
-      fetch(process.env.NTFY_URL_ADMIN || "", {
-        method: "POST",
-        body: `${(
-          await ctx.prisma.user.count({ where: { approvedAt: null } })
-        ).toString()} en attente`,
-        headers: {
-          Actions: `view, Approuver, ${
-            process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL
-              : process.env.FRONTEND_URL
-          }/admin/users`,
-          Click: `${
-            process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL
-              : process.env.FRONTEND_URL
-          }/admin/users`,
-          Tags: "+1",
-          Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
-        },
-      });
+      if (
+        lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
+        firstName.toLowerCase() === userFromRPPS.firstName.toLowerCase()
+      ) {
+        await ctx.prisma.user.update({
+          where: { email: input.email },
+          data: { approvedAt: new Date() },
+        });
+
+        await sendMailApproved({ email: input.email, firstName, lastName });
+
+        fetch(process.env.NTFY_URL_ADMIN || "", {
+          method: "POST",
+          body: `${(
+            await ctx.prisma.user.count({ where: { approvedAt: null } })
+          ).toString()} en attente`,
+          headers: {
+            Tags: "+1",
+            Title: `Nouvelle inscription approuvée automatiquement sur ${process.env.APP_NAME}`,
+          },
+        });
+      } else {
+        await sendMailRegistered({ email: input.email, firstName, lastName });
+
+        fetch(process.env.NTFY_URL_ADMIN || "", {
+          method: "POST",
+          body: `${(
+            await ctx.prisma.user.count({ where: { approvedAt: null } })
+          ).toString()} en attente`,
+          headers: {
+            Actions: `view, Approuver, ${
+              process.env.VERCEL_URL
+                ? "https://" + process.env.VERCEL_URL
+                : process.env.FRONTEND_URL
+            }/admin/users`,
+            Click: `${
+              process.env.VERCEL_URL
+                ? "https://" + process.env.VERCEL_URL
+                : process.env.FRONTEND_URL
+            }/admin/users`,
+            Tags: "+1",
+            Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+          },
+        });
+      }
 
       return MUTATION_SUCCESS;
     }),
@@ -285,23 +341,9 @@ const usersRouter = router({
         where: { email: input.email },
       });
 
-      const token = signJWT({ user_id: user.id });
+      const token = await signJWT({ user_id: user.id });
 
-      await sendMail(
-        {
-          email: user.email,
-          name: `${user.firstName} ${user.lastName}`,
-        },
-        "Réinitialisez votre mot de passe... ",
-        "jy7zpl95vjo45vx6",
-        {
-          link: `${
-            process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL
-              : process.env.FRONTEND_URL
-          }/password-reset?email=${user.email}&token=${token}`,
-        }
-      );
+      await sendMailReinitPassword(user, token);
 
       return MUTATION_SUCCESS;
     }),
