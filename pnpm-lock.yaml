@@ -191,16 +191,16 @@ importers:
         specifier: 18.16.8
         version: 18.16.8
       '@types/node-fetch':
-        specifier: ^2.6.3
+        specifier: 2.6.3
         version: 2.6.3
       '@types/unzipper':
-        specifier: ^0.10.6
+        specifier: 0.10.6
         version: 0.10.6
       csv-parse:
         specifier: 5.3.10
         version: 5.3.10
       node-fetch:
-        specifier: ^2.6.6
+        specifier: 2.6.6
         version: 2.6.6
       ts-node:
         specifier: 10.9.1
@@ -209,7 +209,7 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
       unzipper:
-        specifier: ^0.10.14
+        specifier: 0.10.14
         version: 0.10.14
 
 packages:
@@ -2471,10 +2471,8 @@ packages:
   /isomorphic-unfetch@3.1.0:
     resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
     dependencies:
-      node-fetch: 2.6.11
+      node-fetch: 2.6.6
       unfetch: 4.2.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /jiti@1.18.2:
@@ -2852,7 +2850,6 @@ packages:
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
-    dev: true
 
   /node-releases@2.0.10:
     resolution: {integrity: sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==}
