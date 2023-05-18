@@ -1,4 +1,4 @@
-import { findOne } from "@/../api-pharmaciens";
+import { findOne } from "@plan-prise/api-pharmaciens";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import {
   adminProcedure,
