@@ -2,13 +2,13 @@
   "name": "@plan-prise/api-pharmaciens",
   "devDependencies": {
     "@types/node": "18.16.8",
-    "@types/node-fetch": "^2.6.3",
-    "@types/unzipper": "^0.10.6",
+    "@types/node-fetch": "2.6.3",
+    "@types/unzipper": "0.10.6",
     "csv-parse": "5.3.10",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "2.6.6",
     "ts-node": "10.9.1",
     "typescript": "5.0.4",
-    "unzipper": "^0.10.14"
+    "unzipper": "0.10.14"
   },
   "scripts": {
     "download": "ts-node download.ts",
