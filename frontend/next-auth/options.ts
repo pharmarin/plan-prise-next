@@ -48,12 +48,7 @@ export const nextAuthOptions: NextAuthOptions = {
           throw new PP_Error("RECAPTCHA_LOADING_ERROR");
         }
 
-        if (
-          recaptcha <= 0.5 &&
-          !credentials.email.includes(
-            process.env.MAIL_TEST_DOMAIN || "@mailslurp.com"
-          )
-        ) {
+        if (recaptcha <= 0.5) {
           throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
         }
 

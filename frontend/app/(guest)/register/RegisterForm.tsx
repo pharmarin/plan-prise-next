@@ -14,7 +14,7 @@ import convertToBase64 from "@/utils/file-to-base64";
 import {
   ALLOWED_UPLOADED_FILE_TYPES,
   MAX_UPLOADED_FILE_SIZE,
-  registerSchemaServer,
+  registerSchemaClient,
 } from "@/validation/users";
 import { Formik } from "formik";
 import { useState } from "react";
@@ -84,7 +84,7 @@ const RegisterForm = () => {
           });
         }}
         validateOnMount
-        validationSchema={registerSchemaServer}
+        validationSchema={registerSchemaClient}
       >
         {({ errors, handleSubmit, isSubmitting, values }) => (
           <Form className="flex flex-col" onSubmit={handleSubmit}>
@@ -228,6 +228,7 @@ const RegisterForm = () => {
                   <Button
                     className="flex-1"
                     color="primary"
+                    disabled={!errors}
                     loading={isSubmitting}
                     type="submit"
                   >
