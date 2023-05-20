@@ -1,4 +1,3 @@
-import { findOne } from "@plan-prise/api-pharmaciens";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import {
   adminProcedure,
@@ -22,6 +21,7 @@ import {
   updateUserPasswordSchema,
   updateUserSchema,
 } from "@/validation/users";
+import { findOne } from "@plan-prise/api-pharmaciens";
 import { Prisma, type User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
@@ -232,52 +232,58 @@ const usersRouter = router({
         throw new PP_Error("USER_REGISTER_ERROR");
       }
 
-      const userFromRPPS = await findOne(Number(input.rpps));
+      try {
+        const userFromRPPS = await findOne(Number(input.rpps));
 
-      if (
-        lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
-        firstName.toLowerCase() === userFromRPPS.firstName.toLowerCase()
-      ) {
-        await ctx.prisma.user.update({
-          where: { email: input.email },
-          data: { approvedAt: new Date() },
-        });
+        if (
+          lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
+          firstName.toLowerCase() === userFromRPPS.firstName.toLowerCase()
+        ) {
+          await ctx.prisma.user.update({
+            where: { email: input.email },
+            data: { approvedAt: new Date() },
+          });
 
-        await sendMailApproved({ email: input.email, firstName, lastName });
+          await sendMailApproved({ email: input.email, firstName, lastName });
 
-        fetch(process.env.NTFY_URL_ADMIN || "", {
-          method: "POST",
-          body: `${(
-            await ctx.prisma.user.count({ where: { approvedAt: null } })
-          ).toString()} en attente`,
-          headers: {
-            Tags: "+1",
-            Title: `Nouvelle inscription approuvée automatiquement sur ${process.env.APP_NAME}`,
-          },
-        });
-      } else {
-        await sendMailRegistered({ email: input.email, firstName, lastName });
+          fetch(process.env.NTFY_URL_ADMIN || "", {
+            method: "POST",
+            body: `${(
+              await ctx.prisma.user.count({ where: { approvedAt: null } })
+            ).toString()} en attente`,
+            headers: {
+              Tags: "+1",
+              Title: `Nouvelle inscription approuvée automatiquement sur ${process.env.APP_NAME}`,
+            },
+          });
+        } else {
+          await sendMailRegistered({ email: input.email, firstName, lastName });
 
-        fetch(process.env.NTFY_URL_ADMIN || "", {
-          method: "POST",
-          body: `${(
-            await ctx.prisma.user.count({ where: { approvedAt: null } })
-          ).toString()} en attente`,
-          headers: {
-            Actions: `view, Approuver, ${
-              process.env.VERCEL_URL
-                ? "https://" + process.env.VERCEL_URL
-                : process.env.FRONTEND_URL
-            }/admin/users`,
-            Click: `${
-              process.env.VERCEL_URL
-                ? "https://" + process.env.VERCEL_URL
-                : process.env.FRONTEND_URL
-            }/admin/users`,
-            Tags: "+1",
-            Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
-          },
-        });
+          fetch(process.env.NTFY_URL_ADMIN || "", {
+            method: "POST",
+            body: `${(
+              await ctx.prisma.user.count({ where: { approvedAt: null } })
+            ).toString()} en attente`,
+            headers: {
+              Actions: `view, Approuver, ${
+                process.env.VERCEL_URL
+                  ? "https://" + process.env.VERCEL_URL
+                  : process.env.FRONTEND_URL
+              }/admin/users`,
+              Click: `${
+                process.env.VERCEL_URL
+                  ? "https://" + process.env.VERCEL_URL
+                  : process.env.FRONTEND_URL
+              }/admin/users`,
+              Tags: "+1",
+              Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+            },
+          });
+        }
+      } catch (error) {
+        console.error(error);
+
+        throw new PP_Error("USER_REGISTER_WARNING");
       }
 
       return MUTATION_SUCCESS;
