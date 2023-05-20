@@ -2,7 +2,9 @@ import { readFile } from "fs/promises";
 import { ParsedRecord } from "./download";
 
 const loadData = async () => {
-  const file = await readFile("data/practitionners.json");
+  const file = await readFile(
+    new URL("./data/practitionners.json", import.meta.url)
+  );
   return JSON.parse(file.toString()) as ParsedRecord[];
 };
 
