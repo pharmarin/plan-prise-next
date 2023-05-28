@@ -35,7 +35,7 @@
     "classname-variants": "github:pharmarin/classname-variants",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
-    "formik": "2.2.9",
+    "formik": "2.4.0",
     "jose": "4.14.4",
     "lodash": "4.17.21",
     "mailersend": "2.1.1",
