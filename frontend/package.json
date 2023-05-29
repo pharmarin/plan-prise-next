@@ -34,7 +34,7 @@
     "chart.js": "4.3.0",
     "classname-variants": "github:pharmarin/classname-variants",
     "eslint": "8.41.0",
-    "eslint-config-next": "13.4.4",
+    "eslint-config-next": "13.4.3",
     "formik": "2.4.0",
     "jose": "4.14.4",
     "lodash": "4.17.21",
@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.1",
-    "@next/env": "13.4.4",
+    "@next/env": "13.4.3",
     "@playwright/test": "1.33.0",
     "@prettier/plugin-php": "0.19.4",
     "@tailwindcss/forms": "0.5.3",
