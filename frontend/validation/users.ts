@@ -83,16 +83,18 @@ export const registerSchemaServer = yup.object({
 export const registerSchemaClient = registerSchemaServer.concat(
   yup.object({
     certificate: yup
-      .object({
-        name: yup.string().required(),
-        size: yup.number().required(),
-        type: yup.string().oneOf(ALLOWED_UPLOADED_FILE_TYPES).required(),
+      .object()
+      .notRequired()
+      .shape({
+        name: yup.string().nullable(),
+        size: yup.number().nullable(),
+        type: yup.string().oneOf(ALLOWED_UPLOADED_FILE_TYPES).nullable(),
       })
-      .nullable()
       .when("student", {
         is: true,
         then: (certificate) =>
           certificate
+            .required()
             .test(
               "fileName",
               "Certificat de scolarité est obligatoire",
@@ -106,7 +108,7 @@ export const registerSchemaClient = registerSchemaServer.concat(
               "Le fichier envoyé est trop volumineux",
               (value) =>
                 value && "size" in (value || {})
-                  ? value.size <= MAX_UPLOADED_FILE_SIZE
+                  ? (value?.size || Infinity) <= MAX_UPLOADED_FILE_SIZE
                   : false
             )
             .test(
@@ -114,7 +116,7 @@ export const registerSchemaClient = registerSchemaServer.concat(
               "Le fichier envoyé doit être de type pdf, jpg ou png. ",
               (value) =>
                 value && "type" in (value || {})
-                  ? ALLOWED_UPLOADED_FILE_TYPES.includes(value.type)
+                  ? ALLOWED_UPLOADED_FILE_TYPES.includes(value?.type || "")
                   : false
             )
             .label("Certificat de scolarité"),
