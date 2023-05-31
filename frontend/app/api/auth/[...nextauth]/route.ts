@@ -17,4 +17,6 @@ declare module "next-auth/jwt" {
   }
 }
 
-export default NextAuth(nextAuthOptions);
+const handler = NextAuth(nextAuthOptions);
+
+export { handler as GET, handler as POST };
