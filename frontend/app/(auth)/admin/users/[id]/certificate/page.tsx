@@ -7,24 +7,17 @@ import { trpc } from "@/trpc/client";
 import PP_Error from "@/utils/errors";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
+import { use } from "react";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
 const ApproveStudent = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = trpc.users.unique.useQuery(params.id);
+  const user = use(trpc.users.unique.query(params.id));
 
-  if (isLoading) {
+  if (!user) {
     return <div>Chargement en cours</div>;
-  }
-
-  if (error) {
-    return <div>Impossible de charger le certificat de scolarité</div>;
   }
 
   return (

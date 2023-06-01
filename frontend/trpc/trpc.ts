@@ -1,5 +1,9 @@
+import { getServerSession } from "@/next-auth/get-session";
+import prisma from "@/prisma";
+import { UserSession } from "@/prisma/types";
 import { type ContextType } from "@/trpc/context";
 import PP_Error from "@/utils/errors";
+import { experimental_createServerActionHandler } from "@trpc/next/app-dir/server";
 import { initTRPC } from "@trpc/server";
 import SuperJSON from "superjson";
 
@@ -47,4 +51,12 @@ export const adminProcedure = authProcedure.use((opts) => {
   }
 
   return opts.next();
+});
+
+export const createAction = experimental_createServerActionHandler(tRPC, {
+  createContext: async () => {
+    const session = await getServerSession();
+
+    return { prisma, user: session?.user as UserSession | undefined };
+  },
 });

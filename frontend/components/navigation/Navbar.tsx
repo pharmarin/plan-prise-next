@@ -10,13 +10,14 @@ import { trpc } from "@/trpc/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { use } from "react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();
   const { returnTo, title } = useNavigation();
-  const { data: user } = trpc.users.current.useQuery();
+  const user = use(trpc.users.current.query());
 
   const isHome = pathname === "/";
 

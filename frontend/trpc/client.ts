@@ -1,27 +1,35 @@
 import type { AppRouter } from "@/trpc/routers/app";
-import { createTRPCReact } from "@trpc/react-query";
+import { getTRPCUrl } from "@/utils/get-urls";
+import { httpBatchLink, loggerLink } from "@trpc/client";
+import {
+  experimental_createActionHook,
+  experimental_createTRPCNextAppDirClient,
+  experimental_serverActionLink,
+} from "@trpc/next/app-dir/client";
+import SuperJSON from "superjson";
 
-export const getBaseUrl = () => {
-  if (typeof window !== "undefined")
-    // browser should use relative path
-    return "";
-  if (process.env.VERCEL_URL)
-    // reference for vercel.com
-    return `https://${process.env.VERCEL_URL}`;
-  if (process.env.FRONTEND_URL)
-    // reference for render.com
-    return `${process.env.FRONTEND_URL}:${process.env.PORT}`;
-  // assume localhost
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-};
+export const trpc = experimental_createTRPCNextAppDirClient<AppRouter>({
+  config: () => ({
+    links: [
+      loggerLink({
+        enabled: (op) =>
+          process.env.NODE_ENV === "development" ||
+          (op.direction === "down" && op.result instanceof Error),
+      }),
+      httpBatchLink({
+        url: getTRPCUrl(),
+        headers() {
+          return {
+            "x-trpc-source": "client",
+          };
+        },
+      }),
+    ],
+    transformer: SuperJSON,
+  }),
+});
 
-export const trpc = createTRPCReact<AppRouter>({
-  unstable_overrides: {
-    useMutation: {
-      async onSuccess(opts) {
-        await opts.originalFn();
-        await opts.queryClient.invalidateQueries();
-      },
-    },
-  },
+export const useAction = experimental_createActionHook({
+  links: [loggerLink(), experimental_serverActionLink()],
+  transformer: SuperJSON,
 });

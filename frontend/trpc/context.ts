@@ -7,7 +7,7 @@ import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 export const createContext = async (ctx: FetchCreateContextFnOptions) => {
   const session = await getServerSession();
 
-  return { ...ctx, prisma, user: session?.user as UserSession | undefined };
+  return { prisma, user: session?.user as UserSession | undefined };
 };
 
 export type ContextType = trpc.inferAsyncReturnType<typeof createContext>;
