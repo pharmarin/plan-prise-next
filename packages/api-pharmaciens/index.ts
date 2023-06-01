@@ -1,15 +1,12 @@
-import { readFile } from "fs/promises";
+import practitionners from "./data/practitionners.json";
 import { ParsedRecord } from "./download";
 
-const loadData = async () => {
-  const file = await readFile(
-    new URL("./data/practitionners.json", import.meta.url)
-  );
-  return JSON.parse(file.toString()) as ParsedRecord[];
+const loadData = () => {
+  return practitionners as ParsedRecord[];
 };
 
-export const findOne = async (rpps: number) => {
-  const data = await loadData();
+export const findOne = (rpps: number) => {
+  const data = loadData();
 
   return data.find((practitionner) => practitionner.rpps === rpps);
 };
