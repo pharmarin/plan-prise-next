@@ -233,7 +233,7 @@ const usersRouter = router({
       }
 
       try {
-        const userFromRPPS = await findOne(Number(input.rpps));
+        const userFromRPPS = findOne(Number(input.rpps));
 
         if (
           lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
