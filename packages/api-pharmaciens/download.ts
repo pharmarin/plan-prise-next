@@ -67,5 +67,8 @@ fetch(
       .on("end", () => resolve(records));
   });
 
-  await writeFile("data/practitionners.json", JSON.stringify(jsonArray));
+  await writeFile(
+    "../../frontend/utils/api-pharmaciens/practitionners.json",
+    JSON.stringify(jsonArray)
+  );
 });
