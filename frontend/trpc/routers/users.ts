@@ -246,7 +246,7 @@ const usersRouter = router({
 
           await sendMailApproved({ email: input.email, firstName, lastName });
 
-          fetch(process.env.NTFY_URL_ADMIN || "", {
+          await fetch(process.env.NTFY_ADMIN_URL || "", {
             method: "POST",
             body: `${(
               await ctx.prisma.user.count({ where: { approvedAt: null } })
@@ -259,7 +259,7 @@ const usersRouter = router({
         } else {
           await sendMailRegistered({ email: input.email, firstName, lastName });
 
-          fetch(process.env.NTFY_URL_ADMIN || "", {
+          await fetch(process.env.NTFY_ADMIN_URL || "", {
             method: "POST",
             body: `${(
               await ctx.prisma.user.count({ where: { approvedAt: null } })
