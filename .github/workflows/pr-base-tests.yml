@@ -11,6 +11,8 @@ permissions:
 jobs:
   base-tests:
     runs-on: "ubuntu-latest"
+    container:
+      image: mcr.microsoft.com/playwright:v1.34.3-focal
     defaults:
       run:
         working-directory: frontend
