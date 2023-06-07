@@ -30,7 +30,7 @@ if (isset($_GET["delete"]) && isset($_GET["id"])) {
 //List calendars
 if (!isset($id)) {
   $calendars = calendar_list();
-  $id = $calendars[0]["id"];
+  $id = array_key_exists(0, $calendars) ? $calendars[0]["id"] : null;
 }
 
 //Read database
