@@ -78,6 +78,12 @@ const sendMailReinitPassword = async (
     }
   );
 
+const formatFirstName = (firstName: string) =>
+  startCase(firstName.toLowerCase());
+const formatLastName = (lastName: string) => upperCase(lastName);
+const formatDisplayName = (displayName?: string | null) =>
+  displayName ? startCase(displayName.toLowerCase()) : null;
+
 const usersRouter = router({
   /**
    * Get all users
@@ -204,11 +210,9 @@ const usersRouter = router({
         throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
       }
 
-      const firstName = startCase(input.firstName.toLowerCase());
-      const lastName = upperCase(input.lastName);
-      const displayName = input.displayName
-        ? startCase(input.displayName.toLowerCase())
-        : undefined;
+      const firstName = formatFirstName(input.firstName);
+      const lastName = formatLastName(input.lastName);
+      const displayName = formatDisplayName(input.displayName);
 
       try {
         await ctx.prisma.user.create({
@@ -236,6 +240,7 @@ const usersRouter = router({
         const userFromRPPS = findOne(Number(input.rpps));
 
         if (
+          userFromRPPS &&
           lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
           firstName.toLowerCase() === userFromRPPS.firstName.toLowerCase()
         ) {
@@ -377,14 +382,16 @@ const usersRouter = router({
    */
   update: authProcedure
     .input(updateUserSchema(true))
-    .mutation(async ({ ctx, input: { id, ...values } }) =>
+    .mutation(async ({ ctx, input: { id, ...input } }) =>
       excludePassword(
         await ctx.prisma.user.update({
           where: { id },
           data: {
-            ...values,
-            displayName: values.displayName ?? null,
-            rpps: values.rpps ? BigInt(values.rpps) : undefined,
+            ...input,
+            firstName: formatFirstName(input.firstName),
+            lastName: formatLastName(input.lastName),
+            displayName: formatDisplayName(input.displayName),
+            rpps: input.rpps ? BigInt(input.rpps) : undefined,
           },
         })
       )
