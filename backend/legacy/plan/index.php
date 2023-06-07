@@ -22,7 +22,7 @@ endif;
 $plans = plan_list();
 
 if (!isset($id)) {
-	$id = $plans[0]["id"];
+	$id = array_key_exists(0, $plans) ? $plans[0]["id"] : null;
 }
 
 //Read database
