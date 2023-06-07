@@ -73,7 +73,7 @@ const UsersTable = () => {
 
   const columnHelper = createColumnHelper<User>();
   const [columnFilter, setColumnFilter] = useState<keyof typeof filters>(
-    Object.keys(filters)[0]
+    Object.keys(filters)[1]
   );
   const [globalFilter, setGlobalFilter] = useState("");
 
