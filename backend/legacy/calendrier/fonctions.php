@@ -154,7 +154,7 @@ function calendar_print($id, $type = "horizontal", $patient = "")
     '
 		<table width="100%" style="vertical-align: center; font-size: 8pt; font-weight: bold;"><tr>
 			<td width="33%"><span>Créé par ' .
-      ucwords(strtolower(Auth::user()->displayName)) .
+      ucwords(strtolower(Auth::user()->displayName ?? Auth::user()->firstName . " " . Auth::user()->lastName)) .
       ' le {DATE j/m/Y}</span></td>
 			<td width="33%" style="text-align: center;"><span>Calendrier n°' .
       $id .

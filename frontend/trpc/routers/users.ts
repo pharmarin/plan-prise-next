@@ -383,6 +383,7 @@ const usersRouter = router({
           where: { id },
           data: {
             ...values,
+            displayName: values.displayName ?? null,
             rpps: values.rpps ? BigInt(values.rpps) : undefined,
           },
         })
