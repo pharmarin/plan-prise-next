@@ -1,6 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require("path");
+
 /** @type {import("eslint").Linter.Config} */
 const config = {
-  root: true,
   extends: ["next", "prettier", "plugin:@typescript-eslint/recommended"],
   ignorePatterns: [
     "**/*.config.js",
@@ -8,14 +10,12 @@ const config = {
     "**/*.config.cjs",
     "**/*rc.js",
   ],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: "latest",
-    project: ["./tsconfig.json"],
-    tsconfigRootDir: __dirname,
-  },
-  plugins: ["@typescript-eslint"],
+  reportUnusedDisableDirectives: true,
   rules: {
+    "@next/next/no-html-link-for-pages": [
+      "warn",
+      [path.join(__dirname, "../../frontend")],
+    ],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -28,6 +28,9 @@ const config = {
       "error",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
+    "@typescript-eslint/return-await": "error",
+    // Required by @typescript-eslint/return-await
+    "no-return-await": "off",
   },
 };
 

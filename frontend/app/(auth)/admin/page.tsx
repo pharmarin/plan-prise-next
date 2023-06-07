@@ -12,9 +12,7 @@ const AdminDashboard = async () => {
           Utilisateurs
         </div>
         <div className="grid grid-cols-3 gap-4">
-          {/* @ts-expect-error Server Component */}
           <UsersCountCard />
-          {/* @ts-expect-error Server Component */}
           <ChartCard type="users" />
         </div>
       </div>
@@ -24,9 +22,7 @@ const AdminDashboard = async () => {
           Plans de prise
         </div>
         <div className="grid grid-cols-3 gap-4">
-          {/* @ts-expect-error Server Component */}
           <PlansCountCard />
-          {/* @ts-expect-error Server Component */}
           <ChartCard type="plans" />
         </div>
       </div>
