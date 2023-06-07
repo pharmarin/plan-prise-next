@@ -15,6 +15,7 @@ const FormInfo = styled(FormInfoBase, {
   variants: {
     color: {
       gray: tw`text-gray-500`,
+      green: tw`text-teal-500`,
       red: tw`text-red-500`,
     },
   },

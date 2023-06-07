@@ -1,18 +1,22 @@
 "use client";
 
 import Form from "@/components/forms/Form";
+import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { trpc } from "@/trpc/client";
+import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { updateUserPasswordSchema } from "@/validation/users";
 import { type User } from "@prisma/client";
 import { Formik } from "formik";
+import { useState } from "react";
 
 const EditPassword: React.FC<
   { user: User } | { email: string; token: string }
 > = (props) => {
   const { mutateAsync, error } = trpc.users.updatePassword.useMutation();
+  const [success, setSuccess] = useState(false);
 
   return (
     <Formik
@@ -23,12 +27,19 @@ const EditPassword: React.FC<
         password_confirmation: "",
         token: "token" in props ? props.token : "",
       }}
-      onSubmit={async (values) => {
-        await mutateAsync({
+      onSubmit={async (values, { resetForm }) => {
+        setSuccess(false);
+
+        const response = await mutateAsync({
           current_password: values.current_password,
           password: values.password,
           password_confirmation: values.password_confirmation,
         });
+
+        if (response === MUTATION_SUCCESS) {
+          setSuccess(true);
+          resetForm();
+        }
       }}
       validationSchema={updateUserPasswordSchema}
     >
@@ -69,6 +80,10 @@ const EditPassword: React.FC<
           />
 
           {error && <ServerError error={error} />}
+
+          {success && (
+            <FormInfo color="green">Le mot de passe a été mis à jour</FormInfo>
+          )}
 
           <Button color="primary" loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe
