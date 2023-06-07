@@ -1,6 +1,5 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
-  root: true,
   extends: ["next", "prettier", "plugin:@typescript-eslint/recommended"],
   ignorePatterns: [
     "**/*.config.js",
@@ -8,13 +7,7 @@ const config = {
     "**/*.config.cjs",
     "**/*rc.js",
   ],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: "latest",
-    project: ["./tsconfig.json"],
-    tsconfigRootDir: __dirname,
-  },
-  plugins: ["@typescript-eslint"],
+  reportUnusedDisableDirectives: true,
   rules: {
     "@typescript-eslint/no-unused-vars": [
       "warn",
@@ -28,6 +21,7 @@ const config = {
       "error",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
+    "no-html-link-for-pages": "off",
   },
 };
 

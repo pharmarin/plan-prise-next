@@ -1,3 +1,6 @@
 {
-  "name": "plan-prise"
+  "name": "plan-prise",
+  "devDependencies": {
+    "@plan-prise/eslint-config": "workspace:*"
+  }
 }
