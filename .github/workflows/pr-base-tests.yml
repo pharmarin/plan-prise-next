@@ -38,7 +38,7 @@ jobs:
         run: pnpm playwright install --with-deps
 
       - name: Run base tests
-        run: pnpm test:base
+        run: HOME=/root pnpm test:base
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
