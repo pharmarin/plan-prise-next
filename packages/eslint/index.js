@@ -21,7 +21,10 @@ const config = {
       "error",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
+    "@typescript-eslint/return-await": "error",
     "no-html-link-for-pages": "off",
+    // Required by @typescript-eslint/return-await
+    "no-return-await": "off",
   },
 };
 
