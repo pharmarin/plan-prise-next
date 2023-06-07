@@ -46,7 +46,9 @@ const LoginForm = () => {
             redirect: false,
           });
 
-          if (signInResponse?.ok) {
+          console.log("signInResponse: ", signInResponse);
+
+          if (!signInResponse?.error) {
             router.push((searchParams?.get("redirectTo") ?? "/") as Route);
           } else {
             setError(
