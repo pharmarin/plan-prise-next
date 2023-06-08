@@ -10,6 +10,7 @@ import PP_Error from "@/utils/errors";
 import { signJWT, verifyJWT } from "@/utils/json-web-token";
 import sendMail from "@/utils/mail";
 import { hashPassword } from "@/utils/password-utils";
+import getUrl from "@/utils/url";
 import {
   approveUserSchema,
   deleteUserSchema,
@@ -40,16 +41,16 @@ const excludePassword = <User extends { password?: string }>(
   user: User
 ): Omit<User, "password"> => exclude(user, ["password"]);
 
-const sendMailApproved = async (
+const sendMailApproved = (
   user: Pick<User, "email" | "firstName" | "lastName">
 ) =>
-  await sendMail(
+  sendMail(
     { email: user.email, name: `${user.firstName} ${user.lastName}` },
     "Votre compte a été validé !",
     "351ndgwr91d4zqx8"
   );
 
-const sendMailRegistered = async (
+const sendMailRegistered = (
   user: Pick<User, "email" | "firstName" | "lastName">
 ) =>
   sendMail(
@@ -58,11 +59,11 @@ const sendMailRegistered = async (
     "pq3enl6xr8rl2vwr"
   );
 
-const sendMailReinitPassword = async (
+const sendMailReinitPassword = (
   user: Pick<User, "email" | "firstName" | "lastName">,
   token: string
 ) =>
-  await sendMail(
+  sendMail(
     {
       email: user.email,
       name: `${user.firstName} ${user.lastName}`,
@@ -70,11 +71,7 @@ const sendMailReinitPassword = async (
     "Réinitialisez votre mot de passe... ",
     "jy7zpl95vjo45vx6",
     {
-      link: `${
-        process.env.VERCEL_URL
-          ? "https://" + process.env.VERCEL_URL
-          : process.env.FRONTEND_URL
-      }/password-reset?email=${user.email}&token=${token}`,
+      link: getUrl(`/password-reset?email=${user.email}&token=${token}`),
     }
   );
 
@@ -92,22 +89,21 @@ const usersRouter = router({
    *
    * @returns {User[]} Users
    */
-  all: adminProcedure.query(
-    async ({ ctx }) =>
-      await ctx.prisma.user.findMany({
-        select: {
-          id: true,
-          lastName: true,
-          firstName: true,
-          displayName: true,
-          student: true,
-          admin: true,
-          rpps: true,
-          createdAt: true,
-          approvedAt: true,
-        },
-        orderBy: { createdAt: "desc" },
-      })
+  all: adminProcedure.query(({ ctx }) =>
+    ctx.prisma.user.findMany({
+      select: {
+        id: true,
+        lastName: true,
+        firstName: true,
+        displayName: true,
+        student: true,
+        admin: true,
+        rpps: true,
+        createdAt: true,
+        approvedAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+    })
   ),
   /**
    * Approves user
@@ -137,7 +133,7 @@ const usersRouter = router({
    *
    * @returns {number} User count
    */
-  count: adminProcedure.query(async ({ ctx }) => await ctx.prisma.user.count()),
+  count: adminProcedure.query(({ ctx }) => ctx.prisma.user.count()),
   /**
    * Get current logged in user details
    *
@@ -270,16 +266,8 @@ const usersRouter = router({
               await ctx.prisma.user.count({ where: { approvedAt: null } })
             ).toString()} en attente`,
             headers: {
-              Actions: `view, Approuver, ${
-                process.env.VERCEL_URL
-                  ? "https://" + process.env.VERCEL_URL
-                  : process.env.FRONTEND_URL
-              }/admin/users`,
-              Click: `${
-                process.env.VERCEL_URL
-                  ? "https://" + process.env.VERCEL_URL
-                  : process.env.FRONTEND_URL
-              }/admin/users`,
+              Actions: `view, Approuver, ${getUrl("/admin/users")}`,
+              Click: getUrl("/admin/users"),
               Tags: "+1",
               Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
             },
