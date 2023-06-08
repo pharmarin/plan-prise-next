@@ -1,7 +1,8 @@
 "use client";
 
 import NavigationContextProvider from "@/components/NavigationContextProvider";
-import { getBaseUrl, trpc } from "@/trpc/client";
+import { trpc } from "@/trpc/client";
+import getUrl from "@/utils/url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
 import { SessionProvider } from "next-auth/react";
@@ -22,7 +23,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${getBaseUrl()}/api/v1`,
+          url: getUrl("/api/v1"),
         }),
       ],
       transformer: SuperJSON,

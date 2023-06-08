@@ -2,7 +2,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       APP_NAME: string;
-      FRONTEND_URL: string;
+      PRODUCTION_URL: string;
       BACKEND_URL: string;
       RECAPTCHA_SECRET: string;
       NEXT_PUBLIC_CAPTCHA_SITE_KEY: string;
