@@ -1,6 +1,7 @@
 import LinkExpired from "@/app/(guest)/password-reset/LinkExpired";
 import PasswordResetForm from "@/app/(guest)/password-reset/PasswordResetForm";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
+import Link from "@/components/navigation/Link";
 import { verifyJWT } from "@/utils/json-web-token";
 import { notFound } from "next/navigation";
 
@@ -16,10 +17,13 @@ const PasswordReset = async ({
     return (
       <FormSubmitSuccess
         content={
-          <p>
-            Vous pouvez maintenant vous connecter avec votre nouveau mot de
-            passe.
-          </p>
+          <>
+            <p>
+              Vous pouvez maintenant vous connecter avec votre nouveau mot de
+              passe.
+            </p>
+            <Link href="/login">Se connecter</Link>
+          </>
         }
         title="Réinitialisation du mot de passe terminée"
       />
