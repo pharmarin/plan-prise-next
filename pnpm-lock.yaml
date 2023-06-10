@@ -151,8 +151,8 @@ importers:
         specifier: 18.16.17
         version: 18.16.17
       '@types/react':
-        specifier: 18.2.10
-        version: 18.2.10
+        specifier: 18.2.11
+        version: 18.2.11
       '@types/react-dom':
         specifier: 18.2.4
         version: 18.2.4
@@ -757,26 +757,26 @@ packages:
   /@types/react-dom@18.2.4:
     resolution: {integrity: sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw==}
     dependencies:
-      '@types/react': 18.2.10
+      '@types/react': 18.2.11
     dev: true
 
   /@types/react-google-recaptcha@2.1.5:
     resolution: {integrity: sha512-iWTjmVttlNgp0teyh7eBXqNOQzVq2RWNiFROWjraOptRnb1OcHJehQnji0sjqIRAk9K0z8stjyhU+OLpPb0N6w==}
     dependencies:
-      '@types/react': 18.2.10
+      '@types/react': 18.2.11
     dev: true
 
   /@types/react-pdf@6.2.0:
     resolution: {integrity: sha512-OSCYmrfaJvpXkM5V4seUMAhUDOAOqbGQf9kwv14INyTf7AjDs2ukfkkQrLWRQ8OjWrDklbXYWh5l7pT7l0N76g==}
     dependencies:
-      '@types/react': 18.2.10
+      '@types/react': 18.2.11
       pdfjs-dist: 2.16.105
     transitivePeerDependencies:
       - worker-loader
     dev: true
 
-  /@types/react@18.2.10:
-    resolution: {integrity: sha512-5UTpmDa5L+PgTLXhLPNolv7/Qh+1YQuy4fsh/IahJbvtaLz2g9qX0CKsE0rBQCvn9ymt9NpvZENZwclbLKc3EQ==}
+  /@types/react@18.2.11:
+    resolution: {integrity: sha512-+hsJr9hmwyDecSMQAmX7drgbDpyE+EgSF6t7+5QEBAn1tQK7kl1vWZ4iRf6SjQ8lk7dyEULxUmZOIpN0W5baZA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
@@ -2724,7 +2724,7 @@ packages:
   /merge-refs@1.1.3:
     resolution: {integrity: sha512-di/iXo7YUDHs38KoIROE2BQvL6xmqiKYpNQSM0NG2jdvikvhJOeihXXyOXXMKkoMxdCXF2SvyxTJ92NuRA5wfA==}
     dependencies:
-      '@types/react': 18.2.10
+      '@types/react': 18.2.11
     dev: false
 
   /merge-stream@2.0.0:
