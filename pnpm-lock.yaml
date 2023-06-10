@@ -133,7 +133,7 @@ importers:
         specifier: 13.4.3
         version: 13.4.3
       '@plan-prise/eslint-config':
-        specifier: '*'
+        specifier: workspace:*
         version: link:../packages/eslint
       '@playwright/test':
         specifier: 1.35.0
@@ -400,7 +400,6 @@ packages:
       semver: 7.5.1
       tar: 6.1.14
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -1122,7 +1121,6 @@ packages:
       '@mapbox/node-pre-gyp': 1.0.10
       node-addon-api: 5.1.0
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2105,7 +2103,6 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.6.11
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2561,8 +2558,6 @@ packages:
     dependencies:
       node-fetch: 2.6.11
       unfetch: 4.2.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /jiti@1.18.2:
@@ -2683,7 +2678,6 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2932,8 +2926,6 @@ packages:
   /node-fetch@2.6.11:
     resolution: {integrity: sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==}
     engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
