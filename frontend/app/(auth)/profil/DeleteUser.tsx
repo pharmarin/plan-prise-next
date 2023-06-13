@@ -4,6 +4,7 @@ import FormInfo from "@/components/forms/FormInfo";
 import Button from "@/components/forms/inputs/Button";
 import ConfirmPasswordModal from "@/components/overlays/modals/ConfirmPasswordModal";
 import { trpc } from "@/trpc/client";
+import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { type User } from "@prisma/client";
 import React, { useState } from "react";
 
@@ -28,7 +29,7 @@ const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
         onCancel={() => setShowForm(false)}
         onSubmit={async (password) => {
           try {
-            if ((await passwordVerify({ id, password })) === "success") {
+            if ((await passwordVerify({ id, password })) === MUTATION_SUCCESS) {
               await deleteUser(id);
 
               return true;
