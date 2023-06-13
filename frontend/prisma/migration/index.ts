@@ -120,7 +120,7 @@ const migratePlans = async (users: UsersMap) => {
 
 const seeder = async () => {
   const users = await migrateUsers();
-  // await migrateMedics();
+  await migrateMedics();
   await migratePrecautions();
   await migrateCalendars(users);
   await migratePlans(users);
