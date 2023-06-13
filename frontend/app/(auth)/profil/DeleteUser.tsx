@@ -13,7 +13,7 @@ const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
 
   const { mutateAsync: passwordVerify, error } =
     trpc.users.passwordVerify.useMutation();
-  const { mutateAsync: deleteUser } = trpc.users.delete.useMutation();
+  const { mutateAsync: deleteUser } = trpc.users.deleteCurrent.useMutation();
 
   return (
     <div>
@@ -30,7 +30,7 @@ const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
         onSubmit={async (password) => {
           try {
             if ((await passwordVerify({ id, password })) === MUTATION_SUCCESS) {
-              await deleteUser(id);
+              await deleteUser();
 
               return true;
             }

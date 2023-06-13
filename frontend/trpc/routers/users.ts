@@ -161,6 +161,16 @@ const usersRouter = router({
       await ctx.prisma.user.delete({ where: { id: input } });
     }),
   /**
+   * Delete current logged in user
+   */
+  deleteCurrent: authProcedure.mutation(async ({ ctx }) => {
+    await ctx.prisma.user.delete({
+      where: {
+        id: ctx.user.id,
+      },
+    });
+  }),
+  /**
    * Verify that password matches records
    *
    * @argument {string} id User id
