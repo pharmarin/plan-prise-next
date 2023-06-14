@@ -26,6 +26,7 @@ import { findOne } from "@plan-prise/api-pharmaciens";
 import { Prisma, type User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
+import { revalidatePath } from "next/cache";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -380,8 +381,8 @@ const usersRouter = router({
    */
   update: authProcedure
     .input(updateUserSchema(true))
-    .mutation(async ({ ctx, input: { id, ...input } }) =>
-      excludePassword(
+    .mutation(async ({ ctx, input: { id, ...input } }) => {
+      const user = excludePassword(
         await ctx.prisma.user.update({
           where: { id },
           data: {
@@ -392,8 +393,12 @@ const usersRouter = router({
             rpps: input.rpps ? BigInt(input.rpps) : undefined,
           },
         })
-      )
-    ),
+      );
+
+      revalidatePath("/profil");
+
+      return user;
+    }),
   /**
    * Updates user password
    *

@@ -23,7 +23,7 @@ if (isset($_POST["add"])) {
   $rang = $_POST["rang"] ?? null;
   $data = plan_read($id_plan);
   $plan = plan_array_edit($data, $row, $type, $value, $rang);
-  debug($data, $id_plan);
+  //debug($data, $id_plan);
   echo plan_update_row($plan, $id_plan);
 } elseif (isset($_POST["option"])) {
   $key = $_POST["value"];

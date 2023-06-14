@@ -6,7 +6,7 @@ const ChartCard = async ({ type }: { type: "users" | "plans" }) => {
   const data: { month: number; count: bigint }[] =
     type === "plans"
       ? await prisma.$queryRaw`SELECT
-      DATE_FORMAT(TIME, '%m-%Y') AS month,
+      DATE_FORMAT(TIME, '%Y-%m') AS month,
       COUNT(*) AS count
     FROM
       plans_old
@@ -15,9 +15,9 @@ const ChartCard = async ({ type }: { type: "users" | "plans" }) => {
     GROUP BY
       month
     ORDER BY
-      month DESC;`
+      month ASC;`
       : await prisma.$queryRaw`SELECT
-      DATE_FORMAT(createdAt, '%m-%Y') AS month,
+      DATE_FORMAT(createdAt, '%Y-%m') AS month,
       COUNT(*) AS count
     FROM
       users
@@ -26,7 +26,7 @@ const ChartCard = async ({ type }: { type: "users" | "plans" }) => {
     GROUP BY
       month
     ORDER BY
-      month DESC;`;
+      month ASC;`;
 
   return (
     <Card className="col-span-2 flex h-44 items-center justify-center">

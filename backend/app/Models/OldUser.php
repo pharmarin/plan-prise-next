@@ -25,7 +25,7 @@ class OldUser extends Model
       throw new ApprobationException();
     }
 
-    debug($upassword, $user->password);
+    //debug($upassword, $user->password);
 
     if (password_verify($upassword, $user->password)) {
       return $user;
