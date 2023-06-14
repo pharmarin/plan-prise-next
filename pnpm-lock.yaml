@@ -69,8 +69,8 @@ importers:
         specifier: github:pharmarin/classname-variants
         version: github.com/pharmarin/classname-variants/35d5b981e3d585f5b1927d7e2444b4b235c5799e
       formik:
-        specifier: 2.4.1
-        version: 2.4.1(react@18.2.0)
+        specifier: 2.4.2
+        version: 2.4.2(react@18.2.0)
       jose:
         specifier: 4.14.4
         version: 4.14.4
@@ -2017,8 +2017,8 @@ packages:
       mime-types: 2.1.35
     dev: true
 
-  /formik@2.4.1(react@18.2.0):
-    resolution: {integrity: sha512-ajOB9EmFhXb4PACTlaooVEn7PLtLtBJEZ8fPs+wFZjL5KSGwgAoU+n9DHN8JcqNKcXkloEYYtn1lxrLav18ecQ==}
+  /formik@2.4.2(react@18.2.0):
+    resolution: {integrity: sha512-C6nx0hifW2uENP3M6HpPmnAE6HFWCcd8/sqBZEOHZY6lpHJ5qehsfAy43ktpFLEmkBmhiZDei726utcUB9leqg==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
@@ -2029,7 +2029,7 @@ packages:
       react: 18.2.0
       react-fast-compare: 2.0.4
       tiny-warning: 1.0.3
-      tslib: 1.14.1
+      tslib: 2.5.0
     dev: false
 
   /fraction.js@4.2.0:
