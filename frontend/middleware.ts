@@ -34,7 +34,7 @@ export const config = {
     "/js/:js*",
     "/img/:img*",
     "/ajax/:file*",
-    "/plan/:file*",
+    //"/plan/:file*",
     "/calendrier/:file*",
   ],
 };

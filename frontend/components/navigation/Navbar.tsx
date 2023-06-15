@@ -7,6 +7,7 @@ import NavbarLink from "@/components/navigation/NavbarLink";
 import { useNavigation } from "@/components/NavigationContextProvider";
 import Dropdown from "@/components/overlays/Dropdown";
 import { trpc } from "@/trpc/client";
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,7 +16,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();
-  const { returnTo, title } = useNavigation();
+  const { loading, returnTo, title } = useNavigation();
   const { data: user } = trpc.users.current.useQuery();
 
   const isHome = pathname === "/";
@@ -38,9 +39,13 @@ const Navbar = () => {
       </div>
       <div
         id="navbar-center"
-        className="flex w-fit items-center text-xl font-semibold text-teal-900"
+        className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
         <div>{title}</div>
+        {loading === true && <Spinner className="h-3 w-3 text-teal-900" />}
+        {loading === false && (
+          <CheckCircleIcon className="h-4 w-4 text-teal-600" />
+        )}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">

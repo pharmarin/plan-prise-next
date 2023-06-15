@@ -23,6 +23,7 @@ export const useNavigationDispatch = () =>
   useContext(NavigationDispatchContext);
 
 const initialNavigationState: NavigationState = {
+  loading: undefined,
   title: "",
 };
 
@@ -31,6 +32,8 @@ const navigationReducer = (
   action: NavigationAction
 ) => {
   switch (action.type) {
+    case NavigationActionKind.SET_LOADING:
+      return { ...state, loading: action.payload };
     case NavigationActionKind.SET_TITLE:
       return { ...state, title: action.payload };
     case NavigationActionKind.SET_RETURNTO:
