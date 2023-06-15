@@ -181,7 +181,7 @@ if (isset($data["new"]) || empty($data)) { ?>
 																														) ?> contenteditable="true"><?= array_key_exists(
 																																													"commentairePerso",
 																																													$row
-																																												) && $row["commentairePerso"] ?></span>
+																																												) ? $row["commentairePerso"] : "" ?></span>
 					</div>
 				</td>
 			</tr>
