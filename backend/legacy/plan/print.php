@@ -97,8 +97,8 @@ $color = [
 						<small class="text-muted"><?php if (
 																				!empty($row["voieAdministration"])
 																			) { ?>(Voie <?= strtolower(
-																					$row["voieAdministration"]
-																				) ?>)<?php } ?></small>
+																										$row["voieAdministration"]
+																									) ?>)<?php } ?></small>
 					</td>
 					<td>
 						<?= $row["indication"] ?>
@@ -149,7 +149,7 @@ $color = [
 							<span class="commentaire-perso"><?= array_key_exists(
 																								"commentairePerso",
 																								$row
-																							) && $row["commentairePerso"] ?></span>
+																							) ? $row["commentairePerso"] : "" ?></span>
 						</div>
 					</td>
 				</tr>
