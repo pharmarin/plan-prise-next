@@ -1,3 +1,4 @@
+import PlanCard from "@/app/(auth)/plan/[id]/PlanCard";
 import Navigation from "@/components/navigation/Navigation";
 import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";
@@ -28,7 +29,7 @@ const Plan = async ({ params }: Props) => {
       <Navigation title={`Plan de prise n°${params.id}`} />
       <div>
         {(plan.data || []).map((row) => (
-          <div key={row.id}>{row.nomMedicament}</div>
+          <PlanCard key={row.id} id={row.id} />
         ))}
       </div>
       <p className="font-mono">{JSON.stringify(plan?.data)}</p>
