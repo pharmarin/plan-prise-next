@@ -15,7 +15,9 @@ const ButtonBase: React.FC<
       {...props}
     >
       {loading && <Spinner className="-ml-1 mr-2" />}
-      <span className="truncate">{children}</span>
+      <span className="flex items-center justify-center truncate">
+        {children}
+      </span>
     </button>
   );
 };
@@ -24,12 +26,13 @@ const Button = styled(ButtonBase, {
   base: tw`inline-flex justify-center rounded-md border border-transparent text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm text-white items-center disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-teal-500 transition-colors min-w-0`,
   variants: {
     color: {
-      white: tw`border-gray-300 bg-white text-gray-700 hover:bg-gray-50`,
+      white: tw`border-gray-300 bg-white text-gray-700 hover:bg-gray-400`,
       primary: tw`bg-teal-500 hover:bg-teal-600 focus:ring-teal-600`,
-      red: tw`bg-red-600 hover:bg-red-700 focus:ring-red-500`,
+      red: tw`bg-red-600 border-red-600 hover:bg-red-700 focus:ring-red-500`,
       gradient: tw`bg-gradient-to-r from-emerald-500 to-teal-500 disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-slate-500`,
       link: tw`bg-transparent py-0 px-0 font-normal text-teal-500 shadow-none`,
     },
+    outline: { true: tw`border bg-white hover:text-white` },
     size: {
       sm: tw`px-2 py-1`,
       md: tw`px-4 py-2`,

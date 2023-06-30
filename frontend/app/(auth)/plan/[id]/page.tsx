@@ -1,12 +1,11 @@
 import PlanCard from "@/app/(auth)/plan/[id]/PlanCard";
+import type { PlanData } from "@/app/(auth)/plan/[id]/types";
 import Navigation from "@/components/navigation/Navigation";
 import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";
 import { notFound } from "next/navigation";
 
 type Props = { params: { id: string } };
-
-type PlanData = { id: string; nomMedicament: string }[];
 
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();
@@ -29,7 +28,7 @@ const Plan = async ({ params }: Props) => {
       <Navigation title={`Plan de prise n°${params.id}`} />
       <div>
         {(plan.data || []).map((row) => (
-          <PlanCard key={row.id} id={row.id} />
+          <PlanCard key={row.id} data={row} />
         ))}
       </div>
       <p className="font-mono">{JSON.stringify(plan?.data)}</p>
