@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import prisma from "../index";
 import type {
   CalendarsTable,
@@ -45,6 +44,7 @@ const migrateUsers = async (): Promise<UsersMap> => {
       select: { id: true, email: true },
     })
   ).map((user) => {
+    // @ts-expects-error
     usersMap[user.email].newId = user.id;
   });
 
@@ -73,7 +73,8 @@ const migrateMedics = async () => {
     )?.data || [];
 
   await prisma.medics_simple.createMany({
-    data: medicsTable.map(({ id: _id, ...medic }) => ({
+    data: medicsTable.map((medic) => ({
+      id: medic.id,
       nomMedicament: medic.nomMedicament,
       nomGenerique: medic.nomGenerique || null,
       indication: medic.indication || null,

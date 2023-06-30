@@ -36,5 +36,5 @@
     "next-auth/index",
     "__tests__"
   ],
-  "exclude": ["node_modules", "./prisma/migration"]
+  "exclude": ["node_modules"]
 }
