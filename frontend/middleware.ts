@@ -33,6 +33,7 @@ export const config = {
     "/fonts/:font*",
     "/js/:js*",
     "/img/:img*",
+    "/files/:file*",
     "/ajax/:file*",
     //"/plan/:file*",
     "/calendrier/:file*",
