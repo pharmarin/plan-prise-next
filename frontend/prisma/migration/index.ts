@@ -44,7 +44,7 @@ const migrateUsers = async (): Promise<UsersMap> => {
       select: { id: true, email: true },
     })
   ).map((user) => {
-    // @ts-expects-error
+    // @ts-expect-error Possibly undefined
     usersMap[user.email].newId = user.id;
   });
 
@@ -74,7 +74,7 @@ const migrateMedics = async () => {
 
   await prisma.medics_simple.createMany({
     data: medicsTable.map((medic) => ({
-      id: medic.id,
+      id: Number(medic.id),
       nomMedicament: medic.nomMedicament,
       nomGenerique: medic.nomGenerique || null,
       indication: medic.indication || null,
