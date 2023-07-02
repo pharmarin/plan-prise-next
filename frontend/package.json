@@ -9,6 +9,8 @@
     "dev": "next dev",
     "env:generate": "gen-env-types .env",
     "lint": "next lint",
+    "seed": "ts-node ./prisma/migration/index.ts",
+    "seed:medics": "pnpm seed medics",
     "start": "next start",
     "test": "playwright test",
     "test:base": "playwright test __tests__/base/",
@@ -71,9 +73,7 @@
     "postcss": "8.4.24",
     "prisma": "4.16.1",
     "tailwindcss": "3.3.2",
-    "ts-node": "10.9.1"
-  },
-  "prisma": {
-    "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} ./prisma/migration/index.ts"
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "4.2.0"
   }
 }

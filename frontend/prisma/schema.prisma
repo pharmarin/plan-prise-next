@@ -59,6 +59,13 @@ model User {
   @@map("users")
 }
 
+model Plan {
+  id       String          @id @default(cuid())
+  medics   medics_simple[]
+  data     Json?
+  settings Json?
+}
+
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model calendriers_old {
   id   Int      @id @default(autoincrement())
@@ -80,12 +87,13 @@ model medics_simple {
   midi               String? @db.VarChar(20)
   soir               String? @db.VarChar(20)
   coucher            String? @db.VarChar(20)
-  commentaire        String? @db.Text
+  commentaire        Json?
   modifie            String? @default("NOW()") @db.VarChar(20)
   precaution         String? @db.VarChar(50)
   qui                String? @db.VarChar(10)
   relecture          Int?    @default(0)
   stat               Int     @default(0)
+  plans              Plan[]
 }
 
 model plans_old {
