@@ -1,3 +1,6 @@
+import type { Prisma } from "@prisma/client";
+import type { DefaultArgs } from "@prisma/client/runtime";
+
 type PlanPrisePrecaution = {
   checked?: boolean;
   comment: string;
