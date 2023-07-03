@@ -23,7 +23,12 @@ use Illuminate\Support\Facades\Route;
 Route::get("/{assets}/{file}", function ($assets, $file) {
   return Response::file(LEGACY_PATH . "/" . $assets . "/" . $file);
 })
-  ->whereIn("assets", ["css", "js", "img", "fonts"])
+  ->whereIn("assets", ["css", "js", "img", "files", "fonts"])
+  ->where("file", ".*");
+
+Route::get("/files/fiches/{file}", function ($file) {
+  return Response::file(LEGACY_PATH . "/" . $file);
+})
   ->where("file", ".*");
 
 Route::get("/calendrier/image.php", function () {
