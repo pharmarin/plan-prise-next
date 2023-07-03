@@ -1,6 +1,3 @@
-import type { Prisma } from "@prisma/client";
-import type { DefaultArgs } from "@prisma/client/runtime";
-
 type PlanPrisePrecaution = {
   checked?: boolean;
   comment: string;
@@ -372,6 +369,17 @@ export const migratePlanNew = async () => {
   console.log("medic: ", medic);
 
   console.log("plan", JSON.stringify(plans));
+
+  console.log(
+    decodeURIComponent(
+      Array.isArray(plans.data[0].commentaire)
+        ? plans.data[0].commentaire[0].text.replace(
+            /\\u([\d\w]{4})/gi,
+            (match, grp) => String.fromCharCode(parseInt(grp, 16))
+          )
+        : ""
+    )
+  );
 
   console.log(
     "diff",
