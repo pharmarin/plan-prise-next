@@ -1,6 +1,7 @@
 import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
+import type { PlanData } from "@/app/(auth)/plan/[id]/types";
 
-const PlanCard = async (/* { data: medic }: { data: PlanData[0] } */) => {
+const PlanCard = async ({ data: medic }: { data: PlanData[0] }) => {
   /* if (!id) {
     // TODO: Custom medic
     return null;
@@ -12,7 +13,11 @@ const PlanCard = async (/* { data: medic }: { data: PlanData[0] } */) => {
 
   return (
     <div className="rounded-lg p-4 shadow-md">
-      <PlanCardHeader />
+      <PlanCardHeader
+        nomGenerique={medic.nomGenerique}
+        nomMedicament={medic.nomMedicament}
+        voieAdministration={medic.voieAdministration}
+      />
     </div>
   );
 };

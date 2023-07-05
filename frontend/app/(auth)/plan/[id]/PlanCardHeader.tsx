@@ -5,14 +5,22 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 
-const PlanCardHeader = () => {
+const PlanCardHeader = ({
+  nomGenerique,
+  nomMedicament,
+  voieAdministration,
+}: {
+  nomMedicament: string;
+  nomGenerique: string;
+  voieAdministration: string;
+}) => {
   return (
     <div className="flex">
       <div className="flex flex-grow flex-col">
-        <span className="text-truncate text-lg font-bold">Médicament</span>
-        <small className="text-truncate text-gray-500">Nom générique</small>
+        <span className="text-truncate text-lg font-bold">{nomMedicament}</span>
+        <small className="text-truncate text-gray-500">{nomGenerique}</small>
         <small className="text-truncate italic text-gray-500">
-          Voie d&apos;administration
+          Voie {voieAdministration}
         </small>
       </div>
       <div className="flex flex-shrink-0 flex-grow-0 flex-col space-y-1">
