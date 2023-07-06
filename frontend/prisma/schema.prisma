@@ -59,11 +59,62 @@ model User {
   @@map("users")
 }
 
+enum VoieAdministration {
+  ORALE
+  CUTANEE
+  AURICULAIRE
+  NASALE
+  INHALEE
+  VAGINALE
+  OCULAIRE
+  RECTALE
+  SOUS_CUTANEE
+  INTRA_MUSCULAIRE
+  INTRA_VEINEUX
+  INTRA_URETRALE
+}
+
+model PrincipeActif {
+  id           String       @id @default(cuid())
+  denomination String       @unique
+  medicaments  Medicament[]
+
+  @@map("principes_actifs")
+}
+
+model Commentaire {
+  id                 String              @id @default(cuid())
+  // Si le commentaire est spécifique à une voie d'administration
+  voieAdministration VoieAdministration?
+  population         String?
+  texte              String
+  medicament         Medicament?         @relation(fields: [medicamentId], references: [id])
+  medicamentId       String
+
+  @@index([medicamentId])
+  @@map("commentaires")
+}
+
+model Medicament {
+  id                  String          @id @default(cuid())
+  denomination        String
+  principesActifs     PrincipeActif[]
+  indications         Json
+  conservation_frigo  Boolean
+  conservation_duree  Json?
+  voiesAdministration Json
+  precautions         Commentaire[]
+
+  @@map("medicaments")
+}
+
 model Plan {
   id       String          @id @default(cuid())
   medics   medics_simple[]
   data     Json?
   settings Json?
+
+  @@map("plans")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
