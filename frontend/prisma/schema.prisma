@@ -72,6 +72,7 @@ enum VoieAdministration {
   INTRA_MUSCULAIRE
   INTRA_VEINEUX
   INTRA_URETRALE
+  AUTRE
 }
 
 model PrincipeActif {
@@ -87,7 +88,7 @@ model Commentaire {
   // Si le commentaire est spécifique à une voie d'administration
   voieAdministration VoieAdministration?
   population         String?
-  texte              String
+  texte              String              @db.Text
   medicament         Medicament?         @relation(fields: [medicamentId], references: [id])
   medicamentId       String
 
@@ -98,13 +99,14 @@ model Commentaire {
 model Medicament {
   id                  String          @id @default(cuid())
   medicament_old      medics_simple   @relation(fields: [medics_simpleId], references: [id])
-  denomination        String
+  denomination        String          @unique
   principesActifs     PrincipeActif[]
   indications         Json
   conservation_frigo  Boolean
   conservation_duree  Json?
   voiesAdministration Json
-  precautions         Commentaire[]
+  commentaires        Commentaire[]
+  precaution          String?
   medics_simpleId     Int
 
   @@index([medics_simpleId])
@@ -141,7 +143,7 @@ model medics_simple {
   midi               String?      @db.VarChar(20)
   soir               String?      @db.VarChar(20)
   coucher            String?      @db.VarChar(20)
-  commentaire        Json?
+  commentaire        String?      @db.Text
   modifie            String?      @default("NOW()") @db.VarChar(20)
   precaution         String?      @db.VarChar(50)
   qui                String?      @db.VarChar(10)
@@ -161,7 +163,7 @@ model plans_old {
 
 model precautions_old {
   id      Int    @id @default(autoincrement())
-  mot_cle String @db.VarChar(50)
+  mot_cle String @unique @db.VarChar(50)
   titre   String @db.VarChar(200)
   contenu String @db.Text
   couleur String @db.VarChar(10)

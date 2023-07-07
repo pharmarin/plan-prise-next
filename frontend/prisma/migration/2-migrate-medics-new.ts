@@ -1,11 +1,17 @@
 import prisma from "@/prisma";
-import { VoieAdministration } from "@prisma/client";
+import { VoieAdministration, medics_simple } from "@prisma/client";
 import { trim } from "lodash";
 
 /*
   TODO: 
 
   pnpm prisma db push
+  pnpm seed 2
+
+  WARNING: 
+  - Phloroglucinol: Missing [] arround commentaire value
+  - COTELLIX, LENVIMA, GALAFOLD are inserted twice
+  - \' cause error
 */
 
 const parseJSONPromise = (json: string) =>
@@ -13,12 +19,13 @@ const parseJSONPromise = (json: string) =>
     try {
       return resolve(JSON.parse(json));
     } catch (error) {
+      console.error("JSON parse error: ", error);
       return reject(json);
     }
   });
 
-const switchVoieAdministration = (voie: string) => {
-  switch (voie) {
+const switchVoieAdministration = (med: medics_simple) => {
+  switch (med.voieAdministration) {
     case "Orale":
       return VoieAdministration.ORALE;
     case "Cutanée":
@@ -35,6 +42,7 @@ const switchVoieAdministration = (voie: string) => {
       return VoieAdministration.OCULAIRE;
     case "Rectale":
       return VoieAdministration.RECTALE;
+    case "Sous-cutané":
     case "Sous-cutanée":
       return VoieAdministration.SOUS_CUTANEE;
     case "Intra-musculaire":
@@ -44,15 +52,14 @@ const switchVoieAdministration = (voie: string) => {
     case "Intra-urétrale":
       return VoieAdministration.INTRA_URETRALE;
     default:
-      console.error("Unknown voie administration");
-      process.exit(1);
+      return VoieAdministration.AUTRE;
   }
 };
 
 const migrateMedicsNew = async () => {
   const medics = await prisma.medics_simple.findMany();
 
-  medics.forEach(async (med) => {
+  for (let med of medics) {
     if (!med.nomMedicament) {
       return;
     }
@@ -74,52 +81,63 @@ const migrateMedicsNew = async () => {
               create: { denomination: principeActif },
             })),
         },
-        voiesAdministration: switchVoieAdministration(
-          med.voieAdministration || ""
-        ),
+        voiesAdministration: switchVoieAdministration(med),
         conservation_frigo: med.frigo,
         conservation_duree: med.dureeConservation
-          ? await parseJSONPromise(med.dureeConservation).then((json) => {
-              if (json && typeof json === "object") {
-                return Object.entries(json).map(([laboratoire, duree]) => ({
-                  laboratoire,
-                  duree,
-                }));
-              } else {
-                console.error("Wrong format received");
-                process.exit(1);
-              }
-            })
-          : undefined,
-        precautions: Array.isArray(med.commentaire)
-          ? {
-              create: med.commentaire.map((commentaire) => {
-                if (
-                  typeof commentaire === "object" &&
-                  commentaire &&
-                  "span" in commentaire &&
-                  typeof commentaire.span === "string" &&
-                  "text" in commentaire &&
-                  typeof commentaire.text === "string"
-                ) {
-                  return {
-                    population: commentaire.span,
-                    texte: commentaire.text.replace(/<[^>]*>?/gm, ""),
-                  };
+          ? await parseJSONPromise(med.dureeConservation)
+              .then((json) => {
+                if (json && typeof json === "object") {
+                  return Object.entries(json).map(([laboratoire, duree]) => ({
+                    laboratoire,
+                    duree,
+                  }));
                 } else {
-                  console.log("Wring commentaire type", commentaire);
+                  console.error("Wrong format received");
                   process.exit(1);
                 }
-              }),
+              })
+              .catch((duree) => [{ laboratoire: null, duree }])
+          : undefined,
+        commentaires: await parseJSONPromise(
+          ((med.commentaire as string) || "").replace("\\'", "'")
+        )
+          .then((json) => {
+            if (Array.isArray(json)) {
+              return {
+                create: json.map((commentaire) => {
+                  if (
+                    typeof commentaire === "object" &&
+                    commentaire &&
+                    "span" in commentaire &&
+                    typeof commentaire.span === "string" &&
+                    "text" in commentaire &&
+                    typeof commentaire.text === "string"
+                  ) {
+                    return {
+                      population: commentaire.span,
+                      texte: commentaire.text
+                        .replace(/<[^>]*>?/gm, "")
+                        .replace("&nbsp;", " "),
+                    };
+                  } else {
+                    console.log("Wrong commentaire type", commentaire);
+                    process.exit(1);
+                  }
+                }),
+              };
+            } else {
+              console.error("Wrong commentaire type", med.commentaire);
+              process.exit(1);
             }
-          : (console.error("Wrong commentaire type", med.commentaire) as any) &&
-            process.exit(1),
+          })
+          .catch((_string) => {
+            console.error("Wrong commentaire type", med.commentaire);
+            process.exit(1);
+          }),
+        precaution: med.precaution,
       },
     });
-
-    console.log("commentaire: ", med.precaution);
-    process.exit();
-  });
+  }
 };
 
 export default migrateMedicsNew;
