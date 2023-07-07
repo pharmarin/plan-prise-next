@@ -2,6 +2,12 @@ import prisma from "@/prisma";
 import { VoieAdministration } from "@prisma/client";
 import { trim } from "lodash";
 
+/*
+  TODO: 
+
+  pnpm prisma db push
+*/
+
 const parseJSONPromise = (json: string) =>
   new Promise((resolve, reject) => {
     try {
@@ -55,6 +61,9 @@ const migrateMedicsNew = async () => {
 
     await prisma.medicament.create({
       data: {
+        medicament_old: {
+          connect: { id: med.id },
+        },
         denomination: trim(med.nomMedicament),
         indications: trim(med.indication || "").split(" OU "),
         principesActifs: {

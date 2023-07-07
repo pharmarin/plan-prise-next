@@ -97,6 +97,7 @@ model Commentaire {
 
 model Medicament {
   id                  String          @id @default(cuid())
+  medicament_old      medics_simple   @relation(fields: [medics_simpleId], references: [id])
   denomination        String
   principesActifs     PrincipeActif[]
   indications         Json
@@ -104,7 +105,9 @@ model Medicament {
   conservation_duree  Json?
   voiesAdministration Json
   precautions         Commentaire[]
+  medics_simpleId     Int
 
+  @@index([medics_simpleId])
   @@map("medicaments")
 }
 
@@ -127,24 +130,25 @@ model calendriers_old {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model medics_simple {
-  id                 Int     @id @default(autoincrement())
-  nomMedicament      String? @db.VarChar(200)
-  nomGenerique       String? @db.VarChar(100)
-  indication         String? @db.Text
-  frigo              Boolean @default(false)
-  dureeConservation  String? @db.Text
-  voieAdministration String? @db.VarChar(50)
-  matin              String? @db.VarChar(20)
-  midi               String? @db.VarChar(20)
-  soir               String? @db.VarChar(20)
-  coucher            String? @db.VarChar(20)
+  id                 Int          @id @default(autoincrement())
+  nomMedicament      String?      @db.VarChar(200)
+  nomGenerique       String?      @db.VarChar(100)
+  indication         String?      @db.Text
+  frigo              Boolean      @default(false)
+  dureeConservation  String?      @db.Text
+  voieAdministration String?      @db.VarChar(50)
+  matin              String?      @db.VarChar(20)
+  midi               String?      @db.VarChar(20)
+  soir               String?      @db.VarChar(20)
+  coucher            String?      @db.VarChar(20)
   commentaire        Json?
-  modifie            String? @default("NOW()") @db.VarChar(20)
-  precaution         String? @db.VarChar(50)
-  qui                String? @db.VarChar(10)
-  relecture          Int?    @default(0)
-  stat               Int     @default(0)
+  modifie            String?      @default("NOW()") @db.VarChar(20)
+  precaution         String?      @db.VarChar(50)
+  qui                String?      @db.VarChar(10)
+  relecture          Int?         @default(0)
+  stat               Int          @default(0)
   plans              Plan[]
+  Medicament         Medicament[]
 }
 
 model plans_old {
