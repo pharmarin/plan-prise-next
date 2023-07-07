@@ -104,7 +104,7 @@ const migrateMedicsNew = async () => {
                 ) {
                   return {
                     population: commentaire.span,
-                    texte: commentaire.text,
+                    texte: commentaire.text.replace(/<[^>]*>?/gm, ""),
                   };
                 } else {
                   console.log("Wring commentaire type", commentaire);
