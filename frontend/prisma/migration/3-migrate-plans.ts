@@ -1,23 +1,8 @@
 import prisma from "@/prisma";
+import type { PlanDataItem } from "@/types/plan";
 import { createId } from "@paralleldrive/cuid2";
 import type { medics_simple } from "@prisma/client";
 import { difference, trim } from "lodash";
-
-type PlanPriseDataItem = {
-  indications?: string;
-  posologies?: Record<PlanPrisePosologies, string | undefined>;
-  commentaires?: Record<string, { checked: boolean }>;
-  custom_commentaires?: Record<string, { texte: string }>;
-};
-
-type PlanPrisePosologies =
-  | "poso_matin"
-  | "poso_10h"
-  | "poso_midi"
-  | "poso_16h"
-  | "poso_18h"
-  | "poso_soir"
-  | "poso_coucher";
 
 const decodeUnicode = (value: string) =>
   value.replace(/\\u([\d\w]{4})/gi, (_match, grp) =>
@@ -152,11 +137,11 @@ export const migratePlanNew = async () => {
                     }
                   })(),
                 },
-              ] as [string, PlanPriseDataItem]);
+              ] as [string, PlanDataItem]);
 
               return accu;
             });
-          }, Promise.resolve([] as [string, PlanPriseDataItem][]))
+          }, Promise.resolve([] as [string, PlanDataItem][]))
         ),
       },
     });

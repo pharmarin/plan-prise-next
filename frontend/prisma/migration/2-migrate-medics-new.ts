@@ -81,7 +81,7 @@ const migrateMedicsNew = async () => {
               create: { denomination: principeActif },
             })),
         },
-        voiesAdministration: switchVoieAdministration(med),
+        voiesAdministration: [switchVoieAdministration(med)],
         conservation_frigo: med.frigo,
         conservation_duree: med.dureeConservation
           ? await parseJSONPromise(med.dureeConservation)

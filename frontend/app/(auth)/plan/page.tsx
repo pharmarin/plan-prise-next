@@ -4,9 +4,11 @@ import prisma from "@/prisma";
 
 const PlansIndex = async () => {
   const session = await getServerSession();
-  const plans = await prisma.plans_old.findMany({
+  const plans = await prisma.plan.findMany({
     where: {
-      user: session?.user.id,
+      user: {
+        id: session?.user.id,
+      },
     },
     select: { id: true },
   });

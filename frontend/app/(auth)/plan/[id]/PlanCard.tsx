@@ -1,22 +1,33 @@
+"use client";
+
 import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
-import type { PlanData } from "@/app/(auth)/plan/[id]/types";
+import type { PlanDataItem } from "@/types/plan";
+import type {
+  Medicament,
+  PrincipeActif
+} from "@prisma/client";
+import { useState } from "react";
 
-const PlanCard = async ({ data: medic }: { data: PlanData[0] }) => {
-  /* if (!id) {
-    // TODO: Custom medic
-    return null;
-  } */
-
-  /* const medic = await prisma.medics_simple.findUnique({
-    where: { id: Number(id) },
-  }); */
+const PlanCard = ({
+  data: _data,
+  medicament,
+}: {
+  data: PlanDataItem;
+  medicament: Medicament & {
+    principesActifs: PrincipeActif[];
+    voiesAdministrationParsed: string[];
+  };
+}) => {
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
     <div className="rounded-lg p-4 shadow-md">
       <PlanCardHeader
-        nomGenerique={medic.nomGenerique}
-        nomMedicament={medic.nomMedicament}
-        voieAdministration={medic.voieAdministration}
+        denomination={medicament.denomination}
+        principesActifs={medicament.principesActifs}
+        voieAdministration={medicament.voiesAdministrationParsed}
+        open={showDetails}
+        toggle={() => setShowDetails((showDetails) => !showDetails)}
       />
     </div>
   );

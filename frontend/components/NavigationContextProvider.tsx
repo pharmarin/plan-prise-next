@@ -4,7 +4,7 @@ import {
   NavigationActionKind,
   type NavigationAction,
   type NavigationState,
-} from "@/types";
+} from "@/types/navigation";
 import {
   createContext,
   useContext,

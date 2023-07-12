@@ -1,5 +1,4 @@
 import PlanCard from "@/app/(auth)/plan/[id]/PlanCard";
-import type { PlanData } from "@/app/(auth)/plan/[id]/types";
 import Navigation from "@/components/navigation/Navigation";
 import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";
@@ -9,15 +8,14 @@ type Props = { params: { id: string } };
 
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();
-  const plan = await prisma.plans_old
-    .findFirst({
-      where: { id: Number(params.id), user: session?.user.id },
-    })
-    .then((plan) => ({
-      ...plan,
-      data: plan?.data ? (JSON.parse(plan.data) as PlanData) : null,
-      options: plan?.options ? JSON.parse(plan.options) : null,
-    }));
+  const plan = await prisma.plan.findFirst({
+    where: { id: params.id, user: { is: { id: session?.user.id } } },
+    include: {
+      medics: {
+        include: { principesActifs: true },
+      },
+    },
+  });
 
   if (!plan) {
     return notFound();
@@ -27,11 +25,16 @@ const Plan = async ({ params }: Props) => {
     <>
       <Navigation title={`Plan de prise n°${params.id}`} />
       <div>
-        {(plan.data || []).map((row) => (
-          <PlanCard key={row.id} data={row} />
+        {plan.medics.map((row) => (
+          <PlanCard
+            key={`plan_${plan.id}_${row.id}`}
+            medicament={row}
+            data={plan.dataParsed?.[row.id] || {}}
+            data-superjson
+          />
         ))}
       </div>
-      <p className="font-mono">{JSON.stringify(plan?.data)}</p>
+      <p className="font-mono">{JSON.stringify(plan.medics[0])}</p>
     </>
   );
 };

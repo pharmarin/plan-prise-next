@@ -1,7 +1,7 @@
 "use client";
 
 import { useNavigationDispatch } from "@/components/NavigationContextProvider";
-import { NavigationActionKind, type NavigationState } from "@/types";
+import { NavigationActionKind, type NavigationState } from "@/types/navigation";
 import { useEffect } from "react";
 
 const Navigation: React.FC<{
