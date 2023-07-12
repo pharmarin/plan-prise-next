@@ -1,4 +1,5 @@
 {
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": "node_modules/.pnpm/typescript@5.1.3/node_modules/typescript/lib"
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": false,
+  "typescript.tsdk": "./frontend/node_modules/typescript/lib"
 }
