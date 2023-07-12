@@ -1,5 +1,5 @@
 import prisma from "@/prisma";
-import { VoieAdministration, medics_simple } from "@prisma/client";
+import { VoieAdministration, type medics_simple } from "@prisma/client";
 import { trim } from "lodash";
 
 /*
@@ -59,7 +59,7 @@ const switchVoieAdministration = (med: medics_simple) => {
 const migrateMedicsNew = async () => {
   const medics = await prisma.medics_simple.findMany();
 
-  for (let med of medics) {
+  for (const med of medics) {
     if (!med.nomMedicament) {
       return;
     }
