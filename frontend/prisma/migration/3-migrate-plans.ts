@@ -31,6 +31,11 @@ export const migratePlanNew = async () => {
   const plans = await prisma.plans_old.findMany({ take: 5 });
 
   for (const plan of plans) {
+    if (!plan.user) {
+      console.log("No user, skipping... ");
+      continue;
+    }
+
     let data = JSON.parse(plan.data) as (medics_simple & {
       dixhuith: string;
     })[];
@@ -41,6 +46,9 @@ export const migratePlanNew = async () => {
 
     await prisma.plan.create({
       data: {
+        user: {
+          connect: { id: plan.user || "" },
+        },
         medics: {
           connect: data.map((data: medics_simple) => ({
             denomination: data.nomMedicament || "",
@@ -64,7 +72,6 @@ export const migratePlanNew = async () => {
               accu.push([
                 medicament.id,
                 {
-                  // indication = null if no diff
                   indications:
                     Array.isArray(medicament.indications) &&
                     medicament.indications.length === 1 &&
