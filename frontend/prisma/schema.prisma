@@ -108,16 +108,20 @@ model Medicament {
   commentaires        Commentaire[]
   precaution          String?
   medics_simpleId     Int
+  Plan                Plan[]
+  planId              String?
 
   @@index([medics_simpleId])
+  @@index([planId])
   @@map("medicaments")
 }
 
 model Plan {
-  id       String          @id @default(cuid())
-  medics   medics_simple[]
-  data     Json?
-  settings Json?
+  id              String       @id @default(cuid())
+  medics          Medicament[]
+  data            Json?
+  settings        Json?
+  medics_simpleId Int?
 
   @@map("plans")
 }
@@ -149,7 +153,6 @@ model medics_simple {
   qui                String?      @db.VarChar(10)
   relecture          Int?         @default(0)
   stat               Int          @default(0)
-  plans              Plan[]
   Medicament         Medicament[]
 }
 
