@@ -1,4 +1,5 @@
 import prisma from "@/prisma";
+import type { MedicamentConservationDuree } from "@/types/medicament";
 import { VoieAdministration, type medics_simple } from "@prisma/client";
 import { trim } from "lodash";
 
@@ -68,7 +69,7 @@ const migrateMedicsNew = async () => {
 
     await prisma.medicament.create({
       data: {
-        medicament_old: {
+        medicamentOld: {
           connect: { id: med.id },
         },
         denomination: trim(med.nomMedicament),
@@ -82,15 +83,15 @@ const migrateMedicsNew = async () => {
             })),
         },
         voiesAdministration: [switchVoieAdministration(med)],
-        conservation_frigo: med.frigo,
-        conservation_duree: med.dureeConservation
+        conservationFrigo: med.frigo,
+        conservationDuree: med.dureeConservation
           ? await parseJSONPromise(med.dureeConservation)
               .then((json) => {
                 if (json && typeof json === "object") {
                   return Object.entries(json).map(([laboratoire, duree]) => ({
                     laboratoire,
                     duree,
-                  }));
+                  })) as MedicamentConservationDuree;
                 } else {
                   console.error("Wrong format received");
                   process.exit(1);

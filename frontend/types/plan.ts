@@ -8,7 +8,7 @@ type PlanPrisePosologies =
   | "poso_coucher";
 
 export type PlanDataItem = {
-  indications?: string;
+  indication?: string;
   posologies?: Record<PlanPrisePosologies, string | undefined>;
   commentaires?: Record<string, { checked: boolean }>;
   custom_commentaires?: Record<string, { texte: string }>;

@@ -20,7 +20,7 @@ const PlanCardHeader = ({
   voieAdministration: string[];
 }) => {
   return (
-    <div className="flex">
+    <div className="flex bg-gray-100 p-4 pb-2">
       <div className="flex flex-grow flex-col">
         <span className="text-truncate text-lg font-bold">{denomination}</span>
         <small className="text-truncate text-gray-500">

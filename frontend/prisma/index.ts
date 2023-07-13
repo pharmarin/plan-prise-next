@@ -1,3 +1,4 @@
+import type { MedicamentConservationDuree } from "@/types/medicament";
 import type { PlanDataItem } from "@/types/plan";
 import { PrismaClient, VoieAdministration } from "@prisma/client";
 
@@ -14,9 +15,29 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 export default prisma.$extends({
   result: {
     medicament: {
+      conservationDureeParsed: {
+        needs: { conservationDuree: true },
+        compute: ({ conservationDuree }) => {
+          if (Array.isArray(conservationDuree)) {
+            return conservationDuree as MedicamentConservationDuree;
+          } else {
+            return null;
+          }
+        },
+      },
+      indicationsParsed: {
+        needs: { indications: true },
+        compute: ({ indications }): string[] => {
+          if (Array.isArray(indications)) {
+            return indications as string[];
+          } else {
+            return [];
+          }
+        },
+      },
       voiesAdministrationParsed: {
         needs: { voiesAdministration: true },
-        compute: ({ voiesAdministration }) => {
+        compute: ({ voiesAdministration }): string[] => {
           if (
             Array.isArray(voiesAdministration) &&
             voiesAdministration.every((voieAdministration) =>
@@ -68,7 +89,7 @@ export default prisma.$extends({
         needs: {
           data: true,
         },
-        compute: ({ data }) => {
+        compute: ({ data }): Record<string, PlanDataItem> => {
           if (typeof data === "object" && data) {
             return data as Record<string, PlanDataItem>;
           } else {

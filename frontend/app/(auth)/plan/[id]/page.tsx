@@ -18,13 +18,14 @@ const Plan = async ({ params }: Props) => {
   });
 
   if (!plan) {
+    // TODO: Check if working
     return notFound();
   }
 
   return (
     <>
       <Navigation title={`Plan de prise n°${params.id}`} />
-      <div>
+      <div className="space-y-4">
         {plan.medics.map((row) => (
           <PlanCard
             key={`plan_${plan.id}_${row.id}`}

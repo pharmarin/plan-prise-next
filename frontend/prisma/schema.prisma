@@ -99,12 +99,12 @@ model Commentaire {
 
 model Medicament {
   id                  String          @id @default(cuid())
-  medicament_old      medics_simple   @relation(fields: [medics_simpleId], references: [id])
+  medicamentOld       medics_simple   @relation(fields: [medics_simpleId], references: [id])
   denomination        String          @unique
   principesActifs     PrincipeActif[]
   indications         Json
-  conservation_frigo  Boolean
-  conservation_duree  Json?
+  conservationFrigo   Boolean
+  conservationDuree   Json?
   voiesAdministration Json
   commentaires        Commentaire[]
   precaution          String?

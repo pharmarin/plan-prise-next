@@ -57,7 +57,7 @@ export const migratePlanNew = async () => {
               accu.push([
                 medicament.id,
                 {
-                  indications:
+                  indication:
                     Array.isArray(medicament.indications) &&
                     medicament.indications.length === 1 &&
                     medicament.indications[0] === data.indication
