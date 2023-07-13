@@ -58,7 +58,7 @@
     "@next/env": "13.4.9",
     "@plan-prise/eslint-config": "workspace:*",
     "@playwright/test": "1.36.0",
-    "@tailwindcss/forms": "0.5.3",
+    "@tailwindcss/forms": "0.5.4",
     "@types/bcrypt": "5.0.0",
     "@types/lodash": "4.14.195",
     "@types/node": "18.16.19",
