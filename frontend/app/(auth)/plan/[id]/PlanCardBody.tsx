@@ -4,19 +4,9 @@ import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
 import Select from "@/components/forms/inputs/Select";
 import TextInput from "@/components/forms/inputs/TextInput";
 import type { MedicamentConservationDuree } from "@/types/medicament";
-import type { PlanDataItem, PlanPrisePosologies } from "@/types/plan";
+import { PlanPrisePosologies, type PlanDataItem } from "@/types/plan";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
-
-const posologies: PlanPrisePosologies[] = [
-  "poso_matin",
-  "poso_10h",
-  "poso_midi",
-  "poso_16h",
-  "poso_18h",
-  "poso_soir",
-  "poso_coucher",
-];
 
 const PlanCardBody = ({
   data,
@@ -31,10 +21,14 @@ const PlanCardBody = ({
     voiesAdministrationParsed: string[];
   };
 }) => {
+  const posologies = Object.keys(
+    PlanPrisePosologies
+  ) as (keyof typeof PlanPrisePosologies)[];
+
   return (
     <div className="flex flex-col space-y-2 p-4 pt-2">
       <div className="flex flex-row">
-        <div>
+        <div className="w-full">
           <FormLabel>Indication</FormLabel>
           {(data?.indication || "").length > 0 ||
           medicament.indicationsParsed.length === 1 ? (
@@ -70,7 +64,7 @@ const PlanCardBody = ({
         {posologies.map((posologie) => (
           <TextInput
             key={posologie}
-            label={posologie}
+            label={PlanPrisePosologies[posologie]}
             defaultValue={data?.posologies?.[posologie]}
           />
         ))}
