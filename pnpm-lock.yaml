@@ -140,7 +140,7 @@ importers:
         version: 1.36.1
       '@tailwindcss/forms':
         specifier: 0.5.4
-        version: 0.5.4(tailwindcss@3.3.2)
+        version: 0.5.4(tailwindcss@3.3.3)
       '@types/bcrypt':
         specifier: 5.0.0
         version: 5.0.0
@@ -175,8 +175,8 @@ importers:
         specifier: 4.16.2
         version: 4.16.2
       tailwindcss:
-        specifier: 3.3.2
-        version: 3.3.2(ts-node@10.9.1)
+        specifier: 3.3.3
+        version: 3.3.3(ts-node@10.9.1)
       ts-node:
         specifier: 10.9.1
         version: 10.9.1(@types/node@18.16.19)(typescript@5.1.6)
@@ -597,13 +597,13 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@tailwindcss/forms@0.5.4(tailwindcss@3.3.2):
+  /@tailwindcss/forms@0.5.4(tailwindcss@3.3.3):
     resolution: {integrity: sha512-YAm12D3R7/9Mh4jFbYSMnsd6jG++8KxogWgqs7hbdo/86aWjjlIEvL7+QYdVELmAI0InXTpZqFIg5e7aDVWI2Q==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.3.2(ts-node@10.9.1)
+      tailwindcss: 3.3.3(ts-node@10.9.1)
     dev: true
 
   /@tanstack/match-sorter-utils@8.8.4:
@@ -3858,8 +3858,8 @@ packages:
     resolution: {integrity: sha512-R2/nULkdg1VR/EL4RXg4dEohdoxNUJGLMnWIQnPKL+O9Twu7Cn3Rxi4dlXkDzZrEGtR+G+psSXFouWlpTyLhCQ==}
     dev: false
 
-  /tailwindcss@3.3.2(ts-node@10.9.1):
-    resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
+  /tailwindcss@3.3.3(ts-node@10.9.1):
+    resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -3883,7 +3883,6 @@ packages:
       postcss-load-config: 4.0.1(postcss@8.4.25)(ts-node@10.9.1)
       postcss-nested: 6.0.1(postcss@8.4.25)
       postcss-selector-parser: 6.0.12
-      postcss-value-parser: 4.2.0
       resolve: 1.22.2
       sucrase: 3.32.0
     transitivePeerDependencies:
