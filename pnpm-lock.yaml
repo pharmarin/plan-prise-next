@@ -88,7 +88,7 @@ importers:
         version: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
       next-superjson-plugin:
         specifier: 0.5.9
-        version: 0.5.9(next@13.4.9)(superjson@1.12.4)
+        version: 0.5.9(next@13.4.9)(superjson@1.13.1)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -108,8 +108,8 @@ importers:
         specifier: 4.2.1
         version: 4.2.1(react-dom@18.2.0)(react@18.2.0)
       superjson:
-        specifier: 1.12.4
-        version: 1.12.4
+        specifier: 1.13.1
+        version: 1.13.1
       tailwind-merge:
         specifier: 1.13.2
         version: 1.13.2
@@ -2870,7 +2870,7 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-superjson-plugin@0.5.9(next@13.4.9)(superjson@1.12.4):
+  /next-superjson-plugin@0.5.9(next@13.4.9)(superjson@1.13.1):
     resolution: {integrity: sha512-xEU+SvrSDk8PGAQ2TrJM/OhkZBcWjWWqSjpUtlxTAI9ovTjKBxxQumcFt7oXzoBLJsRtq0BWTHrcnzL/9izXPQ==}
     peerDependencies:
       next: ^13
@@ -2878,7 +2878,7 @@ packages:
     dependencies:
       hoist-non-react-statics: 3.3.2
       next: 13.4.9(react-dom@18.2.0)(react@18.2.0)
-      superjson: 1.12.4
+      superjson: 1.13.1
     dev: false
 
   /next@13.4.9(react-dom@18.2.0)(react@18.2.0):
@@ -3829,8 +3829,8 @@ packages:
       ts-interface-checker: 0.1.13
     dev: true
 
-  /superjson@1.12.4:
-    resolution: {integrity: sha512-vkpPQAxdCg9SLfPv5GPC5fnGrui/WryktoN9O5+Zif/14QIMjw+RITf/5LbBh+9QpBFb3KNvJth+puz2H8o6GQ==}
+  /superjson@1.13.1:
+    resolution: {integrity: sha512-AVH2eknm9DEd3qvxM4Sq+LTCkSXE2ssfh1t11MHMXyYXFQyQ1HLgVvV+guLTsaQnJU3gnaVo34TohHPulY/wLg==}
     engines: {node: '>=10'}
     dependencies:
       copy-anything: 3.0.4
