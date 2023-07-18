@@ -1,4 +1,4 @@
-type PlanPrisePosologies =
+export type PlanPrisePosologies =
   | "poso_matin"
   | "poso_10h"
   | "poso_midi"
@@ -10,6 +10,6 @@ type PlanPrisePosologies =
 export type PlanDataItem = {
   indication?: string;
   posologies?: Record<PlanPrisePosologies, string | undefined>;
-  commentaires?: Record<string, { checked: boolean }>;
+  commentaires?: Record<string, { checked?: boolean; texte?: string }>;
   custom_commentaires?: Record<string, { texte: string }>;
 };

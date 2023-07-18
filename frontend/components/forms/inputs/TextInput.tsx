@@ -30,10 +30,8 @@ const TextInput = forwardRef<
     ref
   ) => {
     return (
-      <div className={twMerge("relative", wrapperClassName)}>
-        {!slideLabel && label && (
-          <FormLabel name={props.id}>{label}</FormLabel>
-        )}
+      <div className={twMerge("relative w-full", wrapperClassName)}>
+        {!slideLabel && label && <FormLabel name={props.id}>{label}</FormLabel>}
         <input
           className={twMerge(
             "peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent p-2 text-sm text-gray-700 focus:border-emerald-600 focus:outline-none focus:ring-0",
@@ -47,7 +45,7 @@ const TextInput = forwardRef<
         {slideLabel && label && (
           <label
             htmlFor={props.id}
-            className="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-placeholder-shown:cursor-text peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-emerald-600"
+            className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-placeholder-shown:cursor-text peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-emerald-600"
           >
             {label}
           </label>

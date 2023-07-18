@@ -12,7 +12,10 @@ const Plan = async ({ params }: Props) => {
     where: { id: params.id, user: { is: { id: session?.user.id } } },
     include: {
       medics: {
-        include: { principesActifs: true },
+        include: {
+          commentaires: true,
+          principesActifs: true,
+        },
       },
     },
   });

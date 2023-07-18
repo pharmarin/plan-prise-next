@@ -30,7 +30,7 @@ const Button = styled(ButtonBase, {
       primary: tw`bg-teal-500 hover:bg-teal-600 focus:ring-teal-600`,
       red: tw`bg-red-600 border-red-600 hover:bg-red-700 focus:ring-red-500`,
       gradient: tw`bg-gradient-to-r from-emerald-500 to-teal-500 disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-slate-500`,
-      link: tw`bg-transparent py-0 px-0 font-normal text-teal-500 shadow-none`,
+      link: tw`bg-transparent py-0 px-0 font-normal text-teal-600 hover:text-teal-700 shadow-none`,
     },
     outline: { true: tw`border bg-white hover:text-white` },
     size: {
