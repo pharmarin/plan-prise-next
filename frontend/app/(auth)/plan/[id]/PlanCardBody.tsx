@@ -74,7 +74,6 @@ const PlanCardBody = ({
         <div className="space-y-2">
           {medicament.commentaires.map((commentaire) => (
             <div key={commentaire.id} className="flex items-center space-x-2">
-              <span>{commentaire.population}</span>
               <CheckboxInput
                 defaultChecked={data.commentaires?.[commentaire.id]?.checked}
               />
@@ -84,17 +83,20 @@ const PlanCardBody = ({
                   commentaire.texte
                 }
               />
+              {commentaire.population && <span>{commentaire.population}</span>}
             </div>
           ))}
           {Object.entries(data?.custom_commentaires || {}).map(
             ([id, commentaire]) => (
-              <div key={id} className="flex items-center">
-                <XMarkIcon className="mx-2 h-4 w-4 text-teal-600 hover:text-teal-700" />
+              <div key={id} className="flex items-center space-x-2">
+                <Button color="link" className="p-0">
+                  <XMarkIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
+                </Button>
                 <TextInput defaultValue={commentaire.texte} />
               </div>
             )
           )}
-          <Button color="link" className="p-2">
+          <Button color="link" className="p-0">
             <PlusIcon className="mr-3 h-4 w-4" /> Ajouter un commentaire
           </Button>
         </div>
