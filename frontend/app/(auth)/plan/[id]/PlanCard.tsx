@@ -2,8 +2,9 @@
 
 import PlanCardBody from "@/app/(auth)/plan/[id]/PlanCardBody";
 import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
+import type { MedicamentConservationDuree } from "@/types/medicament";
 import type { PlanDataItem } from "@/types/plan";
-import type { Medicament, PrincipeActif } from "@prisma/client";
+import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
 import { useState } from "react";
 
 const PlanCard = ({
@@ -12,6 +13,8 @@ const PlanCard = ({
 }: {
   data: PlanDataItem;
   medicament: Medicament & {
+    commentaires: Commentaire[];
+    conservationDureeParsed: MedicamentConservationDuree | null;
     indicationsParsed: string[];
     principesActifs: PrincipeActif[];
     voiesAdministrationParsed: string[];
