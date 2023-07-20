@@ -123,8 +123,8 @@ importers:
         specifier: 1.2.0
         version: 1.2.0
       yup-locales:
-        specifier: 1.2.12
-        version: 1.2.12
+        specifier: 1.2.15
+        version: 1.2.15
     devDependencies:
       '@faker-js/faker':
         specifier: 8.0.2
@@ -4214,8 +4214,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /yup-locales@1.2.12:
-    resolution: {integrity: sha512-UqKwQBS1V8niBPFjpE7WgH7a40QqzhDbIMjunpM0fCNLmSZMdmkYKbFwfA86VOQqUEsmBumxXQLVgtwJzFSpYA==}
+  /yup-locales@1.2.15:
+    resolution: {integrity: sha512-+Ch2dJuNWsNZYZB29u359rGYNQMjDIrLXkRMuSGPEvmM/Em3QeoOOBcKEnmMxxsbdEtm5saE7p5VHk4n0C5BTA==}
     dev: false
 
   /yup@1.2.0:
