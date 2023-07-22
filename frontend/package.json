@@ -37,7 +37,7 @@
     "jose": "4.14.4",
     "lodash": "4.17.21",
     "mailersend": "2.2.0",
-    "next": "13.4.11",
+    "next": "13.4.12",
     "next-auth": "4.22.3",
     "next-superjson-plugin": "0.5.9",
     "react": "18.2.0",
@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@next/env": "13.4.11",
+    "@next/env": "13.4.12",
     "@plan-prise/eslint-config": "workspace:*",
     "@playwright/test": "1.36.1",
     "@tailwindcss/forms": "0.5.4",
