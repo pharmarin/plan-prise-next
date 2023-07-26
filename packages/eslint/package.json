@@ -1,13 +1,13 @@
 {
   "name": "@plan-prise/eslint-config",
   "devDependencies": {
-    "@types/eslint": "8.44.0"
+    "@types/eslint": "8.44.1"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "eslint": "8.45.0",
-    "eslint-config-next": "13.4.10",
+    "eslint-config-next": "13.4.12",
     "eslint-config-prettier": "8.8.0",
     "typescript": "5.1.6"
   }
