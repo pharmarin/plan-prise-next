@@ -31,7 +31,7 @@
     "@trpc/react-query": "10.35.0",
     "@trpc/server": "10.35.0",
     "bcrypt": "5.1.0",
-    "chart.js": "4.3.1",
+    "chart.js": "4.3.2",
     "classname-variants": "github:pharmarin/classname-variants",
     "formik": "2.4.2",
     "jose": "4.14.4",
