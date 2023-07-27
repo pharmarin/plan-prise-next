@@ -2,17 +2,19 @@
 
 import PlanCardBody from "@/app/(auth)/plan/[id]/PlanCardBody";
 import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
-import usePlanStore from "@/app/(auth)/plan/[id]/state";
+import { trpc } from "@/trpc/client";
 import { useState } from "react";
 
 const PlanCard = ({ medicamentId }: { medicamentId: string }) => {
   const [showDetails, setShowDetails] = useState(false);
 
-  const medicament = usePlanStore((state) =>
-    state.medics?.find((medic) => medic.id === medicamentId)
-  );
+  const {
+    data: medicament,
+    isLoading,
+    error,
+  } = trpc.medics.unique.useQuery(medicamentId);
 
-  if (!medicament) {
+  if (error) {
     // TODO
     throw new Error();
   }
@@ -20,14 +22,12 @@ const PlanCard = ({ medicamentId }: { medicamentId: string }) => {
   return (
     <div className="flex flex-col divide-y divide-gray-200 overflow-hidden rounded-lg shadow-md">
       <PlanCardHeader
-        denomination={medicament.denomination}
-        principesActifs={medicament.principesActifs}
-        voieAdministration={medicament.voiesAdministration}
+        medicament={medicament}
         open={showDetails}
         toggle={() => setShowDetails((showDetails) => !showDetails)}
       />
 
-      <PlanCardBody medicament={medicament} />
+      {!isLoading && <PlanCardBody medicament={medicament} />}
     </div>
   );
 };

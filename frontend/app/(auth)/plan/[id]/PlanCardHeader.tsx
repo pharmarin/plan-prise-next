@@ -1,36 +1,54 @@
 import { parseVoieAdministration } from "@/app/(auth)/plan/[id]/state";
 import Button from "@/components/forms/inputs/Button";
+import type { MedicamentInclude } from "@/types/medicament";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import type { Medicament, PrincipeActif } from "@prisma/client";
+import { twMerge } from "tailwind-merge";
 
 const PlanCardHeader = ({
-  denomination,
+  medicament,
   open,
   toggle,
-  principesActifs,
-  voieAdministration,
 }: {
-  denomination: Medicament["denomination"];
+  medicament?: MedicamentInclude;
   open: boolean;
-  principesActifs: PrincipeActif[];
   toggle: () => void;
-  voieAdministration: Medicament["voiesAdministration"];
 }) => {
   return (
     <div className="flex bg-gray-100 p-4 pb-2">
       <div className="flex flex-grow flex-col">
-        <span className="text-truncate text-lg font-bold">{denomination}</span>
-        <small className="text-truncate text-gray-500">
-          {principesActifs
+        <span
+          className={twMerge(
+            "text-truncate text-lg font-bold",
+            !medicament && "mb-2 h-6 w-1/3 animate-pulse rounded bg-gray-300"
+          )}
+        >
+          {medicament?.denomination}
+        </span>
+        <small
+          className={twMerge(
+            "text-truncate text-gray-500",
+            !medicament && "mb-2 h-4 w-1/2 animate-pulse rounded bg-gray-300"
+          )}
+        >
+          {(medicament?.principesActifs || [])
             .map((principeActif) => principeActif.denomination)
             .join(" + ")}
         </small>
-        <small className="text-truncate italic text-gray-500">
-          Voie {parseVoieAdministration(voieAdministration).join(" ou ")}
+        <small
+          className={twMerge(
+            "text-truncate italic text-gray-500",
+            !medicament && "h-4 w-1/4 animate-pulse rounded bg-gray-300"
+          )}
+        >
+          {medicament?.voiesAdministration &&
+            `Voie 
+          ${parseVoieAdministration(medicament.voiesAdministration).join(
+            " ou "
+          )}`}
         </small>
       </div>
       <div className="flex flex-shrink-0 flex-grow-0 flex-col space-y-1">
