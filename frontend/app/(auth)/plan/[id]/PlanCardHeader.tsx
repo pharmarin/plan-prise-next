@@ -1,3 +1,4 @@
+import { parseVoieAdministration } from "@/app/(auth)/plan/[id]/state";
 import Button from "@/components/forms/inputs/Button";
 import {
   ChevronDownIcon,
@@ -17,7 +18,7 @@ const PlanCardHeader = ({
   open: boolean;
   principesActifs: PrincipeActif[];
   toggle: () => void;
-  voieAdministration: string[];
+  voieAdministration: Medicament["voiesAdministration"];
 }) => {
   return (
     <div className="flex bg-gray-100 p-4 pb-2">
@@ -29,7 +30,7 @@ const PlanCardHeader = ({
             .join(" + ")}
         </small>
         <small className="text-truncate italic text-gray-500">
-          Voie {voieAdministration.join(" ou ")}
+          Voie {parseVoieAdministration(voieAdministration).join(" ou ")}
         </small>
       </div>
       <div className="flex flex-shrink-0 flex-grow-0 flex-col space-y-1">

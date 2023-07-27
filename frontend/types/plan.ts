@@ -1,3 +1,10 @@
+import type { MedicamentInclude } from "@/types/medicament";
+import type { Plan } from "@prisma/client";
+
+export type PlanInclude = Plan & {
+  medics: MedicamentInclude[];
+};
+
 export enum PlanPrisePosologies {
   "poso_matin" = "Matin",
   "poso_10h" = "10h",
