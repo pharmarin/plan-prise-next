@@ -6,6 +6,7 @@ import type {
 } from "@/types/medicament";
 import type { PlanDataItem, PlanInclude } from "@/types/plan";
 import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
+import { set } from "lodash";
 import { create } from "zustand";
 
 const usePlanStore = create<{
@@ -13,15 +14,20 @@ const usePlanStore = create<{
   medics?: MedicamentInclude[];
   settings?: Plan["settings"];
   init: (plan: PlanInclude) => void;
-}>((set) => ({
+  setData: (path: string, value: string) => void;
+}>((setState, getState) => ({
   data: undefined,
   medics: undefined,
   settings: undefined,
   init: (plan) =>
-    set({
+    setState({
       data: plan.data,
       medics: plan.medics,
       settings: plan.settings,
+    }),
+  setData: (path, value) =>
+    setState({
+      data: { ...set((getState().data || {}) as object, path, value) },
     }),
 }));
 

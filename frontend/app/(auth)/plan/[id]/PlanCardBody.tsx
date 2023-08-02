@@ -11,7 +11,6 @@ import TextInput from "@/components/forms/inputs/TextInput";
 import { PlanPrisePosologies } from "@/types/plan";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
-import { shallow } from "zustand/shallow";
 
 const PlanCardBody = ({
   medicament,
@@ -21,10 +20,10 @@ const PlanCardBody = ({
     principesActifs: PrincipeActif[];
   };
 }) => {
-  const data = usePlanStore(
-    (state) => parseData(state.data)[medicament.id] || {},
-    shallow
-  );
+  const data = usePlanStore((state) => parseData(state.data));
+  const setData = usePlanStore((state) => state.setData);
+
+  const medicData = data?.[medicament.id] || {};
 
   const posologies = Object.keys(
     PlanPrisePosologies
@@ -40,9 +39,11 @@ const PlanCardBody = ({
       <div className="flex flex-row">
         <div className="w-full">
           <FormLabel>Indication</FormLabel>
-          {(data.indication || "").length > 0 ||
+          {(medicData.indication || "").length > 0 ||
           indicationsParsed.length === 1 ? (
-            <TextInput defaultValue={data.indication || indicationsParsed[0]} />
+            <TextInput
+              defaultValue={medicData.indication || indicationsParsed[0]}
+            />
           ) : (
             <Select>
               {indicationsParsed.map((indication) => (
@@ -71,7 +72,13 @@ const PlanCardBody = ({
           <TextInput
             key={posologie}
             label={PlanPrisePosologies[posologie]}
-            defaultValue={data.posologies?.[posologie]}
+            onChange={(event) =>
+              setData(
+                `${medicament.id}.posologies.${posologie}`,
+                event.currentTarget.value
+              )
+            }
+            value={medicData.posologies?.[posologie] || ""}
           />
         ))}
       </div>
@@ -81,18 +88,20 @@ const PlanCardBody = ({
           {medicament.commentaires.map((commentaire) => (
             <div key={commentaire.id} className="flex items-center space-x-2">
               <CheckboxInput
-                defaultChecked={data.commentaires?.[commentaire.id]?.checked}
+                defaultChecked={
+                  medicData.commentaires?.[commentaire.id]?.checked
+                }
               />
               <TextInput
                 defaultValue={
-                  data.commentaires?.[commentaire.id]?.texte ||
+                  medicData.commentaires?.[commentaire.id]?.texte ||
                   commentaire.texte
                 }
               />
               {commentaire.population && <span>{commentaire.population}</span>}
             </div>
           ))}
-          {Object.entries(data.custom_commentaires || {}).map(
+          {Object.entries(medicData.custom_commentaires || {}).map(
             ([id, commentaire]) => (
               <div key={id} className="flex items-center space-x-2">
                 <Button color="link" className="p-0">
