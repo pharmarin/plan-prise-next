@@ -61,7 +61,7 @@
     "@tailwindcss/forms": "0.5.4",
     "@types/bcrypt": "5.0.0",
     "@types/lodash": "4.14.197",
-    "@types/node": "18.17.4",
+    "@types/node": "18.17.5",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
     "@types/react-google-recaptcha": "2.1.5",
