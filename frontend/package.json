@@ -38,7 +38,7 @@
     "lodash": "4.17.21",
     "mailersend": "2.2.0",
     "next": "13.4.12",
-    "next-auth": "4.22.5",
+    "next-auth": "4.23.0",
     "next-superjson-plugin": "0.5.9",
     "react": "18.2.0",
     "react-chartjs-2": "5.2.0",
