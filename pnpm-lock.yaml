@@ -136,8 +136,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/eslint
       '@playwright/test':
-        specifier: 1.37.0
-        version: 1.37.0
+        specifier: 1.37.1
+        version: 1.37.1
       '@tailwindcss/forms':
         specifier: 0.5.4
         version: 0.5.4(tailwindcss@3.3.3)
@@ -548,13 +548,13 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@playwright/test@1.37.0:
-    resolution: {integrity: sha512-181WBLk4SRUyH1Q96VZl7BP6HcK0b7lbdeKisn3N/vnjitk+9HbdlFz/L5fey05vxaAhldIDnzo8KUoy8S3mmQ==}
+  /@playwright/test@1.37.1:
+    resolution: {integrity: sha512-bq9zTli3vWJo8S3LwB91U0qDNQDpEXnw7knhxLM0nwDvexQAwx9tO8iKDZSqqneVq+URd/WIoz+BALMqUTgdSg==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
       '@types/node': 18.17.5
-      playwright-core: 1.37.0
+      playwright-core: 1.37.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -3208,8 +3208,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /playwright-core@1.37.0:
-    resolution: {integrity: sha512-1c46jhTH/myQw6sesrcuHVtLoSNfJv8Pfy9t3rs6subY7kARv0HRw5PpyfPYPpPtQvBOmgbE6K+qgYUpj81LAA==}
+  /playwright-core@1.37.1:
+    resolution: {integrity: sha512-17EuQxlSIYCmEMwzMqusJ2ztDgJePjrbttaefgdsiqeLWidjYz9BxXaTaZWxH1J95SHGk6tjE+dwgWILJoUZfA==}
     engines: {node: '>=16'}
     hasBin: true
     dev: true
