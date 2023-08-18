@@ -12,8 +12,8 @@ importers:
         specifier: workspace:*
         version: link:packages/eslint
       '@prettier/plugin-php':
-        specifier: 0.20.0
-        version: 0.20.0(prettier@2.8.8)
+        specifier: 0.20.1
+        version: 0.20.1(prettier@2.8.8)
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -559,13 +559,13 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /@prettier/plugin-php@0.20.0(prettier@2.8.8):
-    resolution: {integrity: sha512-bdnK9VKeMD/SoIdSxCUwuiiy/86BOF7sCWrCLVrMHj2dL8FFBgsvVxGzQbd7hxweh0eaFKmr7GszIlVpNyHgzw==}
+  /@prettier/plugin-php@0.20.1(prettier@2.8.8):
+    resolution: {integrity: sha512-CFn+NH44jb0buvg8D/DvLjeetadmNBMRq3yrgL8I+tXioDZlhQ+eBLLRILPEBIQ6jBmOjzm/Q7Qin8KD7raiFw==}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
       linguist-languages: 7.21.0
-      mem: 8.1.1
+      mem: 9.0.2
       php-parser: 3.1.5
       prettier: 2.8.8
     dev: true
@@ -2722,12 +2722,12 @@ packages:
       p-defer: 1.0.0
     dev: true
 
-  /mem@8.1.1:
-    resolution: {integrity: sha512-qFCFUDs7U3b8mBDPyz5EToEKoAkgCzqquIgi9nkkR9bixxOVOre+09lbuH7+9Kn2NFpm56M3GUWVbU2hQgdACA==}
-    engines: {node: '>=10'}
+  /mem@9.0.2:
+    resolution: {integrity: sha512-F2t4YIv9XQUBHt6AOJ0y7lSmP1+cY7Fm1DRh9GClTGzKST7UWLMx6ly9WZdLH/G/ppM5RL4MlQfRT71ri9t19A==}
+    engines: {node: '>=12.20'}
     dependencies:
       map-age-cleaner: 0.1.3
-      mimic-fn: 3.1.0
+      mimic-fn: 4.0.0
     dev: true
 
   /merge-refs@1.1.3:
@@ -2768,15 +2768,9 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /mimic-fn@3.1.0:
-    resolution: {integrity: sha512-Ysbi9uYW9hFyfrThdDEQuykN4Ey6BuwPD2kpI5ES/nFTDn/98yxYNLZJcgUAKPT/mcrLLKaGzJR9YVxJrIdASQ==}
-    engines: {node: '>=8'}
-    dev: true
-
   /mimic-fn@4.0.0:
     resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}
     engines: {node: '>=12'}
-    dev: false
 
   /mini-svg-data-uri@1.4.4:
     resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
