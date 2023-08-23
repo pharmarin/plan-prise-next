@@ -11,7 +11,6 @@ import { trim } from "lodash";
 
   WARNING: 
   - Phloroglucinol: Missing [] arround commentaire value
-  - COTELLIX, LENVIMA, GALAFOLD are inserted twice
   - \' cause error
 */
 
@@ -20,7 +19,7 @@ const parseJSONPromise = (json: string) =>
     try {
       return resolve(JSON.parse(json));
     } catch (error) {
-      console.error("JSON parse error: ", error);
+      // console.error("JSON parse error: ", error);
       return reject(json);
     }
   });

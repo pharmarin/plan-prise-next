@@ -73,7 +73,7 @@ export const migrateMedics = async () => {
 
   await prisma.medics_simple.createMany({
     data: medicsTable.map((medic) => {
-      console.log(medic.commentaire);
+      //console.log(medic.commentaire);
 
       return {
         id: Number(medic.id),
@@ -83,7 +83,7 @@ export const migrateMedics = async () => {
         frigo: medic.frigo === "1",
         dureeConservation: medic.dureeConservation || null,
         voieAdministration: medic.voieAdministration || null,
-        commentaire: medic.commentaire ? JSON.parse(medic.commentaire) : null,
+        commentaire: medic.commentaire ? JSON.stringify(JSON.parse((medic.commentaire.startsWith("[") ? medic.commentaire : `[${medic.commentaire}]`).replaceAll("\\'", "'"))) : null,
         precaution: medic.precaution || null,
       };
     }),
