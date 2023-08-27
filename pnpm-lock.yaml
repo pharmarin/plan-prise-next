@@ -105,8 +105,8 @@ importers:
         specifier: 6.2.2
         version: 6.2.2(react-dom@18.2.0)(react@18.2.0)
       reapop:
-        specifier: 4.2.1
-        version: 4.2.1(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.2.2
+        version: 4.2.2(react-dom@18.2.0)(react@18.2.0)
       superjson:
         specifier: 1.13.1
         version: 1.13.1
@@ -3516,8 +3516,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /reapop@4.2.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-lreC2g+96+g13ims3/ZD3Aw9mrS1Ikv18QYUmLA0/qZWZcxwXUfmRbKZIeLkc1eDgtjRxbgpnNLVfbKqoOyrWw==}
+  /reapop@4.2.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-pyiCVda0YAzXk727LEOYjAqqWn6xXmIacVXBGDRlq3RCWZixX7WhWS3E6yv2ZWBzEIbyXO0ZRmvxMYnuA3A7Qg==}
     engines: {node: '>= 14.19.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
