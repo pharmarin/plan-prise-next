@@ -11,6 +11,7 @@ import TextInput from "@/components/forms/inputs/TextInput";
 import { PlanPrisePosologies } from "@/types/plan";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
+import type { ChangeEvent } from "react";
 
 const PlanCardBody = ({
   medicament,
@@ -20,18 +21,20 @@ const PlanCardBody = ({
     principesActifs: PrincipeActif[];
   };
 }) => {
+  // TODO: Extraire medicData dans le hook pour mieux controller le rerender
   const data = usePlanStore((state) => parseData(state.data));
   const setData = usePlanStore((state) => state.setData);
 
   const medicData = data?.[medicament.id] || {};
+  console.log("medicData: ", medicData);
 
   const posologies = Object.keys(
-    PlanPrisePosologies
+    PlanPrisePosologies,
   ) as (keyof typeof PlanPrisePosologies)[];
 
   const indicationsParsed = parseIndications(medicament.indications);
   const conservationDureeParsed = parseConservationDuree(
-    medicament.conservationDuree
+    medicament.conservationDuree,
   );
 
   return (
@@ -42,10 +45,24 @@ const PlanCardBody = ({
           {(medicData.indication || "").length > 0 ||
           indicationsParsed.length === 1 ? (
             <TextInput
-              defaultValue={medicData.indication || indicationsParsed[0]}
+              onChange={(event) =>
+                setData(
+                  `${medicament.id}.indication`,
+                  event.currentTarget.value,
+                )
+              }
+              value={medicData.indication || indicationsParsed[0]}
             />
           ) : (
-            <Select>
+            <Select
+              onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                setData(
+                  `${medicament.id}.indication`,
+                  event.currentTarget.value,
+                )
+              }
+              value={indicationsParsed[0]}
+            >
               {indicationsParsed.map((indication) => (
                 <option key={indication} value={indication}>
                   {indication}
@@ -75,7 +92,7 @@ const PlanCardBody = ({
             onChange={(event) =>
               setData(
                 `${medicament.id}.posologies.${posologie}`,
-                event.currentTarget.value
+                event.currentTarget.value,
               )
             }
             value={medicData.posologies?.[posologie] || ""}
@@ -93,7 +110,13 @@ const PlanCardBody = ({
                 }
               />
               <TextInput
-                defaultValue={
+                onChange={(event) =>
+                  setData(
+                    `${medicament.id}.commentaires.${commentaire.id}.texte`,
+                    event.currentTarget.value,
+                  )
+                }
+                value={
                   medicData.commentaires?.[commentaire.id]?.texte ||
                   commentaire.texte
                 }
@@ -107,9 +130,17 @@ const PlanCardBody = ({
                 <Button color="link" className="p-0">
                   <XMarkIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
                 </Button>
-                <TextInput defaultValue={commentaire.texte} />
+                <TextInput
+                  onChange={(event) =>
+                    setData(
+                      `${medicament.id}.custom_commentaires.${id}.texte`,
+                      event.currentTarget.value,
+                    )
+                  }
+                  value={commentaire.texte}
+                />
               </div>
-            )
+            ),
           )}
           <Button color="link" className="p-0">
             <PlusIcon className="mr-3 h-4 w-4" /> Ajouter un commentaire
