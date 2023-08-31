@@ -10,6 +10,7 @@ import Select from "@/components/forms/inputs/Select";
 import TextInput from "@/components/forms/inputs/TextInput";
 import { PlanPrisePosologies } from "@/types/plan";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { createId } from "@paralleldrive/cuid2";
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
 import type { ChangeEvent } from "react";
 
@@ -24,6 +25,7 @@ const PlanCardBody = ({
   // TODO: Extraire medicData dans le hook pour mieux controller le rerender
   const data = usePlanStore((state) => parseData(state.data));
   const setData = usePlanStore((state) => state.setData);
+  const unsetData = usePlanStore((state) => state.unsetData);
 
   const medicData = data?.[medicament.id] || {};
   console.log("medicData: ", medicData);
@@ -105,8 +107,12 @@ const PlanCardBody = ({
           {medicament.commentaires.map((commentaire) => (
             <div key={commentaire.id} className="flex items-center space-x-2">
               <CheckboxInput
-                defaultChecked={
-                  medicData.commentaires?.[commentaire.id]?.checked
+                checked={medicData.commentaires?.[commentaire.id]?.checked}
+                onChange={(event) =>
+                  setData(
+                    `${medicament.id}.commentaires.${commentaire.id}.checked`,
+                    event.currentTarget.checked,
+                  )
                 }
               />
               <TextInput
@@ -127,7 +133,13 @@ const PlanCardBody = ({
           {Object.entries(medicData.custom_commentaires || {}).map(
             ([id, commentaire]) => (
               <div key={id} className="flex items-center space-x-2">
-                <Button color="link" className="p-0">
+                <Button
+                  color="link"
+                  className="p-0"
+                  onClick={() => {
+                    unsetData(`${medicament.id}.custom_commentaires.${id}`);
+                  }}
+                >
                   <XMarkIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
                 </Button>
                 <TextInput
@@ -142,7 +154,16 @@ const PlanCardBody = ({
               </div>
             ),
           )}
-          <Button color="link" className="p-0">
+          <Button
+            color="link"
+            className="p-0"
+            onClick={() =>
+              setData(
+                `${medicament.id}.custom_commentaires.${createId()}.texte`,
+                "",
+              )
+            }
+          >
             <PlusIcon className="mr-3 h-4 w-4" /> Ajouter un commentaire
           </Button>
         </div>

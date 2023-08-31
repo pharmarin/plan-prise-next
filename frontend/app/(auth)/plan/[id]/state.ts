@@ -6,7 +6,7 @@ import type {
 } from "@/types/medicament";
 import type { PlanDataItem, PlanInclude } from "@/types/plan";
 import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
-import { set } from "lodash";
+import { set, unset } from "lodash";
 import { create } from "zustand";
 
 const usePlanStore = create<{
@@ -14,7 +14,8 @@ const usePlanStore = create<{
   medics?: MedicamentInclude[];
   settings?: Plan["settings"];
   init: (plan: PlanInclude) => void;
-  setData: (path: string, value: string) => void;
+  setData: (path: string, value: string | boolean) => void;
+  unsetData: (path: string) => void;
 }>((setState, getState) => ({
   data: undefined,
   medics: undefined,
@@ -29,6 +30,16 @@ const usePlanStore = create<{
     setState({
       data: { ...set((getState().data || {}) as object, path, value) },
     }),
+  unsetData: (path) => {
+    const data = { ...((getState().data as object) || {}) };
+    unset(data, path);
+
+    setState({
+      data: {
+        ...data,
+      },
+    });
+  },
 }));
 
 export default usePlanStore;
@@ -42,7 +53,7 @@ export const parseData = (data?: Plan["data"]) => {
 };
 
 export const parseConservationDuree = (
-  conservationDuree: Medicament["conservationDuree"]
+  conservationDuree: Medicament["conservationDuree"],
 ) => {
   if (Array.isArray(conservationDuree)) {
     return conservationDuree as MedicamentConservationDuree;
@@ -52,7 +63,7 @@ export const parseConservationDuree = (
 };
 
 export const parseIndications = (
-  indications: Medicament["indications"]
+  indications: Medicament["indications"],
 ): string[] => {
   if (Array.isArray(indications)) {
     return indications as string[];
@@ -62,14 +73,14 @@ export const parseIndications = (
 };
 
 export const parseVoieAdministration = (
-  voiesAdministration: Medicament["voiesAdministration"]
+  voiesAdministration: Medicament["voiesAdministration"],
 ): string[] => {
   if (
     Array.isArray(voiesAdministration) &&
     voiesAdministration.every((voieAdministration) =>
       Object.values(VoieAdministration).includes(
-        voieAdministration as VoieAdministration
-      )
+        voieAdministration as VoieAdministration,
+      ),
     )
   ) {
     return voiesAdministration.map((voieAdministration) => {
