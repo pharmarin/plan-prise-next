@@ -13,6 +13,7 @@ import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { createId } from "@paralleldrive/cuid2";
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
 import type { ChangeEvent } from "react";
+import { twMerge } from "tailwind-merge";
 
 const PlanCardBody = ({
   medicament,
@@ -114,6 +115,10 @@ const PlanCardBody = ({
                 }
               />
               <TextInput
+                className={twMerge(
+                  !data.commentaires?.[commentaire.id]?.checked &&
+                    "text-gray-400",
+                )}
                 onChange={(event) =>
                   setData(
                     `${medicament.id}.commentaires.${commentaire.id}.texte`,
