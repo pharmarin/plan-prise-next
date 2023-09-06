@@ -44,7 +44,7 @@ const PlanCardBody = ({
       <div className="flex flex-row">
         <div className="w-full">
           <FormLabel>Indication</FormLabel>
-          {(medicData.indication || "").length > 0 ||
+          {(data.indication || "").length > 0 ||
           indicationsParsed.length === 1 ? (
             <TextInput
               onChange={(event) =>
@@ -53,7 +53,7 @@ const PlanCardBody = ({
                   event.currentTarget.value,
                 )
               }
-              value={medicData.indication || indicationsParsed[0]}
+              value={data.indication || indicationsParsed[0]}
             />
           ) : (
             <Select
@@ -97,7 +97,7 @@ const PlanCardBody = ({
                 event.currentTarget.value,
               )
             }
-            value={medicData.posologies?.[posologie] || ""}
+            value={data.posologies?.[posologie] || ""}
           />
         ))}
       </div>
@@ -107,7 +107,7 @@ const PlanCardBody = ({
           {medicament.commentaires.map((commentaire) => (
             <div key={commentaire.id} className="flex items-center space-x-2">
               <CheckboxInput
-                checked={medicData.commentaires?.[commentaire.id]?.checked}
+                checked={data.commentaires?.[commentaire.id]?.checked}
                 onChange={(event) =>
                   setData(
                     `${medicament.id}.commentaires.${commentaire.id}.checked`,
@@ -123,14 +123,14 @@ const PlanCardBody = ({
                   )
                 }
                 value={
-                  medicData.commentaires?.[commentaire.id]?.texte ||
+                  data.commentaires?.[commentaire.id]?.texte ||
                   commentaire.texte
                 }
               />
               {commentaire.population && <span>{commentaire.population}</span>}
             </div>
           ))}
-          {Object.entries(medicData.custom_commentaires || {}).map(
+          {Object.entries(data.custom_commentaires || {}).map(
             ([id, commentaire]) => (
               <div key={id} className="flex items-center space-x-2">
                 <Button

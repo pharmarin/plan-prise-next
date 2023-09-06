@@ -6,41 +6,48 @@ import type {
 } from "@/types/medicament";
 import type { PlanDataItem, PlanInclude } from "@/types/plan";
 import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
+import type { JsonValue } from "@prisma/client/runtime/library";
 import { set, unset } from "lodash";
 import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
-const usePlanStore = create<{
+type State = {
   data?: Plan["data"];
   medics?: MedicamentInclude[];
   settings?: Plan["settings"];
+};
+
+type Actions = {
   init: (plan: PlanInclude) => void;
   setData: (path: string, value: string | boolean) => void;
   unsetData: (path: string) => void;
-}>((setState, getState) => ({
-  data: undefined,
-  medics: undefined,
-  settings: undefined,
-  init: (plan) =>
-    setState({
-      data: plan.data,
-      medics: plan.medics,
-      settings: plan.settings,
-    }),
-  setData: (path, value) =>
-    setState({
-      data: { ...set((getState().data || {}) as object, path, value) },
-    }),
-  unsetData: (path) => {
-    const data = { ...((getState().data as object) || {}) };
-    unset(data, path);
+};
 
-    setState({
-      data: {
-        ...data,
-      },
-    });
-  },
-}));
+const usePlanStore = create(
+  immer<State & Actions>((setState) => ({
+    data: undefined,
+    medics: undefined,
+    settings: undefined,
+    init: (plan) =>
+      setState((state) => {
+        (state.data = plan.data),
+          (state.medics = plan.medics),
+          (state.settings = plan.settings);
+      }),
+    setData: (path, value) =>
+      setState((state) => {
+        state.data = set(
+          (state.data || {}) as object,
+          path,
+          value,
+        ) as JsonValue;
+      }),
+    unsetData: (path) =>
+      setState((state) => {
+        unset((state.data || {}) as object, path);
+      }),
+  })),
+);
 
 export default usePlanStore;
 
