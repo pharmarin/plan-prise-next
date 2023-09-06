@@ -22,13 +22,11 @@ const PlanCardBody = ({
     principesActifs: PrincipeActif[];
   };
 }) => {
-  // TODO: Extraire medicData dans le hook pour mieux controller le rerender
-  const data = usePlanStore((state) => parseData(state.data));
+  const data = usePlanStore(
+    (state) => parseData(state.data)?.[medicament.id] || {},
+  );
   const setData = usePlanStore((state) => state.setData);
   const unsetData = usePlanStore((state) => state.unsetData);
-
-  const medicData = data?.[medicament.id] || {};
-  console.log("medicData: ", medicData);
 
   const posologies = Object.keys(
     PlanPrisePosologies,
