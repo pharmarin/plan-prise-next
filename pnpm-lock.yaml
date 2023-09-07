@@ -69,8 +69,8 @@ importers:
         specifier: github:pharmarin/classname-variants
         version: github.com/pharmarin/classname-variants/35d5b981e3d585f5b1927d7e2444b4b235c5799e
       formik:
-        specifier: 2.4.3
-        version: 2.4.3(react@18.2.0)
+        specifier: 2.4.4
+        version: 2.4.4(react@18.2.0)
       jose:
         specifier: 4.14.6
         version: 4.14.6
@@ -2015,8 +2015,8 @@ packages:
       mime-types: 2.1.35
     dev: true
 
-  /formik@2.4.3(react@18.2.0):
-    resolution: {integrity: sha512-2Dy79Szw3zlXmZiokUdKsn+n1ow4G8hRrC/n92cOWHNTWXCRpQXlyvz6HcjW7aSQZrldytvDOavYjhfmDnUq8Q==}
+  /formik@2.4.4(react@18.2.0):
+    resolution: {integrity: sha512-MV99upag7fCC3JfsI60WcxhymwNZnJUcMcnGuoz6mDf78SUfBbKjmfcA9LzHx4lEmjzmOflhP7oqz+ZQv5eStg==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
