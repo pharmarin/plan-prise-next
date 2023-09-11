@@ -3,7 +3,7 @@
 
 /** @type {PrettierConfig | TailwindConfig} */
 const config = {
-  plugins: [require("prettier-plugin-tailwindcss")],
+  plugins: ["prettier-plugin-tailwindcss"],
   tabWidth: 2,
   tailwindConfig: "./frontend/tailwind.config.js",
   useTabs: false,

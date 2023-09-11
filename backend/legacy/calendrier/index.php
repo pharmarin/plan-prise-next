@@ -35,9 +35,7 @@ if (!isset($id)) {
 
 //Read database
 $data = calendar_read($id);
-if ($data == "new") {
-  $new = true;
-}
+$new = $data === "new";
 
 if (isset($action)) {
   if ($action == "Ajouter") {
