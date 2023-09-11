@@ -38,27 +38,6 @@ export const middleware = (request: NextRequestWithAuth, event: NextFetchEvent) 
   }
 }
 
-/* withAuth(
-  async (request: NextRequestWithAuth) => {
-    const requestHeaders = new Headers(request.headers);
-
-    if (request.nextauth.token) {
-      requestHeaders.append(
-        "Authorization",
-        await signJWT({ user_id: request.nextauth.token.user.id })
-      );
-    }
-
-    const legacyUrl =
-      toLegacy(request.nextUrl.pathname) + request.nextUrl.search;
-
-    return NextResponse.rewrite(legacyUrl, {
-      request: { headers: requestHeaders },
-    });
-  },
-  { pages: { signIn: NEXT_AUTH_PAGES.signIn } }
-); */
-
 export const config = {
   matcher: [
     "/css/:css*",
