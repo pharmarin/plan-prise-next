@@ -20,6 +20,8 @@ const AuthGuard = async ({
   //const pathname = window.location.pathname;
 
   if (!guest && (!session || !user)) {
+    console.log("User not logged in, redirecting")
+    
     return redirect(
       `/login${
         "" // (pathname && pathname !== "/" && `?callbackUrl=${pathname}`) || ""
