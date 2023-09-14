@@ -1,14 +1,14 @@
 "use client";
 
 import PlanCard from "@/app/(auth)/plan/[id]/PlanCard";
-import PlanCardMutating from "@/app/(auth)/plan/[id]/PlanCardMutating";
+import PlanCardLoading from "@/app/(auth)/plan/[id]/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/[id]/state";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
 import { debounce } from "lodash";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Select, { type SelectInstance } from "react-select";
 
 type SelectValueType = {
@@ -62,7 +62,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
       {medics &&
         medics.map((id) =>
           removingMedicsId.includes(id) ? (
-            <PlanCardMutating
+            <PlanCardLoading
               key={`plan_${plan.id}_${id}_removing`}
               denomination={
                 removingMedics.find((medic) => medic.id === id)?.denomination ||
@@ -71,33 +71,40 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
               type="deleting"
             />
           ) : (
-            <PlanCard
+            <Suspense
               key={`plan_${plan.id}_${id}`}
-              medicamentId={id}
-              removeMedic={async (medicament: MedicamentIdentifier) => {
-                setRemovingMedics((state) => [
-                  ...state,
-                  { id: medicament.id, denomination: medicament.denomination },
-                ]);
-                await removeMedicServer({
-                  planId: plan.id,
-                  medicId: medicament.id,
-                })
-                  .then(() => removeMedic(medicament.id))
-                  .catch(() => {
-                    // TODO
+              fallback={<PlanCardLoading type="fetching" />}
+            >
+              <PlanCard
+                medicamentId={id}
+                removeMedic={async (medicament: MedicamentIdentifier) => {
+                  setRemovingMedics((state) => [
+                    ...state,
+                    {
+                      id: medicament.id,
+                      denomination: medicament.denomination,
+                    },
+                  ]);
+                  await removeMedicServer({
+                    planId: plan.id,
+                    medicId: medicament.id,
                   })
-                  .finally(() => {
-                    setRemovingMedics((state) => [
-                      ...state.filter((medic) => medic.id !== medicament.id),
-                    ]);
-                  });
-              }}
-            />
+                    .then(() => removeMedic(medicament.id))
+                    .catch(() => {
+                      // TODO
+                    })
+                    .finally(() => {
+                      setRemovingMedics((state) => [
+                        ...state.filter((medic) => medic.id !== medicament.id),
+                      ]);
+                    });
+                }}
+              />
+            </Suspense>
           ),
         )}
       {addingMedics.map((row) => (
-        <PlanCardMutating
+        <PlanCardLoading
           key={`plan_${plan.id}_${row.id}_adding`}
           denomination={row.denomination}
           type="adding"

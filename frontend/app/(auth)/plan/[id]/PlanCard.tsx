@@ -2,6 +2,7 @@
 
 import PlanCardBody from "@/app/(auth)/plan/[id]/PlanCardBody";
 import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
+import PlanCardUI from "@/app/(auth)/plan/[id]/_ui/PlanCardUI";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import { useState } from "react";
@@ -15,28 +16,19 @@ const PlanCard = ({
 }) => {
   const [showDetails, setShowDetails] = useState(false);
 
-  const {
-    data: medicament,
-    isLoading,
-    error,
-  } = trpc.medics.unique.useQuery(medicamentId);
-
-  if (error) {
-    // TODO
-    throw new Error();
-  }
+  const [medicament] = trpc.medics.unique.useSuspenseQuery(medicamentId);
 
   return (
-    <div className="flex flex-col divide-y divide-gray-200 overflow-hidden rounded-lg shadow-md">
+    <PlanCardUI>
       <PlanCardHeader
         medicament={medicament}
         open={showDetails}
         removeMedic={removeMedic}
         toggle={() => setShowDetails((showDetails) => !showDetails)}
       />
-
-      {!isLoading && <PlanCardBody medicament={medicament} />}
-    </div>
+      <PlanCardBody medicament={medicament} />
+    </PlanCardUI>
   );
 };
+
 export default PlanCard;
