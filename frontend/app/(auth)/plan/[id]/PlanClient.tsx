@@ -7,8 +7,14 @@ import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
-import { useEffect, useState } from "react";
-import Select from "react-select";
+import { useEffect, useRef, useState } from "react";
+import Select, { type SelectInstance } from "react-select";
+
+type SelectValueType = {
+  denomination: string;
+  principesActifs: string[];
+  id: string;
+};
 
 const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const [ready, setReady] = useState(false);
@@ -17,7 +23,10 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const medics = usePlanStore((state) => state.medics);
   const setMedics = usePlanStore((state) => state.setMedics);
 
+  const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
+
   const [searchValue, setSearchValue] = useState("");
+  //const debounceSetSearchValue = debounce(setSearchValue, 10000);
   const { data: searchResults, isLoading: isLoadingResults } =
     trpc.medics.findAll.useQuery({
       fields: ["denomination"],
@@ -85,11 +94,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
           type="adding"
         />
       ))}
-      <Select<{
-        denomination: string;
-        principesActifs: string[];
-        id: string;
-      }>
+      <Select<SelectValueType>
         classNames={{
           control: () => "!border-0 !rounded-lg !shadow-md",
           menu: () => "!border-0 !rounded-lg !shadow-md",
@@ -98,6 +103,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
         getOptionValue={(option) => option.id}
         isLoading={isLoadingResults}
         loadingMessage={() => "Chargement des médicaments en cours"}
+        menuPlacement="top"
         noOptionsMessage={(p) =>
           p.inputValue.length > 0
             ? "Aucun résultat"
@@ -114,6 +120,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
               planId: plan.id,
               medicId: value.id,
             }).then((response) => setMedics(response.medicsIdSorted));
+            selectRef.current?.clearValue();
             setAddingMedics((state) => [
               ...state.filter((medic) => medic.id !== value.id),
             ]);
@@ -128,7 +135,9 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
           id: result.id,
         }))}
         placeholder="Ajouter un médicament"
+        ref={selectRef}
       />
+      <p className="font-mono">{medics?.join("\n")}</p>
     </div>
   );
 };
