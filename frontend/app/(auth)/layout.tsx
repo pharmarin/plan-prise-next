@@ -8,7 +8,7 @@ const AuthLayout: React.FC<PropsWithChildren> = ({ children }) => {
     <AuthGuard>
       <AuthProviders>
         <Navbar />
-        <div className="container mx-auto mb-8 overflow-hidden rounded-lg bg-white p-4 shadow-inner">
+        <div className="container mx-auto mb-8 rounded-lg bg-white p-4 shadow-inner">
           {children}
         </div>
       </AuthProviders>
