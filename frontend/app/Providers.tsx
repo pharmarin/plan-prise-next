@@ -1,5 +1,6 @@
 "use client";
 
+import { NotificationProvider } from "@/app/notifications";
 import NavigationContextProvider from "@/components/NavigationContextProvider";
 import { trpc } from "@/trpc/client";
 import getUrl from "@/utils/url";
@@ -17,7 +18,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
         defaultOptions: {
           queries: { retry: process.env.NODE_ENV === "test" ? false : 3 },
         },
-      })
+      }),
   );
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -27,17 +28,19 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
         }),
       ],
       transformer: SuperJSON,
-    })
+    }),
   );
 
   return (
-    <SessionProvider>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </trpc.Provider>
-    </SessionProvider>
+    <NotificationProvider>
+      <SessionProvider>
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </trpc.Provider>
+      </SessionProvider>
+    </NotificationProvider>
   );
 };
 

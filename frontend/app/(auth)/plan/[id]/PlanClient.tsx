@@ -3,6 +3,7 @@
 import PlanCard from "@/app/(auth)/plan/[id]/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/[id]/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/[id]/state";
+import useNotificationsStore, { createNotification } from "@/app/notifications";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
@@ -24,6 +25,10 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const medics = usePlanStore((state) => state.medics);
   const addMedic = usePlanStore((state) => state.addMedic);
   const removeMedic = usePlanStore((state) => state.removeMedic);
+
+  const addNotification = useNotificationsStore(
+    (state) => state.addNotification,
+  );
 
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
 
@@ -91,7 +96,13 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                   })
                     .then(() => removeMedic(medicament.id))
                     .catch(() => {
-                      // TODO
+                      addNotification(
+                        createNotification({
+                          type: "error",
+                          text: `Impossible de supprimer ${medicament.denomination} pour le moment. Veuillez réessayer.`,
+                          timer: 3000,
+                        }),
+                      );
                     })
                     .finally(() => {
                       setRemovingMedics((state) => [
@@ -140,7 +151,13 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                 addMedic(value.id);
               })
               .catch(() => {
-                // TODO
+                addNotification(
+                  createNotification({
+                    type: "error",
+                    text: `Impossible d'ajouter ${value.denomination} pour le moment. Veuillez réessayer.`,
+                    timer: 3000,
+                  }),
+                );
               })
               .finally(() => {
                 selectRef.current?.clearValue();
