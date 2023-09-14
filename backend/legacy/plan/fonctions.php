@@ -273,11 +273,22 @@ function plan_print($id, $patient = "")
 	'
   );
   $toprintid = $id;
+
+  $style =
+    file_get_contents(__DIR__ . './../css/styles.css');
+  $style_plan = file_get_contents(__DIR__ . './../css/plan.css');
+  $style_print = file_get_contents(__DIR__ . './../css/plan-print.css');
+
   ob_start();
   require "print.php";
   $html = ob_get_contents();
   ob_end_clean();
-  $mpdf->WriteHTML($html);
+
+  $mpdf->WriteHTML($style, \Mpdf\HTMLParserMode::HEADER_CSS);
+  $mpdf->WriteHTML($style_plan, \Mpdf\HTMLParserMode::HEADER_CSS);
+  $mpdf->WriteHTML($style_print, \Mpdf\HTMLParserMode::HEADER_CSS);
+  $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+
   if (!empty($patient)) {
     $patient = " (" . $patient . ")";
   }
