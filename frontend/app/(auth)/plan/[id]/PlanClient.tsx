@@ -84,6 +84,9 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                   medicId: medicament.id,
                 })
                   .then(() => removeMedic(medicament.id))
+                  .catch(() => {
+                    // TODO
+                  })
                   .finally(() => {
                     setRemovingMedics((state) => [
                       ...state.filter((medic) => medic.id !== medicament.id),
@@ -128,6 +131,9 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
             })
               .then(() => {
                 addMedic(value.id);
+              })
+              .catch(() => {
+                // TODO
               })
               .finally(() => {
                 selectRef.current?.clearValue();
