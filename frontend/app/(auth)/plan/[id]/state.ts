@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  MedicamentConservationDuree,
-  MedicamentInclude,
-} from "@/types/medicament";
+import type { MedicamentConservationDuree } from "@/types/medicament";
 import type { PlanDataItem, PlanInclude } from "@/types/plan";
 import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
@@ -13,13 +10,14 @@ import { immer } from "zustand/middleware/immer";
 
 type State = {
   data?: Plan["data"];
-  medics?: MedicamentInclude[];
+  medics?: string[];
   settings?: Plan["settings"];
 };
 
 type Actions = {
   init: (plan: PlanInclude) => void;
   setData: (path: string, value: string | boolean) => void;
+  setMedics: (value: string[]) => void;
   unsetData: (path: string) => void;
 };
 
@@ -30,9 +28,9 @@ const usePlanStore = create(
     settings: undefined,
     init: (plan) =>
       setState((state) => {
-        (state.data = plan.data),
-          (state.medics = plan.medics),
-          (state.settings = plan.settings);
+        state.data = plan.data;
+        state.medics = plan.medicsIdSorted;
+        state.settings = plan.settings;
       }),
     setData: (path, value) =>
       setState((state) => {
@@ -41,6 +39,10 @@ const usePlanStore = create(
           path,
           value,
         ) as JsonValue;
+      }),
+    setMedics: (value) =>
+      setState((state) => {
+        state.medics = value;
       }),
     unsetData: (path) =>
       setState((state) => {

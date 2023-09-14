@@ -1,8 +1,8 @@
-import type { MedicamentInclude } from "@/types/medicament";
-import type { Plan } from "@prisma/client";
+import type { Medicament, Plan } from "@prisma/client";
 
 export type PlanInclude = Plan & {
-  medics: MedicamentInclude[];
+  medics: Medicament[];
+  medicsIdSorted: string[];
 };
 
 export enum PlanPrisePosologies {

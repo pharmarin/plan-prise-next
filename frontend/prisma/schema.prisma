@@ -116,12 +116,13 @@ model Medicament {
 }
 
 model Plan {
-  id       String       @id @default(cuid())
-  medics   Medicament[]
-  data     Json?
-  settings Json?
-  user     User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String?
+  id          String       @id @default(cuid())
+  medics      Medicament[]
+  medicsOrder Json         @default("[]")
+  data        Json?
+  settings    Json?
+  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
 
   @@index([userId])
   @@map("plans")
