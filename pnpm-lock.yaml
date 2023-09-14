@@ -116,9 +116,6 @@ importers:
       react-select:
         specifier: ^5.7.4
         version: 5.7.4(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
-      reapop:
-        specifier: 4.2.1
-        version: 4.2.1(react-dom@18.2.0)(react@18.2.0)
       superjson:
         specifier: 1.13.1
         version: 1.13.1
@@ -3869,18 +3866,6 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
-
-  /reapop@4.2.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-lreC2g+96+g13ims3/ZD3Aw9mrS1Ikv18QYUmLA0/qZWZcxwXUfmRbKZIeLkc1eDgtjRxbgpnNLVfbKqoOyrWw==}
-    engines: {node: '>= 14.19.0'}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - react-dom
-    dev: false
 
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
