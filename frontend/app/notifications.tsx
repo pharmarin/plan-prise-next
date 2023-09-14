@@ -93,7 +93,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-end justify-start space-y-4 bg-gray-900 p-4">
+      <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-end justify-start space-y-4 p-4">
         {notifications.map((notification) => (
           <Notification key={notification.id} notification={notification} />
         ))}
