@@ -12,6 +12,7 @@ import { PlanPrisePosologies } from "@/types/plan";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { createId } from "@paralleldrive/cuid2";
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
+import { get } from "lodash";
 import type { ChangeEvent } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -106,7 +107,11 @@ const PlanCardBody = ({
           {medicament.commentaires.map((commentaire) => (
             <div key={commentaire.id} className="flex items-center space-x-2">
               <CheckboxInput
-                checked={data.commentaires?.[commentaire.id]?.checked}
+                checked={get(
+                  data,
+                  `commentaires.${commentaire.id}.checked`,
+                  true,
+                )}
                 onChange={(event) =>
                   setData(
                     `${medicament.id}.commentaires.${commentaire.id}.checked`,
@@ -116,7 +121,7 @@ const PlanCardBody = ({
               />
               <TextInput
                 className={twMerge(
-                  !data.commentaires?.[commentaire.id]?.checked &&
+                  !get(data, `commentaires.${commentaire.id}.checked`, true) &&
                     "text-gray-400",
                 )}
                 onChange={(event) =>
