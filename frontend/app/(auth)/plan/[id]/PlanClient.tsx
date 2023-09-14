@@ -7,6 +7,7 @@ import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
+import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import Select, { type SelectInstance } from "react-select";
 
@@ -26,7 +27,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
 
   const [searchValue, setSearchValue] = useState("");
-  //const debounceSetSearchValue = debounce(setSearchValue, 10000);
+  const setSearchValueDebounced = debounce(setSearchValue, 500);
   const { data: searchResults, isLoading: isLoadingResults } =
     trpc.medics.findAll.useQuery({
       fields: ["denomination"],
@@ -126,7 +127,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
             ]);
           }
         }}
-        onInputChange={(value) => setSearchValue(value)}
+        onInputChange={(value) => setSearchValueDebounced(value)}
         options={(searchResults || []).map((result) => ({
           denomination: result.denomination,
           principesActifs: result.principesActifs.map(
