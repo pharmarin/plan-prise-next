@@ -164,11 +164,19 @@ function calendar_print($id, $type = "horizontal", $patient = "")
 	'
   );
 
+  $style =
+    file_get_contents(__DIR__ . './../css/styles.css');
+  $style_print = file_get_contents(__DIR__ . './../css/calendar-print.css');
+
   ob_start();
   require "print.php";
   $html = ob_get_contents();
   ob_end_clean();
-  $mpdf->WriteHTML($html);
+
+  $mpdf->WriteHTML($style, \Mpdf\HTMLParserMode::HEADER_CSS);
+  $mpdf->WriteHTML($style_print, \Mpdf\HTMLParserMode::HEADER_CSS);
+  $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+
   if (!empty($patient)) {
     $patient = " (" . $patient . ")";
   }
@@ -269,9 +277,7 @@ function calendar_draw_vertical($month, $year, $events = [])
           $title = $event["id_medic"];
         }
         $titre =
-          ' <img src="/calendrier/image.php?color=' .
-          $listmedic[$event["id_medic"]] .
-          '" style="margin: 1mm;"> ' .
+          ' <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAEklEQVQImWP4f4ChwQE7+n8AAI+/CX9DwAMqAAAAAElFTkSuQmCC" style="margin: 1mm;"> ' .
           $event["nombre"] .
           " x " .
           $title;
@@ -397,7 +403,7 @@ function calendar_draw_horizontal($month, $year, $events = [])
           $td->appendChild($event_div);
 
           $image = $document->createElement("img");
-          $image->setAttribute("src", "/calendrier/image.php?color={$listmedic[$event['id_medic']]}");
+          $image->setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAEklEQVQImWP4f4ChwQE7+n8AAI+/CX9DwAMqAAAAAElFTkSuQmCC");
           $image->setAttribute("style", "margin: 1mm;");
 
           $event_title = $document->createElement("span", $event["nombre"] .

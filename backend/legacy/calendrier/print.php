@@ -58,52 +58,50 @@ $date_max = date("Y-m-d", $date_max);
 $nombre_mois = diff_en_mois_entre_deux_date($date_min, $date_max);
 ?>
 <html>
-	<head>
-		<?php include LEGACY_PATH . "/head.php"; ?>
-		<link href="<?= $_url ?>/css/calendar-print.css" rel="stylesheet"/>
-	</head>
-	<body>
-		<div class="container">
-			<?php
-   sscanf($date_min, "%4s-%2s-%2s", $annee, $mois, $jour);
-   $mois = (int) $mois;
-   if ($type == "vertical"): ?>
-				<div class="row">
-					<?php for ($k = 0; $k <= $nombre_mois; $k++) {
-       if ($k % 2 == 0 && $k != 0) {
-         echo "</div><pagebreak/><div class='row'>";
-       } ?>
-						<div class="col-xs-6" style="width:45%">
-							<?php
-       echo calendar_draw_vertical($mois, $annee, $events);
-       $mois++;
-       if ($mois == 13) {
-         $mois = 1;
-         $annee++;
-       }
-       ?>
-						</div>
-					<?php
-     } ?>
-				</div>
-			<?php elseif ($type == "horizontal"):
-     for ($k = 0; $k <= $nombre_mois; $k++) { ?>
-					<div class="row">
-						<div class="col-xs-12 <?= $k ?>">
-							<?php
-       echo calendar_draw_horizontal($mois, $annee, $events);
-       $mois++;
-       if ($mois == 13) {
-         $mois = 1;
-         $annee++;
-       }
-       ?>
-						</div>
-					</div>
-					<pagebreak/>
-				<?php }
-   endif;
-   ?>
-		</div>
-	</body>
+
+<body>
+  <div class="container">
+    <?php
+    sscanf($date_min, "%4s-%2s-%2s", $annee, $mois, $jour);
+    $mois = (int) $mois;
+    if ($type == "vertical") : ?>
+      <div class="row">
+        <?php for ($k = 0; $k <= $nombre_mois; $k++) {
+          if ($k % 2 == 0 && $k != 0) {
+            echo "</div><pagebreak/><div class='row'>";
+          } ?>
+          <div class="col-xs-6" style="width:45%">
+            <?php
+            echo calendar_draw_vertical($mois, $annee, $events);
+            $mois++;
+            if ($mois == 13) {
+              $mois = 1;
+              $annee++;
+            }
+            ?>
+          </div>
+        <?php
+        } ?>
+      </div>
+      <?php elseif ($type == "horizontal") :
+      for ($k = 0; $k <= $nombre_mois; $k++) { ?>
+        <div class="row">
+          <div class="col-xs-12 <?= $k ?>">
+            <?php
+            echo calendar_draw_horizontal($mois, $annee, $events);
+            $mois++;
+            if ($mois == 13) {
+              $mois = 1;
+              $annee++;
+            }
+            ?>
+          </div>
+        </div>
+        <pagebreak />
+    <?php }
+    endif;
+    ?>
+  </div>
+</body>
+
 </html>
