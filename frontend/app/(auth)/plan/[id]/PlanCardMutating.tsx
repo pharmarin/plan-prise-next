@@ -7,7 +7,7 @@ const PlanCardMutating = ({
   type,
 }: {
   denomination: string;
-  type: "adding";
+  type: "adding" | "deleting";
 }) => {
   return (
     <div className="flex h-16 justify-center overflow-hidden rounded-lg shadow-md">
@@ -15,6 +15,7 @@ const PlanCardMutating = ({
         <Logo className="animate-pulse text-base" />
         <span className="text-gray-700">
           {type === "adding" && `Ajout de ${denomination} en cours...`}
+          {type === "deleting" && `Suppression de ${denomination} en cours...`}
         </span>
         {/* <PlanCardHeader
           medicament={medicament}

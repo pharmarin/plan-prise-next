@@ -9,6 +9,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 type State = {
+  id?: Plan["id"];
   data?: Plan["data"];
   medics?: string[];
   settings?: Plan["settings"];
@@ -23,11 +24,13 @@ type Actions = {
 
 const usePlanStore = create(
   immer<State & Actions>((setState) => ({
+    id: undefined,
     data: undefined,
     medics: undefined,
     settings: undefined,
     init: (plan) =>
       setState((state) => {
+        state.id = plan.id;
         state.data = plan.data;
         state.medics = plan.medicsIdSorted;
         state.settings = plan.settings;

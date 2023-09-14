@@ -3,9 +3,16 @@
 import PlanCardBody from "@/app/(auth)/plan/[id]/PlanCardBody";
 import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
 import { trpc } from "@/trpc/client";
+import type { MedicamentIdentifier } from "@/types/medicament";
 import { useState } from "react";
 
-const PlanCard = ({ medicamentId }: { medicamentId: string }) => {
+const PlanCard = ({
+  medicamentId,
+  removeMedic,
+}: {
+  medicamentId: string;
+  removeMedic: (medicament: MedicamentIdentifier) => void;
+}) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const {
@@ -24,6 +31,7 @@ const PlanCard = ({ medicamentId }: { medicamentId: string }) => {
       <PlanCardHeader
         medicament={medicament}
         open={showDetails}
+        removeMedic={removeMedic}
         toggle={() => setShowDetails((showDetails) => !showDetails)}
       />
 

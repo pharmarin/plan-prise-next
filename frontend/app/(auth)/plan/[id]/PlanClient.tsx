@@ -5,6 +5,7 @@ import PlanCardMutating from "@/app/(auth)/plan/[id]/PlanCardMutating";
 import usePlanStore from "@/app/(auth)/plan/[id]/state";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
+import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
 import { useEffect, useState } from "react";
 import Select from "react-select";
@@ -28,6 +29,12 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   >([]);
   const { mutateAsync: addMedic } = trpc.plan.addMedic.useMutation();
 
+  const [removingMedics, setRemovingMedics] = useState<
+    { id: string; denomination: string }[]
+  >([]);
+  const removingMedicsId = removingMedics.map((medic) => medic.id);
+  const { mutateAsync: removeMedic } = trpc.plan.removeMedic.useMutation();
+
   useEffect(() => {
     console.log("Initializing zustand for plan");
     init(plan);
@@ -41,12 +48,39 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   return (
     <div className="space-y-4">
       {medics &&
-        medics.map((id) => (
-          <PlanCard key={`plan_${plan.id}_${id}`} medicamentId={id} />
-        ))}
+        medics.map((id) =>
+          removingMedicsId.includes(id) ? (
+            <PlanCardMutating
+              key={`plan_${plan.id}_${id}_removing`}
+              denomination={
+                removingMedics.find((medic) => medic.id === id)?.denomination ||
+                ""
+              }
+              type="deleting"
+            />
+          ) : (
+            <PlanCard
+              key={`plan_${plan.id}_${id}`}
+              medicamentId={id}
+              removeMedic={async (medicament: MedicamentIdentifier) => {
+                setRemovingMedics((state) => [
+                  ...state,
+                  { id: medicament.id, denomination: medicament.denomination },
+                ]);
+                await removeMedic({
+                  planId: plan.id,
+                  medicId: medicament.id,
+                }).then((response) => setMedics(response.medicsIdSorted));
+                setRemovingMedics((state) => [
+                  ...state.filter((medic) => medic.id !== medicament.id),
+                ]);
+              }}
+            />
+          ),
+        )}
       {addingMedics.map((row) => (
         <PlanCardMutating
-          key={`plan_${plan.id}_${row.id}`}
+          key={`plan_${plan.id}_${row.id}_adding`}
           denomination={row.denomination}
           type="adding"
         />
@@ -79,9 +113,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
             await addMedic({
               planId: plan.id,
               medicId: value.id,
-            }).then((response) =>
-              setMedics(response.medicsIdSorted as string[]),
-            );
+            }).then((response) => setMedics(response.medicsIdSorted));
             setAddingMedics((state) => [
               ...state.filter((medic) => medic.id !== value.id),
             ]);

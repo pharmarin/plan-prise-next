@@ -24,7 +24,6 @@ const Plan = async ({ params }: Props) => {
     <>
       <Navigation title={`Plan de prise n°${params.id}`} />
       <PlanClient plan={plan} />
-      <p className="font-mono">{JSON.stringify(plan.medics[0])}</p>
     </>
   );
 };
