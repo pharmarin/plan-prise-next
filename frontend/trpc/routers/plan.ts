@@ -1,6 +1,6 @@
+import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { authProcedure, router } from "@/trpc/trpc";
 import type { RouterLike } from "@trpc/react-query/shared";
-import { isEqual, sortBy } from "lodash";
 import * as zod from "zod";
 
 const planRouter = router({
@@ -18,22 +18,11 @@ const planRouter = router({
         include: { medics: true },
       });
 
-      let medicsOrder: string[] = Array.isArray(plan.medicsOrder)
-        ? (plan.medicsOrder as string[])
-        : [];
-      const medicsId = plan.medics.map((medic) => medic.id);
-
-      if (isEqual(sortBy(medicsOrder), sortBy(medicsId))) {
-        medicsOrder = medicsId;
-      }
-
-      medicsOrder.push(input.medicId);
-
-      return ctx.prisma.plan.update({
+      await ctx.prisma.plan.update({
         where: { id: input.planId },
         data: {
           medics: { connect: { id: input.medicId } },
-          medicsOrder,
+          medicsOrder: [...plan.medicsIdSorted, input.medicId],
         },
         include: {
           medics: {
@@ -44,6 +33,8 @@ const planRouter = router({
           },
         },
       });
+
+      return MUTATION_SUCCESS;
     }),
   removeMedic: authProcedure
     .input(
@@ -55,15 +46,11 @@ const planRouter = router({
         include: { medics: true },
       });
 
-      const medicsOrder: string[] = Array.isArray(plan.medicsOrder)
-        ? (plan.medicsOrder as string[]).filter((id) => id !== input.medicId)
-        : [];
-
-      return ctx.prisma.plan.update({
+      await ctx.prisma.plan.update({
         where: { id: input.planId },
         data: {
           medics: { disconnect: { id: input.medicId } },
-          medicsOrder,
+          medicsOrder: plan.medicsIdSorted.filter((id) => id !== input.medicId),
         },
         include: {
           medics: {
@@ -74,6 +61,8 @@ const planRouter = router({
           },
         },
       });
+
+      return MUTATION_SUCCESS;
     }),
 });
 

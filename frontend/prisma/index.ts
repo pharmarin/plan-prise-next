@@ -18,13 +18,13 @@ const extendedClient = () => {
             );
 
             if (
-              !Array.isArray(plan.medicsOrder) ||
+              Array.isArray(plan.medicsOrder) &&
               isEqual(sortBy(plan.medicsOrder), sortBy(medicsId))
             ) {
-              return medicsId;
+              return plan.medicsOrder as string[];
             }
 
-            return plan.medicsOrder as string[];
+            return medicsId;
           },
         },
       },

@@ -18,8 +18,9 @@ type State = {
 type Actions = {
   init: (plan: PlanInclude) => void;
   setData: (path: string, value: string | boolean) => void;
-  setMedics: (value: string[]) => void;
   unsetData: (path: string) => void;
+  addMedic: (id: string) => void;
+  removeMedic: (id: string) => void;
 };
 
 const usePlanStore = create(
@@ -43,13 +44,17 @@ const usePlanStore = create(
           value,
         ) as JsonValue;
       }),
-    setMedics: (value) =>
-      setState((state) => {
-        state.medics = value;
-      }),
     unsetData: (path) =>
       setState((state) => {
         unset((state.data || {}) as object, path);
+      }),
+    addMedic: (medicId) =>
+      setState((state) => {
+        state.medics?.push(medicId);
+      }),
+    removeMedic: (medicId) =>
+      setState((state) => {
+        state.medics = state.medics?.filter((id) => id !== medicId);
       }),
   })),
 );

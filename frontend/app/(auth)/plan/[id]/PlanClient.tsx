@@ -22,7 +22,8 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
 
   const init = usePlanStore((state) => state.init);
   const medics = usePlanStore((state) => state.medics);
-  const setMedics = usePlanStore((state) => state.setMedics);
+  const addMedic = usePlanStore((state) => state.addMedic);
+  const removeMedic = usePlanStore((state) => state.removeMedic);
 
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
 
@@ -37,13 +38,14 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const [addingMedics, setAddingMedics] = useState<
     { id: string; denomination: string }[]
   >([]);
-  const { mutateAsync: addMedic } = trpc.plan.addMedic.useMutation();
+  const { mutateAsync: addMedicServer } = trpc.plan.addMedic.useMutation();
 
   const [removingMedics, setRemovingMedics] = useState<
     { id: string; denomination: string }[]
   >([]);
   const removingMedicsId = removingMedics.map((medic) => medic.id);
-  const { mutateAsync: removeMedic } = trpc.plan.removeMedic.useMutation();
+  const { mutateAsync: removeMedicServer } =
+    trpc.plan.removeMedic.useMutation();
 
   useEffect(() => {
     console.log("Initializing zustand for plan");
@@ -77,13 +79,16 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                   ...state,
                   { id: medicament.id, denomination: medicament.denomination },
                 ]);
-                await removeMedic({
+                await removeMedicServer({
                   planId: plan.id,
                   medicId: medicament.id,
-                }).then((response) => setMedics(response.medicsIdSorted));
-                setRemovingMedics((state) => [
-                  ...state.filter((medic) => medic.id !== medicament.id),
-                ]);
+                })
+                  .then(() => removeMedic(medicament.id))
+                  .finally(() => {
+                    setRemovingMedics((state) => [
+                      ...state.filter((medic) => medic.id !== medicament.id),
+                    ]);
+                  });
               }}
             />
           ),
@@ -117,14 +122,19 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
               ...state,
               { id: value.id, denomination: value.denomination },
             ]);
-            await addMedic({
+            await addMedicServer({
               planId: plan.id,
               medicId: value.id,
-            }).then((response) => setMedics(response.medicsIdSorted));
-            selectRef.current?.clearValue();
-            setAddingMedics((state) => [
-              ...state.filter((medic) => medic.id !== value.id),
-            ]);
+            })
+              .then(() => {
+                addMedic(value.id);
+              })
+              .finally(() => {
+                selectRef.current?.clearValue();
+                setAddingMedics((state) => [
+                  ...state.filter((medic) => medic.id !== value.id),
+                ]);
+              });
           }
         }}
         onInputChange={(value) => setSearchValueDebounced(value)}
@@ -138,7 +148,6 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
         placeholder="Ajouter un médicament"
         ref={selectRef}
       />
-      <p className="font-mono">{medics?.join("\n")}</p>
     </div>
   );
 };
