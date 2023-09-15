@@ -61,7 +61,7 @@ const Notification = ({ notification }: { notification: Notification }) => {
   return (
     <div
       key={notification.id}
-      className="flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow"
+      className="z-10 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow"
       role="alert"
     >
       <div
@@ -93,7 +93,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-end justify-start space-y-4 p-4">
+      <div className="absolute left-0 top-0 -z-50 flex h-full w-full flex-col items-end justify-start space-y-4 p-4">
         {notifications.map((notification) => (
           <Notification key={notification.id} notification={notification} />
         ))}
