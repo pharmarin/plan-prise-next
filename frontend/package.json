@@ -33,7 +33,7 @@
     "bcrypt": "5.1.1",
     "chart.js": "4.4.0",
     "classname-variants": "github:pharmarin/classname-variants",
-    "formik": "2.4.4",
+    "formik": "2.4.5",
     "jose": "4.14.6",
     "lodash": "4.17.21",
     "mailersend": "2.2.0",
