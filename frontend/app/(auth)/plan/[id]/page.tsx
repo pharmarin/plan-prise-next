@@ -9,7 +9,7 @@ type Props = { params: { id: string } };
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();
   const plan = await prisma.plan.findFirst({
-    where: { id: params.id, user: { is: { id: session?.user.id } } },
+    where: { id: params.id, user: { id: session?.user.id } },
     include: {
       medics: true,
     },

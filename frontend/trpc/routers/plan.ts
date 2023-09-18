@@ -19,7 +19,7 @@ const planRouter = router({
       });
 
       await ctx.prisma.plan.update({
-        where: { id: input.planId },
+        where: { id: input.planId, user: { id: ctx.user.id } },
         data: {
           medics: { connect: { id: input.medicId } },
           medicsOrder: [...plan.medicsIdSorted, input.medicId],
@@ -42,7 +42,7 @@ const planRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const plan = await ctx.prisma.plan.findUniqueOrThrow({
-        where: { id: input.planId },
+        where: { id: input.planId, user: { id: ctx.user.id } },
         include: { medics: true },
       });
 
@@ -59,6 +59,59 @@ const planRouter = router({
               principesActifs: true,
             },
           },
+        },
+      });
+
+      return MUTATION_SUCCESS;
+    }),
+  saveData: authProcedure
+    .input(
+      zod.object({
+        planId: zod.string().cuid(),
+        data: zod.record(
+          zod.string().cuid(),
+          zod.object({
+            indication: zod.string().optional(),
+            posologies: zod
+              .object({
+                poso_matin: zod.string().optional(),
+                poso_10h: zod.string().optional(),
+                poso_midi: zod.string().optional(),
+                poso_16h: zod.string().optional(),
+                poso_18h: zod.string().optional(),
+                poso_soir: zod.string().optional(),
+                poso_coucher: zod.string().optional(),
+              })
+              .optional(),
+            commentaires: zod
+              .record(
+                zod.string().cuid(),
+                zod
+                  .object({
+                    texte: zod.string().optional(),
+                    checked: zod.boolean().optional(),
+                  })
+                  .optional(),
+              )
+              .optional(),
+            custom_commentaires: zod
+              .record(
+                zod.string().cuid2(),
+                zod.object({ texte: zod.string().optional() }).optional(),
+              )
+              .optional(),
+          }),
+        ),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.plan.update({
+        where: {
+          id: input.planId,
+          user: { id: ctx.user.id },
+        },
+        data: {
+          data: input.data,
         },
       });
 

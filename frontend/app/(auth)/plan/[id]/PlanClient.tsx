@@ -21,10 +21,15 @@ type SelectValueType = {
 const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const [ready, setReady] = useState(false);
 
-  const init = usePlanStore((state) => state.init);
+  const { init, addMedic, removeMedic, setIsSaving } = usePlanStore(
+    (state) => ({
+      init: state.init,
+      addMedic: state.addMedic,
+      removeMedic: state.removeMedic,
+      setIsSaving: state.setIsSaving,
+    }),
+  );
   const medics = usePlanStore((state) => state.medics);
-  const addMedic = usePlanStore((state) => state.addMedic);
-  const removeMedic = usePlanStore((state) => state.removeMedic);
 
   const addNotification = useNotificationsStore(
     (state) => state.addNotification,
@@ -52,11 +57,29 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const { mutateAsync: removeMedicServer } =
     trpc.plan.removeMedic.useMutation();
 
+  const { mutateAsync: saveData } = trpc.plan.saveData.useMutation();
+  const saveDataDebounced = debounce(async (data) => {
+    console.log("debounce started");
+    setIsSaving(true);
+    await saveData(data);
+    console.log("debounce ended");
+    setIsSaving(false);
+  }, 2000);
+
   useEffect(() => {
-    console.log("Initializing zustand for plan");
     init(plan);
     setReady(true);
   }, [init, plan]);
+
+  useEffect(() => {
+    usePlanStore.subscribe(
+      (state) => state.data,
+      async (data) => {
+        await saveDataDebounced({ planId: plan.id, data: data });
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!ready) {
     return <LoadingScreen />;
