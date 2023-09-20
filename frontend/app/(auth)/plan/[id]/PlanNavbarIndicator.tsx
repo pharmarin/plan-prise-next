@@ -1,4 +1,5 @@
 import usePlanStore from "@/app/(auth)/plan/[id]/state";
+import Tooltip from "@/components/Tooltip";
 import Spinner from "@/components/icons/Spinner";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
@@ -13,9 +14,13 @@ const PlanNavbarIndicator = () => {
   return (
     <div>
       {isSaving ? (
-        <Spinner className="h-3 w-3 text-teal-900" />
+        <Tooltip message="⏳ Sauvegarde en cours">
+          <Spinner className="h-3 w-3 text-teal-900" />
+        </Tooltip>
       ) : (
-        <CheckCircleIcon className="h-4 w-4 text-teal-600" />
+        <Tooltip message="✅ Plan de prise sauvegardé">
+          <CheckCircleIcon className="h-4 w-4 text-teal-600" />
+        </Tooltip>
       )}
     </div>
   );
