@@ -51,7 +51,7 @@
     "typescript": "5.2.2",
     "windstitch": "0.3.0",
     "yup": "1.2.0",
-    "yup-locales": "1.2.16"
+    "yup-locales": "1.2.18"
   },
   "devDependencies": {
     "@faker-js/faker": "8.1.0",
