@@ -5,19 +5,13 @@ import dynamic from "next/dynamic";
 
 const ShowPDF: React.FC<{ file: string }> = ({ file }) => {
   const Document = dynamic(
-    () =>
-      import("react-pdf/dist/esm/entry.webpack5").then(
-        (imported) => imported.Document
-      ),
-    { ssr: false }
+    () => import("react-pdf").then((imported) => imported.Document),
+    { ssr: false },
   );
 
   const Page = dynamic(
-    () =>
-      import("react-pdf/dist/esm/entry.webpack5").then(
-        (imported) => imported.Page
-      ),
-    { ssr: false }
+    () => import("react-pdf").then((imported) => imported.Page),
+    { ssr: false },
   );
 
   return (
