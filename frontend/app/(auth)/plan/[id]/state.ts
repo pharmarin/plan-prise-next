@@ -1,6 +1,5 @@
 "use client";
 
-import type { MedicamentConservationDuree } from "@/types/medicament";
 import type { PlanDataItem, PlanInclude } from "@/types/plan";
 import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
@@ -77,26 +76,6 @@ export const parseData = (data?: Plan["data"]) => {
     return data as Record<string, PlanDataItem>;
   } else {
     return {};
-  }
-};
-
-export const parseConservationDuree = (
-  conservationDuree: Medicament["conservationDuree"],
-) => {
-  if (Array.isArray(conservationDuree)) {
-    return conservationDuree as MedicamentConservationDuree;
-  } else {
-    return null;
-  }
-};
-
-export const parseIndications = (
-  indications: Medicament["indications"],
-): string[] => {
-  if (Array.isArray(indications)) {
-    return indications as string[];
-  } else {
-    return [];
   }
 };
 

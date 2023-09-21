@@ -72,6 +72,7 @@ const planRouter = router({
           zod.string().cuid(),
           zod.object({
             indication: zod.string().optional(),
+            conservation: zod.string().optional(),
             posologies: zod
               .object({
                 poso_matin: zod.string().optional(),

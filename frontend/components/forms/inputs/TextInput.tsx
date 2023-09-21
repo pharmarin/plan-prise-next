@@ -27,16 +27,18 @@ const TextInput = forwardRef<
       wrapperClassName,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <div className={twMerge("relative w-full", wrapperClassName)}>
-        {!slideLabel && label && <FormLabel name={props.id}>{label}</FormLabel>}
+        {!slideLabel && label && (
+          <FormLabel htmlFor={props.id}>{label}</FormLabel>
+        )}
         <input
           className={twMerge(
             "peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent p-2 text-sm text-gray-700 focus:border-emerald-600 focus:outline-none focus:ring-0",
             slideLabel && "px-2 pb-2 pt-4",
-            className
+            className,
           )}
           type={type}
           {...props}
@@ -53,7 +55,7 @@ const TextInput = forwardRef<
         {info && <FormInfo>{info}</FormInfo>}
       </div>
     );
-  }
+  },
 );
 
 export default TextInput;

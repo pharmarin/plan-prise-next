@@ -23,7 +23,7 @@ const Plan = async ({ params }: Props) => {
   return (
     <>
       <Navigation title={`Plan de prise n°${params.id}`} />
-      <PlanClient plan={plan} />
+      <PlanClient plan={plan} data-superjson />
     </>
   );
 };

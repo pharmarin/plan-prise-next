@@ -59,10 +59,8 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
 
   const { mutateAsync: saveData } = trpc.plan.saveData.useMutation();
   const saveDataDebounced = debounce(async (data) => {
-    console.log("debounce started");
     setIsSaving(true);
     await saveData(data);
-    console.log("debounce ended");
     setIsSaving(false);
   }, 2000);
 

@@ -7,12 +7,12 @@ const FileInput: React.FC<
 > = ({ className, label, value, ...props }) => {
   return (
     <div>
-      {label && <FormLabel name={props.name}>{label}</FormLabel>}
+      {label && <FormLabel htmlFor={props.name}>{label}</FormLabel>}
       <div className="relative">
         <input
           className={twMerge(
             "relative z-10 m-0 h-10 w-full opacity-0",
-            className
+            className,
           )}
           type="file"
           {...props}

@@ -17,6 +17,7 @@ export enum PlanPrisePosologies {
 
 export type PlanDataItem = {
   indication?: string;
+  conservation?: string;
   posologies?: Record<keyof typeof PlanPrisePosologies, string | undefined>;
   commentaires?: Record<string, { checked?: boolean; texte?: string }>;
   custom_commentaires?: Record<string, { texte: string }>;
