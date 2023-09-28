@@ -1,7 +1,7 @@
 import usePlanStore, { parseData } from "@/app/(auth)/plan/[id]/state";
 import { extractCommentaire } from "@/app/(auth)/plan/_lib/functions";
 import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
-import TextInput from "@/components/forms/inputs/TextInput";
+import TextAreaInput from "@/components/forms/inputs/TextArea";
 import type { Commentaire, Medicament } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
 
@@ -31,7 +31,7 @@ const PlanCommentaire = ({
           )
         }
       />
-      <TextInput
+      <TextAreaInput
         className={twMerge(!comment.checked && "text-gray-400")}
         label={
           commentaire.population && (commentaire.population || "").length > 0
