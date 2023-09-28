@@ -37,7 +37,7 @@ const TextInput = forwardRef<
         <input
           className={twMerge(
             "peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent p-2 text-sm text-gray-700 focus:border-emerald-600 focus:outline-none focus:ring-0",
-            slideLabel && "px-2 pb-2 pt-4",
+            slideLabel && "px-2 pb-2 pt-3",
             className,
           )}
           type={type}
