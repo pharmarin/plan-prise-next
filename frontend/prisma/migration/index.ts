@@ -8,6 +8,7 @@ import {
 } from "@/prisma/migration/1-migrate-old-db";
 import migrateMedicsNew from "@/prisma/migration/2-migrate-medics-new";
 import { migratePlanNew } from "@/prisma/migration/3-migrate-plans";
+import { addMaxIdColumn } from "@/prisma/migration/4-add-maxid-column-users";
 
 const seeder = async () => {
   switch (process.argv?.[2]) {
@@ -23,6 +24,9 @@ const seeder = async () => {
       process.exit();
     case "3":
       await migratePlanNew();
+      process.exit();
+    case "4":
+      await addMaxIdColumn();
       process.exit();
     default:
       console.info("Vous devez fournir au moins un argument");
