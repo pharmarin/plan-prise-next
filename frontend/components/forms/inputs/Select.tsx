@@ -1,4 +1,5 @@
 import FormLabel from "@/components/forms/FormLabel";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { styled, tw } from "classname-variants/react";
 import { type PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
@@ -17,13 +18,18 @@ const SelectBase: React.FC<
   return (
     <div className={twMerge("relative", wrapperClassName)}>
       {label && <FormLabel htmlFor={props.id}>{label}</FormLabel>}
-      <select {...props}>{children}</select>
+      <div className="relative w-fit">
+        <select {...props}>{children}</select>
+        <span className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 my-auto h-4 pr-3">
+          <ChevronDownIcon className="h-4 w-4" />
+        </span>
+      </div>
     </div>
   );
 };
 
 const Select = styled(SelectBase, {
-  base: tw`block rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-teal-500 transition-colors min-w-0`,
+  base: tw`appearance-none font-normal block rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-teal-500 transition-colors min-w-0`,
   variants: {
     size: { sm: tw`pl-2 pr-6 py-[.125rem]`, md: tw`pl-4 pr-8 py-2` },
   },
