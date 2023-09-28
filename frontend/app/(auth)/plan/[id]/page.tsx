@@ -11,7 +11,9 @@ const Plan = async ({ params }: Props) => {
   const plan = await prisma.plan.findFirst({
     where: { id: params.id, user: { id: session?.user.id } },
     include: {
-      medics: true,
+      medics: {
+        include: { commentaires: true, principesActifs: true },
+      },
     },
   });
 

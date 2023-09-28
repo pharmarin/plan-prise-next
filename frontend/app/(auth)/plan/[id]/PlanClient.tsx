@@ -9,7 +9,7 @@ import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
 import { debounce } from "lodash";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Select, { type SelectInstance } from "react-select";
 
 type SelectValueType = {
@@ -97,42 +97,41 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
               type="deleting"
             />
           ) : (
-            <Suspense
+            <PlanCard
               key={`plan_${plan.id}_${id}`}
-              fallback={<PlanCardLoading type="fetching" />}
-            >
-              <PlanCard
-                medicamentId={id}
-                removeMedic={async (medicament: MedicamentIdentifier) => {
-                  setRemovingMedics((state) => [
-                    ...state,
-                    {
-                      id: medicament.id,
-                      denomination: medicament.denomination,
-                    },
-                  ]);
-                  await removeMedicServer({
-                    planId: plan.id,
-                    medicId: medicament.id,
+              medicamentId={id}
+              medicamentData={plan.medics.find(
+                (medicament) => medicament.id === id,
+              )}
+              removeMedic={async (medicament: MedicamentIdentifier) => {
+                setRemovingMedics((state) => [
+                  ...state,
+                  {
+                    id: medicament.id,
+                    denomination: medicament.denomination,
+                  },
+                ]);
+                await removeMedicServer({
+                  planId: plan.id,
+                  medicId: medicament.id,
+                })
+                  .then(() => removeMedic(medicament.id))
+                  .catch(() => {
+                    addNotification(
+                      createNotification({
+                        type: "error",
+                        text: `Impossible de supprimer ${medicament.denomination} pour le moment. Veuillez réessayer.`,
+                        timer: 3000,
+                      }),
+                    );
                   })
-                    .then(() => removeMedic(medicament.id))
-                    .catch(() => {
-                      addNotification(
-                        createNotification({
-                          type: "error",
-                          text: `Impossible de supprimer ${medicament.denomination} pour le moment. Veuillez réessayer.`,
-                          timer: 3000,
-                        }),
-                      );
-                    })
-                    .finally(() => {
-                      setRemovingMedics((state) => [
-                        ...state.filter((medic) => medic.id !== medicament.id),
-                      ]);
-                    });
-                }}
-              />
-            </Suspense>
+                  .finally(() => {
+                    setRemovingMedics((state) => [
+                      ...state.filter((medic) => medic.id !== medicament.id),
+                    ]);
+                  });
+              }}
+            />
           ),
         )}
       {addingMedics.map((row) => (

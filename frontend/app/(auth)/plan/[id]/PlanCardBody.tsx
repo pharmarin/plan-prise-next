@@ -4,18 +4,11 @@ import PlanConservation from "@/app/(auth)/plan/[id]/_inputs/PlanConservation";
 import PlanIndication from "@/app/(auth)/plan/[id]/_inputs/PlanIndication";
 import PlanPosologie from "@/app/(auth)/plan/[id]/_inputs/PlanPosologie";
 import FormLabel from "@/components/forms/FormLabel";
+import type { MedicamentInclude } from "@/types/medicament";
 import { PlanPrisePosologies } from "@/types/plan";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
 
-const PlanCardBody = ({
-  medicament,
-}: {
-  medicament: Medicament & {
-    commentaires: Commentaire[];
-    principesActifs: PrincipeActif[];
-  };
-}) => {
+const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
   const posologies = Object.keys(
     PlanPrisePosologies,
   ) as (keyof typeof PlanPrisePosologies)[];

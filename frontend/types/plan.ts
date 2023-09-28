@@ -1,7 +1,8 @@
-import type { Medicament, Plan } from "@prisma/client";
+import type { MedicamentInclude } from "@/types/medicament";
+import type { Plan } from "@prisma/client";
 
 export type PlanInclude = Plan & {
-  medics: Medicament[];
+  medics: MedicamentInclude[];
   medicsIdSorted: string[];
 };
 
