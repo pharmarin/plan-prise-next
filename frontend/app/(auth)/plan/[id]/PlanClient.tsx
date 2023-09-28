@@ -40,10 +40,13 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const [searchValue, setSearchValue] = useState("");
   const setSearchValueDebounced = debounce(setSearchValue, 500);
   const { data: searchResults, isLoading: isLoadingResults } =
-    trpc.medics.findAll.useQuery({
-      fields: ["denomination"],
-      value: searchValue,
-    });
+    trpc.medics.findAll.useQuery(
+      {
+        fields: ["denomination"],
+        value: searchValue,
+      },
+      { enabled: searchValue.length > 2 },
+    );
 
   const [addingMedics, setAddingMedics] = useState<
     { id: string; denomination: string }[]
@@ -144,12 +147,16 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
       <Select<SelectValueType>
         classNames={{
           control: () => "!border-0 !rounded-lg !shadow-md",
-          menu: () => "!border-0 !rounded-lg !shadow-md",
+          menu: () => "!border-0 !rounded-lg !shadow-md !z-10",
         }}
         getOptionLabel={(option) => option.denomination}
         getOptionValue={(option) => option.id}
         isLoading={isLoadingResults}
-        loadingMessage={() => "Chargement des médicaments en cours"}
+        loadingMessage={({ inputValue }) =>
+          inputValue.length > 2
+            ? "Chargement des médicaments en cours"
+            : "Tapez 3 lettres pour commencer la recherche"
+        }
         menuPlacement="top"
         noOptionsMessage={(p) =>
           p.inputValue.length > 0
