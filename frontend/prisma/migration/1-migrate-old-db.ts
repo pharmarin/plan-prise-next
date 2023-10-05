@@ -12,6 +12,10 @@ import database from "./plandepr_medics.json";
 type UsersMap = { [username: string]: string };
 
 export const migrateUsers = async (): Promise<UsersMap> => {
+  console.log(
+    "Migration n°1 : Migration de l'export de la base de données vers Planetscale",
+  );
+
   const usersMap: {
     [email: string]: { username: string; newId: string };
   } = {};
@@ -19,8 +23,13 @@ export const migrateUsers = async (): Promise<UsersMap> => {
   const usersTable =
     (database as MySQLExport).find(
       (data): data is UsersTable =>
-        data.type === "table" && data.name === "users"
+        data.type === "table" && data.name === "users",
     )?.data || [];
+
+  console.log(
+    "Migration de la table 'users' en cours, %d utilisateurs à migrer",
+    usersTable.length,
+  );
 
   await prisma.user.createMany({
     data: usersTable.map((user) => {
@@ -39,6 +48,8 @@ export const migrateUsers = async (): Promise<UsersMap> => {
     }),
   });
 
+  console.log("Migration de la table 'users' terminée");
+
   (
     await prisma.user.findMany({
       select: { id: true, email: true },
@@ -48,7 +59,7 @@ export const migrateUsers = async (): Promise<UsersMap> => {
   });
 
   return Object.fromEntries(
-    Object.values(usersMap).map((value) => [value.username, value.newId])
+    Object.values(usersMap).map((value) => [value.username, value.newId]),
   );
 };
 
@@ -56,20 +67,32 @@ export const migratePrecautions = async () => {
   const precautionsTable =
     (database as MySQLExport).find(
       (data): data is PrecautionsTable =>
-        data.type === "table" && data.name === "precautions"
+        data.type === "table" && data.name === "precautions",
     )?.data || [];
+
+  console.log(
+    "Migration de la table 'precautions' en cours, %d utilisateurs à migrer",
+    precautionsTable.length,
+  );
 
   await prisma.precautions_old.createMany({
     data: precautionsTable.map(({ id: _id, ...precaution }) => precaution),
   });
+
+  console.log("Migration de la table 'precautions' terminée");
 };
 
 export const migrateMedics = async () => {
   const medicsTable =
     (database as MySQLExport).find(
       (data): data is MedicsTable =>
-        data.type === "table" && data.name === "medics_simple"
+        data.type === "table" && data.name === "medics_simple",
     )?.data || [];
+
+  console.log(
+    "Migration de la table 'medics' en cours, %d utilisateurs à migrer",
+    medicsTable.length,
+  );
 
   await prisma.medics_simple.createMany({
     data: medicsTable.map((medic) => {
@@ -83,19 +106,35 @@ export const migrateMedics = async () => {
         frigo: medic.frigo === "1",
         dureeConservation: medic.dureeConservation || null,
         voieAdministration: medic.voieAdministration || null,
-        commentaire: medic.commentaire ? JSON.stringify(JSON.parse((medic.commentaire.startsWith("[") ? medic.commentaire : `[${medic.commentaire}]`).replaceAll("\\'", "'"))) : null,
+        commentaire: medic.commentaire
+          ? JSON.stringify(
+              JSON.parse(
+                (medic.commentaire.startsWith("[")
+                  ? medic.commentaire
+                  : `[${medic.commentaire}]`
+                ).replaceAll("\\'", "'"),
+              ),
+            )
+          : null,
         precaution: medic.precaution || null,
       };
     }),
   });
+
+  console.log("Migration de la table 'medics' terminée");
 };
 
 export const migrateCalendars = async (users: UsersMap) => {
   const calendarsTable =
     (database as MySQLExport).find(
       (data): data is CalendarsTable =>
-        data.type === "table" && data.name === "calendriers"
+        data.type === "table" && data.name === "calendriers",
     )?.data || [];
+
+  console.log(
+    "Migration de la table 'calendars' en cours, %d utilisateurs à migrer",
+    calendarsTable.length,
+  );
 
   await prisma.calendriers_old.createMany({
     data: calendarsTable.map(({ id: _id, ...calendar }) => ({
@@ -104,14 +143,21 @@ export const migrateCalendars = async (users: UsersMap) => {
       TIME: new Date(calendar.TIME),
     })),
   });
+
+  console.log("Migration de la table 'calendars' terminée");
 };
 
 export const migratePlans = async (users: UsersMap) => {
   const plansTable =
     (database as MySQLExport).find(
       (data): data is PlansTable =>
-        data.type === "table" && data.name === "plans"
+        data.type === "table" && data.name === "plans",
     )?.data || [];
+
+  console.log(
+    "Migration de la table 'plans' en cours, %d utilisateurs à migrer",
+    plansTable.length,
+  );
 
   await prisma.plans_old.createMany({
     data: plansTable.map(({ id: _id, ...plan }) => ({
@@ -120,4 +166,6 @@ export const migratePlans = async (users: UsersMap) => {
       TIME: new Date(plan.TIME),
     })),
   });
+
+  console.log("Migration de la table 'plans' terminée");
 };

@@ -8,6 +8,7 @@ import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
+import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import Select, { type SelectInstance } from "react-select";
@@ -103,9 +104,22 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
             <PlanCard
               key={`plan_${plan.id}_${id}`}
               medicamentId={id}
-              medicamentData={plan.medics.find(
-                (medicament) => medicament.id === id,
-              )}
+              medicamentData={
+                isCuid(id)
+                  ? plan.medics.find((medicament) => medicament.id === id)
+                  : {
+                      id,
+                      denomination: id,
+                      indications: [],
+                      conservationFrigo: false,
+                      conservationDuree: [],
+                      voiesAdministration: [],
+                      commentaires: [],
+                      precaution: "",
+                      medics_simpleId: 0,
+                      principesActifs: [],
+                    }
+              }
               removeMedic={async (medicament: MedicamentIdentifier) => {
                 setRemovingMedics((state) => [
                   ...state,

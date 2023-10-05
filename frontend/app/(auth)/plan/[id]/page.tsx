@@ -8,8 +8,9 @@ type Props = { params: { id: string } };
 
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();
+
   const plan = await prisma.plan.findFirst({
-    where: { id: params.id, user: { id: session?.user.id } },
+    where: { displayId: Number(params.id), user: { id: session?.user.id } },
     include: {
       medics: {
         include: { commentaires: true, principesActifs: true },
@@ -24,13 +25,13 @@ const Plan = async ({ params }: Props) => {
 
   return (
     <>
-      <Navigation title={`Plan de prise n°${params.id}`} />
+      <Navigation title={`Plan de prise n°${plan.displayId}`} />
       <PlanClient plan={plan} data-superjson />
     </>
   );
 };
 export default Plan;
 
-export const generateMetadata = ({ params }: Props) => ({
-  title: `Plan de prise n°${params.id}`,
-});
+export const metadata = {
+  title: "Plan de prise",
+};

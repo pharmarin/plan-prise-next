@@ -10,14 +10,15 @@ const PlansIndex = async () => {
         id: session?.user.id,
       },
     },
-    select: { id: true },
+    select: { displayId: true },
+    orderBy: { displayId: "asc" },
   });
 
   return (
     <div className="flex flex-col">
       {plans.map((plan) => (
-        <Link key={plan.id} href={`/plan/${plan.id}`}>
-          {plan.id}
+        <Link key={plan.displayId} href={`/plan/${plan.displayId}`}>
+          {plan.displayId}
         </Link>
       ))}
     </div>

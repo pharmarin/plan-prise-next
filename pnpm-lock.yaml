@@ -74,6 +74,9 @@ importers:
       classname-variants:
         specifier: github:pharmarin/classname-variants
         version: github.com/pharmarin/classname-variants/35d5b981e3d585f5b1927d7e2444b4b235c5799e
+      cli-progress:
+        specifier: ^3.12.0
+        version: 3.12.0
       formik:
         specifier: 2.4.5
         version: 2.4.5(react@18.2.0)
@@ -165,6 +168,9 @@ importers:
       '@types/bcrypt':
         specifier: 5.0.0
         version: 5.0.0
+      '@types/cli-progress':
+        specifier: ^3.11.3
+        version: 3.11.3
       '@types/lodash':
         specifier: 4.14.198
         version: 4.14.198
@@ -903,6 +909,12 @@ packages:
       '@types/node': 18.17.18
     dev: true
 
+  /@types/cli-progress@3.11.3:
+    resolution: {integrity: sha512-/+C9xAdVtc+g5yHHkGBThgAA8rYpi5B+2ve3wLtybYj0JHEBs57ivR4x/zGfSsplRnV+psE91Nfin1soNKqz5Q==}
+    dependencies:
+      '@types/node': 18.17.18
+    dev: true
+
   /@types/eslint@8.44.2:
     resolution: {integrity: sha512-sdPRb9K6iL5XZOmBubg8yiFp5yS/JdUDQsq5e6h95km91MCYMuvp7mh1fjPEYUhvHepKpZOjnEaMBR4PxjWDzg==}
     dependencies:
@@ -1546,6 +1558,13 @@ packages:
   /chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
+    dev: false
+
+  /cli-progress@3.12.0:
+    resolution: {integrity: sha512-tRkV3HJ1ASwm19THiiLIXLO7Im7wlTuKnvkYaTkyoAPefqjNg7W7DHKUlGRxy9vxDvbyCYQkQozvptuMkGCg8A==}
+    engines: {node: '>=4'}
+    dependencies:
+      string-width: 4.2.3
     dev: false
 
   /client-only@0.0.1:

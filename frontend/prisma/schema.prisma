@@ -124,6 +124,7 @@ model Plan {
   settings    Json?
   user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String?
+  displayId   Int
 
   @@index([userId])
   @@map("plans")

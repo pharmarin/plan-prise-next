@@ -1,4 +1,5 @@
 import type { PlanInclude } from "@/types/plan";
+import { createId } from "@paralleldrive/cuid2";
 import { PrismaClient } from "@prisma/client";
 import { isEqual, sortBy } from "lodash";
 
@@ -8,6 +9,26 @@ const extendedClient = () => {
   });
 
   return prisma.$extends({
+    query: {
+      $allModels: {
+        async create({ args, query }) {
+          if ("data" in args && args.data) {
+            args.data.id = createId();
+          }
+
+          return query(args);
+        },
+        async createMany({ args, query }) {
+          if (Array.isArray(args.data)) {
+            args.data.map((user) => (user.id = createId()));
+          } else {
+            args.data.id = createId();
+          }
+
+          return query(args);
+        },
+      },
+    },
     result: {
       plan: {
         medicsIdSorted: {
