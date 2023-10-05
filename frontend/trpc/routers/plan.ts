@@ -62,6 +62,18 @@ const planRouter = router({
         return MUTATION_SUCCESS;
       }
     }),
+  delete: authProcedure
+    .input(z.string().cuid2())
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.plan.delete({
+        where: {
+          id: input,
+          user: { id: ctx.user.id },
+        },
+      });
+
+      return MUTATION_SUCCESS;
+    }),
   removeMedic: authProcedure
     .input(
       z.object({ planId: z.string().cuid2(), medicId: z.string().cuid2() }),

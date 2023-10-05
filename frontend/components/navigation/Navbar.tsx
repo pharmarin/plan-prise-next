@@ -1,6 +1,6 @@
 "use client";
 
-import PlanNavbarIndicator from "@/app/(auth)/plan/_components/PlanNavbarIndicator";
+import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/PlanNavbarStack";
 import Avatar from "@/components/icons/Avatar";
 import Spinner from "@/components/icons/Spinner";
 import Logo from "@/components/navigation/Logo";
@@ -42,7 +42,7 @@ const Navbar = () => {
         className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
         <div>{title}</div>
-        {pathname.startsWith("/plan/") && <PlanNavbarIndicator />}
+        {pathname.startsWith("/plan/") && <PlanNavbarStack />}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">
