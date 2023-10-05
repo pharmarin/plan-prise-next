@@ -1,7 +1,5 @@
-import type { PlanInclude } from "@/types/plan";
 import { createId } from "@paralleldrive/cuid2";
 import { PrismaClient } from "@prisma/client";
-import { isEqual, sortBy } from "lodash";
 
 const extendedClient = () => {
   const prisma = new PrismaClient({
@@ -26,27 +24,6 @@ const extendedClient = () => {
           }
 
           return query(args);
-        },
-      },
-    },
-    result: {
-      plan: {
-        medicsIdSorted: {
-          needs: { medicsOrder: true },
-          compute: (plan) => {
-            const medicsId = (plan as unknown as PlanInclude).medics.map(
-              (medic) => medic.id,
-            );
-
-            if (
-              Array.isArray(plan.medicsOrder) &&
-              isEqual(sortBy(plan.medicsOrder), sortBy(medicsId))
-            ) {
-              return plan.medicsOrder as string[];
-            }
-
-            return medicsId;
-          },
         },
       },
     },

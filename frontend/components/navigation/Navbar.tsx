@@ -1,6 +1,6 @@
 "use client";
 
-import PlanNavbarIndicator from "@/app/(auth)/plan/[id]/PlanNavbarIndicator";
+import PlanNavbarIndicator from "@/app/(auth)/plan/_components/PlanNavbarIndicator";
 import Avatar from "@/components/icons/Avatar";
 import Spinner from "@/components/icons/Spinner";
 import Logo from "@/components/navigation/Logo";

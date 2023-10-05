@@ -1,8 +1,9 @@
 "use client";
 
-import PlanCard from "@/app/(auth)/plan/[id]/PlanCard";
-import PlanCardLoading from "@/app/(auth)/plan/[id]/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/[id]/state";
+import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
+import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
+import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import useNotificationsStore, { createNotification } from "@/app/notifications";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";
@@ -10,8 +11,9 @@ import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import Select, { type SelectInstance } from "react-select";
+import ReactSelect, { type SelectInstance } from "react-select";
 
 type SelectValueType = {
   denomination: string;
@@ -20,6 +22,9 @@ type SelectValueType = {
 };
 
 const PlanClient = ({ plan }: { plan: PlanInclude }) => {
+  const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
+  const router = useRouter();
+
   const [ready, setReady] = useState(false);
 
   const { init, addMedic, removeMedic, setIsSaving } = usePlanStore(
@@ -35,8 +40,6 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const addNotification = useNotificationsStore(
     (state) => state.addNotification,
   );
-
-  const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
 
   const [searchValue, setSearchValue] = useState("");
   const setSearchValueDebounced = debounce(setSearchValue, 500);
@@ -74,12 +77,16 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   }, [init, plan]);
 
   useEffect(() => {
-    usePlanStore.subscribe(
-      (state) => state.data,
-      async (data) => {
-        await saveDataDebounced({ planId: plan.id, data: data });
+    const unsubscribe = usePlanStore.subscribe(
+      (state) => ({ id: state.id, data: state.data }),
+      async (newState, previousState) => {
+        if (previousState.id !== PLAN_NEW && newState.data !== null) {
+          await saveDataDebounced({ planId: newState.id, data: newState.data });
+        }
       },
     );
+
+    return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -158,7 +165,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
           type="adding"
         />
       ))}
-      <Select<SelectValueType>
+      <ReactSelect<SelectValueType>
         classNames={{
           control: () => "!border-0 !rounded-lg !shadow-md",
           menu: () => "!border-0 !rounded-lg !shadow-md !z-10",
@@ -171,7 +178,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
             ? "Chargement des médicaments en cours"
             : "Tapez 3 lettres pour commencer la recherche"
         }
-        menuPlacement="top"
+        menuPlacement={plan.id === PLAN_NEW ? "bottom" : "top"}
         noOptionsMessage={(p) =>
           p.inputValue.length > 0
             ? "Aucun résultat"
@@ -188,8 +195,15 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
               planId: plan.id,
               medicId: value.id,
             })
-              .then(() => {
-                addMedic(value.id);
+              .then((response) => {
+                if (plan.id === PLAN_NEW) {
+                  if (typeof response === "object" && "id" in response) {
+                    init(response);
+                    router.replace(`/plan/${response.displayId}`);
+                  }
+                } else {
+                  addMedic(value.id);
+                }
               })
               .catch(() => {
                 addNotification(
@@ -209,6 +223,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
           }
         }}
         onInputChange={(value) => setSearchValueDebounced(value)}
+        openMenuOnFocus={true}
         options={(searchResults || []).map((result) => ({
           denomination: result.denomination,
           principesActifs: result.principesActifs.map(
@@ -217,7 +232,10 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
           id: result.id,
         }))}
         placeholder="Ajouter un médicament"
-        ref={selectRef}
+        ref={(ref) => {
+          selectRef.current = ref;
+          plan.id === PLAN_NEW && ref?.focus();
+        }}
       />
     </div>
   );

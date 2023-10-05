@@ -1,7 +1,7 @@
-import PlanCardBody from "@/app/(auth)/plan/[id]/PlanCardBody";
-import PlanCardHeader from "@/app/(auth)/plan/[id]/PlanCardHeader";
-import PlanCardLoading from "@/app/(auth)/plan/[id]/PlanCardLoading";
-import PlanCardUI from "@/app/(auth)/plan/[id]/_ui/PlanCardUI";
+import PlanCardBody from "@/app/(auth)/plan/_components/PlanCardBody";
+import PlanCardHeader from "@/app/(auth)/plan/_components/PlanCardHeader";
+import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
+import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
 import { trpc } from "@/trpc/client";
 import type {
   MedicamentIdentifier,
@@ -35,12 +35,12 @@ const PlanCard = ({
   return (
     <PlanCardUI>
       <PlanCardHeader
-        // @ts-expect-error undefined
+        // @ts-expect-error unexpected
         medicament={medicamentData || medicament}
         removeMedic={removeMedic}
       />
       <PlanCardBody
-        // @ts-expect-error undefined
+        // @ts-expect-error unexpected
         medicament={medicamentData || medicament}
       />
     </PlanCardUI>

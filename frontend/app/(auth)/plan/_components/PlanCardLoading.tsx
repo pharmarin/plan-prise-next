@@ -1,7 +1,7 @@
 "use client";
 
-import PlanCardHeaderUI from "@/app/(auth)/plan/[id]/_ui/PlanCardHeaderUI";
-import PlanCardUI from "@/app/(auth)/plan/[id]/_ui/PlanCardUI";
+import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
+import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
 import Logo from "@/components/navigation/Logo";
 
 const PlanCardLoading = (

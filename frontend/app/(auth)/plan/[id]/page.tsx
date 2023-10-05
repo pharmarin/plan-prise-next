@@ -1,4 +1,4 @@
-import PlanClient from "@/app/(auth)/plan/[id]/PlanClient";
+import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
 import Navigation from "@/components/navigation/Navigation";
 import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";

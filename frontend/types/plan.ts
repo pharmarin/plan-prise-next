@@ -3,7 +3,6 @@ import type { Plan } from "@prisma/client";
 
 export type PlanInclude = Plan & {
   medics: MedicamentInclude[];
-  medicsIdSorted: string[];
 };
 
 export enum PlanPrisePosologies {

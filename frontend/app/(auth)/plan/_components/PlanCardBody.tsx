@@ -1,8 +1,8 @@
-import PlanCommentaire from "@/app/(auth)/plan/[id]/_inputs/PlanCommentaire";
-import PlanCommentaireCustom from "@/app/(auth)/plan/[id]/_inputs/PlanCommentaireCustom";
-import PlanConservation from "@/app/(auth)/plan/[id]/_inputs/PlanConservation";
-import PlanIndication from "@/app/(auth)/plan/[id]/_inputs/PlanIndication";
-import PlanPosologie from "@/app/(auth)/plan/[id]/_inputs/PlanPosologie";
+import PlanCommentaire from "@/app/(auth)/plan/_components/_inputs/PlanCommentaire";
+import PlanCommentaireCustom from "@/app/(auth)/plan/_components/_inputs/PlanCommentaireCustom";
+import PlanConservation from "@/app/(auth)/plan/_components/_inputs/PlanConservation";
+import PlanIndication from "@/app/(auth)/plan/_components/_inputs/PlanIndication";
+import PlanPosologie from "@/app/(auth)/plan/_components/_inputs/PlanPosologie";
 import FormLabel from "@/components/forms/FormLabel";
 import type { MedicamentInclude } from "@/types/medicament";
 import { PlanPrisePosologies } from "@/types/plan";
