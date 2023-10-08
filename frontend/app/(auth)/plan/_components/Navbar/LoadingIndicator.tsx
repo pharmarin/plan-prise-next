@@ -1,8 +1,12 @@
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import Tooltip from "@/components/Tooltip";
-import Spinner from "@/components/icons/Spinner";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { CheckCircle2, Loader2 } from "lucide-react";
 
 const PlanNavbarIndicator = () => {
   const isSaving = usePlanStore((state) => state.isSaving);
@@ -15,17 +19,27 @@ const PlanNavbarIndicator = () => {
   }
 
   return (
-    <div>
+    <TooltipProvider>
       {isSaving ? (
-        <Tooltip message="⏳ Sauvegarde en cours">
-          <Spinner className="h-3 w-3 text-teal-900" />
+        <Tooltip>
+          <TooltipTrigger>
+            <Loader2 className="h-4 w-4 text-teal-900" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>⏳ Sauvegarde en cours</p>
+          </TooltipContent>
         </Tooltip>
       ) : (
-        <Tooltip message="✅ Plan de prise sauvegardé">
-          <CheckCircleIcon className="h-4 w-4 text-teal-600" />
+        <Tooltip>
+          <TooltipTrigger>
+            <CheckCircle2 className="h-4 w-4 text-teal-600" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>✅ Plan de prise sauvegardé</p>
+          </TooltipContent>
         </Tooltip>
       )}
-    </div>
+    </TooltipProvider>
   );
 };
 

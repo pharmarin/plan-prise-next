@@ -45,7 +45,7 @@ const Settings = () => {
         if (previousState.id !== PLAN_NEW && newState.settings !== null) {
           await saveSettingsDebounced({
             planId: newState.id,
-            data: newState.settings,
+            settings: newState.settings,
           });
         }
       },
