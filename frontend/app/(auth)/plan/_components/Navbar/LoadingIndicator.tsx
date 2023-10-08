@@ -1,5 +1,5 @@
-import usePlanStore from "@/app/(auth)/plan/[id]/state";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
+import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import Tooltip from "@/components/Tooltip";
 import Spinner from "@/components/icons/Spinner";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";

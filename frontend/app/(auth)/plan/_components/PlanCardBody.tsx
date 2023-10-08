@@ -3,15 +3,16 @@ import PlanCommentaireCustom from "@/app/(auth)/plan/_components/Inputs/PlanComm
 import PlanConservation from "@/app/(auth)/plan/_components/Inputs/PlanConservation";
 import PlanIndication from "@/app/(auth)/plan/_components/Inputs/PlanIndication";
 import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
+import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import FormLabel from "@/components/forms/FormLabel";
 import type { MedicamentInclude } from "@/types/medicament";
-import { PlanPrisePosologies } from "@/types/plan";
+import type { PlanSettings } from "@/types/plan";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
 const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
-  const posologies = Object.keys(
-    PlanPrisePosologies,
-  ) as (keyof typeof PlanPrisePosologies)[];
+  const posologies = usePlanStore(
+    (state) => (state.settings as PlanSettings)?.posos,
+  );
 
   return (
     <div className="flex flex-col space-y-2 p-4 pt-2">
@@ -30,13 +31,19 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
         )}
       </div>
       <div className="flex space-x-2">
-        {posologies.map((posologie) => (
-          <PlanPosologie
-            key={`${medicament.id}.${posologie}`}
-            medicament={medicament}
-            name={posologie}
-          />
-        ))}
+        {Object.entries(posologies)
+          .map(([key, value]) => value && key)
+          .filter(
+            (posologie): posologie is keyof typeof posologies =>
+              posologie !== false,
+          )
+          .map((posologie) => (
+            <PlanPosologie
+              key={`${medicament.id}.${posologie}`}
+              medicament={medicament}
+              name={posologie}
+            />
+          ))}
       </div>
       <div>
         <FormLabel>Commentaires</FormLabel>

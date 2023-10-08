@@ -22,3 +22,7 @@ export type PlanDataItem = {
   commentaires?: Record<string, { checked?: boolean; texte?: string }>;
   custom_commentaires?: Record<string, { texte: string }>;
 };
+
+export type PlanSettings = {
+  posos: Record<keyof typeof PlanPrisePosologies, boolean>;
+};

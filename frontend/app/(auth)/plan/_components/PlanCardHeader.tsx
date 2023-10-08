@@ -1,5 +1,5 @@
-import { parseVoieAdministration } from "@/app/(auth)/plan/[id]/state";
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
+import { parseVoieAdministration } from "@/app/(auth)/plan/_lib/state";
 import Button from "@/components/forms/inputs/Button";
 import type {
   MedicamentIdentifier,

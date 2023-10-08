@@ -1,6 +1,7 @@
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { authProcedure, router } from "@/trpc/trpc";
+import { planSettingsSchema } from "@/validation/plan";
 import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
@@ -154,6 +155,18 @@ const planRouter = router({
         data: {
           data: input.data,
         },
+      });
+
+      return MUTATION_SUCCESS;
+    }),
+  saveSettings: authProcedure
+    .input(
+      z.object({ planId: z.string().cuid2(), settings: planSettingsSchema }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.plan.update({
+        where: { id: input.planId, user: { id: ctx.user.id } },
+        data: { settings: input.settings },
       });
 
       return MUTATION_SUCCESS;

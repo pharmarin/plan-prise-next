@@ -1,6 +1,6 @@
 "use client";
 
-import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/PlanNavbarStack";
+import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
 import Avatar from "@/components/icons/Avatar";
 import Spinner from "@/components/icons/Spinner";
 import Logo from "@/components/navigation/Logo";

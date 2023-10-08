@@ -1,5 +1,5 @@
-import usePlanStore, { parseData } from "@/app/(auth)/plan/[id]/state";
 import { extractIndication } from "@/app/(auth)/plan/_lib/functions";
+import usePlanStore, { parseData } from "@/app/(auth)/plan/_lib/state";
 import Select from "@/components/forms/inputs/Select";
 import TextInput from "@/components/forms/inputs/TextInput";
 import type { Medicament } from "@prisma/client";

@@ -1,4 +1,4 @@
-import usePlanStore, { parseData } from "@/app/(auth)/plan/[id]/state";
+import usePlanStore, { parseData } from "@/app/(auth)/plan/_lib/state";
 import Button from "@/components/forms/inputs/Button";
 import TextAreaInput from "@/components/forms/inputs/TextArea";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";

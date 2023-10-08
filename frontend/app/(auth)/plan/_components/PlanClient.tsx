@@ -1,9 +1,9 @@
 "use client";
 
-import usePlanStore from "@/app/(auth)/plan/[id]/state";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
+import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import useNotificationsStore, { createNotification } from "@/app/notifications";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { trpc } from "@/trpc/client";

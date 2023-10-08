@@ -1,9 +1,10 @@
 "use client";
 
+import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
 import type { PlanDataItem, PlanInclude } from "@/types/plan";
 import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
-import { set, unset } from "lodash";
+import { merge, set, unset } from "lodash";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -23,6 +24,7 @@ type Actions = {
   addMedic: (id: string) => void;
   removeMedic: (id: string) => void;
   setIsSaving: (isSaving: boolean) => void;
+  setSetting: (path: string, value: boolean) => void;
 };
 
 const usePlanStore = create(
@@ -40,7 +42,7 @@ const usePlanStore = create(
           state.medics = Array.isArray(plan.medicsOrder)
             ? (plan.medicsOrder as string[])
             : [];
-          state.settings = plan.settings;
+          state.settings = merge(PLAN_SETTINGS_DEFAULT, plan.settings);
         }),
       setData: (path, value) => {
         setState((state) => {
@@ -66,6 +68,10 @@ const usePlanStore = create(
       setIsSaving: (isSaving) =>
         setState((state) => {
           state.isSaving = isSaving;
+        }),
+      setSetting: (path, value) =>
+        setState((state) => {
+          set((state.settings || {}) as object, path, value) as JsonValue;
         }),
     })),
   ),

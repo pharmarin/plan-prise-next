@@ -1,5 +1,5 @@
-import usePlanStore, { parseData } from "@/app/(auth)/plan/[id]/state";
 import { extractConservation } from "@/app/(auth)/plan/_lib/functions";
+import usePlanStore, { parseData } from "@/app/(auth)/plan/_lib/state";
 import FormLabel from "@/components/forms/FormLabel";
 import Button from "@/components/forms/inputs/Button";
 import Select from "@/components/forms/inputs/Select";

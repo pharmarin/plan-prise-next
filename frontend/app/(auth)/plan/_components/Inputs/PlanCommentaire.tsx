@@ -1,5 +1,5 @@
-import usePlanStore, { parseData } from "@/app/(auth)/plan/[id]/state";
 import { extractCommentaire } from "@/app/(auth)/plan/_lib/functions";
+import usePlanStore, { parseData } from "@/app/(auth)/plan/_lib/state";
 import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
 import TextAreaInput from "@/components/forms/inputs/TextArea";
 import type { Commentaire, Medicament } from "@prisma/client";
