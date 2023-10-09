@@ -6,6 +6,7 @@ export type PlanInclude = Plan & {
 };
 
 export enum PlanPrisePosologies {
+  "poso_lever" = "Lever",
   "poso_matin" = "Matin",
   "poso_10h" = "10h",
   "poso_midi" = "Midi",

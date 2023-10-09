@@ -49,6 +49,7 @@ export const migratePlanNew = async () => {
 
     let data = JSON.parse(plan.data) as (medics_simple & {
       dixhuith: string;
+      lever: string;
     })[];
 
     if (!Array.isArray(data)) {
@@ -97,12 +98,17 @@ export const migratePlanNew = async () => {
                 : formatString(customData?.indication || "")
               : formatString(customData?.indication || ""),
           posologies:
+            customData?.lever ||
             customData?.matin ||
             customData?.midi ||
             customData?.dixhuith ||
             customData?.soir ||
             customData?.coucher
               ? {
+                  poso_lever:
+                    customData?.lever && customData?.lever.length > 0
+                      ? formatString(customData?.lever)
+                      : undefined,
                   poso_matin:
                     customData?.matin && customData?.matin.length > 0
                       ? formatString(customData?.matin)

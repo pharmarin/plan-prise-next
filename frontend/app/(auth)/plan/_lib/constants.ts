@@ -4,6 +4,7 @@ export const PLAN_NEW = "PLAN_NEW";
 
 export const PLAN_SETTINGS_DEFAULT: PlanSettings = {
   posos: {
+    poso_lever: false,
     poso_matin: true,
     poso_10h: false,
     poso_midi: true,
