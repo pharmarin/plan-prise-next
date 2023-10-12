@@ -13,7 +13,7 @@ export const Table = ({
   <View
     style={tw(
       twMerge(
-        "flex w-auto border border-solid border-r-0 border-b-0",
+        "flex flex-col justify-start items-start h-auto w-auto border border-solid border-r-0 border-b-0",
         className,
       ),
     )}
@@ -24,7 +24,7 @@ export const Table = ({
 );
 
 export const Row = ({ children }: PropsWithChildren) => (
-  <View style={tw("w-full m-auto flex-row justify-start")} wrap={false}>
+  <View style={tw("w-full m-auto mt-0 flex-row justify-start")}>
     {children}
   </View>
 );
@@ -43,7 +43,6 @@ export const Col = ({
       ),
       { lineHeight: 1 },
     ]}
-    wrap={false}
   >
     {children}
   </View>
