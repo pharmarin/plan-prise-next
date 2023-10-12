@@ -1,8 +1,8 @@
 "use client";
 
 import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
-import type { PlanDataItem, PlanInclude } from "@/types/plan";
-import { VoieAdministration, type Medicament, type Plan } from "@prisma/client";
+import type { PlanInclude } from "@/types/plan";
+import { type Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 import { merge, set, unset } from "lodash";
 import { create } from "zustand";
@@ -78,59 +78,3 @@ const usePlanStore = create(
 );
 
 export default usePlanStore;
-
-export const parseData = (data?: Plan["data"]) => {
-  if (typeof data === "object" && data) {
-    return data as Record<string, PlanDataItem>;
-  } else {
-    return {};
-  }
-};
-
-export const parseVoieAdministration = (
-  voiesAdministration: Medicament["voiesAdministration"],
-): string[] => {
-  if (
-    Array.isArray(voiesAdministration) &&
-    voiesAdministration.every((voieAdministration) =>
-      Object.values(VoieAdministration).includes(
-        voieAdministration as VoieAdministration,
-      ),
-    )
-  ) {
-    return voiesAdministration.map((voieAdministration) => {
-      switch (voieAdministration) {
-        case VoieAdministration.AURICULAIRE:
-          return "auriculaire";
-        case VoieAdministration.AUTRE:
-          return "inconnue";
-        case VoieAdministration.CUTANEE:
-          return "cutanée";
-        case VoieAdministration.INHALEE:
-          return "inhalée";
-        case VoieAdministration.INTRA_MUSCULAIRE:
-          return "intra-musculaire";
-        case VoieAdministration.INTRA_URETRALE:
-          return "intra-urétrale";
-        case VoieAdministration.INTRA_VEINEUX:
-          return "intra-veineuse";
-        case VoieAdministration.NASALE:
-          return "nasale";
-        case VoieAdministration.OCULAIRE:
-          return "oculaire";
-        case VoieAdministration.ORALE:
-          return "orale";
-        case VoieAdministration.RECTALE:
-          return "rectale";
-        case VoieAdministration.SOUS_CUTANEE:
-          return "sous-cutanée";
-        case VoieAdministration.VAGINALE:
-          return "vaginale";
-        default:
-          return "";
-      }
-    });
-  } else {
-    return [];
-  }
-};

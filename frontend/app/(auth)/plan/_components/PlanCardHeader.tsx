@@ -1,5 +1,5 @@
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
-import { parseVoieAdministration } from "@/app/(auth)/plan/_lib/state";
+import { extractVoieAdministration } from "@/app/(auth)/plan/_lib/functions";
 import Button from "@/components/forms/inputs/Button";
 import type {
   MedicamentIdentifier,
@@ -64,9 +64,7 @@ const PlanCardHeader = ({
         >
           {medicament?.voiesAdministration &&
             `Voie 
-          ${parseVoieAdministration(medicament.voiesAdministration).join(
-            " ou ",
-          )}`}
+          ${extractVoieAdministration(medicament).join(" ou ")}`}
         </small>
       </div>
     </PlanCardHeaderUI>

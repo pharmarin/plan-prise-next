@@ -24,5 +24,7 @@
   "USER_REGISTER_CONFLICT": "Un utilisateur est déjà inscrit avec cette adresse email",
   "USER_REGISTER_ERROR": "Une erreur est survenue lors de l'inscription",
   "USER_REGISTER_WARNING": "Votre inscription a bien été prise en compte mais une erreur est survenue",
-  "MEDICAMENT_LOADING_ERROR": "Une erreur est survenue lors du chargement du médicament"
+  "MEDICAMENT_LOADING_ERROR": "Une erreur est survenue lors du chargement du médicament",
+  "PLAN_INDICATION_LENGTH_ERROR": "Veuillez sélectionner une indication pour chaque médicament",
+  "PLAN_CONSERVATION_LENGTH_ERROR": "Veuillez sélectionner une durée de conservation pour chaque médicament"
 }
