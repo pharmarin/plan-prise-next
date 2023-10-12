@@ -5,14 +5,28 @@ import { twMerge } from "tailwind-merge";
 
 const tw = createTw({});
 
-export const Table = ({ children }: PropsWithChildren) => (
-  <View style={tw("flex w-auto border border-solid border-r-0 border-b-0")}>
+export const Table = ({
+  children,
+  className,
+  fixed,
+}: PropsWithChildren & { className?: string; fixed?: boolean }) => (
+  <View
+    style={tw(
+      twMerge(
+        "flex w-auto border border-solid border-r-0 border-b-0",
+        className,
+      ),
+    )}
+    fixed={fixed}
+  >
     {children}
   </View>
 );
 
 export const Row = ({ children }: PropsWithChildren) => (
-  <View style={tw("w-full m-auto flex-row justify-start")}>{children}</View>
+  <View style={tw("w-full m-auto flex-row justify-start")} wrap={false}>
+    {children}
+  </View>
 );
 
 export const Col = ({
@@ -29,6 +43,7 @@ export const Col = ({
       ),
       { lineHeight: 1 },
     ]}
+    wrap={false}
   >
     {children}
   </View>

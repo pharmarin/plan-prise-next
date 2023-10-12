@@ -11,7 +11,7 @@ const ViewPDF = (props: ReactPDF.PDFViewerProps) => {
     },
   );
 
-  return <PDFViewer {...props} />;
+  return <PDFViewer className="h-screen w-full" {...props} />;
 };
 
 export default ViewPDF;
