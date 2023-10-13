@@ -156,110 +156,105 @@ const PlanPrintClient = ({
               <Header>Commentaires</Header>
             </Row>
           </Table>
-          <Table>
-            {[...planMedicsOrder, ...planMedicsOrder].map((medicamentId) => {
-              const medicament = isCuid(medicamentId)
-                ? plan.medics.find((medic) => medic.id === medicamentId)
-                : { denomination: medicamentId };
+          {[...planMedicsOrder, ...planMedicsOrder].map((medicamentId) => {
+            const medicament = isCuid(medicamentId)
+              ? plan.medics.find((medic) => medic.id === medicamentId)
+              : { denomination: medicamentId };
 
-              if (!medicament) {
-                return undefined;
+            if (!medicament) {
+              return undefined;
+            }
+
+            const rowData =
+              medicamentId in planData ? planData[medicamentId] : {};
+
+            const rowIndication = extractIndication(
+              medicament,
+              rowData.indication,
+            );
+
+            const rowFrigo =
+              "conservationFrigo" in medicament && medicament.conservationFrigo
+                ? "Se conserve au frigo avant ouverture"
+                : "";
+
+            const rowConservation = extractConservation(
+              medicament,
+              rowData.conservation,
+            ).values.map((conservation, key) => {
+              if (key > 1) {
+                throw new PP_Error("PLAN_CONSERVATION_LENGTH_ERROR");
               }
+              return `Se conserve ${conservation.duree}`;
+            })[0];
 
-              const rowData =
-                medicamentId in planData ? planData[medicamentId] : {};
+            if (rowIndication.length > 1) {
+              throw new PP_Error("PLAN_INDICATION_LENGTH_ERROR");
+            }
+            const rowPrincipesActifs =
+              "principesActifs" in medicament
+                ? medicament.principesActifs
+                    .map((principeActif) => principeActif.denomination)
+                    .join(", ")
+                : "";
 
-              const rowIndication = extractIndication(
-                medicament,
-                rowData.indication,
-              );
+            const rowVoiesAdministration = `Voie ${extractVoieAdministration(
+              medicament,
+            ).join(" ou ")}`;
 
-              const rowFrigo =
-                "conservationFrigo" in medicament &&
-                medicament.conservationFrigo
-                  ? "Se conserve au frigo avant ouverture"
-                  : "";
+            const rowCommentaires =
+              "commentaires" in medicament
+                ? medicament.commentaires
+                    .flatMap(
+                      (commentaire) =>
+                        extractCommentaire(
+                          commentaire,
+                          rowData.commentaires?.[commentaire.id],
+                        ).checked && {
+                          text: commentaire.texte,
+                        },
+                    )
+                    .filter((item): item is { text: string } => item !== false)
+                : [];
 
-              const rowConservation = extractConservation(
-                medicament,
-                rowData.conservation,
-              ).values.map((conservation, key) => {
-                if (key > 1) {
-                  throw new PP_Error("PLAN_CONSERVATION_LENGTH_ERROR");
-                }
-                return `Se conserve ${conservation.duree}`;
-              })[0];
+            const rowCustomCommentaires = Object.values(
+              rowData.custom_commentaires || {},
+            ).map((commentaire) => ({
+              text: commentaire.texte,
+            }));
 
-              if (rowIndication.length > 1) {
-                throw new PP_Error("PLAN_INDICATION_LENGTH_ERROR");
-              }
-              const rowPrincipesActifs =
-                "principesActifs" in medicament
-                  ? medicament.principesActifs
-                      .map((principeActif) => principeActif.denomination)
-                      .join(", ")
-                  : "";
-
-              const rowVoiesAdministration = `Voie ${extractVoieAdministration(
-                medicament,
-              ).join(" ou ")}`;
-
-              const rowCommentaires =
-                "commentaires" in medicament
-                  ? medicament.commentaires
-                      .flatMap(
-                        (commentaire) =>
-                          extractCommentaire(
-                            commentaire,
-                            rowData.commentaires?.[commentaire.id],
-                          ).checked && {
-                            text: commentaire.texte,
-                            className: "mb-2",
-                          },
-                      )
-                      .filter(
-                        (item): item is { text: string; className: string } =>
-                          item !== false,
-                      )
-                  : [];
-
-              const rowCustomCommentaires = Object.values(
-                rowData.custom_commentaires || {},
-              ).map((commentaire) => ({
-                text: commentaire.texte,
-                className: "mb-2",
-              }));
-
-              return (
-                <Row key={medicamentId}>
+            return (
+              <Table key={medicamentId} className="border-t-0">
+                <Row>
                   <Cell
                     alignLeft
                     className={`flex-initial ${INFORMATIONS_WIDTH}`}
+                    wrap={false}
                   >
                     {[
                       { text: medicament?.denomination, bold: true },
 
                       {
                         text: rowPrincipesActifs,
-                        className: "text-gray-700 text-sm",
+                        className: "text-gray-700 text-sm mt-2",
                         italic: true,
                       },
 
                       {
                         text: rowVoiesAdministration,
-                        className: "text-sm text-gray-600",
+                        className: "text-sm text-gray-600 mt-2",
                       },
                       {
                         text: rowFrigo,
-                        className: "text-sm text-gray-600",
+                        className: "text-sm text-gray-600 mt-2",
                         italic: true,
                       },
                       {
                         text: rowConservation,
-                        className: "text-sm text-gray-600",
+                        className: "text-sm text-gray-600 mt-2 mb-auto",
                         italic: true,
                       },
-                    ]}
+                    ].filter((line) => line.text !== "")}
                   </Cell>
                   <Cell className={`flex-initial ${INDICATION_WIDTH}`}>
                     {rowIndication[0]}
@@ -280,10 +275,9 @@ const PlanPrintClient = ({
                     {[...rowCommentaires, ...rowCustomCommentaires]}
                   </Cell>
                 </Row>
-              );
-            })}
-          </Table>
-          {/*  <PageCount /> */}
+              </Table>
+            );
+          })}
         </Page>
       </Document>
     </ViewPDF>
