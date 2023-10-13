@@ -212,10 +212,14 @@ const PlanPrintClient = ({
                           extractCommentaire(
                             commentaire,
                             rowData.commentaires?.[commentaire.id],
-                          ).checked && { text: commentaire.texte },
+                          ).checked && {
+                            text: commentaire.texte,
+                            className: "mb-2",
+                          },
                       )
                       .filter(
-                        (item): item is { text: string } => item !== false,
+                        (item): item is { text: string; className: string } =>
+                          item !== false,
                       )
                   : [];
 
@@ -223,6 +227,7 @@ const PlanPrintClient = ({
                 rowData.custom_commentaires || {},
               ).map((commentaire) => ({
                 text: commentaire.texte,
+                className: "mb-2",
               }));
 
               return (
