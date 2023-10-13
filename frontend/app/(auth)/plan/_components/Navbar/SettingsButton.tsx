@@ -27,7 +27,7 @@ const posologies = Object.keys(
   PlanPrisePosologies,
 ) as (keyof typeof PlanPrisePosologies)[];
 
-const Settings = () => {
+const SettingsButton = () => {
   const { settings, setSetting } = usePlanStore((state) => ({
     setSetting: state.setSetting,
     settings: state.settings as PlanSettings,
@@ -103,4 +103,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default SettingsButton;

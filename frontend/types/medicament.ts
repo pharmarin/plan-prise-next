@@ -1,5 +1,7 @@
 import type { Commentaire, Medicament, PrincipeActif } from "@prisma/client";
 
+export type CustomMedicament = { denomination: string };
+
 export type MedicamentIdentifier = {
   id: Medicament["id"];
   denomination: Medicament["denomination"];

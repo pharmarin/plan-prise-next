@@ -1,6 +1,5 @@
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import Spinner from "@/components/icons/Spinner";
 import {
   Tooltip,
   TooltipContent,
@@ -8,7 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { trpc } from "@/trpc/client";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const PlanDeleteButton = () => {
@@ -31,7 +30,7 @@ const PlanDeleteButton = () => {
           }}
         >
           {isLoading ? (
-            <Spinner className="h-4 w-4" />
+            <Loader2 className="h-4 w-4" />
           ) : (
             <Trash2 className="h-4 w-4" />
           )}

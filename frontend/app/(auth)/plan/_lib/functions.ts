@@ -1,4 +1,7 @@
-import type { MedicamentConservationDuree } from "@/types/medicament";
+import type {
+  CustomMedicament,
+  MedicamentConservationDuree,
+} from "@/types/medicament";
 import type { PlanDataItem } from "@/types/plan";
 import {
   VoieAdministration,
@@ -6,8 +9,6 @@ import {
   type Medicament,
   type Plan,
 } from "@prisma/client";
-
-type CustomMedicament = { denomination: string };
 
 export const parseData = (data?: Plan["data"]) => {
   if (typeof data === "object" && data) {

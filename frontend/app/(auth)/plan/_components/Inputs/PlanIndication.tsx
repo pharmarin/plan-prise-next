@@ -1,19 +1,29 @@
-import { extractIndication, parseData } from "@/app/(auth)/plan/_lib/functions";
+"use client";
+
+import { useIndication } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import Select from "@/components/forms/inputs/Select";
 import TextInput from "@/components/forms/inputs/TextInput";
 import type { Medicament } from "@prisma/client";
-import type { ChangeEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 
 const NOT_SET = "NOT_SET";
 
 const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
-  const data = usePlanStore(
-    (state) => parseData(state.data)?.[medicament.id]?.indication,
-  );
-  const setData = usePlanStore((state) => state.setData);
+  const { setData, setCanPrint } = usePlanStore((state) => ({
+    setData: state.setData,
+    setCanPrint: state.setCanPrint,
+  }));
 
-  const extracted = extractIndication(medicament, data);
+  const extracted = useIndication(medicament);
+
+  useEffect(() => {
+    setCanPrint(
+      extracted.length > 1
+        ? `Veuillez choisir une indication pour ${medicament.denomination}`
+        : true,
+    );
+  }, [extracted.length, medicament.denomination, setCanPrint]);
 
   if (extracted.length === 1) {
     return (

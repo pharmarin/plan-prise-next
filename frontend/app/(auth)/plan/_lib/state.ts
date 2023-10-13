@@ -15,6 +15,7 @@ type State = {
   medics?: string[];
   settings?: Plan["settings"];
   isSaving: boolean;
+  canPrint: boolean | string;
 };
 
 type Actions = {
@@ -23,8 +24,9 @@ type Actions = {
   unsetData: (path: string) => void;
   addMedic: (id: string) => void;
   removeMedic: (id: string) => void;
-  setIsSaving: (isSaving: boolean) => void;
   setSetting: (path: string, value: boolean) => void;
+  setIsSaving: (isSaving: boolean) => void;
+  setCanPrint: (canPrint: boolean | string) => void;
 };
 
 const usePlanStore = create(
@@ -35,6 +37,7 @@ const usePlanStore = create(
       medics: undefined,
       settings: undefined,
       isSaving: false,
+      canPrint: false,
       init: (plan) =>
         setState((state) => {
           state.id = plan.id;
@@ -43,6 +46,10 @@ const usePlanStore = create(
             ? (plan.medicsOrder as string[])
             : [];
           state.settings = merge(PLAN_SETTINGS_DEFAULT, plan.settings);
+          state.canPrint =
+            (state.medics || []).length > 0
+              ? true
+              : "Veuillez ajouter des médicaments pour imprimer le plan de prise";
         }),
       setData: (path, value) => {
         setState((state) => {
@@ -65,13 +72,17 @@ const usePlanStore = create(
         setState((state) => {
           state.medics = state.medics?.filter((id) => id !== medicId);
         }),
+      setSetting: (path, value) =>
+        setState((state) => {
+          set((state.settings || {}) as object, path, value) as JsonValue;
+        }),
       setIsSaving: (isSaving) =>
         setState((state) => {
           state.isSaving = isSaving;
         }),
-      setSetting: (path, value) =>
+      setCanPrint: (canPrint) =>
         setState((state) => {
-          set((state.settings || {}) as object, path, value) as JsonValue;
+          state.canPrint = (state.medics || []).length > 0 ? canPrint : false;
         }),
     })),
   ),

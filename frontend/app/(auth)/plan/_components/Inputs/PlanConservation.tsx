@@ -1,26 +1,35 @@
-import {
-  extractConservation,
-  parseData,
-} from "@/app/(auth)/plan/_lib/functions";
+"use client";
+
+import { useConservation } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import FormLabel from "@/components/forms/FormLabel";
 import Button from "@/components/forms/inputs/Button";
 import Select from "@/components/forms/inputs/Select";
 import type { Medicament } from "@prisma/client";
-import type { ChangeEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 
 const NOT_SET = "NOT_SET";
 
 const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
-  const data = usePlanStore(
-    (state) => parseData(state.data)?.[medicament.id]?.conservation,
-  );
-  const { setData, unsetData } = usePlanStore((state) => ({
+  const { setData, unsetData, setCanPrint } = usePlanStore((state) => ({
     setData: state.setData,
     unsetData: state.unsetData,
+    setCanPrint: state.setCanPrint,
   }));
 
-  const conservationDuree = extractConservation(medicament, data);
+  const conservationDuree = useConservation(medicament);
+
+  useEffect(() => {
+    if (conservationDuree.values.length === 0) {
+      setCanPrint(true);
+    } else {
+      setCanPrint(
+        conservationDuree.values.length > 1
+          ? `Veuillez choisir une durée de conservation pour ${medicament.denomination}`
+          : true,
+      );
+    }
+  }, [conservationDuree.values.length, medicament.denomination, setCanPrint]);
 
   if (conservationDuree.values.length === 0) {
     return undefined;
