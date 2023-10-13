@@ -24,25 +24,25 @@ export const Table = ({
 );
 
 export const Row = ({ children }: PropsWithChildren) => (
-  <View style={tw("w-full m-auto mt-0 flex-row justify-start")}>
-    {children}
-  </View>
+  <View style={tw("w-full m-auto mt-0 flex-row")}>{children}</View>
 );
 
 export const Col = ({
   children,
   className,
-}: PropsWithChildren & { className?: string }) => (
+  wrap,
+}: PropsWithChildren & { className?: string; wrap?: boolean }) => (
   <View
     style={[
       tw(
         twMerge(
-          "flex-1 border border-solid border-l-0 border-t-0 p-1 text-base items-start",
+          "flex-1 border border-solid border-l-0 border-t-0 p-1 text-base",
           className,
         ),
       ),
       { lineHeight: 1 },
     ]}
+    wrap={wrap}
   >
     {children}
   </View>
@@ -99,6 +99,7 @@ export const Cell = ({
   alignTop,
   children,
   className,
+  wrap,
   ...props
 }: (
   | { children: string; bold?: boolean }
@@ -114,20 +115,23 @@ export const Cell = ({
   alignLeft?: boolean;
   alignTop?: boolean;
   className?: string;
+  wrap?: boolean;
 }) => (
-  <Col className={twMerge(alignTop && "items-start", className)}>
+  <Col className={twMerge(alignTop && "items-start", className)} wrap={wrap}>
     {Array.isArray(children) ? (
-      children.map((line, key) => (
-        <Line
-          key={key}
-          alignLeft={alignLeft}
-          bold={line.bold}
-          italic={line.italic}
-          className={line.className}
-        >
-          {line.text}
-        </Line>
-      ))
+      <View style={tw("mb-auto")}>
+        {children.map((line, key) => (
+          <Line
+            key={key}
+            alignLeft={alignLeft}
+            bold={line.bold}
+            italic={line.italic}
+            className={twMerge(key !== 0 && "mt-2", line.className)}
+          >
+            {line.text}
+          </Line>
+        ))}
+      </View>
     ) : (
       <Line alignLeft={alignLeft} bold={"bold" in props && props.bold}>
         {children}
