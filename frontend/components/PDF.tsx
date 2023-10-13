@@ -13,7 +13,7 @@ export const Table = ({
   <View
     style={tw(
       twMerge(
-        "flex flex-col justify-start items-start h-auto w-auto border border-solid border-r-0 border-b-0",
+        "h-auto w-auto border border-solid border-r-0 border-b-0",
         className,
       ),
     )}
