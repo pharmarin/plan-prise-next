@@ -2,7 +2,7 @@
   "name": "@plan-prise/api-pharmaciens",
   "devDependencies": {
     "@types/node": "18.18.6",
-    "@types/node-fetch": "2.6.6",
+    "@types/node-fetch": "2.6.7",
     "@types/unzipper": "0.10.7",
     "csv-parse": "5.5.2",
     "node-fetch": "2.7.0",
