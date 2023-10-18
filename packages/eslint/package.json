@@ -1,7 +1,7 @@
 {
   "name": "@plan-prise/eslint-config",
   "devDependencies": {
-    "@types/eslint": "8.44.4"
+    "@types/eslint": "8.44.5"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "6.8.0",
