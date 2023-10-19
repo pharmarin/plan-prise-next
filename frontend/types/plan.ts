@@ -16,6 +16,8 @@ export enum PlanPrisePosologies {
   "poso_coucher" = "Coucher",
 }
 
+export type PlanData = Record<string, PlanDataItem>;
+
 export type PlanDataItem = {
   indication?: string;
   conservation?: string;

@@ -171,6 +171,24 @@ const planRouter = router({
 
       return MUTATION_SUCCESS;
     }),
+  getById: authProcedure.input(z.string().cuid2()).query(({ ctx, input }) =>
+    ctx.prisma.plan.findUniqueOrThrow({
+      where: {
+        id: input,
+        user: {
+          id: ctx.user.id,
+        },
+      },
+      include: {
+        medics: {
+          include: {
+            commentaires: true,
+            principesActifs: true,
+          },
+        },
+      },
+    }),
+  ),
 });
 
 export type PlanRouterType = RouterLike<typeof planRouter>;

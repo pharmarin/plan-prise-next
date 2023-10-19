@@ -1,8 +1,9 @@
+import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
 import type {
   CustomMedicament,
   MedicamentConservationDuree,
 } from "@/types/medicament";
-import type { PlanDataItem } from "@/types/plan";
+import type { PlanData, PlanSettings } from "@/types/plan";
 import {
   VoieAdministration,
   type Commentaire,
@@ -10,9 +11,9 @@ import {
   type Plan,
 } from "@prisma/client";
 
-export const parseData = (data?: Plan["data"]) => {
+export const parseData = (data?: Plan["data"]): PlanData => {
   if (typeof data === "object" && data) {
-    return data as Record<string, PlanDataItem>;
+    return data as PlanData;
   } else {
     return {};
   }
@@ -115,4 +116,24 @@ export const extractVoieAdministration = (
   } else {
     return [];
   }
+};
+
+export const extractPosologiesSettings = (posos?: PlanSettings["posos"]) => {
+  if (!posos) {
+    return [];
+  }
+
+  return Object.keys(PLAN_SETTINGS_DEFAULT["posos"])
+    .map((poso) =>
+      posos?.[poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]] ??
+      PLAN_SETTINGS_DEFAULT["posos"][
+        poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]
+      ] === true
+        ? poso
+        : undefined,
+    )
+    .filter(
+      (poso): poso is keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"] =>
+        poso !== undefined,
+    );
 };

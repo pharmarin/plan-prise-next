@@ -18,6 +18,9 @@ export const nextAuthOptions: NextAuthOptions = {
           token.user = {
             id: user.id,
             admin: user.admin,
+            displayName: user.displayName,
+            lastName: user.lastName,
+            firstName: user.firstName,
           };
         }
       }

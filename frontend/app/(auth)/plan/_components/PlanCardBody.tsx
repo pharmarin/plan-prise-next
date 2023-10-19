@@ -3,6 +3,7 @@ import PlanCommentaireCustom from "@/app/(auth)/plan/_components/Inputs/PlanComm
 import PlanConservation from "@/app/(auth)/plan/_components/Inputs/PlanConservation";
 import PlanIndication from "@/app/(auth)/plan/_components/Inputs/PlanIndication";
 import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
+import { extractPosologiesSettings } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import FormLabel from "@/components/forms/FormLabel";
 import type { MedicamentInclude } from "@/types/medicament";
@@ -10,8 +11,8 @@ import type { PlanSettings } from "@/types/plan";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
 const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
-  const posologies = usePlanStore(
-    (state) => (state.settings as PlanSettings)?.posos,
+  const posologies = usePlanStore((state) =>
+    extractPosologiesSettings((state.settings as PlanSettings)?.posos),
   );
 
   return (
@@ -31,19 +32,13 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
         )}
       </div>
       <div className="flex space-x-2">
-        {Object.entries(posologies)
-          .map(([key, value]) => value && key)
-          .filter(
-            (posologie): posologie is keyof typeof posologies =>
-              posologie !== false,
-          )
-          .map((posologie) => (
-            <PlanPosologie
-              key={`${medicament.id}.${posologie}`}
-              medicament={medicament}
-              name={posologie}
-            />
-          ))}
+        {posologies.map((posologie) => (
+          <PlanPosologie
+            key={`${medicament.id}.${posologie}`}
+            medicament={medicament}
+            name={posologie}
+          />
+        ))}
       </div>
       <div>
         <FormLabel>Commentaires</FormLabel>
