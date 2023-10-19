@@ -172,7 +172,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
         }}
         getOptionLabel={(option) => option.denomination}
         getOptionValue={(option) => option.id}
-        isLoading={isLoadingResults}
+        isLoading={searchValue.length > 0 && isLoadingResults}
         loadingMessage={({ inputValue }) =>
           inputValue.length > 2
             ? "Chargement des médicaments en cours"
