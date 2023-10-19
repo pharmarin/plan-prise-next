@@ -1,7 +1,7 @@
 import { parseData } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import Button from "@/components/forms/inputs/Button";
-import TextAreaInput from "@/components/forms/inputs/TextArea";
+import { Textarea } from "@/components/ui/textarea";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { createId } from "@paralleldrive/cuid2";
 import type { Medicament } from "@prisma/client";
@@ -37,7 +37,7 @@ const PlanCommentaireCustomItem = ({
       >
         <XMarkIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
       </Button>
-      <TextAreaInput
+      <Textarea
         onChange={(event) =>
           setData(
             `${medicId}.custom_commentaires.${commentId}.texte`,
