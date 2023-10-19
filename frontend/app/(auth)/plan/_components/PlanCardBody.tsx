@@ -11,9 +11,11 @@ import type { PlanSettings } from "@/types/plan";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
 const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
-  const posologies = usePlanStore((state) =>
-    extractPosologiesSettings((state.settings as PlanSettings)?.posos),
+  const settings = usePlanStore(
+    (state) => (state.settings as PlanSettings)?.posos,
   );
+
+  const posologies = extractPosologiesSettings(settings);
 
   return (
     <div className="flex flex-col space-y-2 p-4 pt-2">
