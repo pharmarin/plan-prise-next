@@ -44,9 +44,13 @@ const PrintButton = () => {
               "bg-green-700": canPrint === true && isPrinting === false,
             },
           )}
-          onClick={() => {
-            setIsPrinting(true);
-          }}
+          onClick={() =>
+            canPrint === true
+              ? setIsPrinting(true)
+              : document
+                  .getElementsByClassName("action-required")[0]
+                  .scrollIntoView()
+          }
         >
           {(() => {
             const loader = <Loader2 className="h-4 w-4 animate-spin" />;

@@ -2,13 +2,19 @@
 
 import { useConservation } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import FormLabel from "@/components/forms/FormLabel";
 import Button from "@/components/forms/inputs/Button";
-import Select from "@/components/forms/inputs/Select";
+import { FormItem } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import type { Medicament } from "@prisma/client";
-import { useEffect, type ChangeEvent } from "react";
-
-const NOT_SET = "NOT_SET";
+import { useEffect } from "react";
 
 const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   const { setData, unsetData, setCanPrint } = usePlanStore((state) => ({
@@ -20,13 +26,9 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   const conservationDuree = useConservation(medicament);
 
   useEffect(() => {
-    if (conservationDuree.values.length === 0) {
-      setCanPrint(true);
-    } else {
+    if (conservationDuree.values.length > 1) {
       setCanPrint(
-        conservationDuree.values.length > 1
-          ? `Veuillez choisir une durée de conservation pour ${medicament.denomination}`
-          : true,
+        `Veuillez choisir une durée de conservation pour ${medicament.denomination}`,
       );
     }
   }, [conservationDuree.values.length, medicament.denomination, setCanPrint]);
@@ -36,8 +38,10 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   }
 
   return (
-    <>
-      <FormLabel>Durée de conservation après ouverture</FormLabel>
+    <FormItem
+      className={cn({ "action-required": conservationDuree.values.length > 1 })}
+    >
+      <Label>Durée de conservation après ouverture</Label>
       {conservationDuree.values.length === 1 ? (
         <div>
           <p className="text-sm text-gray-900">
@@ -60,20 +64,27 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
         </div>
       ) : (
         <Select
-          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-            setData(`${medicament.id}.conservation`, event.currentTarget.value)
-          }
-          value={NOT_SET}
+          onValueChange={(value) => {
+            setData(`${medicament.id}.conservation`, value);
+            setCanPrint(true);
+          }}
         >
-          <option value={NOT_SET}>Choisissez un laboratoire</option>
-          {conservationDuree.values.map((conservationDuree, index) => (
-            <option key={index} value={conservationDuree.laboratoire}>
-              {conservationDuree.laboratoire}
-            </option>
-          ))}
+          <SelectTrigger className="border-destructive shadow shadow-destructive">
+            <SelectValue placeholder="Choisissez un laboratoire" />
+          </SelectTrigger>
+          <SelectContent>
+            {conservationDuree.values.map((conservationDuree, index) => (
+              <SelectItem
+                key={index}
+                value={conservationDuree.laboratoire || ""}
+              >
+                {conservationDuree.laboratoire}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       )}
-    </>
+    </FormItem>
   );
 };
 

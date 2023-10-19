@@ -2,12 +2,19 @@
 
 import { useIndication } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import Select from "@/components/forms/inputs/Select";
-import TextInput from "@/components/forms/inputs/TextInput";
+import { FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import type { Medicament } from "@prisma/client";
-import { useEffect, type ChangeEvent } from "react";
-
-const NOT_SET = "NOT_SET";
+import { useEffect } from "react";
 
 const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   const { setData, setCanPrint } = usePlanStore((state) => ({
@@ -18,42 +25,43 @@ const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   const extracted = useIndication(medicament);
 
   useEffect(() => {
-    setCanPrint(
-      extracted.length > 1
-        ? `Veuillez choisir une indication pour ${medicament.denomination}`
-        : true,
-    );
+    if (extracted.length > 1) {
+      setCanPrint(
+        `Veuillez choisir une indication pour ${medicament.denomination}`,
+      );
+    }
   }, [extracted.length, medicament.denomination, setCanPrint]);
 
-  if (extracted.length === 1) {
-    return (
-      <TextInput
-        label="Indication"
-        onChange={(event) =>
-          setData(`${medicament.id}.indication`, event.currentTarget.value)
-        }
-        value={extracted}
-      />
-    );
-  }
-
   return (
-    <Select
-      label="Indication"
-      onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-        setData(`${medicament.id}.indication`, event.currentTarget.value)
-      }
-      value={NOT_SET}
-    >
-      <option value={NOT_SET} disabled={true}>
-        Choisissez une indication
-      </option>
-      {extracted.map((indication) => (
-        <option key={indication} className="font-sans" value={indication}>
-          {indication}
-        </option>
-      ))}
-    </Select>
+    <FormItem className={cn({ "action-required": extracted.length > 1 })}>
+      <Label>Indication</Label>
+      {extracted.length === 1 ? (
+        <Input
+          onChange={(event) =>
+            setData(`${medicament.id}.indication`, event.currentTarget.value)
+          }
+          value={extracted[0]}
+        />
+      ) : (
+        <Select
+          onValueChange={(value) => {
+            setData(`${medicament.id}.indication`, value);
+            setCanPrint(true);
+          }}
+        >
+          <SelectTrigger className="border-destructive shadow shadow-destructive">
+            <SelectValue placeholder="Choisissez une indication" />
+          </SelectTrigger>
+          <SelectContent>
+            {extracted.map((indication) => (
+              <SelectItem key={indication} value={indication}>
+                {indication}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+    </FormItem>
   );
 };
 

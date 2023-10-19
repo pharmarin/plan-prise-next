@@ -37,7 +37,7 @@ const usePlanStore = create(
       medics: undefined,
       settings: undefined,
       isSaving: false,
-      canPrint: false,
+      canPrint: true,
       init: (plan) =>
         setState((state) => {
           state.id = plan.id;

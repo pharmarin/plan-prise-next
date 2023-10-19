@@ -16,8 +16,8 @@
     --secondary-foreground: 165 86% 17% /* emerald-900 */;
     --muted: 0 0% 97% /* neutral-100 */;
     --muted-foreground: 0 0% 46% /* neutral-500 */;
-    --accent: 0 94% 95% /* red-100 */;
-    --accent-foreground: 0 63% 31% /* red-900 */;
+    --accent: 0 0% 90% /* neutral-50 */;
+    --accent-foreground: 0 0% 4% /* neutral-950 */;
     --destructive: 0 85% 61% /* red-500 */;
     --destructive-foreground: 0 0% 99% /* neutral-50 */;
     --border: 0 0% 90% /* neutral-200 */;
