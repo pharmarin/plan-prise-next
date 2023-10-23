@@ -71,6 +71,9 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
     setIsSaving(false);
   }, 2000);
 
+  const { data: precautions } =
+    trpc.medics.findPrecautionsByMedicId.useQuery(medics);
+
   useEffect(() => {
     init(plan);
     setReady(true);
@@ -237,6 +240,23 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
           plan.id === PLAN_NEW && ref?.focus();
         }}
       />
+      {precautions && (
+        <div className="mt-8 space-y-4">
+          {precautions.map((precaution) => (
+            <div
+              key={precaution.id}
+              className="rounded-lg border p-4 shadow-md"
+              style={{ borderColor: precaution.couleur }}
+            >
+              <p className="font-semibold">{precaution.titre}</p>
+              <p
+                className="prose"
+                dangerouslySetInnerHTML={{ __html: precaution.contenu }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
