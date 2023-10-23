@@ -8,7 +8,7 @@ import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import FormLabel from "@/components/forms/FormLabel";
 import type { MedicamentInclude } from "@/types/medicament";
 import type { PlanSettings } from "@/types/plan";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { ThermometerSnowflake } from "lucide-react";
 
 const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
   const settings = usePlanStore(
@@ -27,10 +27,10 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
           <PlanConservation medicament={medicament} />
         </div>
         {medicament.conservationFrigo && (
-          <div className="space-x-2">
-            <FormLabel>Frigo</FormLabel>
-            <CheckCircleIcon className="inline h-4 w-4 text-gray-900" />
-          </div>
+          <FormLabel className="space-x-2">
+            <ThermometerSnowflake className="inline h-4 w-4 text-gray-900" />
+            <span>Se conserver au frigo avant ouverture</span>
+          </FormLabel>
         )}
       </div>
       <div className="flex space-x-2">
