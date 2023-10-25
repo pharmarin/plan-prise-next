@@ -5,7 +5,7 @@ import PlanIndication from "@/app/(auth)/plan/_components/Inputs/PlanIndication"
 import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
 import { extractPosologiesSettings } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import FormLabel from "@/components/forms/FormLabel";
+import { Label } from "@/components/ui/label";
 import type { MedicamentInclude } from "@/types/medicament";
 import type { PlanSettings } from "@/types/plan";
 import { ThermometerSnowflake } from "lucide-react";
@@ -27,10 +27,10 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
           <PlanConservation medicament={medicament} />
         </div>
         {medicament.conservationFrigo && (
-          <FormLabel className="space-x-2">
+          <Label className="space-x-2">
             <ThermometerSnowflake className="inline h-4 w-4 text-gray-900" />
             <span>Se conserver au frigo avant ouverture</span>
-          </FormLabel>
+          </Label>
         )}
       </div>
       <div className="flex space-x-2">
@@ -43,7 +43,7 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
         ))}
       </div>
       <div>
-        <FormLabel>Commentaires</FormLabel>
+        <Label>Commentaires</Label>
         <div className="space-y-2">
           {medicament.commentaires.map((commentaire) => (
             <PlanCommentaire
