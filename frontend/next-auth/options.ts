@@ -30,6 +30,9 @@ export const nextAuthOptions: NextAuthOptions = {
     session: ({ session, user, token }) => {
       session.user.id = token?.user?.id ?? user.id;
       session.user.admin = token?.user?.admin ?? user.admin;
+      session.user.displayName = token?.user?.displayName ?? user.displayName;
+      session.user.firstName = token?.user?.firstName ?? user.firstName;
+      session.user.lastName = token?.user?.lastName ?? user.lastName;
 
       return session;
     },
