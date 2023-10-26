@@ -1,6 +1,6 @@
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
 import { extractVoieAdministration } from "@/app/(auth)/plan/_lib/functions";
-import Button from "@/components/forms/inputs/Button";
+import { Button } from "@/components/ui/button";
 import type {
   MedicamentIdentifier,
   MedicamentInclude,
@@ -19,16 +19,15 @@ const PlanCardHeader = ({
     <PlanCardHeaderUI
       buttons={
         <Button
-          className="space-x-1 rounded-full bg-white py-0 text-red-600"
-          color="red"
+          className="space-x-1 rounded-full bg-white py-0 text-red-500"
           onClick={() =>
             removeMedic({
               id: medicament.id,
               denomination: medicament.denomination,
             })
           }
-          outline
           tabIndex={-1}
+          variant="destructive"
         >
           <small className="mr-auto">
             Supprimer<span className="hidden sm:inline"> la ligne</span>

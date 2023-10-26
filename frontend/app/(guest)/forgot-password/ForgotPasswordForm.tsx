@@ -2,9 +2,9 @@
 
 import Form from "@/components/forms/Form";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import PP_Error from "@/utils/errors";
@@ -73,10 +73,10 @@ const ForgotPasswordForm = () => {
 
           <Button
             className="mt-4 w-full"
-            color="gradient"
             disabled={"email" in errors}
             loading={isSubmitting}
             type="submit"
+            variant="gradient"
           >
             Envoyer le mail de réinitialisation
           </Button>

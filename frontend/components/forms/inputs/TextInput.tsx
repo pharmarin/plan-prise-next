@@ -1,5 +1,4 @@
-import FormInfo from "@/components/forms/FormInfo";
-import FormLabel from "@/components/forms/FormLabel";
+import { Label } from "@/components/ui/label";
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -31,9 +30,7 @@ const TextInput = forwardRef<
   ) => {
     return (
       <div className={twMerge("relative w-full", wrapperClassName)}>
-        {!slideLabel && label && (
-          <FormLabel htmlFor={props.id}>{label}</FormLabel>
-        )}
+        {!slideLabel && label && <Label htmlFor={props.id}>{label}</Label>}
         <input
           className={twMerge(
             "peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent p-2 text-sm text-gray-700 focus:border-emerald-600 focus:outline-none focus:ring-0",
@@ -52,7 +49,7 @@ const TextInput = forwardRef<
             {label}
           </label>
         )}
-        {info && <FormInfo>{info}</FormInfo>}
+        {info && <p className="mt-1 text-xs text-muted-foreground">{info}</p>}
       </div>
     );
   },

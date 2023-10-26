@@ -1,4 +1,4 @@
-import FormLabel from "@/components/forms/FormLabel";
+import { Label } from "@/components/ui/label";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -7,7 +7,7 @@ const FileInput: React.FC<
 > = ({ className, label, value, ...props }) => {
   return (
     <div>
-      {label && <FormLabel htmlFor={props.name}>{label}</FormLabel>}
+      {label && <Label htmlFor={props.name}>{label}</Label>}
       <div className="relative">
         <input
           className={twMerge(

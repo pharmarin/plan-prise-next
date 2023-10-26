@@ -1,12 +1,11 @@
 "use client";
 
 import Form from "@/components/forms/Form";
-import FormInfo from "@/components/forms/FormInfo";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import Link from "@/components/navigation/Link";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import PP_Error from "@/utils/errors";
@@ -150,7 +149,6 @@ const RegisterForm = () => {
                   />
                 )}
                 <Button
-                  color="primary"
                   disabled={
                     errors.firstName !== undefined ||
                     errors.lastName !== undefined ||
@@ -179,10 +177,10 @@ const RegisterForm = () => {
                     name="displayName"
                     placeholder="Nom de la structure"
                   />
-                  <FormInfo>
+                  <p className="mt-1 text-xs text-muted-foreground">
                     Si indiqué, le nom de la structure apparaitra à la place de
                     votre nom sur le plan de prise
-                  </FormInfo>
+                  </p>
                 </div>
                 <div>
                   <FormikField
@@ -194,7 +192,9 @@ const RegisterForm = () => {
                     placeholder="Adresse mail"
                     type="email"
                   />
-                  <FormInfo>Ne sera jamais utilisée ou diffusée.</FormInfo>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Ne sera jamais utilisée ou diffusée.
+                  </p>
                 </div>
                 <FormikField
                   autoComplete="new-password"
@@ -220,14 +220,13 @@ const RegisterForm = () => {
                 <div className="flex gap-4">
                   <Button
                     className="flex-none"
-                    color="white"
                     onClick={() => setStep(1)}
+                    variant="outline"
                   >
                     Retour
                   </Button>
                   <Button
                     className="flex-1"
-                    color="primary"
                     disabled={!errors}
                     loading={isSubmitting}
                     type="submit"

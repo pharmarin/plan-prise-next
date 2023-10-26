@@ -1,11 +1,11 @@
 "use client";
 
 import Form from "@/components/forms/Form";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
 import ServerError from "@/components/forms/ServerError";
 import InfosModal from "@/components/overlays/modals/InfosModal";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { updateUserSchema } from "@/validation/users";
 import { type User } from "@prisma/client";
@@ -17,7 +17,7 @@ const EditInformations: React.FC<{
   user: User;
 }> = ({ user }) => {
   const [showModal, setShowModal] = useState<true | false | undefined>(
-    undefined
+    undefined,
   );
 
   const trpcContext = trpc.useContext();
@@ -66,7 +66,7 @@ const EditInformations: React.FC<{
         }
         footer={
           <Button
-            className="w-full sm:mt-0 sm:ml-3 sm:w-auto"
+            className="w-full sm:ml-3 sm:mt-0 sm:w-auto"
             onClick={() => setShowModal(false)}
           >
             Mettre à jour mes informations
@@ -116,8 +116,8 @@ const EditInformations: React.FC<{
             {values.student && (
               <Button
                 className={twMerge("mt-2")}
-                color="link"
                 onClick={() => setFieldValue("student", false)}
+                variant="link"
               >
                 Modifier en compte pharmacien
               </Button>

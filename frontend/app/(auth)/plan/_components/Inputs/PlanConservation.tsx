@@ -2,7 +2,7 @@
 
 import { useConservation } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import Button from "@/components/forms/inputs/Button";
+import { Button } from "@/components/ui/button";
 import { FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import {
@@ -54,8 +54,8 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
               </span>
               <Button
                 className="p-0"
-                color="link"
                 onClick={() => unsetData(`${medicament.id}.conservation`)}
+                variant="link"
               >
                 Changer de laboratoire
               </Button>

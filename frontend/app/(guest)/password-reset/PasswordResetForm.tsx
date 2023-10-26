@@ -1,9 +1,9 @@
 "use client";
 
 import Form from "@/components/forms/Form";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { resetPasswordSchema } from "@/validation/users";
@@ -63,12 +63,7 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
 
           {error && <ServerError error={error} />}
 
-          <Button
-            className="w-full"
-            color="primary"
-            loading={isSubmitting}
-            type="submit"
-          >
+          <Button className="w-full" loading={isSubmitting} type="submit">
             Réinitialiser le mot de passe
           </Button>
         </Form>

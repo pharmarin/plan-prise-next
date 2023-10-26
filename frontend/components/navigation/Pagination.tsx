@@ -1,5 +1,11 @@
-import Button from "@/components/forms/inputs/Button";
-import Select from "@/components/forms/inputs/Select";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
@@ -40,18 +46,18 @@ const Pagination: React.FC<{
     <div className="flex items-center justify-between">
       <div className="flex flex-1 justify-start space-x-1 sm:hidden">
         <Button
-          color="white"
           disabled={!getCanPreviousPage()}
           onClick={previousPage}
           size="sm"
+          variant="outline"
         >
           Précédent
         </Button>
         <Button
-          color="white"
           disabled={!getCanNextPage()}
           onClick={nextPage}
           size="sm"
+          variant="outline"
         >
           Suivant
         </Button>
@@ -66,18 +72,18 @@ const Pagination: React.FC<{
         </div>
         <nav className="flex space-x-1" aria-label="Pagination">
           <Button
-            color="white"
             disabled={!getCanPreviousPage()}
             onClick={() => setPageIndex(1)}
             size="sm"
+            variant="outline"
           >
             <ChevronDoubleLeftIcon className={ICON_CLASSNAME} />
           </Button>
           <Button
-            color="white"
             disabled={!getCanPreviousPage()}
             onClick={previousPage}
             size="sm"
+            variant="outline"
           >
             <span className="sr-only">Précédent</span>
             <ChevronLeftIcon className={ICON_CLASSNAME} />
@@ -86,84 +92,91 @@ const Pagination: React.FC<{
             currentPage - key > 0 && currentPage - key < lastPage ? (
               <Button
                 key={`end_${currentPage - key}`}
-                color="white"
                 onClick={() =>
                   setPageIndex(getState().pagination.pageIndex - key)
                 }
                 size="sm"
+                variant="outline"
               >
                 {currentPage - key}
               </Button>
-            ) : undefined
+            ) : undefined,
           )}
           <Select
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setPageIndex(Number(e.target.value))
-            }
-            size="sm"
-            value={currentPage - 1}
+            onValueChange={(value) => setPageIndex(Number(value))}
+            value={String(currentPage - 1)}
           >
-            {[
-              ...new Set([
-                ...(lastPage > 10
-                  ? Array(Math.floor(lastPage / 10))
-                      .fill(0)
-                      .map((_, idx) => 10 + idx * 10)
-                  : Array(lastPage)
-                      .fill(0)
-                      .map((_, idx) => idx + 1)),
-                currentPage,
-              ]),
-            ]
-              .sort((a, b) => a - b)
-              .map((page) => (
-                <option key={page} value={page - 1}>
-                  {page}
-                </option>
-              ))}
+            <SelectTrigger className="h-8 w-16">
+              <SelectValue placeholder={currentPage - 1} />
+            </SelectTrigger>
+            <SelectContent>
+              {[
+                ...new Set([
+                  ...(lastPage > 10
+                    ? Array(Math.floor(lastPage / 10))
+                        .fill(0)
+                        .map((_, idx) => 10 + idx * 10)
+                    : Array(lastPage)
+                        .fill(0)
+                        .map((_, idx) => idx + 1)),
+                  currentPage,
+                ]),
+              ]
+                .sort((a, b) => a - b)
+                .map((page) => (
+                  <SelectItem key={page} value={String(page - 1)}>
+                    {page}
+                  </SelectItem>
+                ))}
+            </SelectContent>
           </Select>
           {[1, 2, 3].map((key) =>
             currentPage + key > 0 && currentPage + key <= lastPage ? (
               <Button
                 key={`start_${currentPage + key}`}
-                color="white"
                 onClick={() =>
                   setPageIndex(getState().pagination.pageIndex + key)
                 }
                 size="sm"
+                variant="outline"
               >
                 {currentPage + key}
               </Button>
-            ) : undefined
+            ) : undefined,
           )}
           <Button
-            color="white"
             disabled={!getCanNextPage()}
             onClick={nextPage}
             size="sm"
+            variant="outline"
           >
             <span className="sr-only">Suivant</span>
             <ChevronRightIcon className={ICON_CLASSNAME} />
           </Button>
           <Button
-            color="white"
             disabled={!getCanNextPage()}
             onClick={() => setPageIndex(lastPage)}
             size="sm"
+            variant="outline"
           >
             <ChevronDoubleRightIcon className={ICON_CLASSNAME} />
           </Button>
           <Select
-            value={getState().pagination.pageSize}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setPageSize(Number(e.target.value));
+            value={String(getState().pagination.pageSize)}
+            onValueChange={(value) => {
+              setPageSize(Number(value));
             }}
           >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize} par page
-              </option>
-            ))}
+            <SelectTrigger className="h-8">
+              <SelectValue placeholder="Nombre par page" />
+            </SelectTrigger>
+            <SelectContent>
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <SelectItem key={pageSize} value={String(pageSize)}>
+                  {pageSize} par page
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </nav>
       </div>

@@ -1,4 +1,3 @@
-import FormInfo from "@/components/forms/FormInfo";
 import { type AppRouter } from "@/trpc/routers/app";
 import { DEFAULT_ERROR } from "@/utils/errors";
 import type { TRPCClientErrorLike } from "@trpc/client";
@@ -8,12 +7,12 @@ const ServerError: React.FC<{
 }> = ({ error }) => {
   if (error?.data && "type" in error.data && error.data.type === "PP_Error") {
     return (
-      <FormInfo color="red">
+      <p className="mt-1 text-xs text-red-500">
         {error.data.message}
         {error.data?.infos && `: ${error.data.infos}`}
-      </FormInfo>
+      </p>
     );
   }
-  return <FormInfo color="red">{DEFAULT_ERROR}</FormInfo>;
+  return <p className="mt-1 text-xs text-red-500">{DEFAULT_ERROR}</p>;
 };
 export default ServerError;

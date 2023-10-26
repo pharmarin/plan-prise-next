@@ -1,6 +1,6 @@
 import { parseData } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import Button from "@/components/forms/inputs/Button";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { createId } from "@paralleldrive/cuid2";
@@ -29,11 +29,11 @@ const PlanCommentaireCustomItem = ({
   return (
     <div className="flex items-center space-x-2">
       <Button
-        color="link"
         className="p-0"
         onClick={() => {
           unsetData(`${medicId}.custom_commentaires.${commentId}`);
         }}
+        variant="link"
       >
         <XMarkIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
       </Button>
@@ -66,7 +66,6 @@ const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
         />
       ))}
       <Button
-        color="link"
         className="p-0"
         onClick={() =>
           setData(
@@ -74,6 +73,7 @@ const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
             "",
           )
         }
+        variant="link"
       >
         <PlusIcon className="mr-3 h-4 w-4" /> Ajouter un commentaire
       </Button>

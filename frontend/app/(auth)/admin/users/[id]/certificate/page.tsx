@@ -2,7 +2,7 @@
 
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
-import Button from "@/components/forms/inputs/Button";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import PP_Error from "@/utils/errors";
 import { XMarkIcon } from "@heroicons/react/20/solid";
@@ -39,7 +39,10 @@ const ApproveStudent = ({ params }: { params: { id: string } }) => {
             onSuccess={() => router.push("/admin/users")}
             user={user}
           />
-          <Button color="red" onClick={() => router.push("/admin/users")}>
+          <Button
+            onClick={() => router.push("/admin/users")}
+            variant="destructive"
+          >
             <XMarkIcon className="h-4 w-4" />
           </Button>
         </div>
