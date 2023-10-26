@@ -17,6 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TypographyH4 } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import { PlanPrisePosologies, type PlanSettings } from "@/types/plan";
 import { debounce } from "lodash";
@@ -28,6 +29,7 @@ const posologies = Object.keys(
 ) as (keyof typeof PlanPrisePosologies)[];
 
 const SettingsButton = () => {
+  const planId = usePlanStore((state) => state.id);
   const { settings, setSetting } = usePlanStore((state) => ({
     setSetting: state.setSetting,
     settings: state.settings as PlanSettings,
@@ -42,7 +44,11 @@ const SettingsButton = () => {
     const unsubscribe = usePlanStore.subscribe(
       (state) => ({ id: state.id, settings: state.settings }),
       async (newState, previousState) => {
-        if (previousState.id !== PLAN_NEW && newState.settings !== null) {
+        if (
+          previousState.id !== PLAN_NEW &&
+          newState.id !== PLAN_NEW &&
+          newState.settings !== null
+        ) {
           await saveSettingsDebounced({
             planId: newState.id,
             settings: newState.settings,
@@ -61,7 +67,12 @@ const SettingsButton = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="rounded-full bg-orange-400 p-1">
+      <DialogTrigger
+        className={cn("rounded-full bg-orange-400 p-1", {
+          "cursor-not-allowed bg-gray-600": planId === PLAN_NEW,
+        })}
+        disabled={planId === PLAN_NEW}
+      >
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
