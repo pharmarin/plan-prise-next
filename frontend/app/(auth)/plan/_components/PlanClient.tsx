@@ -182,7 +182,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
             ? "Chargement des médicaments en cours"
             : "Tapez 3 lettres pour commencer la recherche"
         }
-        menuPlacement={plan.id === PLAN_NEW ? "bottom" : "top"}
+        menuPlacement={medics && medics.length > 0 ? "top" : "bottom"}
         noOptionsMessage={(p) =>
           p.inputValue.length > 0
             ? "Aucun résultat"
