@@ -18,19 +18,22 @@ import {
 } from "@/types/plan";
 import PP_Error from "@/utils/errors";
 import { isCuid } from "@paralleldrive/cuid2";
-import type { Prisma } from "@prisma/client";
+import type { Precaution, Prisma } from "@prisma/client";
 import { Document, Page, Text, View } from "@react-pdf/renderer";
+import Html from "react-pdf-html";
 import { createTw } from "react-pdf-tailwind";
 
 const PrintPDF = ({
   plan,
   planData,
   planSettings,
+  precautions,
   user,
 }: {
   plan: PlanInclude;
   planData: Prisma.JsonValue;
   planSettings: Prisma.JsonValue;
+  precautions: Precaution[];
   user: UserSession;
 }) => {
   const tw = createTw({});
@@ -244,6 +247,38 @@ const PrintPDF = ({
             </Table>
           );
         })}
+        {precautions.map((precaution) => (
+          <View
+            key={precaution.id}
+            style={[
+              tw("rounded-lg border p-4 shadow-md mt-4"),
+              { borderColor: precaution.couleur },
+            ]}
+            wrap={false}
+          >
+            <Text style={[tw("text-sm"), { fontFamily: "Helvetica-Bold" }]}>
+              {precaution.titre}
+            </Text>
+            <Html
+              style={tw("text-sm")}
+              stylesheet={{
+                p: {
+                  marginVertical: 0,
+                },
+                ul: {
+                  marginVertical: 0,
+                  width: "95%",
+                },
+                ol: {
+                  marginVertical: 0,
+                  width: "95%",
+                },
+              }}
+            >
+              {precaution.contenu}
+            </Html>
+          </View>
+        ))}
       </Page>
     </Document>
   );

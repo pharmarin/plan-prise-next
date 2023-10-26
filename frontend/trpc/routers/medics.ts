@@ -40,24 +40,18 @@ const medicsRouter = router({
     ),
   findPrecautionsByMedicId: authProcedure
     .input(z.array(z.string().cuid2()).optional())
-    .query(async ({ ctx, input }) => {
+    .query(({ ctx, input }) => {
       if (!input) {
         return [];
       }
 
-      const medicaments = await ctx.prisma.medicament.findMany({
-        where: { OR: input.map((id) => ({ id })) },
-      });
-
-      const precautions = medicaments
-        .map((medicament) => medicament.precaution)
-        .filter(
-          (precaution): precaution is string => typeof precaution === "string",
-        );
-
-      return ctx.prisma.precautions_old.findMany({
+      return ctx.prisma.precaution.findMany({
         where: {
-          OR: precautions.map((precaution) => ({ mot_cle: precaution })),
+          medicaments: {
+            some: {
+              OR: input.map((id) => ({ id })),
+            },
+          },
         },
       });
     }),

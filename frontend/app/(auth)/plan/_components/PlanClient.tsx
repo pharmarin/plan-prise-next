@@ -125,9 +125,10 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                       conservationDuree: [],
                       voiesAdministration: [],
                       commentaires: [],
-                      precaution: "",
                       medics_simpleId: 0,
                       principesActifs: [],
+                      precaution_old: "",
+                      precautionId: null,
                     }
               }
               removeMedic={async (medicament: MedicamentIdentifier) => {

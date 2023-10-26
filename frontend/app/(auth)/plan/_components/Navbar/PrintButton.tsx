@@ -26,6 +26,10 @@ const PrintButton = () => {
     cacheTime: 1,
     enabled: isPrinting,
   });
+  const { data: precautions, isLoading: isLoadingPrecautions } =
+    trpc.medics.findPrecautionsByMedicId.useQuery(
+      plan?.medicsOrder as string[],
+    );
   const { data: session } = useSession();
 
   if (!planId || !planData || !planSettings || !session?.user) {
@@ -55,11 +59,11 @@ const PrintButton = () => {
           {(() => {
             const loader = <Loader2 className="h-4 w-4 animate-spin" />;
 
-            if (isPrinting && isLoading) {
+            if (isPrinting && (isLoading || isLoadingPrecautions)) {
               return loader;
             }
 
-            if (isPrinting && plan) {
+            if (isPrinting && plan && precautions) {
               return (
                 <PDFDownloadLink
                   document={
@@ -67,6 +71,7 @@ const PrintButton = () => {
                       plan={plan}
                       planData={planData}
                       planSettings={planSettings}
+                      precautions={precautions}
                       user={session.user}
                     />
                   }

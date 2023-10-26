@@ -9,6 +9,8 @@ import {
 import migrateMedicsNew from "@/prisma/migration/2-migrate-medics-new";
 import { migratePlanNew } from "@/prisma/migration/3-migrate-plans";
 import { addMaxIdColumn } from "@/prisma/migration/4-add-maxid-column-users";
+import { migrateRenamePrecautions } from "@/prisma/migration/5-rename-precautions";
+import { migrateMedicamentPrecautions } from "@/prisma/migration/6-migrate-precautions";
 
 const seeder = async () => {
   switch (process.argv?.[2]) {
@@ -27,6 +29,12 @@ const seeder = async () => {
       process.exit();
     case "4":
       await addMaxIdColumn();
+      process.exit();
+    case "5":
+      await migrateRenamePrecautions();
+      process.exit();
+    case "6":
+      await migrateMedicamentPrecautions();
       process.exit();
     default:
       console.info("Vous devez fournir au moins un argument");
