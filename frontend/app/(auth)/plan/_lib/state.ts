@@ -29,6 +29,9 @@ type Actions = {
   setCanPrint: (canPrint: boolean | string) => void;
 };
 
+const PLAN_NO_MEDIC_WARNING =
+  "Veuillez ajouter des médicaments pour imprimer le plan de prise";
+
 const usePlanStore = create(
   subscribeWithSelector(
     immer<State & Actions>((setState) => ({
@@ -67,10 +70,14 @@ const usePlanStore = create(
       addMedic: (medicId) =>
         setState((state) => {
           state.medics?.push(medicId);
+          state.canPrint = true;
         }),
       removeMedic: (medicId) =>
         setState((state) => {
           state.medics = state.medics?.filter((id) => id !== medicId);
+          if (state.medics?.length === 0) {
+            state.canPrint = PLAN_NO_MEDIC_WARNING;
+          }
         }),
       setSetting: (path, value) =>
         setState((state) => {
