@@ -1,6 +1,7 @@
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { authProcedure, router } from "@/trpc/trpc";
+import PP_Error from "@/utils/errors";
 import { planSettingsSchema } from "@/validation/plan";
 import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
@@ -54,6 +55,13 @@ const planRouter = router({
         const plan = await ctx.prisma.plan.findUniqueOrThrow({
           where: { id: input.planId },
         });
+
+        if (
+          Array.isArray(plan.medicsOrder) &&
+          plan.medicsOrder.includes(input.medicId)
+        ) {
+          throw new PP_Error("PLAN_MEDICAMENT_ALREADY_ADDED_ERROR");
+        }
 
         await ctx.prisma.plan.update({
           where: { id: input.planId, user: { id: ctx.user.id } },

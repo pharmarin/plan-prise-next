@@ -69,8 +69,10 @@ const usePlanStore = create(
         }),
       addMedic: (medicId) =>
         setState((state) => {
-          state.medics?.push(medicId);
-          state.canPrint = true;
+          if (!state.medics?.includes(medicId)) {
+            state.medics?.push(medicId);
+            state.canPrint = true;
+          }
         }),
       removeMedic: (medicId) =>
         setState((state) => {

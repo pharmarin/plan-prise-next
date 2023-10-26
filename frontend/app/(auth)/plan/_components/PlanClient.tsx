@@ -4,11 +4,12 @@ import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import useNotificationsStore, { createNotification } from "@/app/notifications";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
+import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanInclude } from "@/types/plan";
+import errors from "@/utils/errors/errors.json";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ type SelectValueType = {
 const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
   const router = useRouter();
+  const { toast } = useToast();
 
   const [ready, setReady] = useState(false);
 
@@ -36,10 +38,6 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
     }),
   );
   const medics = usePlanStore((state) => state.medics);
-
-  const addNotification = useNotificationsStore(
-    (state) => state.addNotification,
-  );
 
   const [searchValue, setSearchValue] = useState("");
   const setSearchValueDebounced = debounce(setSearchValue, 500);
@@ -145,13 +143,11 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                 })
                   .then(() => removeMedic(medicament.id))
                   .catch(() => {
-                    addNotification(
-                      createNotification({
-                        type: "error",
-                        text: `Impossible de supprimer ${medicament.denomination} pour le moment. Veuillez réessayer.`,
-                        timer: 3000,
-                      }),
-                    );
+                    toast({
+                      title: `Impossible de supprimer ${medicament.denomination} pour le moment`,
+                      description: "Veuillez réessayer",
+                      variant: "destructive",
+                    });
                   })
                   .finally(() => {
                     setRemovingMedics((state) => [
@@ -191,6 +187,13 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
         onChange={async (value) => {
           if (value) {
             setSearchValue("");
+            if (medics && medics.includes(value.id)) {
+              toast({
+                title: errors.PLAN_MEDICAMENT_ALREADY_ADDED_ERROR,
+                variant: "destructive",
+              });
+              return;
+            }
             setAddingMedics((state) => [
               ...state,
               { id: value.id, denomination: value.denomination },
@@ -210,13 +213,11 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                 }
               })
               .catch(() => {
-                addNotification(
-                  createNotification({
-                    type: "error",
-                    text: `Impossible d'ajouter ${value.denomination} pour le moment. Veuillez réessayer.`,
-                    timer: 3000,
-                  }),
-                );
+                toast({
+                  title: `Impossible d'ajouter ${value.denomination} pour le moment`,
+                  description: "Veuillez réessayer",
+                  variant: "destructive",
+                });
               })
               .finally(() => {
                 selectRef.current?.clearValue();

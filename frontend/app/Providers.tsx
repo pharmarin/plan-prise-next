@@ -1,7 +1,7 @@
 "use client";
 
-import { NotificationProvider } from "@/app/notifications";
 import NavigationContextProvider from "@/components/NavigationContextProvider";
+import { Toaster } from "@/components/ui/toaster";
 import { trpc } from "@/trpc/client";
 import getUrl from "@/utils/url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -32,7 +32,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
   );
 
   return (
-    <NotificationProvider>
+    <>
       <SessionProvider>
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
           <QueryClientProvider client={queryClient}>
@@ -40,7 +40,8 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
           </QueryClientProvider>
         </trpc.Provider>
       </SessionProvider>
-    </NotificationProvider>
+      <Toaster />
+    </>
   );
 };
 
