@@ -41,7 +41,7 @@ const usePlanStore = create(
       init: (plan) =>
         setState((state) => {
           state.id = plan.id;
-          state.data = plan.data;
+          state.data = plan.data || {};
           state.medics = Array.isArray(plan.medicsOrder)
             ? (plan.medicsOrder as string[])
             : [];
