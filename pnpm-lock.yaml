@@ -16,8 +16,8 @@ importers:
         specifier: workspace:*
         version: link:packages/eslint
       '@prettier/plugin-php':
-        specifier: 0.20.1
-        version: 0.20.1(prettier@3.0.3)
+        specifier: 0.21.0
+        version: 0.21.0(prettier@3.0.3)
       prettier:
         specifier: 3.0.3
         version: 3.0.3
@@ -807,8 +807,8 @@ packages:
       playwright: 1.39.0
     dev: true
 
-  /@prettier/plugin-php@0.20.1(prettier@3.0.3):
-    resolution: {integrity: sha512-CFn+NH44jb0buvg8D/DvLjeetadmNBMRq3yrgL8I+tXioDZlhQ+eBLLRILPEBIQ6jBmOjzm/Q7Qin8KD7raiFw==}
+  /@prettier/plugin-php@0.21.0(prettier@3.0.3):
+    resolution: {integrity: sha512-vWC6HIUUfhvl/7F5IxVQ0ItGB/7ZY+jDlX7KsTqvfKMODW/zvzj8r1Ab4harS22+O3xxHykVVd5jvylmxMMctg==}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
