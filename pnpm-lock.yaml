@@ -171,8 +171,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0(react@18.2.0)(ts-node@10.9.1)
       react-select:
-        specifier: 5.7.4
-        version: 5.7.4(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 5.7.7
+        version: 5.7.7(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
       react-textarea-autosize:
         specifier: 8.5.3
         version: 8.5.3(@types/react@18.2.33)(react@18.2.0)
@@ -5147,8 +5147,8 @@ packages:
       use-sidecar: 1.1.2(@types/react@18.2.33)(react@18.2.0)
     dev: false
 
-  /react-select@5.7.4(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-NhuE56X+p9QDFh4BgeygHFIvJJszO1i1KSkg/JPcIJrbovyRtI+GuOEa4XzFCEpZRAEoEI8u/cAHK+jG/PgUzQ==}
+  /react-select@5.7.7(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-HhashZZJDRlfF/AKj0a0Lnfs3sRdw/46VJIRd8IbB9/Ovr74+ZIwkAdSBjSPXsFMG+u72c5xShqwLSKIJllzqw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
