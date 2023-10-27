@@ -19,7 +19,6 @@ const Plan = async ({ params }: Props) => {
   });
 
   if (!plan) {
-    // TODO: Check if working
     return notFound();
   }
 
