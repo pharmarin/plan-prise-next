@@ -1,4 +1,4 @@
-import { AuthProviders } from "@/app/Providers";
+import { AuthProviders } from "@/app/_components/Providers";
 import AuthGuard from "@/components/guards/AuthGuard";
 import Navbar from "@/components/navigation/Navbar";
 import { type PropsWithChildren } from "react";
@@ -8,7 +8,7 @@ const AuthLayout: React.FC<PropsWithChildren> = ({ children }) => {
     <AuthGuard>
       <AuthProviders>
         <Navbar />
-        <div className="container mx-auto mb-8 rounded-lg bg-white p-4 shadow-inner">
+        <div className="container mx-auto mb-4 flex flex-1 flex-col rounded-lg bg-white p-4 shadow-inner">
           {children}
         </div>
       </AuthProviders>

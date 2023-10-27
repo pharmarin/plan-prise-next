@@ -1,6 +1,6 @@
 import AuthLayout from "@/app/(auth)/layout";
-import Home from "@/app/Home";
 import Title from "@/components/navigation/Navigation";
+import Home from "@/components/pages/Home";
 
 const Index = () => (
   <AuthLayout>
