@@ -1,5 +1,6 @@
 {
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": false,
-  "typescript.tsdk": "./frontend/node_modules/typescript/lib"
+  "typescript.tsdk": "./frontend/node_modules/typescript/lib",
+  "githubPullRequests.ignoredPullRequestBranches": ["master"]
 }
