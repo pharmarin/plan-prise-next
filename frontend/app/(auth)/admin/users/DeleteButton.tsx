@@ -1,5 +1,5 @@
-import Button from "@/components/forms/inputs/Button";
 import Spinner from "@/components/icons/Spinner";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { type User } from "next-auth";
@@ -12,7 +12,6 @@ const DeleteButton: React.FC<{
 
   return (
     <Button
-      color="red"
       disabled={isLoading}
       onClick={async () => {
         try {
@@ -20,10 +19,11 @@ const DeleteButton: React.FC<{
           onSuccess();
         } catch {
           console.error(
-            "Une erreur est survenue lors de la suppression de l'utilisateur"
+            "Une erreur est survenue lors de la suppression de l'utilisateur",
           );
         }
       }}
+      variant="destructive"
     >
       {isLoading ? <Spinner /> : <TrashIcon className="h-4 w-4" />}
     </Button>

@@ -1,12 +1,14 @@
 "use client";
 
-import Avatar from "@/components/icons/Avatar";
-import Spinner from "@/components/icons/Spinner";
+import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
+import { Initials } from "@/components/icons/Initials";
 import Logo from "@/components/navigation/Logo";
 import NavbarLink from "@/components/navigation/NavbarLink";
 import { useNavigation } from "@/components/NavigationContextProvider";
 import Dropdown from "@/components/overlays/Dropdown";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { trpc } from "@/trpc/client";
+import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -38,9 +40,10 @@ const Navbar = () => {
       </div>
       <div
         id="navbar-center"
-        className="flex w-fit items-center text-xl font-semibold text-teal-900"
+        className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
         <div>{title}</div>
+        {pathname.startsWith("/plan/") && <PlanNavbarStack />}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">
@@ -53,12 +56,16 @@ const Navbar = () => {
               <>
                 <span className="sr-only">Ouvrir le menu utilisateur</span>
                 {user ? (
-                  <Avatar
+                  <Initials
                     firstName={user.firstName || "P"}
                     lastName={user.lastName || "P"}
                   />
                 ) : (
-                  <Spinner className="text-gray-800" />
+                  <Avatar>
+                    <AvatarFallback>
+                      <Loader2 className="animate-spin text-gray-800" />
+                    </AvatarFallback>
+                  </Avatar>
                 )}
               </>
             }

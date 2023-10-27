@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/forms/inputs/Button";
+import { Button } from "@/components/ui/button";
 
 const Error = ({ reset }: { error: Error; reset: () => void }) => {
   return (

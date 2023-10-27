@@ -32,9 +32,16 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts",
     "next-auth/index",
     "__tests__"
   ],
-  "exclude": ["node_modules", "./prisma/migration"]
+  "exclude": ["node_modules", "./prisma/migration"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "paths": { "@/*": ["./*"] }
+    },
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true
+  }
 }

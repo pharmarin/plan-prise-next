@@ -1,8 +1,7 @@
 "use client";
 
-import FormInfo from "@/components/forms/FormInfo";
-import Button from "@/components/forms/inputs/Button";
 import ConfirmPasswordModal from "@/components/overlays/modals/ConfirmPasswordModal";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { type User } from "@prisma/client";
@@ -18,13 +17,17 @@ const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
 
   return (
     <div>
-      <Button className="mt-1" color="red" onClick={() => setShowForm(true)}>
+      <Button
+        className="mt-1"
+        onClick={() => setShowForm(true)}
+        variant="destructive"
+      >
         Supprimer mon compte
       </Button>
-      <FormInfo color="red">
+      <p className="mt-1 text-xs text-red-500">
         La suppression de votre compte sera immédiate et ne pourra pas être
         annulée.
-      </FormInfo>
+      </p>
       <ConfirmPasswordModal
         error={error}
         onCancel={() => setShowForm(false)}

@@ -1,129 +1,45 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import prisma from "../index";
-import type {
-  CalendarsTable,
-  MedicsTable,
-  MySQLExport,
-  PlansTable,
-  PrecautionsTable,
-  UsersTable,
-} from "./database";
-import database from "./plandepr_medics.json";
-
-type UsersMap = { [username: string]: string };
-
-const migrateUsers = async (): Promise<UsersMap> => {
-  const usersMap: {
-    [email: string]: { username: string; newId: string };
-  } = {};
-
-  const usersTable =
-    (database as MySQLExport).find(
-      (data): data is UsersTable =>
-        data.type === "table" && data.name === "users"
-    )?.data || [];
-
-  await prisma.user.createMany({
-    data: usersTable.map((user) => {
-      usersMap[user.mail] = { username: user.login, newId: "" };
-
-      return {
-        admin: user.admin === "1",
-        displayName: user.fullname,
-        student: user.status === "2",
-        rpps: Number(user.rpps),
-        email: user.mail,
-        password: user.password,
-        createdAt: new Date(user.inscription),
-        approvedAt: user.active === "1" ? new Date(user.inscription) : null,
-      };
-    }),
-  });
-
-  (
-    await prisma.user.findMany({
-      select: { id: true, email: true },
-    })
-  ).map((user) => {
-    usersMap[user.email].newId = user.id;
-  });
-
-  return Object.fromEntries(
-    Object.values(usersMap).map((value) => [value.username, value.newId])
-  );
-};
-
-const migratePrecautions = async () => {
-  const precautionsTable =
-    (database as MySQLExport).find(
-      (data): data is PrecautionsTable =>
-        data.type === "table" && data.name === "precautions"
-    )?.data || [];
-
-  await prisma.precautions_old.createMany({
-    data: precautionsTable.map(({ id: _id, ...precaution }) => precaution),
-  });
-};
-
-const migrateMedics = async () => {
-  const medicsTable =
-    (database as MySQLExport).find(
-      (data): data is MedicsTable =>
-        data.type === "table" && data.name === "medics_simple"
-    )?.data || [];
-
-  await prisma.medics_simple.createMany({
-    data: medicsTable.map(({ id: _id, ...medic }) => ({
-      nomMedicament: medic.nomMedicament,
-      nomGenerique: medic.nomGenerique || null,
-      indication: medic.indication || null,
-      frigo: medic.frigo === "1",
-      dureeConservation: medic.dureeConservation || null,
-      voieAdministration: medic.voieAdministration || null,
-      commentaire: medic.commentaire || null,
-      precaution: medic.precaution || null,
-    })),
-  });
-};
-
-const migrateCalendars = async (users: UsersMap) => {
-  const calendarsTable =
-    (database as MySQLExport).find(
-      (data): data is CalendarsTable =>
-        data.type === "table" && data.name === "calendriers"
-    )?.data || [];
-
-  await prisma.calendriers_old.createMany({
-    data: calendarsTable.map(({ id: _id, ...calendar }) => ({
-      ...calendar,
-      user: users[calendar.user] || "",
-      TIME: new Date(calendar.TIME),
-    })),
-  });
-};
-
-const migratePlans = async (users: UsersMap) => {
-  const plansTable =
-    (database as MySQLExport).find(
-      (data): data is PlansTable =>
-        data.type === "table" && data.name === "plans"
-    )?.data || [];
-
-  await prisma.plans_old.createMany({
-    data: plansTable.map(({ id: _id, ...plan }) => ({
-      ...plan,
-      user: users[plan.user] || "",
-      TIME: new Date(plan.TIME),
-    })),
-  });
-};
+import prisma from "@/prisma";
+import {
+  migrateCalendars,
+  migrateMedics,
+  migratePlans,
+  migratePrecautions,
+  migrateUsers,
+} from "@/prisma/migration/1-migrate-old-db";
+import migrateMedicsNew from "@/prisma/migration/2-migrate-medics-new";
+import { migratePlanNew } from "@/prisma/migration/3-migrate-plans";
+import { addMaxIdColumn } from "@/prisma/migration/4-add-maxid-column-users";
+import { migrateRenamePrecautions } from "@/prisma/migration/5-rename-precautions";
+import { migrateMedicamentPrecautions } from "@/prisma/migration/6-migrate-precautions";
 
 const seeder = async () => {
-  const users = await migrateUsers();
-  await migrateMedics();
-  await migratePrecautions();
-  await migrateCalendars(users);
-  await migratePlans(users);
+  switch (process.argv?.[2]) {
+    case "1":
+      const users = await migrateUsers();
+      await migrateMedics();
+      await migratePrecautions();
+      await migrateCalendars(users);
+      await migratePlans(users);
+      process.exit();
+    case "2":
+      await migrateMedicsNew();
+      process.exit();
+    case "3":
+      await migratePlanNew();
+      process.exit();
+    case "4":
+      await addMaxIdColumn();
+      process.exit();
+    case "5":
+      await migrateRenamePrecautions();
+      process.exit();
+    case "6":
+      await migrateMedicamentPrecautions();
+      process.exit();
+    default:
+      console.info("Vous devez fournir au moins un argument");
+      process.exit(1);
+  }
 };
 
 seeder()

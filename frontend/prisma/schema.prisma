@@ -55,8 +55,94 @@ model User {
   approvedAt  DateTime?
   accounts    Account[]
   sessions    Session[]
+  plans       Plan[]
+  maxId       Int       @default(1)
 
   @@map("users")
+}
+
+enum VoieAdministration {
+  ORALE
+  CUTANEE
+  AURICULAIRE
+  NASALE
+  INHALEE
+  VAGINALE
+  OCULAIRE
+  RECTALE
+  SOUS_CUTANEE
+  INTRA_MUSCULAIRE
+  INTRA_VEINEUX
+  INTRA_URETRALE
+  AUTRE
+}
+
+model PrincipeActif {
+  id           String       @id @default(cuid())
+  denomination String       @unique
+  medicaments  Medicament[]
+
+  @@map("principes_actifs")
+}
+
+model Commentaire {
+  id                 String              @id @default(cuid())
+  // Si le commentaire est spécifique à une voie d'administration
+  voieAdministration VoieAdministration?
+  population         String?
+  texte              String              @db.Text
+  medicament         Medicament?         @relation(fields: [medicamentId], references: [id], onDelete: Cascade)
+  medicamentId       String
+
+  @@index([medicamentId])
+  @@map("commentaires")
+}
+
+model Medicament {
+  id                  String          @id @default(cuid())
+  medicamentOld       medics_simple   @relation(fields: [medics_simpleId], references: [id])
+  denomination        String          @unique
+  principesActifs     PrincipeActif[]
+  indications         Json
+  conservationFrigo   Boolean
+  conservationDuree   Json?
+  voiesAdministration Json
+  commentaires        Commentaire[]
+  // TODO: Delete precaution_old
+  precaution_old      String?
+  precaution          Precaution?     @relation(fields: [precautionId], references: [id])
+  medics_simpleId     Int
+  plans               Plan[]
+  precautionId        Int?
+
+  @@index([medics_simpleId])
+  @@index([precautionId])
+  @@map("medicaments")
+}
+
+model Precaution {
+  id          Int          @id @default(autoincrement())
+  mot_cle     String       @unique @db.VarChar(50)
+  titre       String       @db.VarChar(200)
+  contenu     String       @db.Text
+  couleur     String       @db.VarChar(10)
+  medicaments Medicament[]
+
+  @@map("precautions")
+}
+
+model Plan {
+  id          String       @id @default(cuid())
+  medics      Medicament[]
+  medicsOrder Json         @default("[]")
+  data        Json?
+  settings    Json?
+  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
+  displayId   Int
+
+  @@index([userId])
+  @@map("plans")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
@@ -69,23 +155,24 @@ model calendriers_old {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model medics_simple {
-  id                 Int     @id @default(autoincrement())
-  nomMedicament      String? @db.VarChar(200)
-  nomGenerique       String? @db.VarChar(100)
-  indication         String? @db.Text
-  frigo              Boolean @default(false)
-  dureeConservation  String? @db.Text
-  voieAdministration String? @db.VarChar(50)
-  matin              String? @db.VarChar(20)
-  midi               String? @db.VarChar(20)
-  soir               String? @db.VarChar(20)
-  coucher            String? @db.VarChar(20)
-  commentaire        String? @db.Text
-  modifie            String? @default("NOW()") @db.VarChar(20)
-  precaution         String? @db.VarChar(50)
-  qui                String? @db.VarChar(10)
-  relecture          Int?    @default(0)
-  stat               Int     @default(0)
+  id                 Int          @id @default(autoincrement())
+  nomMedicament      String?      @db.VarChar(200)
+  nomGenerique       String?      @db.VarChar(100)
+  indication         String?      @db.Text
+  frigo              Boolean      @default(false)
+  dureeConservation  String?      @db.Text
+  voieAdministration String?      @db.VarChar(50)
+  matin              String?      @db.VarChar(20)
+  midi               String?      @db.VarChar(20)
+  soir               String?      @db.VarChar(20)
+  coucher            String?      @db.VarChar(20)
+  commentaire        String?      @db.Text
+  modifie            String?      @default("NOW()") @db.VarChar(20)
+  precaution         String?      @db.VarChar(50)
+  qui                String?      @db.VarChar(10)
+  relecture          Int?         @default(0)
+  stat               Int          @default(0)
+  Medicament         Medicament[]
 }
 
 model plans_old {
@@ -94,12 +181,4 @@ model plans_old {
   data    String   @db.MediumText
   options String?  @db.Text
   TIME    DateTime @default(now()) @db.Timestamp(0)
-}
-
-model precautions_old {
-  id      Int    @id @default(autoincrement())
-  mot_cle String @db.VarChar(50)
-  titre   String @db.VarChar(200)
-  contenu String @db.Text
-  couleur String @db.VarChar(10)
 }

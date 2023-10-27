@@ -35,7 +35,7 @@ export const test = base.extend<AuthFixtures>({
     const email = faker.internet.email(
       firstName,
       lastName,
-      (process.env.MAIL_TEST_DOMAIN || "").replace(/^./, "")
+      (process.env.MAIL_TEST_DOMAIN || "").replace(/^./, ""),
     );
 
     await use({
@@ -47,7 +47,8 @@ export const test = base.extend<AuthFixtures>({
       password: faker.internet.password(),
       admin: false,
       student: false,
-      rpps: BigInt(faker.random.numeric(11)),
+      rpps: BigInt(faker.string.numeric(11)),
+      maxId: faker.number.int(),
     });
 
     await prisma.user.deleteMany({ where: { email } });

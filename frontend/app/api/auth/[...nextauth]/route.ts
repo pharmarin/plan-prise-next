@@ -7,7 +7,6 @@ declare module "next-auth" {
     user: UserSession;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface User extends UserSafe {}
 }
 

@@ -1,0 +1,6 @@
+{
+  "name": "@plan-prise/backend",
+  "scripts": {
+    "dev": "php artisan serve"
+  }
+}

@@ -37,6 +37,9 @@ const Profil = async () => {
           </div>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
+          {/*
+            TODO: Remove usage of superjson plugin
+          */}
           <EditInformations user={user} data-superjson />
         </div>
       </div>

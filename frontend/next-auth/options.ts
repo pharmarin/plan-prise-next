@@ -5,11 +5,12 @@ import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import { checkPassword } from "@/utils/password-utils";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import type { PrismaClient } from "@prisma/client";
 import Credentials from "next-auth/providers/credentials";
 import { type NextAuthOptions } from "node_modules/next-auth";
 
 export const nextAuthOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma as PrismaClient),
   callbacks: {
     jwt: ({ token, user }) => {
       if (user && user.approvedAt) {
@@ -17,6 +18,9 @@ export const nextAuthOptions: NextAuthOptions = {
           token.user = {
             id: user.id,
             admin: user.admin,
+            displayName: user.displayName,
+            lastName: user.lastName,
+            firstName: user.firstName,
           };
         }
       }
@@ -26,6 +30,9 @@ export const nextAuthOptions: NextAuthOptions = {
     session: ({ session, user, token }) => {
       session.user.id = token?.user?.id ?? user.id;
       session.user.admin = token?.user?.admin ?? user.admin;
+      session.user.displayName = token?.user?.displayName ?? user.displayName;
+      session.user.firstName = token?.user?.firstName ?? user.firstName;
+      session.user.lastName = token?.user?.lastName ?? user.lastName;
 
       return session;
     },
@@ -65,7 +72,7 @@ export const nextAuthOptions: NextAuthOptions = {
           user &&
           checkPassword(
             credentials.password,
-            user.password.replace(/^\$2y/, "$2a")
+            user.password.replace(/^\$2y/, "$2a"),
           )
         ) {
           const { password: _password, ...sessionUser } = user;

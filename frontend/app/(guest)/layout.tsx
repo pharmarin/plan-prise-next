@@ -1,4 +1,4 @@
-import { GuestProviders } from "@/app/Providers";
+import { GuestProviders } from "@/app/_components/Providers";
 import AuthGuard from "@/components/guards/AuthGuard";
 import { type PropsWithChildren } from "react";
 

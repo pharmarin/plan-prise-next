@@ -1,10 +1,10 @@
 "use client";
 
 import Form from "@/components/forms/Form";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import Link from "@/components/navigation/Link";
+import { Button } from "@/components/ui/button";
 import type { AppRouter } from "@/trpc/routers/app";
 import PP_Error from "@/utils/errors";
 import { loginSchema } from "@/validation/users";
@@ -55,8 +55,8 @@ const LoginForm = () => {
               new PP_Error(
                 signInResponse?.error === "CredentialsSignin"
                   ? "USER_LOGIN_ERROR"
-                  : "SERVER_ERROR"
-              ).toTRPCError()
+                  : "SERVER_ERROR",
+              ).toTRPCError(),
             );
           }
         }}
@@ -96,10 +96,10 @@ const LoginForm = () => {
 
             <Button
               className="mt-4"
-              color="gradient"
               disabled={"email" in errors || "password" in errors}
               loading={isSubmitting}
               type="submit"
+              variant="gradient"
             >
               Se connecter
             </Button>

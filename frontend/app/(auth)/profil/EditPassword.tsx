@@ -1,10 +1,9 @@
 "use client";
 
 import Form from "@/components/forms/Form";
-import FormInfo from "@/components/forms/FormInfo";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { updateUserPasswordSchema } from "@/validation/users";
@@ -82,10 +81,12 @@ const EditPassword: React.FC<
           {error && <ServerError error={error} />}
 
           {success && (
-            <FormInfo color="green">Le mot de passe a été mis à jour</FormInfo>
+            <p className="mt-1 text-xs text-green-500">
+              Le mot de passe a été mis à jour
+            </p>
           )}
 
-          <Button color="primary" loading={isSubmitting} type="submit">
+          <Button loading={isSubmitting} type="submit">
             Mettre à jour le mot de passe
           </Button>
         </Form>
