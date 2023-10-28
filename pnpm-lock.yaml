@@ -201,8 +201,8 @@ importers:
         specifier: 3.21.4
         version: 3.21.4
       zustand:
-        specifier: 4.4.1
-        version: 4.4.1(@types/react@18.2.33)(immer@10.0.3)(react@18.2.0)
+        specifier: 4.4.4
+        version: 4.4.4(@types/react@18.2.33)(immer@10.0.3)(react@18.2.0)
     devDependencies:
       '@faker-js/faker':
         specifier: 8.2.0
@@ -6272,8 +6272,8 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  /zustand@4.4.1(@types/react@18.2.33)(immer@10.0.3)(react@18.2.0):
-    resolution: {integrity: sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==}
+  /zustand@4.4.4(@types/react@18.2.33)(immer@10.0.3)(react@18.2.0):
+    resolution: {integrity: sha512-5UTUIAiHMNf5+mFp7/AnzJXS7+XxktULFN0+D1sCiZWyX7ZG+AQpqs2qpYrynRij4QvoDdCD+U+bmg/cG3Ucxw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
