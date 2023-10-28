@@ -123,8 +123,8 @@ importers:
         specifier: 2.4.5
         version: 2.4.5(react@18.2.0)
       immer:
-        specifier: 10.0.2
-        version: 10.0.2
+        specifier: 10.0.3
+        version: 10.0.3
       jose:
         specifier: 4.15.4
         version: 4.15.4
@@ -202,7 +202,7 @@ importers:
         version: 3.21.4
       zustand:
         specifier: 4.4.1
-        version: 4.4.1(@types/react@18.2.33)(immer@10.0.2)(react@18.2.0)
+        version: 4.4.1(@types/react@18.2.33)(immer@10.0.3)(react@18.2.0)
     devDependencies:
       '@faker-js/faker':
         specifier: 8.2.0
@@ -3768,8 +3768,8 @@ packages:
     engines: {node: '>= 4'}
     dev: false
 
-  /immer@10.0.2:
-    resolution: {integrity: sha512-Rx3CqeqQ19sxUtYV9CU911Vhy8/721wRFnJv3REVGWUmoAcIwzifTsdmJte/MV+0/XpM35LZdQMBGkRIoLPwQA==}
+  /immer@10.0.3:
+    resolution: {integrity: sha512-pwupu3eWfouuaowscykeckFmVTpqbzW+rXFCX8rQLkZzM9ftBmU/++Ra+o+L27mz03zJTlyV4UUr+fdKNffo4A==}
     dev: false
 
   /import-fresh@3.3.0:
@@ -6272,7 +6272,7 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  /zustand@4.4.1(@types/react@18.2.33)(immer@10.0.2)(react@18.2.0):
+  /zustand@4.4.1(@types/react@18.2.33)(immer@10.0.3)(react@18.2.0):
     resolution: {integrity: sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -6288,7 +6288,7 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.33
-      immer: 10.0.2
+      immer: 10.0.3
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
