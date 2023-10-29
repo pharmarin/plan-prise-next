@@ -12,6 +12,6 @@
   },
   "scripts": {
     "download": "ts-node download.ts",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   }
 }
