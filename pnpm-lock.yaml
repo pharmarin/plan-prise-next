@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@plan-prise/prettier-config':
+        specifier: '*'
+        version: link:config/prettier
       turbo:
         specifier: 1.10.16
         version: 1.10.16

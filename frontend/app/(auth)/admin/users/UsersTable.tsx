@@ -68,12 +68,12 @@ const UsersTable = () => {
     {
       initialData: [],
       refetchOnWindowFocus: false,
-    },
+    }
   );
 
   const columnHelper = createColumnHelper<User>();
   const [columnFilter, setColumnFilter] = useState<keyof typeof filters>(
-    Object.keys(filters)[1],
+    Object.keys(filters)[1]
   );
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -137,7 +137,7 @@ const UsersTable = () => {
         cell: (props) =>
           props.row.original.approvedAt
             ? new Date(props.row.original.approvedAt).toLocaleDateString(
-                "fr-FR",
+                "fr-FR"
               )
             : undefined,
         header: "Validation",
@@ -156,7 +156,7 @@ const UsersTable = () => {
       }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [columnHelper],
+    [columnHelper]
   );
 
   const table = useReactTable({
@@ -229,7 +229,7 @@ const UsersTable = () => {
                   ? null
                   : flexRender(
                       header.column.columnDef.header,
-                      header.getContext(),
+                      header.getContext()
                     )}
               </TableHeadCell>
             ))}
