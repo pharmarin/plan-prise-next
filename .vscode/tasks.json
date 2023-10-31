@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "label": "tsc",
+  "type": "shell",
+  "command": "./node_modules/.bin/turbo",
+  "args": ["typecheck", "--log-prefix=none"],
+  "presentation": {
+    "reveal": "always",
+    "echo": false,
+    "focus": false,
+    "panel": "dedicated"
+  },
+  "problemMatcher": "$tsc-watch"
+}

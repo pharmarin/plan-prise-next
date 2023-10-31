@@ -40,7 +40,7 @@ const PrintPDF = ({
 
   const data = parseData(planData || plan.data);
   const posologies = extractPosologiesSettings(
-    (planSettings as PlanSettings)?.posos,
+    (planSettings as PlanSettings)?.posos
   );
 
   const INFORMATIONS_WIDTH = "w-56";
@@ -135,11 +135,11 @@ const PrintPDF = ({
             return undefined;
           }
 
-          const rowData = medicamentId in data ? data[medicamentId] : {};
+          const rowData = data?.[medicamentId] || {};
 
           const rowIndication = extractIndication(
             medicament,
-            rowData.indication,
+            rowData.indication
           );
 
           const rowFrigo =
@@ -149,7 +149,7 @@ const PrintPDF = ({
 
           const rowConservation = extractConservation(
             medicament,
-            rowData.conservation,
+            rowData.conservation
           ).values.map((conservation, key) => {
             if (key > 1) {
               throw new PP_Error("PLAN_CONSERVATION_LENGTH_ERROR");
@@ -168,7 +168,7 @@ const PrintPDF = ({
               : "";
 
           const rowVoiesAdministration = `Voie ${extractVoieAdministration(
-            medicament,
+            medicament
           ).join(" ou ")}`;
 
           const rowCommentaires =
@@ -178,16 +178,16 @@ const PrintPDF = ({
                     (commentaire) =>
                       extractCommentaire(
                         commentaire,
-                        rowData.commentaires?.[commentaire.id],
+                        rowData.commentaires?.[commentaire.id]
                       ).checked && {
                         text: commentaire.texte,
-                      },
+                      }
                   )
                   .filter((item): item is { text: string } => item !== false)
               : [];
 
           const rowCustomCommentaires = Object.values(
-            rowData.custom_commentaires || {},
+            rowData.custom_commentaires || {}
           ).map((commentaire) => ({
             text: commentaire.texte,
           }));
@@ -201,32 +201,32 @@ const PrintPDF = ({
                   wrap={false}
                 >
                   {[
-                    { text: medicament?.denomination, bold: true },
+                    { text: medicament?.denomination || "", bold: true },
 
                     {
-                      text: rowPrincipesActifs,
+                      text: rowPrincipesActifs || "",
                       className: "text-gray-700 text-sm mt-2",
                       italic: true,
                     },
 
                     {
-                      text: rowVoiesAdministration,
+                      text: rowVoiesAdministration || "",
                       className: "text-sm text-gray-600 mt-2",
                     },
                     {
-                      text: rowFrigo,
+                      text: rowFrigo || "",
                       className: "text-sm text-gray-600 mt-2",
                       italic: true,
                     },
                     {
-                      text: rowConservation,
+                      text: rowConservation || "",
                       className: "text-sm text-gray-600 mt-2 mb-auto",
                       italic: true,
                     },
                   ].filter((line) => line.text !== "")}
                 </Cell>
                 <Cell className={`flex-initial ${INDICATION_WIDTH}`}>
-                  {rowIndication[0]}
+                  {rowIndication[0] || ""}
                 </Cell>
                 {posologies.map((posologie) => (
                   <Cell

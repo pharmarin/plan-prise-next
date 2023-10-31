@@ -28,7 +28,7 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   useEffect(() => {
     if (conservationDuree.values.length > 1) {
       setCanPrint(
-        `Veuillez choisir une durée de conservation pour ${medicament.denomination}`,
+        `Veuillez choisir une durée de conservation pour ${medicament.denomination}`
       );
     }
   }, [conservationDuree.values.length, medicament.denomination, setCanPrint]);
@@ -45,12 +45,12 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
       {conservationDuree.values.length === 1 ? (
         <div>
           <p className="text-sm text-gray-900">
-            {conservationDuree.values[0].duree}
+            {conservationDuree.values[0]?.duree}
           </p>
           {conservationDuree.custom && (
             <div className="flex space-x-2">
               <span className="text-sm italic text-gray-900">
-                Pour {conservationDuree.values[0].laboratoire}
+                Pour {conservationDuree.values[0]?.laboratoire}
               </span>
               <Button
                 className="p-0"

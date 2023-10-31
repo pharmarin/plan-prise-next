@@ -15,7 +15,7 @@ const PlanCommentaireCustomItem = ({
 }) => {
   const data = usePlanStore(
     (state) =>
-      parseData(state.data)?.[medicId].custom_commentaires?.[commentId],
+      parseData(state.data)?.[medicId]?.custom_commentaires?.[commentId]
   );
   const { setData, unsetData } = usePlanStore((state) => ({
     setData: state.setData,
@@ -41,7 +41,7 @@ const PlanCommentaireCustomItem = ({
         onChange={(event) =>
           setData(
             `${medicId}.custom_commentaires.${commentId}.texte`,
-            event.currentTarget.value,
+            event.currentTarget.value
           )
         }
         value={data.texte}
@@ -52,7 +52,7 @@ const PlanCommentaireCustomItem = ({
 
 const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
   const data = usePlanStore(
-    (state) => parseData(state.data)?.[medicament.id]?.custom_commentaires,
+    (state) => parseData(state.data)?.[medicament.id]?.custom_commentaires
   );
   const setData = usePlanStore((state) => state.setData);
 
@@ -70,7 +70,7 @@ const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
         onClick={() =>
           setData(
             `${medicament.id}.custom_commentaires.${createId()}.texte`,
-            "",
+            ""
           )
         }
         variant="link"

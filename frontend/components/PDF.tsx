@@ -14,8 +14,8 @@ export const Table = ({
     style={tw(
       twMerge(
         "h-auto w-auto border border-solid border-r-0 border-b-0",
-        className,
-      ),
+        className
+      )
     )}
     fixed={fixed}
   >
@@ -37,8 +37,8 @@ export const Col = ({
       tw(
         twMerge(
           "flex-1 border border-solid border-l-0 border-t-0 p-1 text-base",
-          className,
-        ),
+          className
+        )
       ),
       { lineHeight: 1 },
     ]}

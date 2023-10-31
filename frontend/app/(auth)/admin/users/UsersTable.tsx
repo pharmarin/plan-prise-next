@@ -38,10 +38,12 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type User = RouterOutputs["users"]["all"][0];
+type FilterState = "all" | "pending";
 
-const filters: {
-  [key: string]: { label: string; filter: ColumnFiltersState };
-} = {
+const filters: Record<
+  FilterState,
+  { label: string; filter: ColumnFiltersState }
+> = {
   all: { label: "Tous les utilisateurs", filter: [] },
   pending: {
     label: "Utilisateurs à valider",
@@ -72,9 +74,7 @@ const UsersTable = () => {
   );
 
   const columnHelper = createColumnHelper<User>();
-  const [columnFilter, setColumnFilter] = useState<keyof typeof filters>(
-    Object.keys(filters)[1]
-  );
+  const [columnFilter, setColumnFilter] = useState<FilterState>("pending");
   const [globalFilter, setGlobalFilter] = useState("");
 
   const setGlobalFilterDebounced = debounce((query: string) => {
@@ -210,9 +210,9 @@ const UsersTable = () => {
                 "py-2 px-3 bg-white shadow-md rounded-lg text-gray-600 font-medium",
             }}
             items={Object.keys(filters).map((key) => ({
-              label: filters[key].label,
+              label: filters[key as keyof typeof filters].label,
               action: () => {
-                setColumnFilter(key);
+                setColumnFilter(key as keyof typeof filters);
                 table.setPageIndex(0);
               },
             }))}

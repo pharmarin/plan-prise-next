@@ -94,7 +94,7 @@ const Chart: React.FC<{
             borderColor: graphColor(1),
             borderWidth: 1,
             callbacks: {
-              title: (tooltipItems) => tooltipItems[0].formattedValue,
+              title: (tooltipItems) => tooltipItems[0]?.formattedValue,
               label: () => "",
             },
             caretSize: 0,

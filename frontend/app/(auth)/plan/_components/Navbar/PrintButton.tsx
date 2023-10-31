@@ -28,7 +28,7 @@ const PrintButton = () => {
   });
   const { data: precautions, isLoading: isLoadingPrecautions } =
     trpc.medics.findPrecautionsByMedicId.useQuery(
-      plan?.medicsOrder as string[],
+      plan?.medicsOrder as string[]
     );
   const { data: session } = useSession();
 
@@ -46,14 +46,14 @@ const PrintButton = () => {
               "cursor-not-allowed bg-gray-600":
                 canPrint !== true || isPrinting === true,
               "bg-green-700": canPrint === true && isPrinting === false,
-            },
+            }
           )}
           onClick={() =>
             canPrint === true
               ? setIsPrinting(true)
               : document
                   .getElementsByClassName("action-required")[0]
-                  .scrollIntoView()
+                  ?.scrollIntoView()
           }
         >
           {(() => {
