@@ -195,8 +195,8 @@ importers:
         specifier: 1.3.2
         version: 1.3.2
       yup-locales:
-        specifier: 1.2.18
-        version: 1.2.18
+        specifier: 1.2.20
+        version: 1.2.20
       zod:
         specifier: 3.21.4
         version: 3.21.4
@@ -6255,8 +6255,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /yup-locales@1.2.18:
-    resolution: {integrity: sha512-65EiisuppqZqQ+PbeG9H/g5yw3jp7PA8q7uRof9RiV/kWAHHiuKPr3JsLoz6kacr6j1oAz3x8/eIoPVAfBDhvg==}
+  /yup-locales@1.2.20:
+    resolution: {integrity: sha512-aP8OQQreM/3n2MViLt8aODizpgxjGFnxyOcP3GcjGm+UwU9qRRwmhFsXVlNrWz+7iNql0yp0Xdu7tL57nW465g==}
     dev: false
 
   /yup@1.3.2:
