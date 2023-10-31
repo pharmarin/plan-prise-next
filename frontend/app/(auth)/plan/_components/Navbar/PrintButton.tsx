@@ -22,7 +22,7 @@ const PrintButton = () => {
   const planData = usePlanStore((state) => state.data);
   const planSettings = usePlanStore((state) => state.settings);
 
-  const { data: plan, isLoading } = trpc.plan.getById.useQuery(planId || "", {
+  const { data: plan, isLoading } = trpc.plan.getById.useQuery(planId ?? "", {
     cacheTime: 1,
     enabled: isPrinting,
   });

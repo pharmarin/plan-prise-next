@@ -38,19 +38,20 @@ const SettingsButton = () => {
 
   const { mutateAsync: saveSettings } = trpc.plan.saveSettings.useMutation();
   const saveSettingsDebounced = debounce(async (settings) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await saveSettings(settings);
   }, 2000);
 
   useEffect(() => {
     const unsubscribe = usePlanStore.subscribe(
       (state) => ({ id: state.id, settings: state.settings }),
-      (newState, previousState) => {
+      async (newState, previousState) => {
         if (
           previousState.id !== PLAN_NEW &&
           newState.id !== PLAN_NEW &&
           newState.settings !== null
         ) {
-          saveSettingsDebounced({
+          await saveSettingsDebounced({
             planId: newState.id,
             settings: newState.settings,
           });

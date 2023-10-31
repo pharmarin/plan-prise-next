@@ -58,4 +58,5 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
     </div>
   );
 };
+
 export default PlanCardBody;

@@ -26,12 +26,8 @@ const config = {
       "warn",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
-    "@typescript-eslint/no-misused-promises": [
-      2,
-      { checksVoidReturn: { attributes: false } },
-    ],
+    "@typescript-eslint/no-misused-promises": [2, { checksVoidReturn: false }],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
-    "import/no-default-export": ["warn"],
   },
   ignorePatterns: [
     "**/.eslintrc.cjs",

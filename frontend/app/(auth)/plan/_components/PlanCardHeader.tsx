@@ -69,4 +69,5 @@ const PlanCardHeader = ({
     </PlanCardHeaderUI>
   );
 };
+
 export default PlanCardHeader;

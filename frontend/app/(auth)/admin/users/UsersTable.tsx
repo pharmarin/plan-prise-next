@@ -52,6 +52,7 @@ const filters: Record<
 
 const fuzzyFilter: FilterFn<User> = (row, columnId, value, addMeta) => {
   // Rank the item
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const itemRank = rankItem(row.getValue(columnId), value);
 
   // Store the itemRank info
@@ -83,15 +84,15 @@ const UsersTable = () => {
   const columns = useMemo(
     () => [
       columnHelper.accessor("lastName", {
-        cell: (props) => upperCase(props.getValue() || ""),
+        cell: (props) => upperCase(props.getValue() ?? ""),
         header: "Nom",
       }),
       columnHelper.accessor("firstName", {
-        cell: (props) => startCase(props.getValue()?.toLowerCase() || ""),
+        cell: (props) => startCase(props.getValue()?.toLowerCase() ?? ""),
         header: "Prénom",
       }),
       columnHelper.accessor("displayName", {
-        cell: (props) => startCase(props.getValue()?.toLowerCase() || ""),
+        cell: (props) => startCase(props.getValue()?.toLowerCase() ?? ""),
         header: "Affichage",
       }),
       columnHelper.accessor("student", {

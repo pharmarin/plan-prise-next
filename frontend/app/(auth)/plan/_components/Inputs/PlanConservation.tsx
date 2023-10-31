@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useConservation } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,6 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import type { Medicament } from "@prisma/client";
-import { useEffect } from "react";
 
 const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   const { setData, unsetData, setCanPrint } = usePlanStore((state) => ({
@@ -28,7 +28,7 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   useEffect(() => {
     if (conservationDuree.values.length > 1) {
       setCanPrint(
-        `Veuillez choisir une durée de conservation pour ${medicament.denomination}`
+        `Veuillez choisir une durée de conservation pour ${medicament.denomination}`,
       );
     }
   }, [conservationDuree.values.length, medicament.denomination, setCanPrint]);
@@ -76,7 +76,7 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
             {conservationDuree.values.map((conservationDuree, index) => (
               <SelectItem
                 key={index}
-                value={conservationDuree.laboratoire || ""}
+                value={conservationDuree.laboratoire ?? ""}
               >
                 {conservationDuree.laboratoire}
               </SelectItem>

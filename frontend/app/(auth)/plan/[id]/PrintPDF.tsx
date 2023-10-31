@@ -35,7 +35,7 @@ const PrintPDF = ({
 }) => {
   const tw = createTw({});
 
-  const data = parseData(planData || plan.data);
+  const data = parseData(planData ?? plan.data);
   const posologies = extractPosologiesSettings(
     (planSettings as PlanSettings)?.posos,
   );
@@ -76,7 +76,7 @@ const PrintPDF = ({
           fixed
         >
           Plan de prise n°{plan.displayId} édité par{" "}
-          {user?.displayName || `${user?.firstName} ${user?.lastName}`} le{" "}
+          {user?.displayName ?? `${user?.firstName} ${user?.lastName}`} le{" "}
           {new Date().toLocaleString("fr-FR", {
             day: "2-digit",
             month: "long",
@@ -132,7 +132,7 @@ const PrintPDF = ({
             return undefined;
           }
 
-          const rowData = data?.[medicamentId] || {};
+          const rowData = data?.[medicamentId] ?? {};
 
           const rowIndication = extractIndication(
             medicament,
@@ -184,7 +184,7 @@ const PrintPDF = ({
               : [];
 
           const rowCustomCommentaires = Object.values(
-            rowData.custom_commentaires || {},
+            rowData.custom_commentaires ?? {},
           ).map((commentaire) => ({
             text: commentaire.texte,
           }));
@@ -216,14 +216,14 @@ const PrintPDF = ({
                       italic: true,
                     },
                     {
-                      text: rowConservation || "",
+                      text: rowConservation ?? "",
                       className: "text-sm text-gray-600 mt-2 mb-auto",
                       italic: true,
                     },
                   ].filter((line) => line.text !== "")}
                 </Cell>
                 <Cell className={`flex-initial ${INDICATION_WIDTH}`}>
-                  {rowIndication[0] || ""}
+                  {rowIndication[0] ?? ""}
                 </Cell>
                 {posologies.map((posologie) => (
                   <Cell
@@ -234,7 +234,7 @@ const PrintPDF = ({
                   >
                     {rowData?.posologies?.[
                       posologie as keyof typeof PlanPrisePosologies
-                    ] || ""}
+                    ] ?? ""}
                   </Cell>
                 ))}
                 <Cell alignLeft>

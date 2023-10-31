@@ -7,6 +7,7 @@ declare module "next-auth" {
     user: UserSession;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface User extends UserSafe {}
 }
 
@@ -16,6 +17,7 @@ declare module "next-auth/jwt" {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const handler = NextAuth(nextAuthOptions);
 
 export { handler as GET, handler as POST };

@@ -57,8 +57,8 @@ const Navbar = () => {
                 <span className="sr-only">Ouvrir le menu utilisateur</span>
                 {user ? (
                   <Initials
-                    firstName={user.firstName || "P"}
-                    lastName={user.lastName || "P"}
+                    firstName={user.firstName ?? "P"}
+                    lastName={user.lastName ?? "P"}
                   />
                 ) : (
                   <Avatar>
@@ -85,8 +85,10 @@ const Navbar = () => {
                 : []),
               {
                 label: "Déconnexion",
-                action: () => {
-                  signOut({ redirect: false }).finally(() => router.refresh());
+                action: async () => {
+                  await signOut({ redirect: false }).finally(() =>
+                    router.refresh(),
+                  );
                 },
               },
             ]}

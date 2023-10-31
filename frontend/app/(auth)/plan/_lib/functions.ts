@@ -15,7 +15,7 @@ export const parseData = (data?: Plan["data"]): PlanData => {
   }
 };
 
-export const extractPosologie = (data?: string) => data || "";
+export const extractPosologie = (data?: string) => data ?? "";
 
 export const extractCommentaire = (
   commentaire: Commentaire,
@@ -24,8 +24,8 @@ export const extractCommentaire = (
   checked:
     data?.checked === true ||
     (data?.checked === undefined &&
-      (commentaire.population || "").length === 0),
-  texte: data?.texte || commentaire.texte,
+      (commentaire.population ?? "").length === 0),
+  texte: data?.texte ?? commentaire.texte,
 });
 
 export const extractIndication = (
@@ -55,18 +55,18 @@ export const extractConservation = (
       : null;
 
   return {
-    custom: (data || "").length > 0,
+    custom: (data ?? "").length > 0,
     values: data
       ? [
           {
             duree:
               defaultValue?.find(
                 (conservation) => conservation.laboratoire === data,
-              )?.duree || "",
+              )?.duree ?? "",
             laboratoire: data,
           },
         ]
-      : defaultValue || [],
+      : defaultValue ?? [],
   };
 };
 
@@ -119,10 +119,10 @@ export const extractPosologiesSettings = (posos?: PlanSettings["posos"]) => {
     return [];
   }
 
-  return Object.keys(PLAN_SETTINGS_DEFAULT["posos"])
+  return Object.keys(PLAN_SETTINGS_DEFAULT.posos)
     .map((poso) =>
       posos?.[poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]] ??
-      PLAN_SETTINGS_DEFAULT["posos"][
+      PLAN_SETTINGS_DEFAULT.posos[
         poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]
       ] === true
         ? poso

@@ -3,7 +3,7 @@ import PlansCountCard from "@/app/(auth)/admin/_components/PlansCountCard";
 import UsersCountCard from "@/app/(auth)/admin/_components/UsersCountCard";
 import Navigation from "@/components/navigation/Navigation";
 
-const AdminDashboard = async () => {
+const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       <Navigation title="Administration" />

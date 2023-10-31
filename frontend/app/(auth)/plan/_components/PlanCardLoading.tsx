@@ -39,4 +39,5 @@ const PlanCardLoading = (
     </PlanCardUI>
   );
 };
+
 export default PlanCardLoading;
