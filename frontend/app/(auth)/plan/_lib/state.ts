@@ -2,7 +2,7 @@
 
 import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
 import type { PlanInclude } from "@/types/plan";
-import { type Plan } from "@prisma/client";
+import type { Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 import { merge, set, unset } from "lodash";
 import { create } from "zustand";

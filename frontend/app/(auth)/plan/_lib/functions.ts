@@ -4,12 +4,8 @@ import type {
   MedicamentConservationDuree,
 } from "@/types/medicament";
 import type { PlanData, PlanSettings } from "@/types/plan";
-import {
-  VoieAdministration,
-  type Commentaire,
-  type Medicament,
-  type Plan,
-} from "@prisma/client";
+import type { Commentaire, Medicament, Plan } from "@prisma/client";
+import { VoieAdministration } from "@prisma/client";
 
 export const parseData = (data?: Plan["data"]): PlanData => {
   if (typeof data === "object" && data) {

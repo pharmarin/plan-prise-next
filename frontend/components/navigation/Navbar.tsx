@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
 import { Initials } from "@/components/icons/Initials";
 import Logo from "@/components/navigation/Logo";
@@ -10,8 +12,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { trpc } from "@/trpc/client";
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -85,9 +85,8 @@ const Navbar = () => {
                 : []),
               {
                 label: "Déconnexion",
-                action: async () => {
-                  await signOut({ redirect: false });
-                  router.refresh();
+                action: () => {
+                  signOut({ redirect: false }).finally(() => router.refresh());
                 },
               },
             ]}

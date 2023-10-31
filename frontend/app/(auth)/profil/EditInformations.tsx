@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Form from "@/components/forms/Form";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
@@ -8,9 +9,8 @@ import InfosModal from "@/components/overlays/modals/InfosModal";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { updateUserSchema } from "@/validation/users";
-import { type User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const EditInformations: React.FC<{

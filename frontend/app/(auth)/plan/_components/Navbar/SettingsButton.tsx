@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import {
@@ -19,10 +20,10 @@ import {
 import { TypographyH4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
-import { PlanPrisePosologies, type PlanSettings } from "@/types/plan";
+import type { PlanSettings } from "@/types/plan";
+import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
-import { useEffect } from "react";
 
 const posologies = Object.keys(
   PlanPrisePosologies,
@@ -43,13 +44,13 @@ const SettingsButton = () => {
   useEffect(() => {
     const unsubscribe = usePlanStore.subscribe(
       (state) => ({ id: state.id, settings: state.settings }),
-      async (newState, previousState) => {
+      (newState, previousState) => {
         if (
           previousState.id !== PLAN_NEW &&
           newState.id !== PLAN_NEW &&
           newState.settings !== null
         ) {
-          await saveSettingsDebounced({
+          saveSettingsDebounced({
             planId: newState.id,
             settings: newState.settings,
           });

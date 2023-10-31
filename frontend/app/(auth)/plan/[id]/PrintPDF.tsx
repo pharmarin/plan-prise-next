@@ -11,11 +11,8 @@ import {
 } from "@/app/(auth)/plan/_lib/functions";
 import { Cell, Header, Row, Table } from "@/components/PDF";
 import type { UserSession } from "@/prisma/types";
-import {
-  PlanPrisePosologies,
-  type PlanInclude,
-  type PlanSettings,
-} from "@/types/plan";
+import type { PlanInclude, PlanSettings } from "@/types/plan";
+import { PlanPrisePosologies } from "@/types/plan";
 import PP_Error from "@/utils/errors";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution, Prisma } from "@prisma/client";
@@ -40,7 +37,7 @@ const PrintPDF = ({
 
   const data = parseData(planData || plan.data);
   const posologies = extractPosologiesSettings(
-    (planSettings as PlanSettings)?.posos
+    (planSettings as PlanSettings)?.posos,
   );
 
   const INFORMATIONS_WIDTH = "w-56";
@@ -139,7 +136,7 @@ const PrintPDF = ({
 
           const rowIndication = extractIndication(
             medicament,
-            rowData.indication
+            rowData.indication,
           );
 
           const rowFrigo =
@@ -149,7 +146,7 @@ const PrintPDF = ({
 
           const rowConservation = extractConservation(
             medicament,
-            rowData.conservation
+            rowData.conservation,
           ).values.map((conservation, key) => {
             if (key > 1) {
               throw new PP_Error("PLAN_CONSERVATION_LENGTH_ERROR");
@@ -168,7 +165,7 @@ const PrintPDF = ({
               : "";
 
           const rowVoiesAdministration = `Voie ${extractVoieAdministration(
-            medicament
+            medicament,
           ).join(" ou ")}`;
 
           const rowCommentaires =
@@ -178,16 +175,16 @@ const PrintPDF = ({
                     (commentaire) =>
                       extractCommentaire(
                         commentaire,
-                        rowData.commentaires?.[commentaire.id]
+                        rowData.commentaires?.[commentaire.id],
                       ).checked && {
                         text: commentaire.texte,
-                      }
+                      },
                   )
                   .filter((item): item is { text: string } => item !== false)
               : [];
 
           const rowCustomCommentaires = Object.values(
-            rowData.custom_commentaires || {}
+            rowData.custom_commentaires || {},
           ).map((commentaire) => ({
             text: commentaire.texte,
           }));

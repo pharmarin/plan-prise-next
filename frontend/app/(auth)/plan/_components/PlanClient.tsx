@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
@@ -12,9 +14,8 @@ import type { PlanInclude } from "@/types/plan";
 import errors from "@/utils/errors/errors.json";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import ReactSelect, { type SelectInstance } from "react-select";
+import type { SelectInstance } from "react-select";
+import ReactSelect from "react-select";
 
 type SelectValueType = {
   denomination: string;
@@ -80,9 +81,9 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
   useEffect(() => {
     const unsubscribe = usePlanStore.subscribe(
       (state) => ({ id: state.id, data: state.data }),
-      async (newState, previousState) => {
+      (newState, previousState) => {
         if (previousState.id !== PLAN_NEW && newState.data !== null) {
-          await saveDataDebounced({ planId: newState.id, data: newState.data });
+          saveDataDebounced({ planId: newState.id, data: newState.data });
         }
       },
     );

@@ -1,8 +1,9 @@
+import React from "react";
 import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
 import FileInput from "@/components/forms/inputs/FileInput";
 import TextInput from "@/components/forms/inputs/TextInput";
-import { useField, useFormikContext, type FieldAttributes } from "formik";
-import React from "react";
+import type { FieldAttributes } from "formik";
+import { useField, useFormikContext } from "formik";
 
 const FormikField: React.FC<
   FieldAttributes<React.HTMLProps<HTMLInputElement>> & {

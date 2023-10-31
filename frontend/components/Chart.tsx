@@ -1,17 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import type { ChartArea, ChartData } from "chart.js";
 import {
   CategoryScale,
   Chart as ChartJS,
   Filler,
-  LineElement,
   LinearScale,
+  LineElement,
   PointElement,
   Tooltip,
-  type ChartArea,
-  type ChartData,
 } from "chart.js";
-import { useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -20,7 +19,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   Tooltip,
-  Filler
+  Filler,
 );
 
 const Chart: React.FC<{
@@ -50,7 +49,7 @@ const Chart: React.FC<{
         0,
         chartArea.bottom,
         0,
-        chartArea.top
+        chartArea.top,
       );
       tempGradient.addColorStop(0, graphColor(0.75));
       tempGradient.addColorStop(1, graphColor(0));

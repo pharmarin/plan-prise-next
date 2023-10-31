@@ -1,5 +1,7 @@
 "use client";
 
+import { useMemo, useState } from "react";
+import Link from "next/link";
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import DeleteButton from "@/app/(auth)/admin/users/DeleteButton";
 import TextInput from "@/components/forms/inputs/TextInput";
@@ -15,12 +17,13 @@ import TableHead from "@/components/table/TableHead";
 import TableHeadCell from "@/components/table/TableHeadCell";
 import TableRow from "@/components/table/TableRow";
 import { trpc } from "@/trpc/client";
-import { type RouterOutputs } from "@/trpc/types";
+import type { RouterOutputs } from "@/trpc/types";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { rankItem } from "@tanstack/match-sorter-utils";
+import type { ColumnFiltersState, FilterFn } from "@tanstack/react-table";
 import {
   createColumnHelper,
   flexRender,
@@ -28,14 +31,10 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-  type ColumnFiltersState,
-  type FilterFn,
 } from "@tanstack/react-table";
 import debounce from "lodash/debounce";
 import startCase from "lodash/startCase";
 import upperCase from "lodash/upperCase";
-import Link from "next/link";
-import { useMemo, useState } from "react";
 
 type User = RouterOutputs["users"]["all"][0];
 type FilterState = "all" | "pending";
@@ -70,7 +69,7 @@ const UsersTable = () => {
     {
       initialData: [],
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   const columnHelper = createColumnHelper<User>();
@@ -137,7 +136,7 @@ const UsersTable = () => {
         cell: (props) =>
           props.row.original.approvedAt
             ? new Date(props.row.original.approvedAt).toLocaleDateString(
-                "fr-FR"
+                "fr-FR",
               )
             : undefined,
         header: "Validation",
@@ -156,7 +155,7 @@ const UsersTable = () => {
       }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [columnHelper]
+    [columnHelper],
   );
 
   const table = useReactTable({
@@ -229,7 +228,7 @@ const UsersTable = () => {
                   ? null
                   : flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
               </TableHeadCell>
             ))}

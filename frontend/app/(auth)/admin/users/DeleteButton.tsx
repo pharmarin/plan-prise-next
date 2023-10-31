@@ -2,7 +2,7 @@ import Spinner from "@/components/icons/Spinner";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import { type User } from "next-auth";
+import type { User } from "next-auth";
 
 const DeleteButton: React.FC<{
   user: Partial<User> & { id: User["id"] };

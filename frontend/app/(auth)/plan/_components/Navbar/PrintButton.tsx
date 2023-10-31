@@ -1,7 +1,8 @@
 "use client";
 
-import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
+import { useState } from "react";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
 import {
   Tooltip,
   TooltipContent,
@@ -13,7 +14,6 @@ import { trpc } from "@/trpc/client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2, Printer } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 const PrintButton = () => {
   const [isPrinting, setIsPrinting] = useState(false);
@@ -28,7 +28,7 @@ const PrintButton = () => {
   });
   const { data: precautions, isLoading: isLoadingPrecautions } =
     trpc.medics.findPrecautionsByMedicId.useQuery(
-      plan?.medicsOrder as string[]
+      plan?.medicsOrder as string[],
     );
   const { data: session } = useSession();
 
@@ -46,7 +46,7 @@ const PrintButton = () => {
               "cursor-not-allowed bg-gray-600":
                 canPrint !== true || isPrinting === true,
               "bg-green-700": canPrint === true && isPrinting === false,
-            }
+            },
           )}
           onClick={() =>
             canPrint === true

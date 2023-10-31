@@ -1,6 +1,7 @@
 import { GlobalProviders } from "@/app/_components/Providers";
 import background from "public/home-bg.jpg";
-import React, { type PropsWithChildren } from "react";
+import React from "react";
+import type {PropsWithChildren} from "react";
 import "./globals.css";
 
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
