@@ -1,16 +1,16 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
   extends: [
-    //"turbo",
-    //"eslint:recommended",
-    //"plugin:@typescript-eslint/recommended-type-checked",
-    //"plugin:@typescript-eslint/stylistic-type-checked",
+    "turbo",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
     "prettier",
   ],
-  /* env: {
+  env: {
     es2022: true,
     node: true,
-  }, */
+  },
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: true,
