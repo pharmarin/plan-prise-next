@@ -9,7 +9,7 @@
     { "pattern": "config/*/" }
   ],
   "githubPullRequests.ignoredPullRequestBranches": ["master"],
-  "tailwindCSS.experimental.configFile": "./tooling/tailwind/index.ts",
+  "tailwindCSS.experimental.configFile": "./config/tailwind/index.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "./frontend/node_modules/typescript/lib",
   "typescript.preferences.autoImportFileExcludePatterns": [
