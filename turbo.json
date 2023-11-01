@@ -27,7 +27,7 @@
       "outputs": ["playwright-report/**"]
     },
     "typecheck": {
-      "dependsOn": ["^topo"],
+      "dependsOn": ["^topo", "build"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "clean": {
