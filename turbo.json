@@ -21,6 +21,11 @@
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
+    "pretest": {},
+    "test": {
+      "dependsOn": ["pretest"],
+      "outputs": ["playwright-report/**"]
+    },
     "typecheck": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
