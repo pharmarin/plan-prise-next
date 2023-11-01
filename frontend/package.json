@@ -14,7 +14,7 @@
     "lint": "next lint",
     "start": "next start",
     "pretest": "playwright install --with-deps",
-    "test": "playwright test",
+    "test": "playwright test __tests__/base/",
     "test:base": "playwright test __tests__/base/",
     "test:e2e": "playwright test __tests__/e2e/",
     "test:utils": "playwright test __tests__/utils/",
