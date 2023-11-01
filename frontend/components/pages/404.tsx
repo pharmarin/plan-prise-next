@@ -5,7 +5,7 @@ const Error404 = ({
   returnTo,
   title,
 }: {
-  returnTo?: __next_route_internal_types__.RouteImpl<string>;
+  returnTo?: string;
   title?: string;
 }) => {
   return (
