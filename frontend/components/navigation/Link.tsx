@@ -2,8 +2,6 @@ import type { LinkProps } from "next/link";
 import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
 
-<NextLink href={`/plan/${1}`} />;
-
 const Link = <RouteType extends string>({
   className,
   ...props
