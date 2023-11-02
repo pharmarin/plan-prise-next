@@ -1,4 +1,4 @@
-export type CalendarsTable = {
+export interface CalendarsTable {
   type: "table";
   name: "calendriers";
   database: DatabaseName;
@@ -8,9 +8,9 @@ export type CalendarsTable = {
     data: string;
     TIME: string;
   }[];
-};
+}
 
-export type MedicsTable = {
+export interface MedicsTable {
   type: "table";
   name: "medics_simple";
   database: DatabaseName;
@@ -33,9 +33,9 @@ export type MedicsTable = {
     relecture?: number;
     stat: number;
   }[];
-};
+}
 
-export type PlansTable = {
+export interface PlansTable {
   type: "table";
   name: "plans";
   database: DatabaseName;
@@ -46,9 +46,9 @@ export type PlansTable = {
     options: string;
     TIME: string;
   }[];
-};
+}
 
-export type PrecautionsTable = {
+export interface PrecautionsTable {
   type: "table";
   name: "precautions";
   database: DatabaseName;
@@ -59,9 +59,9 @@ export type PrecautionsTable = {
     contenu: string;
     couleur: string;
   }[];
-};
+}
 
-export type UsersTable = {
+export interface UsersTable {
   type: "table";
   name: "users";
   database: DatabaseName;
@@ -79,7 +79,7 @@ export type UsersTable = {
     status: string;
     inscription: string;
   }[];
-};
+}
 
 export type MySQLExport<DatabaseName = "plandepr_medics"> = (
   | { type: "header"; version: string; comment: string }

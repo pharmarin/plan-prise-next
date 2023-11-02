@@ -1,5 +1,5 @@
 const checkRecaptcha = async (
-  gRecaptchaToken: string
+  gRecaptchaToken: string,
 ): Promise<number | undefined> => {
   return process.env.NODE_ENV === "test"
     ? await new Promise((resolve) => resolve(0.9))
@@ -11,6 +11,7 @@ const checkRecaptcha = async (
         body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gRecaptchaToken}`,
       })
         .then((reCaptchaRes) => reCaptchaRes.json())
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         .then((reCaptchaRes) => reCaptchaRes?.score as number | undefined)
         .catch(() => undefined);
 };
