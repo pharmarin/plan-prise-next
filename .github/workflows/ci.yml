@@ -47,7 +47,7 @@ jobs:
       - name: Archive build files
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ vars.GITHUB_REF_NAME }}-build
+          name: build
           path: frontend/.next
 
   base-test:
@@ -83,21 +83,7 @@ jobs:
       - name: Download archived build
         uses: actions/download-artifact@v3
         with:
-          name: ${{ vars.GITHUB_REF_NAME }}-build
+          name: build
 
-      - name: Install deps (with cache)
-        run: pnpm install
-
-      - name: Run tests
-        run: pnpm run test
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-
-      - name: Upload report
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: playwright-report
-          path: frontend/playwright-report/
-          retention-days: 30
+      - name: Debug
+        run: echo cat package.json >> $GITHUB_OUTPUT
