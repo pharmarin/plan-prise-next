@@ -74,7 +74,7 @@
     "react-pdf-tailwind": "2.1.0",
     "react-select": "5.7.7",
     "react-textarea-autosize": "8.5.3",
-    "superjson": "1.13.3",
+    "superjson": "2.2.0",
     "tailwind-merge": "1.14.0",
     "typescript": "^5.2.2",
     "windstitch": "0.3.0",
