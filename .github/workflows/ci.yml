@@ -80,16 +80,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install deps (with cache)
-        run: pnpm install
-
       - name: Download archived build
         uses: actions/download-artifact@v3
         with:
           name: ${{ vars.GITHUB_REF_NAME }}-build
 
+      - name: Install deps (with cache)
+        run: pnpm install
+
       - name: Run tests
-        run: pnpm test
+        run: pnpm run test
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}

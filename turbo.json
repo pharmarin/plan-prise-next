@@ -23,7 +23,7 @@
     },
     "pretest": { "cache": false },
     "test": {
-      "dependsOn": ["build", "pretest"],
+      "dependsOn": ["pretest"],
       "outputs": ["playwright-report/**"]
     },
     "typecheck": {
