@@ -7,7 +7,7 @@ const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
     <GuestProviders>
       <AuthGuard guest>
         <div className="flex min-h-screen items-center p-4">
-          <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white sm:flex-row">
+          <div className="container mx-auto flex flex-col-reverse overflow-hidden rounded-lg bg-white px-0 sm:flex-row">
             <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-8 text-white sm:w-1/2">
               <h1 className="mb-4 text-2xl font-bold">
                 Bienvenue sur plandeprise.fr
