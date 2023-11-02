@@ -80,13 +80,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Debug
-        run: cat package.json
-
       - name: Download archived build
         uses: actions/download-artifact@v3
         with:
           name: build
+          path: frontend/.next
 
-      - name: Debug
-        run: cat package.json
+      - name: Run tests
+        run: pnpm test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 30
