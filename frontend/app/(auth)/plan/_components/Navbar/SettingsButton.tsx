@@ -33,7 +33,7 @@ const SettingsButton = () => {
   const planId = usePlanStore((state) => state.id);
   const { settings, setSetting } = usePlanStore((state) => ({
     setSetting: state.setSetting,
-    settings: state.settings as PlanSettings,
+    settings: state.settings as unknown as PlanSettings,
   }));
 
   const { mutateAsync: saveSettings } = trpc.plan.saveSettings.useMutation();

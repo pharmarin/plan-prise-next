@@ -37,7 +37,7 @@ const PrintPDF = ({
 
   const data = parseData(planData ?? plan.data);
   const posologies = extractPosologiesSettings(
-    (planSettings as PlanSettings)?.posos,
+    (planSettings as unknown as PlanSettings)?.posos,
   );
 
   const INFORMATIONS_WIDTH = "w-56";
