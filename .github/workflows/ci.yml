@@ -86,4 +86,4 @@ jobs:
           name: build
 
       - name: Debug
-        run: echo cat package.json >> $GITHUB_OUTPUT
+        run: cat package.json
