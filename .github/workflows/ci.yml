@@ -80,6 +80,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Debug
+        run: cat package.json
+
       - name: Download archived build
         uses: actions/download-artifact@v3
         with:
