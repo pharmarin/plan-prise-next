@@ -18,14 +18,14 @@ export enum PlanPrisePosologies {
 
 export type PlanData = Record<string, PlanDataItem>;
 
-export type PlanDataItem = {
+export interface PlanDataItem {
   indication?: string;
   conservation?: string;
   posologies?: Record<keyof typeof PlanPrisePosologies, string | undefined>;
   commentaires?: Record<string, { checked?: boolean; texte?: string }>;
   custom_commentaires?: Record<string, { texte: string }>;
-};
+}
 
-export type PlanSettings = {
+export interface PlanSettings {
   posos: Record<keyof typeof PlanPrisePosologies, boolean>;
-};
+}

@@ -1,5 +1,5 @@
 import DeleteButton from "@/app/(auth)/plan/_components/Navbar/DeleteButton";
-import NavbarIndicator from "@/app/(auth)/plan/_components/Navbar/LoadingIndicator";
+import LoadingIndicator from "@/app/(auth)/plan/_components/Navbar/LoadingIndicator";
 import PrintButton from "@/app/(auth)/plan/_components/Navbar/PrintButton";
 import SettingsButton from "@/app/(auth)/plan/_components/Navbar/SettingsButton";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
@@ -13,7 +13,7 @@ const NavbarStack = () => {
 
   return (
     <div className="flex items-center space-x-2">
-      <NavbarIndicator />
+      <LoadingIndicator />
       <DeleteButton />
       <SettingsButton />
       <PrintButton />

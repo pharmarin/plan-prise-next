@@ -1,6 +1,7 @@
 import prisma from "@/prisma";
 import type { MedicamentConservationDuree } from "@/types/medicament";
-import { Prisma, VoieAdministration, type medics_simple } from "@prisma/client";
+import { Prisma, VoieAdministration  } from "@prisma/client";
+import type {medics_simple} from "@prisma/client";
 import { SingleBar } from "cli-progress";
 import { trim } from "lodash";
 

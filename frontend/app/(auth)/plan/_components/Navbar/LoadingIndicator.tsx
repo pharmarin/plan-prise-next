@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
-const PlanNavbarIndicator = () => {
+const LoadingIndicator = () => {
   const isSaving = usePlanStore((state) => state.isSaving);
   const isReady = usePlanStore(
     (state) => state.id !== undefined && state.id !== PLAN_NEW,
@@ -43,4 +43,4 @@ const PlanNavbarIndicator = () => {
   );
 };
 
-export default PlanNavbarIndicator;
+export default LoadingIndicator;

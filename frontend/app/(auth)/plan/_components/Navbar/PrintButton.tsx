@@ -1,7 +1,8 @@
 "use client";
 
-import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
+import { useState } from "react";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
 import {
   Tooltip,
   TooltipContent,
@@ -13,7 +14,6 @@ import { trpc } from "@/trpc/client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2, Printer } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 const PrintButton = () => {
   const [isPrinting, setIsPrinting] = useState(false);
@@ -22,7 +22,7 @@ const PrintButton = () => {
   const planData = usePlanStore((state) => state.data);
   const planSettings = usePlanStore((state) => state.settings);
 
-  const { data: plan, isLoading } = trpc.plan.getById.useQuery(planId || "", {
+  const { data: plan, isLoading } = trpc.plan.getById.useQuery(planId ?? "", {
     cacheTime: 1,
     enabled: isPrinting,
   });
@@ -53,7 +53,7 @@ const PrintButton = () => {
               ? setIsPrinting(true)
               : document
                   .getElementsByClassName("action-required")[0]
-                  .scrollIntoView()
+                  ?.scrollIntoView()
           }
         >
           {(() => {

@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import {
   adminProcedure,
@@ -22,15 +23,16 @@ import {
   updateUserPasswordSchema,
   updateUserSchema,
 } from "@/validation/users";
-import { findOne } from "@plan-prise/api-pharmaciens";
-import { Prisma, type User } from "@prisma/client";
+import type { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
-import { revalidatePath } from "next/cache";
+
+import { findOne } from "@plan-prise/api-pharmaciens";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
-  keys: Key[]
+  keys: Key[],
 ): Omit<User, Key> => {
   for (const key of keys) {
     delete user[key];
@@ -39,30 +41,30 @@ const exclude = <User, Key extends keyof User>(
 };
 
 const excludePassword = <User extends { password?: string }>(
-  user: User
+  user: User,
 ): Omit<User, "password"> => exclude(user, ["password"]);
 
 const sendMailApproved = (
-  user: Pick<User, "email" | "firstName" | "lastName">
+  user: Pick<User, "email" | "firstName" | "lastName">,
 ) =>
   sendMail(
     { email: user.email, name: `${user.firstName} ${user.lastName}` },
     "Votre compte a été validé !",
-    "351ndgwr91d4zqx8"
+    "351ndgwr91d4zqx8",
   );
 
 const sendMailRegistered = (
-  user: Pick<User, "email" | "firstName" | "lastName">
+  user: Pick<User, "email" | "firstName" | "lastName">,
 ) =>
   sendMail(
     { email: user.email, name: `${user.firstName} ${user.lastName}` },
     "Bienvenue sur plandeprise.fr !",
-    "pq3enl6xr8rl2vwr"
+    "pq3enl6xr8rl2vwr",
   );
 
 const sendMailReinitPassword = (
   user: Pick<User, "email" | "firstName" | "lastName">,
-  token: string
+  token: string,
 ) =>
   sendMail(
     {
@@ -73,7 +75,7 @@ const sendMailReinitPassword = (
     "jy7zpl95vjo45vx6",
     {
       link: getUrl(`/password-reset?email=${user.email}&token=${token}`),
-    }
+    },
   );
 
 const formatFirstName = (firstName: string) =>
@@ -104,7 +106,7 @@ const usersRouter = router({
         approvedAt: true,
       },
       orderBy: { createdAt: "desc" },
-    })
+    }),
   ),
   /**
    * Approves user
@@ -120,7 +122,7 @@ const usersRouter = router({
         await ctx.prisma.user.update({
           where: { id: input },
           data: { approvedAt: new Date() },
-        })
+        }),
       );
 
       await sendMailApproved(user);
@@ -146,8 +148,8 @@ const usersRouter = router({
     excludePassword(
       await ctx.prisma.user.findUniqueOrThrow({
         where: { id: ctx.user.id },
-      })
-    )
+      }),
+    ),
   ),
   /**
    * Delete user
@@ -228,7 +230,7 @@ const usersRouter = router({
             firstName,
             lastName,
             displayName,
-            student: input.student || false,
+            student: input.student ?? false,
             certificate: input.certificate,
             rpps: input.rpps ? BigInt(input.rpps) : undefined,
             password: await bcrypt.hash(input.password, 10),
@@ -337,7 +339,7 @@ const usersRouter = router({
   sendPasswordResetLink: guestProcedure
     .input(forgotPasswordSchema)
     .mutation(async ({ ctx, input }) => {
-      const recaptcha = await checkRecaptcha(input.recaptcha || "");
+      const recaptcha = await checkRecaptcha(input.recaptcha ?? "");
 
       if (!recaptcha) {
         throw new PP_Error("RECAPTCHA_LOADING_ERROR");
@@ -371,8 +373,8 @@ const usersRouter = router({
       excludePassword(
         await ctx.prisma.user.findUniqueOrThrow({
           where: { id: input },
-        })
-      )
+        }),
+      ),
     ),
   /**
    * Updates user
@@ -392,7 +394,7 @@ const usersRouter = router({
             displayName: formatDisplayName(input.displayName),
             rpps: input.rpps ? BigInt(input.rpps) : undefined,
           },
-        })
+        }),
       );
 
       revalidatePath("/profil");

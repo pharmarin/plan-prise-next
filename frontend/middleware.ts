@@ -1,10 +1,12 @@
+import type { NextFetchEvent } from "next/server";
+import { NextResponse } from "next/server";
 import { NEXT_AUTH_PAGES } from "@/next-auth/config";
 import { signJWT } from "@/utils/json-web-token";
-import { withAuth, type NextRequestWithAuth } from "next-auth/middleware";
-import { NextResponse, type NextFetchEvent } from "next/server";
+import type { NextRequestWithAuth } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
 
 const toLegacy = (path: string, destination?: string) =>
-  process.env.BACKEND_URL + (destination || path);
+  process.env.BACKEND_URL + (destination ?? path);
 
 const withAuthMiddleware = withAuth(
   async (request: NextRequestWithAuth) => {

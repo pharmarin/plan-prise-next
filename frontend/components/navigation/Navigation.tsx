@@ -1,8 +1,9 @@
 "use client";
 
-import { useNavigationDispatch } from "@/components/NavigationContextProvider";
-import { NavigationActionKind, type NavigationState } from "@/types/navigation";
 import { useEffect } from "react";
+import { useNavigationDispatch } from "@/components/NavigationContextProvider";
+import type { NavigationState } from "@/types/navigation";
+import { NavigationActionKind } from "@/types/navigation";
 
 const Navigation: React.FC<{
   loading?: NavigationState["loading"];

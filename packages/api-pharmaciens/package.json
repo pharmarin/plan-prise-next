@@ -1,17 +1,19 @@
 {
   "name": "@plan-prise/api-pharmaciens",
+  "version": "0.1.0",
   "devDependencies": {
+    "@plan-prise/tsconfig": "*",
     "@types/node": "20.8.10",
     "@types/node-fetch": "2.6.8",
     "@types/unzipper": "0.10.8",
     "csv-parse": "5.5.2",
     "node-fetch": "2.7.0",
     "ts-node": "10.9.1",
-    "typescript": "5.2.2",
+    "typescript": "^5.2.2",
     "unzipper": "0.10.14"
   },
   "scripts": {
     "download": "ts-node download.ts",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   }
 }

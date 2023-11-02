@@ -1,7 +1,8 @@
+import type { PropsWithChildren } from "react";
+import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
-import React, { type PropsWithChildren } from "react";
 
 const ModalContent: React.FC<PropsWithChildren<{ title?: string }>> = ({
   children,

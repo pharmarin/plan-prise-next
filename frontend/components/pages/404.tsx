@@ -5,7 +5,7 @@ const Error404 = ({
   returnTo,
   title,
 }: {
-  returnTo?: __next_route_internal_types__.RouteImpl<string>;
+  returnTo?: string;
   title?: string;
 }) => {
   return (
@@ -23,9 +23,9 @@ const Error404 = ({
             </div>
           </div>
           <div className="space-y-2 pl-4">
-            <TypographyH1>{title || "Page introuvable"}</TypographyH1>
+            <TypographyH1>{title ?? "Page introuvable"}</TypographyH1>
             <TypographyMuted>Erreur 404</TypographyMuted>
-            <Link href={returnTo || "/"}>Retour</Link>
+            <Link href={returnTo ?? "/"}>Retour</Link>
           </div>
         </div>
       </div>

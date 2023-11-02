@@ -1,5 +1,5 @@
 import { nextAuthOptions } from "@/next-auth/options";
-import { type UserSafe, type UserSession } from "@/prisma/types";
+import type { UserSafe, UserSession } from "@/prisma/types";
 import NextAuth from "next-auth";
 
 declare module "next-auth" {
@@ -7,6 +7,7 @@ declare module "next-auth" {
     user: UserSession;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface User extends UserSafe {}
 }
 
@@ -16,6 +17,7 @@ declare module "next-auth/jwt" {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const handler = NextAuth(nextAuthOptions);
 
 export { handler as GET, handler as POST };

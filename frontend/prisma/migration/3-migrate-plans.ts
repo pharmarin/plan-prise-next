@@ -80,7 +80,7 @@ export const migratePlanNew = async () => {
       ),
     );
 
-    const medicData: { [id: string]: PlanDataItem } = Object.fromEntries(
+    const medicData: Record<string, PlanDataItem> = Object.fromEntries(
       medicamentArray.map((medicament) => {
         const customData = data.find((old) =>
           "id" in medicament && "id" in old
@@ -219,7 +219,7 @@ export const migratePlanNew = async () => {
       }),
     );
 
-    (Object.keys(medicData) as (keyof typeof medicData)[]).forEach(
+    (Object.keys(medicData) ).forEach(
       (key) =>
         Object.keys(medicData[key]).length === 0 && delete medicData[key],
     );

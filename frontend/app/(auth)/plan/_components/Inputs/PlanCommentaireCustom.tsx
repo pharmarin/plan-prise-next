@@ -15,7 +15,7 @@ const PlanCommentaireCustomItem = ({
 }) => {
   const data = usePlanStore(
     (state) =>
-      parseData(state.data)?.[medicId].custom_commentaires?.[commentId],
+      parseData(state.data)?.[medicId]?.custom_commentaires?.[commentId],
   );
   const { setData, unsetData } = usePlanStore((state) => ({
     setData: state.setData,
@@ -58,7 +58,7 @@ const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
 
   return (
     <>
-      {Object.keys(data || {}).map((id) => (
+      {Object.keys(data ?? {}).map((id) => (
         <PlanCommentaireCustomItem
           key={`${medicament.id}_${id}`}
           commentId={id}
