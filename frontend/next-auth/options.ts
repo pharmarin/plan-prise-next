@@ -28,6 +28,12 @@ export const nextAuthOptions: NextAuthOptions = {
       return token;
     },
     session: ({ session, user, token }) => {
+      console.log("session, user, token: ", session, user, token);
+
+      if (!user && !token?.user) {
+        return session;
+      }
+
       session.user.id = token?.user?.id ?? user.id;
       session.user.admin = token?.user?.admin ?? user.admin;
       session.user.displayName = token?.user?.displayName ?? user.displayName;
