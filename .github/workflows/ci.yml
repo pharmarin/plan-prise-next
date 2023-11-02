@@ -82,6 +82,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Install deps (with cache)
+        run: pnpm install
+
       - name: Download archived build
         uses: actions/download-artifact@v3
         with:
