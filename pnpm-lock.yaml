@@ -256,8 +256,8 @@ importers:
         specifier: 10.0.3
         version: 10.0.3
       jose:
-        specifier: 4.15.4
-        version: 4.15.4
+        specifier: 5.1.0
+        version: 5.1.0
       lodash:
         specifier: 4.17.21
         version: 4.17.21
@@ -4851,6 +4851,10 @@ packages:
 
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
+    dev: false
+
+  /jose@5.1.0:
+    resolution: {integrity: sha512-H+RVqxA6apaJ0rcQYupKYhos7uosAiF42gUcWZiwhICWMphDULFj/CRr1R0tV/JCv9DEeJaSyYYpc9luHHNT4g==}
     dev: false
 
   /js-tokens@4.0.0:
