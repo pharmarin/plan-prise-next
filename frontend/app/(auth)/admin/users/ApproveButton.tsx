@@ -1,11 +1,11 @@
 "use client";
 
+import React from "react";
 import Spinner from "@/components/icons/Spinner";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { type User } from "next-auth";
-import React from "react";
+import type { User } from "next-auth";
 
 const ApproveButton: React.FC<{
   user: Partial<User> & { id: User["id"] };

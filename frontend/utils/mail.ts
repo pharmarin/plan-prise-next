@@ -16,7 +16,7 @@ const sendMail = async (
   },
   subject: string,
   templateId?: string,
-  variables?: { [key: string]: string }
+  variables?: Record<string, string>
 ) => {
   const emailParams = new EmailParams()
     .setFrom(sentFrom)

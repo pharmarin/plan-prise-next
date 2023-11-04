@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -12,11 +13,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import {
-  type CoreInstance,
-  type PaginationInstance,
-} from "@tanstack/react-table";
-import React from "react";
+import type { CoreInstance, PaginationInstance } from "@tanstack/react-table";
 
 const Pagination: React.FC<{
   getCanNextPage: PaginationInstance<never>["getCanNextPage"];

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Form from "@/components/forms/Form";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
@@ -8,9 +9,8 @@ import InfosModal from "@/components/overlays/modals/InfosModal";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { updateUserSchema } from "@/validation/users";
-import { type User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const EditInformations: React.FC<{
@@ -20,14 +20,14 @@ const EditInformations: React.FC<{
     undefined,
   );
 
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
   const { error, mutateAsync } = trpc.users.update.useMutation();
 
   useEffect(() => {
     if (showModal === undefined && user) {
       if (
-        (user.firstName || "").length > 0 &&
-        (user.lastName || "").length > 0
+        (user.firstName ?? "").length > 0 &&
+        (user.lastName ?? "").length > 0
       ) {
         setShowModal(false);
       } else {
@@ -41,12 +41,12 @@ const EditInformations: React.FC<{
   }
 
   const initialValues = {
-    displayName: user.displayName || "",
-    email: user.email || "",
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    rpps: user.rpps?.toString() || "",
-    student: user.student || false,
+    displayName: user.displayName ?? "",
+    email: user.email ?? "",
+    firstName: user.firstName ?? "",
+    lastName: user.lastName ?? "",
+    rpps: user.rpps?.toString() ?? "",
+    student: user.student ?? false,
   };
 
   return (
@@ -72,7 +72,7 @@ const EditInformations: React.FC<{
             Mettre à jour mes informations
           </Button>
         }
-        show={showModal || false}
+        show={showModal ?? false}
         title="Information importante"
         toggle={() => setShowModal(!showModal)}
       />

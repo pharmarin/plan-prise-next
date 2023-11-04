@@ -1,8 +1,9 @@
+import React from "react";
 import CheckboxInput from "@/components/forms/inputs/CheckboxInput";
 import FileInput from "@/components/forms/inputs/FileInput";
 import TextInput from "@/components/forms/inputs/TextInput";
-import { useField, useFormikContext, type FieldAttributes } from "formik";
-import React from "react";
+import type { FieldAttributes } from "formik";
+import { useField, useFormikContext } from "formik";
 
 const FormikField: React.FC<
   FieldAttributes<React.HTMLProps<HTMLInputElement>> & {
@@ -24,7 +25,7 @@ const FormikField: React.FC<
   const inputProps = {
     ...field,
     ...props,
-    disabled: (disableOnSubmit && isSubmitting) || disabled,
+    disabled: (disableOnSubmit && isSubmitting) ?? disabled,
     id: props.name,
     label,
   };
@@ -39,18 +40,21 @@ const FormikField: React.FC<
             return (
               <FileInput
                 {...inputProps}
-                onChange={(event) => {
-                  setFieldValue(props.name, event.currentTarget.files?.[0]);
-                  setFieldTouched(
+                onChange={async (event) => {
+                  await setFieldValue(
                     props.name,
-                    (event.currentTarget.files || []).length > 0,
+                    event.currentTarget.files?.[0],
+                  );
+                  await setFieldTouched(
+                    props.name,
+                    (event.currentTarget.files ?? []).length > 0,
                     false,
                   );
                 }}
               />
             );
           default:
-            return <TextInput {...inputProps} type={props.type || "text"} />;
+            return <TextInput {...inputProps} type={props.type ?? "text"} />;
         }
       })()}
       {displayErrors && meta.touched && meta.error && (

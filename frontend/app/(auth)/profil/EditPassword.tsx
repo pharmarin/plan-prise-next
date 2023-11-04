@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Form from "@/components/forms/Form";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
@@ -7,9 +8,8 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import { updateUserPasswordSchema } from "@/validation/users";
-import { type User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { Formik } from "formik";
-import { useState } from "react";
 
 const EditPassword: React.FC<
   { user: User } | { email: string; token: string }

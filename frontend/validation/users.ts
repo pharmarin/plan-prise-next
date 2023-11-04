@@ -13,7 +13,7 @@ export const ALLOWED_UPLOADED_FILE_TYPES = [
 export const MAX_UPLOADED_FILE_SIZE = 2000000;
 
 const requiredIfServer = (schema: yup.Schema, server = false) =>
-  server ? schema.required() : schema;
+  server ? (schema.required() as yup.Schema) : schema;
 
 const password = yup.string().min(8).max(20).required().label("Mot de passe");
 
@@ -73,7 +73,7 @@ export const registerSchemaServer = yup.object({
     .string()
     .oneOf(
       [yup.ref("password")],
-      "Les deux mots de passe ne correspondent pas. "
+      "Les deux mots de passe ne correspondent pas. ",
     )
     .required()
     .label("Confirmation du mot de passe"),
@@ -95,29 +95,29 @@ export const registerSchemaClient = registerSchemaServer.concat(
               "Certificat de scolarité est obligatoire",
               (value: { name?: string }) =>
                 value && "name" in (value || {})
-                  ? (value.name || "").length > 0
-                  : false
+                  ? (value.name ?? "").length > 0
+                  : false,
             )
             .test(
               "fileSize",
               "Le fichier envoyé est trop volumineux",
               (value: { size?: number }) =>
                 value && "size" in (value || {})
-                  ? (value?.size || Infinity) <= MAX_UPLOADED_FILE_SIZE
-                  : false
+                  ? (value?.size ?? Infinity) <= MAX_UPLOADED_FILE_SIZE
+                  : false,
             )
             .test(
               "fileType",
               "Le fichier envoyé doit être de type pdf, jpg ou png. ",
               (value: { type?: string }) =>
                 value && "type" in (value || {})
-                  ? ALLOWED_UPLOADED_FILE_TYPES.includes(value?.type || "")
-                  : false
+                  ? ALLOWED_UPLOADED_FILE_TYPES.includes(value?.type ?? "")
+                  : false,
             )
             .label("Certificat de scolarité"),
       }),
     recaptcha: yup.string(),
-  })
+  }),
 );
 
 export const resetPasswordSchema = yup.object({
@@ -128,7 +128,7 @@ export const resetPasswordSchema = yup.object({
     .string()
     .oneOf(
       [yup.ref("password")],
-      "Les deux mots de passe ne correspondent pas. "
+      "Les deux mots de passe ne correspondent pas. ",
     )
     .required()
     .label("Confirmation du mot de passe"),
@@ -147,7 +147,7 @@ export const updateUserSchema = (server = false) => {
         "displayName",
         "rpps",
         "student",
-      ])
+      ]),
     );
 };
 

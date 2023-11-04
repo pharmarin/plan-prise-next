@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import {
@@ -8,9 +9,8 @@ import {
 } from "@/components/ui/tooltip";
 import { trpc } from "@/trpc/client";
 import { Loader2, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
-const PlanDeleteButton = () => {
+const DeleteButton = () => {
   const router = useRouter();
   const id = usePlanStore((state) => state.id);
   const { mutateAsync, isLoading } = trpc.plan.delete.useMutation();
@@ -43,4 +43,4 @@ const PlanDeleteButton = () => {
   );
 };
 
-export default PlanDeleteButton;
+export default DeleteButton;

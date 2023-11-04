@@ -1,4 +1,4 @@
-import { type Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class LoginPage {
   readonly page: Page;
@@ -20,7 +20,7 @@ export class LoginPage {
   async submitForm() {
     const response = this.page.waitForResponse(
       (response) =>
-        new URL(response.url()).pathname === "/api/auth/callback/credentials"
+        new URL(response.url()).pathname === "/api/auth/callback/credentials",
     );
 
     await this.page.click('button[type="submit"]');

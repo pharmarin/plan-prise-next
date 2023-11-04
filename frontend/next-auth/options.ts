@@ -1,19 +1,19 @@
 import { NEXT_AUTH_PAGES } from "@/next-auth/config";
 import prisma from "@/prisma";
-import { type UserSafe } from "@/prisma/types";
+import type { UserSafe } from "@/prisma/types";
 import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import { checkPassword } from "@/utils/password-utils";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import type { PrismaClient } from "@prisma/client";
 import Credentials from "next-auth/providers/credentials";
-import { type NextAuthOptions } from "node_modules/next-auth";
+import type { NextAuthOptions } from "node_modules/next-auth";
 
 export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient),
   callbacks: {
     jwt: ({ token, user }) => {
-      if (user && user.approvedAt) {
+      if (user?.approvedAt) {
         if (!token.user) {
           token.user = {
             id: user.id,
@@ -28,6 +28,12 @@ export const nextAuthOptions: NextAuthOptions = {
       return token;
     },
     session: ({ session, user, token }) => {
+      console.log("session, user, token: ", session, user, token);
+
+      if (!user && !token?.user) {
+        return session;
+      }
+
       session.user.id = token?.user?.id ?? user.id;
       session.user.admin = token?.user?.admin ?? user.admin;
       session.user.displayName = token?.user?.displayName ?? user.displayName;

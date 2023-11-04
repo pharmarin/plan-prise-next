@@ -1,16 +1,32 @@
 {
   "name": "plan-prise",
   "scripts": {
-    "dev": "turbo dev --parallel"
-  },
-  "devDependencies": {
-    "@plan-prise/eslint-config": "workspace:*",
-    "@prettier/plugin-php": "0.21.0",
-    "prettier": "3.0.3",
-    "prettier-plugin-tailwindcss": "0.5.6"
+    "build": "turbo build",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean",
+    "postinstall": "manypkg check",
+    "db:push": "pnpm -F db push",
+    "db:studio": "pnpm -F db studio",
+    "dev": "turbo dev --parallel",
+    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
+    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "test": "turbo test",
+    "typecheck": "turbo typecheck"
   },
   "dependencies": {
-    "turbo": "1.10.16"
+    "@manypkg/cli": "0.21.0",
+    "@plan-prise/eslint-config": "0.2.0",
+    "@plan-prise/prettier-config": "*",
+    "@prettier/plugin-php": "0.21.0",
+    "@turbo/gen": "1.10.16",
+    "@types/node": "20.8.10",
+    "prettier": "3.0.3",
+    "prettier-plugin-tailwindcss": "0.5.6",
+    "turbo": "1.10.16",
+    "typescript": "5.2.2"
   },
-  "packageManager": "pnpm@8.10.2"
+  "packageManager": "pnpm@8.10.2",
+  "prettier": "@plan-prise/prettier-config"
 }

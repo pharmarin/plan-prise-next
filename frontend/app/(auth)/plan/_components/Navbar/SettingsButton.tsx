@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import {
@@ -19,10 +20,10 @@ import {
 import { TypographyH4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
-import { PlanPrisePosologies, type PlanSettings } from "@/types/plan";
+import type { PlanSettings } from "@/types/plan";
+import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
-import { useEffect } from "react";
 
 const posologies = Object.keys(
   PlanPrisePosologies,
@@ -32,11 +33,12 @@ const SettingsButton = () => {
   const planId = usePlanStore((state) => state.id);
   const { settings, setSetting } = usePlanStore((state) => ({
     setSetting: state.setSetting,
-    settings: state.settings as PlanSettings,
+    settings: state.settings as unknown as PlanSettings,
   }));
 
   const { mutateAsync: saveSettings } = trpc.plan.saveSettings.useMutation();
   const saveSettingsDebounced = debounce(async (settings) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await saveSettings(settings);
   }, 2000);
 

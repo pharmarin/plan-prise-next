@@ -1,9 +1,11 @@
 "use client";
 
-import { Menu, Transition, type MenuButtonProps } from "@headlessui/react";
+import type { ElementType } from "react";
+import React from "react";
 import type { Route } from "next";
 import Link from "next/link";
-import React, { type ElementType } from "react";
+import type { MenuButtonProps } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import { twMerge } from "tailwind-merge";
 
 const Dropdown: React.FC<{
@@ -37,7 +39,7 @@ const Dropdown: React.FC<{
                       <Link
                         className={twMerge(
                           "block w-full px-4 py-2 text-sm font-medium normal-case tracking-normal text-gray-700 hover:bg-gray-100",
-                          active && "bg-teal-200"
+                          active && "bg-teal-200",
                         )}
                         href={item.path}
                       >
@@ -47,7 +49,7 @@ const Dropdown: React.FC<{
                       <button
                         className={twMerge(
                           "block w-full px-4 py-2 text-sm font-medium normal-case tracking-normal text-gray-700 hover:bg-gray-100",
-                          active && "bg-teal-200"
+                          active && "bg-teal-200",
                         )}
                         onClick={item.action}
                       >

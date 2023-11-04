@@ -7,20 +7,20 @@ export enum NavigationActionKind {
   SET_TITLE = "SET_TITLE",
 }
 
-type NavigationSetLoadingAction = {
+interface NavigationSetLoadingAction {
   type: NavigationActionKind.SET_LOADING;
   payload: NavigationState["loading"];
-};
+}
 
-type NavigationSetReturnToAction = {
+interface NavigationSetReturnToAction {
   type: NavigationActionKind.SET_RETURNTO;
   payload?: NavigationState["returnTo"];
-};
+}
 
-type NavigationSetTitleAction = {
+interface NavigationSetTitleAction {
   type: NavigationActionKind.SET_TITLE;
   payload: NavigationState["title"];
-};
+}
 
 export type NavigationAction =
   | NavigationSetLoadingAction
@@ -34,9 +34,9 @@ export type NavigationItem = {
   className?: string;
 } & ({ path: Route<string> | URL } | { event: string });
 
-export type NavigationState = {
+export interface NavigationState {
   loading?: boolean;
   options?: NavigationItem[];
   returnTo?: Route<string> | URL;
   title: string;
-};
+}

@@ -1,3 +1,4 @@
+import React from "react";
 import Form from "@/components/forms/Form";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
@@ -5,11 +6,10 @@ import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
 import { Button } from "@/components/ui/button";
-import { type AppRouter } from "@/trpc/routers/app";
+import type { AppRouter } from "@/trpc/routers/app";
 import { passwordVerifySchema } from "@/validation/users";
-import { type TRPCClientErrorLike } from "@trpc/react-query";
+import type { TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
-import React from "react";
 
 const ConfirmPasswordModal: React.FC<{
   error?: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]> | null;

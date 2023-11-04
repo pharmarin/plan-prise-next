@@ -4,7 +4,7 @@ import { getServerSession } from "@/next-auth/get-session";
 import prisma from "@/prisma";
 import { notFound } from "next/navigation";
 
-type Props = { params: { id: string } };
+interface Props { params: { id: string } }
 
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();

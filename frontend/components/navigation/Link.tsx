@@ -1,13 +1,14 @@
-import NextLink, { type LinkProps } from "next/link";
+import type { ReactNode } from "react";
+import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
 
-<NextLink href={`/plan/${1}`} />;
-
-const Link = <RouteType extends string>({
+const Link = ({
   className,
   ...props
-}: LinkProps<RouteType>) => (
-  <NextLink className={twMerge("text-teal-500", className)} {...props} />
-);
+}: {
+  children: ReactNode;
+  className?: string;
+  href: string;
+}) => <NextLink className={twMerge("text-teal-500", className)} {...props} />;
 
 export default Link;

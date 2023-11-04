@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useConservation } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,6 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import type { Medicament } from "@prisma/client";
-import { useEffect } from "react";
 
 const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   const { setData, unsetData, setCanPrint } = usePlanStore((state) => ({
@@ -45,12 +45,12 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
       {conservationDuree.values.length === 1 ? (
         <div>
           <p className="text-sm text-gray-900">
-            {conservationDuree.values[0].duree}
+            {conservationDuree.values[0]?.duree}
           </p>
           {conservationDuree.custom && (
             <div className="flex space-x-2">
               <span className="text-sm italic text-gray-900">
-                Pour {conservationDuree.values[0].laboratoire}
+                Pour {conservationDuree.values[0]?.laboratoire}
               </span>
               <Button
                 className="p-0"
@@ -76,7 +76,7 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
             {conservationDuree.values.map((conservationDuree, index) => (
               <SelectItem
                 key={index}
-                value={conservationDuree.laboratoire || ""}
+                value={conservationDuree.laboratoire ?? ""}
               >
                 {conservationDuree.laboratoire}
               </SelectItem>

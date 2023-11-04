@@ -11,11 +11,8 @@ import {
 } from "@/app/(auth)/plan/_lib/functions";
 import { Cell, Header, Row, Table } from "@/components/PDF";
 import type { UserSession } from "@/prisma/types";
-import {
-  PlanPrisePosologies,
-  type PlanInclude,
-  type PlanSettings,
-} from "@/types/plan";
+import type { PlanInclude, PlanSettings } from "@/types/plan";
+import { PlanPrisePosologies } from "@/types/plan";
 import PP_Error from "@/utils/errors";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution, Prisma } from "@prisma/client";
@@ -38,9 +35,9 @@ const PrintPDF = ({
 }) => {
   const tw = createTw({});
 
-  const data = parseData(planData || plan.data);
+  const data = parseData(planData ?? plan.data);
   const posologies = extractPosologiesSettings(
-    (planSettings as PlanSettings)?.posos,
+    (planSettings as unknown as PlanSettings)?.posos,
   );
 
   const INFORMATIONS_WIDTH = "w-56";
@@ -79,7 +76,7 @@ const PrintPDF = ({
           fixed
         >
           Plan de prise n°{plan.displayId} édité par{" "}
-          {user?.displayName || `${user?.firstName} ${user?.lastName}`} le{" "}
+          {user?.displayName ?? `${user?.firstName} ${user?.lastName}`} le{" "}
           {new Date().toLocaleString("fr-FR", {
             day: "2-digit",
             month: "long",
@@ -135,7 +132,7 @@ const PrintPDF = ({
             return undefined;
           }
 
-          const rowData = medicamentId in data ? data[medicamentId] : {};
+          const rowData = data?.[medicamentId] ?? {};
 
           const rowIndication = extractIndication(
             medicament,
@@ -187,7 +184,7 @@ const PrintPDF = ({
               : [];
 
           const rowCustomCommentaires = Object.values(
-            rowData.custom_commentaires || {},
+            rowData.custom_commentaires ?? {},
           ).map((commentaire) => ({
             text: commentaire.texte,
           }));
@@ -201,32 +198,32 @@ const PrintPDF = ({
                   wrap={false}
                 >
                   {[
-                    { text: medicament?.denomination, bold: true },
+                    { text: medicament?.denomination || "", bold: true },
 
                     {
-                      text: rowPrincipesActifs,
+                      text: rowPrincipesActifs || "",
                       className: "text-gray-700 text-sm mt-2",
                       italic: true,
                     },
 
                     {
-                      text: rowVoiesAdministration,
+                      text: rowVoiesAdministration || "",
                       className: "text-sm text-gray-600 mt-2",
                     },
                     {
-                      text: rowFrigo,
+                      text: rowFrigo || "",
                       className: "text-sm text-gray-600 mt-2",
                       italic: true,
                     },
                     {
-                      text: rowConservation,
+                      text: rowConservation ?? "",
                       className: "text-sm text-gray-600 mt-2 mb-auto",
                       italic: true,
                     },
                   ].filter((line) => line.text !== "")}
                 </Cell>
                 <Cell className={`flex-initial ${INDICATION_WIDTH}`}>
-                  {rowIndication[0]}
+                  {rowIndication[0] ?? ""}
                 </Cell>
                 {posologies.map((posologie) => (
                   <Cell
@@ -237,7 +234,7 @@ const PrintPDF = ({
                   >
                     {rowData?.posologies?.[
                       posologie as keyof typeof PlanPrisePosologies
-                    ] || ""}
+                    ] ?? ""}
                   </Cell>
                 ))}
                 <Cell alignLeft>

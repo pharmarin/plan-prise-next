@@ -1,4 +1,5 @@
-import { jwtVerify, SignJWT, type JWTPayload } from "jose";
+import { jwtVerify, SignJWT  } from "jose";
+import type {JWTPayload} from "jose";
 
 const secret = new TextEncoder().encode(process.env.CROSS_SITE_SECRET || "");
 

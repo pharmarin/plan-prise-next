@@ -12,7 +12,7 @@ import { ThermometerSnowflake } from "lucide-react";
 
 const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
   const settings = usePlanStore(
-    (state) => (state.settings as PlanSettings)?.posos,
+    (state) => (state.settings as unknown as PlanSettings)?.posos,
   );
 
   const posologies = extractPosologiesSettings(settings);
@@ -58,4 +58,5 @@ const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
     </div>
   );
 };
+
 export default PlanCardBody;

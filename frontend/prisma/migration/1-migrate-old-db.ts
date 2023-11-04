@@ -9,16 +9,14 @@ import type {
 } from "./database";
 import database from "./plandepr_medics.json";
 
-type UsersMap = { [username: string]: string };
+type UsersMap = Record<string, string>;
 
 export const migrateUsers = async (): Promise<UsersMap> => {
   console.log(
     "Migration n°1 : Migration de l'export de la base de données vers Planetscale",
   );
 
-  const usersMap: {
-    [email: string]: { username: string; newId: string };
-  } = {};
+  const usersMap: Record<string, { username: string; newId: string }> = {};
 
   const usersTable =
     (database as MySQLExport).find(

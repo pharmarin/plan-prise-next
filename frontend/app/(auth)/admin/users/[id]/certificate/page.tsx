@@ -1,12 +1,13 @@
 "use client";
 
-import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
+import { useRouter } from "next/navigation";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
+import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import PP_Error from "@/utils/errors";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { useRouter } from "next/navigation";
+
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
@@ -49,7 +50,7 @@ const ApproveStudent = ({ params }: { params: { id: string } }) => {
       </div>
       {(() => {
         if (
-          user.certificate?.startsWith("data:image/jpeg") ||
+          user.certificate?.startsWith("data:image/jpeg") ??
           user.certificate?.startsWith("data:image/png")
         ) {
           return (

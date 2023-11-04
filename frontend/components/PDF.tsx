@@ -1,5 +1,5 @@
-import { Text, View } from "@react-pdf/renderer";
 import type { PropsWithChildren } from "react";
+import { Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import { twMerge } from "tailwind-merge";
 

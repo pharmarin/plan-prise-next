@@ -1,17 +1,9 @@
 "use client";
 
-import {
-  NavigationActionKind,
-  type NavigationAction,
-  type NavigationState,
-} from "@/types/navigation";
-import {
-  createContext,
-  useContext,
-  useReducer,
-  type Dispatch,
-  type PropsWithChildren,
-} from "react";
+import type { Dispatch, PropsWithChildren } from "react";
+import { createContext, useContext, useReducer } from "react";
+import type { NavigationAction, NavigationState } from "@/types/navigation";
+import { NavigationActionKind } from "@/types/navigation";
 
 const NavigationContext = createContext<NavigationState>({ title: "" });
 const NavigationDispatchContext = createContext<
@@ -29,7 +21,7 @@ const initialNavigationState: NavigationState = {
 
 const navigationReducer = (
   state: NavigationState,
-  action: NavigationAction
+  action: NavigationAction,
 ) => {
   switch (action.type) {
     case NavigationActionKind.SET_LOADING:
@@ -48,7 +40,7 @@ const NavigationContextProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [navigation, dispatch] = useReducer(
     navigationReducer,
-    initialNavigationState
+    initialNavigationState,
   );
 
   return (
