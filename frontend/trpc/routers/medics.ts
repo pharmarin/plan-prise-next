@@ -1,6 +1,7 @@
-import prisma from "@/prisma";
 import { authProcedure, router } from "@/trpc/trpc";
 import { z } from "zod";
+
+import prisma from "@plan-prise/db-prisma";
 
 const medicsRouter = router({
   unique: authProcedure.input(z.string().cuid2()).query(({ input }) =>

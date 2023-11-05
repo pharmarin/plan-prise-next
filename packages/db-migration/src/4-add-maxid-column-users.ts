@@ -1,5 +1,6 @@
-import prisma from "@/prisma";
 import { SingleBar } from "cli-progress";
+
+import prisma from "@plan-prise/db-prisma";
 
 export const addMaxIdColumn = async () => {
   console.log("Migration n°4 : Ajout d'une colonne maxId au modèle User");

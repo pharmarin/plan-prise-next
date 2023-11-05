@@ -1,9 +1,13 @@
-import prisma from "@/prisma";
-import type { PlanDataItem } from "@/types/plan";
 import { createId } from "@paralleldrive/cuid2";
-import type { Prisma, medics_simple } from "@prisma/client";
 import { SingleBar } from "cli-progress";
 import { difference, trim } from "lodash";
+
+import type {
+  medics_simple,
+  PlanDataItem,
+  Prisma,
+} from "@plan-prise/db-prisma";
+import prisma from "@plan-prise/db-prisma";
 
 const decodeUnicode = (value: string) =>
   (value || "").replace(/\\u([\d\w]{4})/gi, (_match, grp) =>
@@ -219,7 +223,7 @@ export const migratePlanNew = async () => {
       }),
     );
 
-    (Object.keys(medicData) ).forEach(
+    Object.keys(medicData).forEach(
       (key) =>
         Object.keys(medicData[key]).length === 0 && delete medicData[key],
     );

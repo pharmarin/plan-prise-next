@@ -10,9 +10,9 @@ import {
   parseData,
 } from "@/app/(auth)/plan/_lib/functions";
 import { Cell, Header, Row, Table } from "@/components/PDF";
-import type { UserSession } from "@/prisma/types";
 import type { PlanInclude, PlanSettings } from "@/types/plan";
 import { PlanPrisePosologies } from "@/types/plan";
+import type { UserSession } from "@/types/user";
 import PP_Error from "@/utils/errors";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution, Prisma } from "@prisma/client";

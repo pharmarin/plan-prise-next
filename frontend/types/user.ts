@@ -1,4 +1,4 @@
-import type {User} from "@prisma/client";
+import type { User } from "@prisma/client";
 
 export type UserSafe = Omit<User, "password">;
 export type UserSession = Pick<

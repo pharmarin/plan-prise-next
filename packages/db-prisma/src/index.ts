@@ -1,6 +1,8 @@
 import { createId } from "@paralleldrive/cuid2";
 import { PrismaClient } from "@prisma/client";
 
+export * from "@prisma/client";
+
 const extendedClient = () => {
   const prisma = new PrismaClient({
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],

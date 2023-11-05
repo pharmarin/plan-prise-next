@@ -1,5 +1,6 @@
-import prisma from "@/prisma";
 import { expect, test } from "@playwright/test";
+
+import prisma from "@plan-prise/db-prisma";
 
 test.describe("database", () => {
   test("should connect to database", async () => {

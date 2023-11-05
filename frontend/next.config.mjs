@@ -1,16 +1,23 @@
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     swcPlugins: [["next-superjson-plugin", {}]],
   },
   reactStrictMode: true,
-  transpilePackages: ["@plan-prise/api-pharmaciens"],
-  webpack: (config) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  transpilePackages: ["@plan-prise/api-pharmaciens", "@plan-prise/db-prisma"],
+  webpack: (config, { isServer }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     config.module.rules.push({
       test: /\.node/,
       use: "raw-loader",
     });
+
+    if (isServer) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return config;

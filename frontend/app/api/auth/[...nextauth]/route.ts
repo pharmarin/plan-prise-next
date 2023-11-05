@@ -1,5 +1,5 @@
 import { nextAuthOptions } from "@/next-auth/options";
-import type { UserSafe, UserSession } from "@/prisma/types";
+import type { UserSafe, UserSession } from "@/types/user";
 import NextAuth from "next-auth";
 
 declare module "next-auth" {

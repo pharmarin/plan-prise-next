@@ -1,6 +1,5 @@
 import { NEXT_AUTH_PAGES } from "@/next-auth/config";
-import prisma from "@/prisma";
-import type { UserSafe } from "@/prisma/types";
+import type { UserSafe } from "@/types/user";
 import checkRecaptcha from "@/utils/check-recaptcha";
 import PP_Error from "@/utils/errors";
 import { checkPassword } from "@/utils/password-utils";
@@ -8,6 +7,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import type { PrismaClient } from "@prisma/client";
 import Credentials from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "node_modules/next-auth";
+
+import prisma from "@plan-prise/db-prisma";
 
 export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient),
@@ -28,8 +29,6 @@ export const nextAuthOptions: NextAuthOptions = {
       return token;
     },
     session: ({ session, user, token }) => {
-      console.log("session, user, token: ", session, user, token);
-
       if (!user && !token?.user) {
         return session;
       }

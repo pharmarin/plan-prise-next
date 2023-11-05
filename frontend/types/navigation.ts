@@ -1,5 +1,4 @@
 import type { navbarIcons } from "@/components/navigation/NavbarLink";
-import type { Route } from "next";
 
 export enum NavigationActionKind {
   SET_LOADING = "SET_LOADING",
@@ -32,11 +31,11 @@ export type NavbarIcons = keyof typeof navbarIcons;
 export type NavigationItem = {
   icon: NavbarIcons;
   className?: string;
-} & ({ path: Route<string> | URL } | { event: string });
+} & ({ path: string | URL } | { event: string });
 
 export interface NavigationState {
   loading?: boolean;
   options?: NavigationItem[];
-  returnTo?: Route<string> | URL;
+  returnTo?: string | URL;
   title: string;
 }

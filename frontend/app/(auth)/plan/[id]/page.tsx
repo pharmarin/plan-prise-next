@@ -1,10 +1,13 @@
+import { notFound } from "next/navigation";
 import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
 import Navigation from "@/components/navigation/Navigation";
 import { getServerSession } from "@/next-auth/get-session";
-import prisma from "@/prisma";
-import { notFound } from "next/navigation";
 
-interface Props { params: { id: string } }
+import prisma from "@plan-prise/db-prisma";
+
+interface Props {
+  params: { id: string };
+}
 
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();

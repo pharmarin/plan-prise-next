@@ -1,5 +1,6 @@
-import prisma from "@/prisma";
 import { Prisma } from "@prisma/client";
+
+import prisma from "@plan-prise/db-prisma";
 
 export const migrateRenamePrecautions = async () => {
   await prisma.$executeRaw(

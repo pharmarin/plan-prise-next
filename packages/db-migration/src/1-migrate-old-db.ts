@@ -1,4 +1,5 @@
-import prisma from "../index";
+import prisma from "@plan-prise/db-prisma";
+
 import type {
   CalendarsTable,
   MedicsTable,

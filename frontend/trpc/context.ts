@@ -1,7 +1,8 @@
 import { getServerSession } from "@/next-auth/get-session";
-import prisma from "@/prisma";
 import type * as trpc from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+
+import prisma from "@plan-prise/db-prisma";
 
 export const createContext = async (ctx: FetchCreateContextFnOptions) => {
   const session = await getServerSession();

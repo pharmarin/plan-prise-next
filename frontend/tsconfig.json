@@ -13,13 +13,5 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [".", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "./prisma/migration"],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-      "paths": { "@/*": ["./*"] }
-    },
-    "require": ["tsconfig-paths/register"],
-    "transpileOnly": true
-  }
+  "exclude": ["node_modules"]
 }

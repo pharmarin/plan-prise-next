@@ -1,16 +1,16 @@
-import prisma from "@/prisma";
+import prisma from "@plan-prise/db-prisma";
 import {
   migrateCalendars,
   migrateMedics,
   migratePlans,
   migratePrecautions,
   migrateUsers,
-} from "@/prisma/migration/1-migrate-old-db";
-import migrateMedicsNew from "@/prisma/migration/2-migrate-medics-new";
-import { migratePlanNew } from "@/prisma/migration/3-migrate-plans";
-import { addMaxIdColumn } from "@/prisma/migration/4-add-maxid-column-users";
-import { migrateRenamePrecautions } from "@/prisma/migration/5-rename-precautions";
-import { migrateMedicamentPrecautions } from "@/prisma/migration/6-migrate-precautions";
+} from "@plan-prise/db-prisma/migration/1-migrate-old-db";
+import migrateMedicsNew from "@plan-prise/db-prisma/migration/2-migrate-medics-new";
+import { migratePlanNew } from "@plan-prise/db-prisma/migration/3-migrate-plans";
+import { addMaxIdColumn } from "@plan-prise/db-prisma/migration/4-add-maxid-column-users";
+import { migrateRenamePrecautions } from "@plan-prise/db-prisma/migration/5-rename-precautions";
+import { migrateMedicamentPrecautions } from "@plan-prise/db-prisma/migration/6-migrate-precautions";
 
 const seeder = async () => {
   switch (process.argv?.[2]) {

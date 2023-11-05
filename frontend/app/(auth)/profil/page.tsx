@@ -3,8 +3,9 @@ import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
 import Title from "@/components/navigation/Navigation";
 import { getServerSession } from "@/next-auth/get-session";
-import prisma from "@/prisma";
 import PP_Error from "@/utils/errors";
+
+import prisma from "@plan-prise/db-prisma";
 
 const PAGE_TITLE = "Profil";
 

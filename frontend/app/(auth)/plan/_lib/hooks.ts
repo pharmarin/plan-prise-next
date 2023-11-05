@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   extractConservation,
   extractIndication,
@@ -11,7 +12,6 @@ import type {
   MedicamentConservationDuree,
 } from "@/types/medicament";
 import type { Medicament } from "@prisma/client";
-import { useEffect, useState } from "react";
 
 export const useIndication = (medicament: Medicament | CustomMedicament) => {
   const customData = usePlanStore(

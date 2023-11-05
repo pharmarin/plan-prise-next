@@ -1,9 +1,11 @@
-import prisma from "@/prisma";
-import type { MedicamentConservationDuree } from "@/types/medicament";
-import { Prisma, VoieAdministration  } from "@prisma/client";
-import type {medics_simple} from "@prisma/client";
 import { SingleBar } from "cli-progress";
 import { trim } from "lodash";
+
+import type {
+  MedicamentConservationDuree,
+  medics_simple,
+} from "@plan-prise/db-prisma";
+import prisma, { Prisma, VoieAdministration } from "@plan-prise/db-prisma";
 
 /*
   TODO: 
