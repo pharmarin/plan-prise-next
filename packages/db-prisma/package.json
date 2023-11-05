@@ -32,7 +32,7 @@
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "0.1.0",
     "@plan-prise/tsconfig": "0.1.0",
-    "dotenv-cli": "7.2.1",
+    "dotenv-cli": "7.3.0",
     "eslint": "8.53.0",
     "prisma": "5.5.2",
     "typescript": "5.2.2"
