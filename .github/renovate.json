@@ -11,5 +11,16 @@
     ":separateMajorReleases"
   ],
   "baseBranches": ["master"],
-  "enabledManagers": ["npm"]
+  "enabledManagers": ["npm"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^@plan-prise/"],
+      "enabled": false
+    },
+    {
+      "packagePatterns": [".*"],
+      "updateTypes": ["major"],
+      "branchName": "renovate/major-{{{branchTopic}}}"
+    }
+  ]
 }
