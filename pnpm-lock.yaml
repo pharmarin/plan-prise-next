@@ -350,8 +350,8 @@ importers:
         specifier: 0.5.6
         version: 0.5.6(tailwindcss@3.3.5)
       '@types/bcrypt':
-        specifier: 5.0.1
-        version: 5.0.1
+        specifier: 5.0.2
+        version: 5.0.2
       '@types/lodash':
         specifier: 4.14.200
         version: 4.14.200
@@ -2235,8 +2235,8 @@ packages:
       update-check: 1.5.4
     dev: false
 
-  /@types/bcrypt@5.0.1:
-    resolution: {integrity: sha512-dIIrEsLV1/v0AUNI8oHMaRRTSeVjoy5ID8oclJavtPj8CwPJoD1eFoNXEypuu6k091brEzBeOo3LlxeAH9zRZg==}
+  /@types/bcrypt@5.0.2:
+    resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
     dependencies:
       '@types/node': 20.8.10
     dev: true
