@@ -438,8 +438,8 @@ importers:
         specifier: ^0.1.0
         version: link:../../config/typescript
       '@types/cli-progress':
-        specifier: 3.11.4
-        version: 3.11.4
+        specifier: 3.11.5
+        version: 3.11.5
       '@types/lodash':
         specifier: 4.14.200
         version: 4.14.200
@@ -2241,8 +2241,8 @@ packages:
       '@types/node': 20.8.10
     dev: true
 
-  /@types/cli-progress@3.11.4:
-    resolution: {integrity: sha512-yufTxeeNCZuEIxx2uebK8lpSAsJM4lvzakm/VxzYhDtqhXCzwH9jpn7nPCxzrROuEbLATqhFq4MIPoG0tlrsvw==}
+  /@types/cli-progress@3.11.5:
+    resolution: {integrity: sha512-D4PbNRbviKyppS5ivBGyFO29POlySLmA2HyUFE4p5QGazAMM3CwkKWcvTl8gvElSuxRh6FPKL8XmidX873ou4g==}
     dependencies:
       '@types/node': 20.8.10
     dev: true
