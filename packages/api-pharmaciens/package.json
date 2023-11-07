@@ -4,7 +4,7 @@
   "devDependencies": {
     "@plan-prise/tsconfig": "*",
     "@types/node": "20.8.10",
-    "@types/node-fetch": "2.6.8",
+    "@types/node-fetch": "2.6.9",
     "@types/unzipper": "0.10.8",
     "csv-parse": "5.5.2",
     "node-fetch": "2.7.0",
