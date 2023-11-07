@@ -353,8 +353,8 @@ importers:
         specifier: 5.0.2
         version: 5.0.2
       '@types/lodash':
-        specifier: 4.14.200
-        version: 4.14.200
+        specifier: 4.14.201
+        version: 4.14.201
       '@types/node':
         specifier: 20.8.10
         version: 20.8.10
@@ -441,8 +441,8 @@ importers:
         specifier: 3.11.5
         version: 3.11.5
       '@types/lodash':
-        specifier: 4.14.200
-        version: 4.14.200
+        specifier: 4.14.201
+        version: 4.14.201
       cli-progress:
         specifier: 3.12.0
         version: 3.12.0
@@ -2292,8 +2292,8 @@ packages:
       '@types/node': 20.8.10
     dev: false
 
-  /@types/lodash@4.14.200:
-    resolution: {integrity: sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==}
+  /@types/lodash@4.14.201:
+    resolution: {integrity: sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==}
     dev: true
 
   /@types/minimatch@5.1.2:
