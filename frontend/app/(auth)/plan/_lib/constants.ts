@@ -1,6 +1,6 @@
 export const PLAN_NEW = "PLAN_NEW";
 
-export const PLAN_SETTINGS_DEFAULT: Required<PrismaJson.Plan.Settings> = {
+export const PLAN_SETTINGS_DEFAULT: Required<PP.Plan.Settings> = {
   posos: {
     poso_lever: false,
     poso_matin: true,
@@ -14,7 +14,7 @@ export const PLAN_SETTINGS_DEFAULT: Required<PrismaJson.Plan.Settings> = {
 };
 
 export const PLAN_POSOLOGIE_COLOR: Record<
-  keyof typeof PrismaJson.Plan.PlanPrisePosologies,
+  keyof typeof PP.Plan.PlanPrisePosologies,
   { header: string; body: string }
 > = {
   poso_lever: {

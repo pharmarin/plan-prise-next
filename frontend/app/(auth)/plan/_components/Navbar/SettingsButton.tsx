@@ -24,8 +24,8 @@ import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
 
 const posologies = Object.keys(
-  PrismaJson.Plan.PlanPrisePosologies,
-) as (keyof typeof PrismaJson.Plan.PlanPrisePosologies)[];
+  PP.Plan.PlanPrisePosologies,
+) as (keyof typeof PP.Plan.PlanPrisePosologies)[];
 
 const SettingsButton = () => {
   const planId = usePlanStore((state) => state.id);
@@ -95,7 +95,7 @@ const SettingsButton = () => {
                 className="flex items-center justify-between"
               >
                 <Label htmlFor={posologie}>
-                  {PrismaJson.Plan.PlanPrisePosologies[posologie]}
+                  {PP.Plan.PlanPrisePosologies[posologie]}
                 </Label>
                 <Switch
                   checked={settings.posos?.[posologie]}

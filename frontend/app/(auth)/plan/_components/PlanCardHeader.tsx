@@ -8,8 +8,8 @@ const PlanCardHeader = ({
   medicament,
   removeMedic,
 }: {
-  medicament: PrismaJson.Medicament.Include;
-  removeMedic: (medicament: PrismaJson.Medicament.Identifier) => void;
+  medicament: PP.Medicament.Include;
+  removeMedic: (medicament: PP.Medicament.Identifier) => void;
 }) => {
   return (
     <PlanCardHeaderUI

@@ -10,9 +10,9 @@ const PlanCard = ({
   medicamentId,
   removeMedic,
 }: {
-  medicamentData?: PrismaJson.Medicament.Include;
+  medicamentData?: PP.Medicament.Include;
   medicamentId: string;
-  removeMedic: (medicament: PrismaJson.Medicament.Identifier) => void;
+  removeMedic: (medicament: PP.Medicament.Identifier) => void;
 }) => {
   const { data: medicament, isLoading } = trpc.medics.unique.useQuery(
     medicamentId,

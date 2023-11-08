@@ -21,7 +21,7 @@ type SelectValueType = {
   id: string;
 };
 
-const PlanClient = ({ plan }: { plan: PrismaJson.Plan.Include }) => {
+const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
   const router = useRouter();
   const { toast } = useToast();
@@ -133,9 +133,7 @@ const PlanClient = ({ plan }: { plan: PrismaJson.Plan.Include }) => {
                     precautionId: null,
                   }
             }
-            removeMedic={async (
-              medicament: PrismaJson.Medicament.Identifier,
-            ) => {
+            removeMedic={async (medicament: PP.Medicament.Identifier) => {
               setRemovingMedics((state) => [
                 ...state,
                 {

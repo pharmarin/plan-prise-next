@@ -16,7 +16,7 @@ export const extractCommentaire = (
 });
 
 export const extractIndication = (
-  medicament: Medicament | PrismaJson.Medicament.Custom,
+  medicament: Medicament | PP.Medicament.Custom,
   data?: string,
 ) => {
   const indications =
@@ -32,7 +32,7 @@ export const extractIndication = (
 };
 
 export const extractConservation = (
-  medicament: Medicament | PrismaJson.Medicament.Custom,
+  medicament: Medicament | PP.Medicament.Custom,
   data?: string,
 ) => {
   const defaultValue =
@@ -58,7 +58,7 @@ export const extractConservation = (
 };
 
 export const extractVoieAdministration = (
-  medicament: Medicament | PrismaJson.Medicament.Custom,
+  medicament: Medicament | PP.Medicament.Custom,
 ) => {
   if (
     "voiesAdministration" in medicament &&
@@ -102,7 +102,7 @@ export const extractVoieAdministration = (
 };
 
 export const extractPosologiesSettings = (
-  posos?: PrismaJson.Plan.Settings["posos"],
+  posos?: PP.Plan.Settings["posos"],
 ) => {
   if (!posos) {
     return [];

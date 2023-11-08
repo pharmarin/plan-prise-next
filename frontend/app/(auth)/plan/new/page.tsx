@@ -5,7 +5,7 @@ import Navigation from "@/components/navigation/Navigation";
 
 const PlanNew = () => {
   const plan = useMemo(
-    (): PrismaJson.Plan.Include => ({
+    (): PP.Plan.Include => ({
       id: PLAN_NEW,
       medicsOrder: [],
       data: {},

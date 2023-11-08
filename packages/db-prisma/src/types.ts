@@ -9,7 +9,7 @@ import type {
 /* eslint-disable @typescript-eslint/no-namespace */
 
 declare global {
-  namespace PrismaJson {
+  namespace PP {
     namespace Plan {
       enum PlanPrisePosologies {
         "poso_lever" = "Lever",
@@ -44,7 +44,7 @@ declare global {
 }
 
 declare global {
-  namespace PrismaJson {
+  namespace PP {
     namespace Medicament {
       type Custom = { denomination: string };
       type Identifier = {

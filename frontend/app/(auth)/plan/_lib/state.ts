@@ -18,7 +18,7 @@ type State = {
 };
 
 type Actions = {
-  init: (plan: PrismaJson.Plan.Include) => void;
+  init: (plan: PP.Plan.Include) => void;
   setData: (path: string, value: string | boolean) => void;
   unsetData: (path: string) => void;
   addMedic: (id: string) => void;
@@ -59,7 +59,7 @@ const usePlanStore = create(
             (state.data ?? {}) as object,
             path,
             value,
-          ) as PrismaJson.Plan.Data;
+          ) as PP.Plan.Data;
         });
       },
       unsetData: (path) =>

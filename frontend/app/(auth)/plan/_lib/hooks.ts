@@ -9,7 +9,7 @@ import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import type { Medicament } from "@prisma/client";
 
 export const useIndication = (
-  medicament: Medicament | PrismaJson.Medicament.Custom,
+  medicament: Medicament | PP.Medicament.Custom,
 ) => {
   const customData = usePlanStore(
     (state) =>
@@ -29,7 +29,7 @@ export const useIndication = (
 };
 
 export const useConservation = (
-  medicament: Medicament | PrismaJson.Medicament.Custom,
+  medicament: Medicament | PP.Medicament.Custom,
 ) => {
   const customData = usePlanStore(
     (state) =>
@@ -39,7 +39,7 @@ export const useConservation = (
 
   const [conservation, setConservation] = useState<{
     custom: boolean;
-    values: PrismaJson.Medicament.ConservationDuree;
+    values: PP.Medicament.ConservationDuree;
   }>(extractConservation(medicament, customData));
 
   useEffect(() => {

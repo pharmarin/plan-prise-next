@@ -24,9 +24,9 @@ const PrintPDF = ({
   precautions,
   user,
 }: {
-  plan: PrismaJson.Plan.Include;
-  planData: PrismaJson.Plan.Data;
-  planSettings: PrismaJson.Plan.Settings;
+  plan: PP.Plan.Include;
+  planData: PP.Plan.Data;
+  planSettings: PP.Plan.Settings;
   precautions: Precaution[];
   user: UserSession;
 }) => {
@@ -105,8 +105,8 @@ const PrintPDF = ({
                 }`}
               >
                 {
-                  PrismaJson.Plan.PlanPrisePosologies[
-                    posologie as keyof typeof PrismaJson.Plan.PlanPrisePosologies
+                  PP.Plan.PlanPrisePosologies[
+                    posologie as keyof typeof PP.Plan.PlanPrisePosologies
                   ]
                 }
               </Header>
@@ -228,7 +228,7 @@ const PrintPDF = ({
                     ]?.body} p-0`}
                   >
                     {rowData?.posologies?.[
-                      posologie as keyof typeof PrismaJson.Plan.PlanPrisePosologies
+                      posologie as keyof typeof PP.Plan.PlanPrisePosologies
                     ] ?? ""}
                   </Cell>
                 ))}

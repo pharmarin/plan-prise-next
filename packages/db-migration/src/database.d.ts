@@ -1,4 +1,4 @@
-export interface CalendarsTable {
+export type CalendarsTable = {
   type: "table";
   name: "calendriers";
   database: DatabaseName;
@@ -10,7 +10,7 @@ export interface CalendarsTable {
   }[];
 }
 
-export interface MedicsTable {
+export type MedicsTable = {
   type: "table";
   name: "medics_simple";
   database: DatabaseName;
@@ -35,7 +35,7 @@ export interface MedicsTable {
   }[];
 }
 
-export interface PlansTable {
+export type PlansTable = {
   type: "table";
   name: "plans";
   database: DatabaseName;
@@ -48,7 +48,7 @@ export interface PlansTable {
   }[];
 }
 
-export interface PrecautionsTable {
+export type PrecautionsTable = {
   type: "table";
   name: "precautions";
   database: DatabaseName;
@@ -61,7 +61,7 @@ export interface PrecautionsTable {
   }[];
 }
 
-export interface UsersTable {
+export type UsersTable = {
   type: "table";
   name: "users";
   database: DatabaseName;

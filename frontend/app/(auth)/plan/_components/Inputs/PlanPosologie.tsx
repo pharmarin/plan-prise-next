@@ -10,7 +10,7 @@ const PlanPosologie = ({
   name,
 }: {
   medicament: Medicament;
-  name: keyof typeof PrismaJson.Plan.PlanPrisePosologies;
+  name: keyof typeof PP.Plan.PlanPrisePosologies;
 }) => {
   const data = usePlanStore(
     (state) => state.data?.[medicament.id]?.posologies?.[name],
@@ -19,7 +19,7 @@ const PlanPosologie = ({
 
   return (
     <FormItem className="w-full">
-      <Label>{PrismaJson.Plan.PlanPrisePosologies[name]}</Label>
+      <Label>{PP.Plan.PlanPrisePosologies[name]}</Label>
       <Input
         onChange={(event) =>
           setData(

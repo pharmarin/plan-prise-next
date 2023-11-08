@@ -11,7 +11,7 @@ import { ThermometerSnowflake } from "lucide-react";
 const PlanCardBody = ({
   medicament,
 }: {
-  medicament: PrismaJson.Medicament.Include;
+  medicament: PP.Medicament.Include;
 }) => {
   const settings = usePlanStore((state) => state.settings?.posos);
 
