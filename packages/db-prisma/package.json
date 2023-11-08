@@ -19,7 +19,7 @@
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "generate": "pnpm with-env prisma generate",
     "lint": "eslint .",
-    "postinstall": "pnpm db:generate",
+    "postinstall": "pnpm generate",
     "push": "pnpm with-env prisma db push --skip-generate",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
