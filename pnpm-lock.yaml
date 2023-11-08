@@ -401,8 +401,8 @@ importers:
         specifier: 2.6.9
         version: 2.6.9
       '@types/unzipper':
-        specifier: 0.10.8
-        version: 0.10.8
+        specifier: 0.10.9
+        version: 0.10.9
       csv-parse:
         specifier: 5.5.2
         version: 5.5.2
@@ -2370,8 +2370,8 @@ packages:
     resolution: {integrity: sha512-uLJijDHN5E6j5n1qefF9oaeplgszXglWXWTviMoFr/YxgvbyrkFil20yDT7ljhCiTQ/BfCYtxfJS81LdTro5DQ==}
     dev: false
 
-  /@types/unzipper@0.10.8:
-    resolution: {integrity: sha512-Cior/4Y78R1ZVF6tnWEHWIkAMDqKxU5pPCbaC62826oEfchPGg90fKdi3sLZ2D7oB7GrFu3+PW2elEMBOtd27w==}
+  /@types/unzipper@0.10.9:
+    resolution: {integrity: sha512-vHbmFZAw8emNAOVkHVbS3qBnbr0x/qHQZ+ei1HE7Oy6Tyrptl+jpqnOX+BF5owcu/HZLOV0nJK+K9sjs1Ox2JA==}
     dependencies:
       '@types/node': 20.8.10
     dev: true
