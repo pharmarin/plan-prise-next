@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "2.2.2",
-    "@prisma/client": "^5.5.2"
+    "@prisma/client": "5.5.2"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "0.1.0",
     "@plan-prise/tsconfig": "0.1.0",
-    "dotenv-cli": "7.2.1",
+    "dotenv-cli": "7.3.0",
     "eslint": "8.53.0",
     "prisma": "5.5.2",
     "prisma-json-types-generator": "^3.0.3",

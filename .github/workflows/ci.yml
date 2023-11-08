@@ -51,6 +51,7 @@ jobs:
           path: |
             frontend/.next
             !frontend/.next/cache
+          retention-days: 1
 
   base-test:
     runs-on: ubuntu-latest
