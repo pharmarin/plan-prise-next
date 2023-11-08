@@ -1,8 +1,6 @@
-import type { PlanPrisePosologies, PlanSettings } from "@/types/plan";
-
 export const PLAN_NEW = "PLAN_NEW";
 
-export const PLAN_SETTINGS_DEFAULT: PlanSettings = {
+export const PLAN_SETTINGS_DEFAULT: Required<PrismaJson.Plan.Settings> = {
   posos: {
     poso_lever: false,
     poso_matin: true,
@@ -16,7 +14,7 @@ export const PLAN_SETTINGS_DEFAULT: PlanSettings = {
 };
 
 export const PLAN_POSOLOGIE_COLOR: Record<
-  keyof typeof PlanPrisePosologies,
+  keyof typeof PrismaJson.Plan.PlanPrisePosologies,
   { header: string; body: string }
 > = {
   poso_lever: {

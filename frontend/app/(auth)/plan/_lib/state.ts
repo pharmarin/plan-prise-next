@@ -1,7 +1,6 @@
 "use client";
 
 import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
-import type { PlanInclude } from "@/types/plan";
 import type { Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 import { merge, set, unset } from "lodash";
@@ -9,17 +8,17 @@ import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-interface State {
+type State = {
   id?: Plan["id"];
   data?: Plan["data"];
   medics?: string[];
   settings?: Plan["settings"];
   isSaving: boolean;
   canPrint: boolean | string;
-}
+};
 
-interface Actions {
-  init: (plan: PlanInclude) => void;
+type Actions = {
+  init: (plan: PrismaJson.Plan.Include) => void;
   setData: (path: string, value: string | boolean) => void;
   unsetData: (path: string) => void;
   addMedic: (id: string) => void;
@@ -27,7 +26,7 @@ interface Actions {
   setSetting: (path: string, value: boolean) => void;
   setIsSaving: (isSaving: boolean) => void;
   setCanPrint: (canPrint: boolean | string) => void;
-}
+};
 
 const PLAN_NO_MEDIC_WARNING =
   "Veuillez ajouter des médicaments pour imprimer le plan de prise";
@@ -60,7 +59,7 @@ const usePlanStore = create(
             (state.data ?? {}) as object,
             path,
             value,
-          ) as JsonValue;
+          ) as PrismaJson.Plan.Data;
         });
       },
       unsetData: (path) =>

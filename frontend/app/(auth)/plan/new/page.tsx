@@ -2,11 +2,10 @@ import { useMemo } from "react";
 import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import Navigation from "@/components/navigation/Navigation";
-import type { PlanInclude } from "@/types/plan";
 
 const PlanNew = () => {
   const plan = useMemo(
-    (): PlanInclude => ({
+    (): PrismaJson.Plan.Include => ({
       id: PLAN_NEW,
       medicsOrder: [],
       data: {},

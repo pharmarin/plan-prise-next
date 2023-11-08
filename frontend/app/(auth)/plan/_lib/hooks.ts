@@ -4,21 +4,17 @@ import { useEffect, useState } from "react";
 import {
   extractConservation,
   extractIndication,
-  parseData,
 } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import type {
-  CustomMedicament,
-  MedicamentConservationDuree,
-} from "@/types/medicament";
 import type { Medicament } from "@prisma/client";
 
-export const useIndication = (medicament: Medicament | CustomMedicament) => {
+export const useIndication = (
+  medicament: Medicament | PrismaJson.Medicament.Custom,
+) => {
   const customData = usePlanStore(
     (state) =>
-      parseData(state.data)?.[
-        "id" in medicament ? medicament.id : medicament.denomination
-      ]?.indication,
+      state.data?.["id" in medicament ? medicament.id : medicament.denomination]
+        ?.indication,
   );
 
   const [indications, setIndications] = useState<string[]>(
@@ -32,17 +28,18 @@ export const useIndication = (medicament: Medicament | CustomMedicament) => {
   return indications;
 };
 
-export const useConservation = (medicament: Medicament | CustomMedicament) => {
+export const useConservation = (
+  medicament: Medicament | PrismaJson.Medicament.Custom,
+) => {
   const customData = usePlanStore(
     (state) =>
-      parseData(state.data)?.[
-        "id" in medicament ? medicament.id : medicament.denomination
-      ]?.conservation,
+      state.data?.["id" in medicament ? medicament.id : medicament.denomination]
+        ?.conservation,
   );
 
   const [conservation, setConservation] = useState<{
     custom: boolean;
-    values: MedicamentConservationDuree;
+    values: PrismaJson.Medicament.ConservationDuree;
   }>(extractConservation(medicament, customData));
 
   useEffect(() => {

@@ -1,19 +1,6 @@
 import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
-import type {
-  CustomMedicament,
-  MedicamentConservationDuree,
-} from "@/types/medicament";
-import type { PlanData, PlanSettings } from "@/types/plan";
-import type { Commentaire, Medicament, Plan } from "@prisma/client";
+import type { Commentaire, Medicament } from "@prisma/client";
 import { VoieAdministration } from "@prisma/client";
-
-export const parseData = (data?: Plan["data"]): PlanData => {
-  if (typeof data === "object" && data) {
-    return data as PlanData;
-  } else {
-    return {};
-  }
-};
 
 export const extractPosologie = (data?: string) => data ?? "";
 
@@ -29,7 +16,7 @@ export const extractCommentaire = (
 });
 
 export const extractIndication = (
-  medicament: Medicament | CustomMedicament,
+  medicament: Medicament | PrismaJson.Medicament.Custom,
   data?: string,
 ) => {
   const indications =
@@ -45,13 +32,13 @@ export const extractIndication = (
 };
 
 export const extractConservation = (
-  medicament: Medicament | CustomMedicament,
+  medicament: Medicament | PrismaJson.Medicament.Custom,
   data?: string,
 ) => {
   const defaultValue =
     "conservationDuree" in medicament &&
     Array.isArray(medicament.conservationDuree)
-      ? (medicament.conservationDuree as MedicamentConservationDuree)
+      ? medicament.conservationDuree
       : null;
 
   return {
@@ -71,7 +58,7 @@ export const extractConservation = (
 };
 
 export const extractVoieAdministration = (
-  medicament: Medicament | CustomMedicament,
+  medicament: Medicament | PrismaJson.Medicament.Custom,
 ) => {
   if (
     "voiesAdministration" in medicament &&
@@ -114,7 +101,9 @@ export const extractVoieAdministration = (
   }
 };
 
-export const extractPosologiesSettings = (posos?: PlanSettings["posos"]) => {
+export const extractPosologiesSettings = (
+  posos?: PrismaJson.Plan.Settings["posos"],
+) => {
   if (!posos) {
     return [];
   }

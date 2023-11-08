@@ -33,7 +33,10 @@ declare global {
         custom_commentaires?: Record<string, { texte: string }>;
       };
       type Data = Record<string, DataItem>;
-      type PlanInclude = PlanType & {
+      type Settings = {
+        posos?: Record<keyof typeof PlanPrisePosologies, boolean>;
+      };
+      type Include = PlanType & {
         medics: Medicament.Include[];
       };
     }

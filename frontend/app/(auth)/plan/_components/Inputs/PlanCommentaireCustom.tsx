@@ -1,4 +1,3 @@
-import { parseData } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,8 +13,7 @@ const PlanCommentaireCustomItem = ({
   medicId: string;
 }) => {
   const data = usePlanStore(
-    (state) =>
-      parseData(state.data)?.[medicId]?.custom_commentaires?.[commentId],
+    (state) => state.data?.[medicId]?.custom_commentaires?.[commentId],
   );
   const { setData, unsetData } = usePlanStore((state) => ({
     setData: state.setData,
@@ -52,7 +50,7 @@ const PlanCommentaireCustomItem = ({
 
 const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
   const data = usePlanStore(
-    (state) => parseData(state.data)?.[medicament.id]?.custom_commentaires,
+    (state) => state.data?.[medicament.id]?.custom_commentaires,
   );
   const setData = usePlanStore((state) => state.setData);
 
