@@ -21,7 +21,7 @@
     "@plan-prise/prettier-config": "*",
     "@prettier/plugin-php": "0.21.0",
     "@turbo/gen": "1.10.16",
-    "@types/node": "20.8.10",
+    "@types/node": "20.9.0",
     "prettier": "3.0.3",
     "prettier-plugin-tailwindcss": "0.5.6",
     "turbo": "1.10.16",
