@@ -15,12 +15,12 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "db:generate": "pnpm with-env prisma generate",
-    "db:push": "pnpm with-env prisma db push --skip-generate",
     "dev": "pnpm with-env prisma studio --port 5556",
-    "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "generate": "pnpm with-env prisma generate",
+    "lint": "eslint .",
     "postinstall": "pnpm db:generate",
+    "push": "pnpm with-env prisma db push --skip-generate",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
@@ -35,6 +35,7 @@
     "dotenv-cli": "7.2.1",
     "eslint": "8.53.0",
     "prisma": "5.5.2",
+    "prisma-json-types-generator": "^3.0.3",
     "typescript": "5.2.2"
   },
   "eslintConfig": {
