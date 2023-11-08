@@ -365,8 +365,8 @@ importers:
         specifier: 18.2.14
         version: 18.2.14
       '@types/react-google-recaptcha':
-        specifier: 2.1.7
-        version: 2.1.7
+        specifier: 2.1.8
+        version: 2.1.8
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.31)
@@ -2324,8 +2324,8 @@ packages:
     dependencies:
       '@types/react': 18.2.36
 
-  /@types/react-google-recaptcha@2.1.7:
-    resolution: {integrity: sha512-qAif3VMKgIrT6l3YcCN29F0W0LZR9Q5jxLvH2MANgc2Hm3Pk27goHBwj3Ri4vtFc0jZyFt6npdERdzUtZtJsLQ==}
+  /@types/react-google-recaptcha@2.1.8:
+    resolution: {integrity: sha512-nYI3ZDoteZ0g4FYusyKWqz7AZqRdu70R3wDkosCcN0peb2WLn57i0Alm4IPiCRIx59yTUVPTiOELZH08gV1wXA==}
     dependencies:
       '@types/react': 18.2.36
     dev: true
