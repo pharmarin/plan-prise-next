@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  create:
   pull_request:
     branches: ["*"]
   push:
