@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
@@ -9,13 +7,16 @@ import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/trpc/client";
-import errors from "@/utils/errors/errors.json";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
 
-type SelectValueType = {
+import errors from "@plan-prise/errors/errors.json";
+
+interface SelectValueType {
   denomination: string;
   principesActifs: string[];
   id: string;

@@ -7,10 +7,11 @@ import ServerError from "@/components/forms/ServerError";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
-import PP_Error from "@/utils/errors";
 import { forgotPasswordSchema } from "@/validation/users";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
+import PP_Error from "@plan-prise/errors";
 
 const ForgotPasswordForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();

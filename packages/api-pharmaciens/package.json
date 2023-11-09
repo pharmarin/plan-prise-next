@@ -13,6 +13,7 @@
     "unzipper": "0.10.14"
   },
   "scripts": {
+    "clean": "rm -rf .turbo node_modules",
     "download": "ts-node download.ts",
     "typecheck": "tsc --noEmit"
   }

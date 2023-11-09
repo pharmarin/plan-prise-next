@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Form from "@/components/forms/Form";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
 import FormikField from "@/components/forms/inputs/FormikField";
@@ -8,7 +9,6 @@ import Link from "@/components/navigation/Link";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
-import PP_Error from "@/utils/errors";
 import convertToBase64 from "@/utils/file-to-base64";
 import {
   ALLOWED_UPLOADED_FILE_TYPES,
@@ -16,8 +16,9 @@ import {
   registerSchemaClient,
 } from "@/validation/users";
 import { Formik } from "formik";
-import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
+import PP_Error from "@plan-prise/errors";
 
 const RegisterForm = () => {
   const [step, setStep] = useState(1);

@@ -3,7 +3,8 @@ import PlanCardBody from "@/app/(auth)/plan/_components/PlanCardBody";
 import PlanCardHeader from "@/app/(auth)/plan/_components/PlanCardHeader";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import { trpc } from "@/trpc/client";
-import PP_Error from "@/utils/errors";
+
+import PP_Error from "@plan-prise/errors";
 
 const PlanCard = ({
   medicamentData,

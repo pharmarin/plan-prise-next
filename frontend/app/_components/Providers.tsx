@@ -1,16 +1,17 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
-import { useState } from "react";
 import NavigationContextProvider from "@/components/NavigationContextProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { trpc } from "@/trpc/client";
 import getUrl from "@/utils/url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
-import { SessionProvider } from "next-auth/react";
+import type { PropsWithChildren } from "react";
+import { useState } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
+
+import { SessionProvider } from "next-auth/react";
 
 export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(

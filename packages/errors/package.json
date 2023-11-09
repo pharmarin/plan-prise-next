@@ -1,0 +1,40 @@
+{
+  "name": "@plan-prise/errors",
+  "private": true,
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts",
+    "./errors.json": "./src/errors.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@trpc/client": "10.43.2",
+    "@trpc/server": "10.43.2"
+  },
+  "devDependencies": {
+    "@plan-prise/eslint-config": "0.2.0",
+    "@plan-prise/prettier-config": "^0.1.0",
+    "@plan-prise/tsconfig": "^0.1.0",
+    "eslint": "8.53.0",
+    "typescript": "5.2.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@plan-prise/eslint-config/base"
+    ]
+  },
+  "prettier": "@plan-prise/prettier-config"
+}
