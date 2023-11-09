@@ -1,5 +1,5 @@
-import setLanguage from "@/validation/locale";
 import * as yup from "yup";
+import setLanguage from "./locale";
 
 setLanguage();
 

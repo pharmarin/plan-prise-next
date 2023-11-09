@@ -1,6 +1,7 @@
 import test from "@/__tests__/e2e/fixtures/auth:registered.fixture";
-import errors from "@/utils/errors/errors.json";
 import { expect } from "@playwright/test";
+
+import errors from "@plan-prise/errors/errors.json";
 
 test.describe("auth:registered", () => {
   test("should display error message if user not approved", async ({
@@ -11,7 +12,7 @@ test.describe("auth:registered", () => {
     await loginPage.populateForm(registeredUser.email, registeredUser.password);
     await loginPage.submitForm();
     await expect(
-      page.getByText(errors.USER_NOT_APPROVED.message)
+      page.getByText(errors.USER_NOT_APPROVED.message),
     ).toBeVisible();
   });
 });

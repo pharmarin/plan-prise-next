@@ -1,5 +1,6 @@
-import jsonErrors from "@/utils/errors/errors.json";
 import { TRPCClientError } from "@trpc/client";
+
+import jsonErrors from "./errors.json";
 
 export type ErrorObject = Record<
   string,

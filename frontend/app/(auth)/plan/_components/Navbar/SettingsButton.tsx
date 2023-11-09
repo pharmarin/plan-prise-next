@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import {
   Dialog,
@@ -19,13 +18,16 @@ import {
 } from "@/components/ui/tooltip";
 import { TypographyH4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
-import { trpc } from "@/trpc/client";
+import { PlanPrisePosologies } from "@/types/plan";
+import { trpc } from "@/utils/api";
 import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
 
+import { PLAN_NEW } from "@plan-prise/api/constants";
+
 const posologies = Object.keys(
-  PP.Plan.PlanPrisePosologies,
-) as (keyof typeof PP.Plan.PlanPrisePosologies)[];
+  PlanPrisePosologies,
+) as (keyof typeof PlanPrisePosologies)[];
 
 const SettingsButton = () => {
   const planId = usePlanStore((state) => state.id);
@@ -95,7 +97,7 @@ const SettingsButton = () => {
                 className="flex items-center justify-between"
               >
                 <Label htmlFor={posologie}>
-                  {PP.Plan.PlanPrisePosologies[posologie]}
+                  {PlanPrisePosologies[posologie]}
                 </Label>
                 <Switch
                   checked={settings.posos?.[posologie]}

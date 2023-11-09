@@ -1,5 +1,6 @@
-import sendMail from "@/utils/mail";
 import { expect, test } from "@playwright/test";
+
+import sendMail from "@plan-prise/api/utils/mail";
 
 test.describe("registration", () => {
   test("should send mail without error", () => {

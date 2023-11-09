@@ -1,4 +1,3 @@
-import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import {
   Tooltip,
@@ -7,6 +6,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CheckCircle2, Loader2 } from "lucide-react";
+
+import { PLAN_NEW } from "@plan-prise/api/constants";
 
 const LoadingIndicator = () => {
   const isSaving = usePlanStore((state) => state.isSaving);

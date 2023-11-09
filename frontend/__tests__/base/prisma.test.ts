@@ -9,7 +9,7 @@ test.describe("database", () => {
 
   test("should query database successfully", async () => {
     await expect(prisma.$queryRaw`SELECT "success"`).resolves.toStrictEqual([
-      { ":vtg1 /* VARCHAR */": "success" },
+      { "'success'": "success" },
     ]);
   });
 

@@ -5,11 +5,12 @@ import Form from "@/components/forms/Form";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/client";
-import { MUTATION_SUCCESS } from "@/trpc/responses";
-import { updateUserPasswordSchema } from "@/validation/users";
+import { trpc } from "@/utils/api";
 import type { User } from "@prisma/client";
 import { Formik } from "formik";
+
+import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { updateUserPasswordSchema } from "@plan-prise/api/validation/users";
 
 const EditPassword: React.FC<
   { user: User } | { email: string; token: string }

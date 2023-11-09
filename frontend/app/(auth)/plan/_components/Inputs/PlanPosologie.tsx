@@ -3,6 +3,7 @@ import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PlanPrisePosologies } from "@/types/plan";
 import type { Medicament } from "@prisma/client";
 
 const PlanPosologie = ({
@@ -10,7 +11,7 @@ const PlanPosologie = ({
   name,
 }: {
   medicament: Medicament;
-  name: keyof typeof PP.Plan.PlanPrisePosologies;
+  name: keyof typeof PlanPrisePosologies;
 }) => {
   const data = usePlanStore(
     (state) => state.data?.[medicament.id]?.posologies?.[name],
@@ -19,7 +20,7 @@ const PlanPosologie = ({
 
   return (
     <FormItem className="w-full">
-      <Label>{PP.Plan.PlanPrisePosologies[name]}</Label>
+      <Label>{PlanPrisePosologies[name]}</Label>
       <Input
         onChange={(event) =>
           setData(

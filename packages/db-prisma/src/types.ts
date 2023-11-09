@@ -7,9 +7,8 @@ import type {
 } from "@prisma/client";
 
 /* eslint-disable @typescript-eslint/no-namespace */
-
 declare global {
-  namespace PP {
+  export namespace PP {
     namespace Plan {
       enum PlanPrisePosologies {
         "poso_lever" = "Lever",

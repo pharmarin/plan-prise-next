@@ -1,4 +1,4 @@
-export const PLAN_NEW = "PLAN_NEW";
+import type { PlanPrisePosologies } from "@/types/plan";
 
 export const PLAN_SETTINGS_DEFAULT: Required<PP.Plan.Settings> = {
   posos: {
@@ -14,7 +14,7 @@ export const PLAN_SETTINGS_DEFAULT: Required<PP.Plan.Settings> = {
 };
 
 export const PLAN_POSOLOGIE_COLOR: Record<
-  keyof typeof PP.Plan.PlanPrisePosologies,
+  keyof typeof PlanPrisePosologies,
   { header: string; body: string }
 > = {
   poso_lever: {

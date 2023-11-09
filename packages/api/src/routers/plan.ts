@@ -1,18 +1,18 @@
-import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
-import { MUTATION_SUCCESS } from "@/trpc/responses";
-import { authProcedure, router } from "@/trpc/trpc";
-import PP_Error from "@/utils/errors";
-import { planSettingsSchema } from "@/validation/plan";
 import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
+import { planSettingsSchema } from "../validation/plan";
+
+import PP_Error from "@plan-prise/errors";
+import { MUTATION_SUCCESS, PLAN_NEW } from "../constants";
+import { authProcedure, createTRPCRouter } from "../trpc";
 
 const addMedic = (medicId: string, medicsOrder: Plan["medicsOrder"]) => ({
   medics: { connect: { id: medicId } },
   medicsOrder: [...(Array.isArray(medicsOrder) ? medicsOrder : []), medicId],
 });
 
-const planRouter = router({
+const planRouter = createTRPCRouter({
   addMedic: authProcedure
     .input(
       z.object({
@@ -23,7 +23,7 @@ const planRouter = router({
     .mutation(async ({ input, ctx }) => {
       if (input.planId === PLAN_NEW) {
         const user = await ctx.prisma.user.update({
-          where: { id: ctx.user.id },
+          where: { id: ctx.session.user.id },
           data: {
             maxId: { increment: 1 },
           },
@@ -36,7 +36,7 @@ const planRouter = router({
             ...addMedic(input.medicId, []),
             user: {
               connect: {
-                id: ctx.user.id,
+                id: ctx.session.user.id,
               },
             },
           },
@@ -64,7 +64,7 @@ const planRouter = router({
         }
 
         await ctx.prisma.plan.update({
-          where: { id: input.planId, user: { id: ctx.user.id } },
+          where: { id: input.planId, user: { id: ctx.session.user.id } },
           data: addMedic(input.medicId, plan.medicsOrder),
         });
 
@@ -77,7 +77,7 @@ const planRouter = router({
       await ctx.prisma.plan.delete({
         where: {
           id: input,
-          user: { id: ctx.user.id },
+          user: { id: ctx.session.user.id },
         },
       });
 
@@ -89,7 +89,7 @@ const planRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const plan = await ctx.prisma.plan.findUniqueOrThrow({
-        where: { id: input.planId, user: { id: ctx.user.id } },
+        where: { id: input.planId, user: { id: ctx.session.user.id } },
         include: { medics: true },
       });
 
@@ -158,7 +158,7 @@ const planRouter = router({
       await ctx.prisma.plan.update({
         where: {
           id: input.planId,
-          user: { id: ctx.user.id },
+          user: { id: ctx.session.user.id },
         },
         data: {
           data: input.data,
@@ -173,7 +173,7 @@ const planRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       await ctx.prisma.plan.update({
-        where: { id: input.planId, user: { id: ctx.user.id } },
+        where: { id: input.planId, user: { id: ctx.session.user.id } },
         data: { settings: input.settings },
       });
 
@@ -184,7 +184,7 @@ const planRouter = router({
       where: {
         id: input,
         user: {
-          id: ctx.user.id,
+          id: ctx.session.user.id,
         },
       },
       include: {

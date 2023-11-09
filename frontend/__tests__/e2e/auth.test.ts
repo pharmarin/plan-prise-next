@@ -1,6 +1,7 @@
 import { test } from "@/__tests__/e2e/fixtures/auth.fixture";
-import errors from "@/utils/errors/errors.json";
 import { expect } from "@playwright/test";
+
+import errors from "@plan-prise/errors/errors.json";
 
 test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({
@@ -8,7 +9,9 @@ test.describe("auth", () => {
   }) => {
     await page.goto("/");
     await expect(page).toHaveURL(
-      `${process.env.PLAYWRIGHT_TEST_BASE_URL || "http://localhost:3000"}/login`
+      `${
+        process.env.PLAYWRIGHT_TEST_BASE_URL || "http://localhost:3000"
+      }/login`,
     );
   });
 
