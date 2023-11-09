@@ -1,4 +1,4 @@
-import { extractPosologie, parseData } from "@/app/(auth)/plan/_lib/functions";
+import { extractPosologie } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,7 @@ const PlanPosologie = ({
   name: keyof typeof PlanPrisePosologies;
 }) => {
   const data = usePlanStore(
-    (state) => parseData(state.data)?.[medicament.id]?.posologies?.[name],
+    (state) => state.data?.[medicament.id]?.posologies?.[name],
   );
   const setData = usePlanStore((state) => state.setData);
 

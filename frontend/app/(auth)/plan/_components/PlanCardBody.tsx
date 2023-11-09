@@ -6,14 +6,14 @@ import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
 import { extractPosologiesSettings } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { Label } from "@/components/ui/label";
-import type { MedicamentInclude } from "@/types/medicament";
-import type { PlanSettings } from "@/types/plan";
 import { ThermometerSnowflake } from "lucide-react";
 
-const PlanCardBody = ({ medicament }: { medicament: MedicamentInclude }) => {
-  const settings = usePlanStore(
-    (state) => (state.settings as unknown as PlanSettings)?.posos,
-  );
+const PlanCardBody = ({
+  medicament,
+}: {
+  medicament: PP.Medicament.Include;
+}) => {
+  const settings = usePlanStore((state) => state.settings?.posos);
 
   const posologies = extractPosologiesSettings(settings);
 

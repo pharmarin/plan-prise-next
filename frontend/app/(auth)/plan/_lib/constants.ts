@@ -1,8 +1,8 @@
-import type { PlanPrisePosologies, PlanSettings } from "@/types/plan";
+import type { PlanPrisePosologies } from "@/types/plan";
 
 export const PLAN_NEW = "PLAN_NEW";
 
-export const PLAN_SETTINGS_DEFAULT: PlanSettings = {
+export const PLAN_SETTINGS_DEFAULT: Required<PP.Plan.Settings> = {
   posos: {
     poso_lever: false,
     poso_matin: true,

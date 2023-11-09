@@ -27,6 +27,7 @@ const config = {
       "warn",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
+    "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
     "@typescript-eslint/no-misused-promises": [2, { checksVoidReturn: false }],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
   },

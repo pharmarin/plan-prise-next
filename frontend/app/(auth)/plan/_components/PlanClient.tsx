@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
@@ -9,10 +7,10 @@ import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/trpc/client";
-import type { MedicamentIdentifier } from "@/types/medicament";
-import type { PlanData, PlanInclude } from "@/types/plan";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
 
@@ -22,9 +20,9 @@ interface SelectValueType {
   denomination: string;
   principesActifs: string[];
   id: string;
-}
+};
 
-const PlanClient = ({ plan }: { plan: PlanInclude }) => {
+const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
   const router = useRouter();
   const { toast } = useToast();
@@ -89,7 +87,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
         if (previousState.id !== PLAN_NEW && newState.data !== null) {
           await saveDataDebounced({
             planId: newState.id ?? "",
-            data: newState.data as PlanData,
+            data: newState.data ?? {},
           });
         }
       },
@@ -136,7 +134,7 @@ const PlanClient = ({ plan }: { plan: PlanInclude }) => {
                     precautionId: null,
                   }
             }
-            removeMedic={async (medicament: MedicamentIdentifier) => {
+            removeMedic={async (medicament: PP.Medicament.Identifier) => {
               setRemovingMedics((state) => [
                 ...state,
                 {

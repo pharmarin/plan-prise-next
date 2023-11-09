@@ -1,10 +1,6 @@
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
 import { extractVoieAdministration } from "@/app/(auth)/plan/_lib/functions";
 import { Button } from "@/components/ui/button";
-import type {
-  MedicamentIdentifier,
-  MedicamentInclude,
-} from "@/types/medicament";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { twMerge } from "tailwind-merge";
 
@@ -12,8 +8,8 @@ const PlanCardHeader = ({
   medicament,
   removeMedic,
 }: {
-  medicament: MedicamentInclude;
-  removeMedic: (medicament: MedicamentIdentifier) => void;
+  medicament: PP.Medicament.Include;
+  removeMedic: (medicament: PP.Medicament.Identifier) => void;
 }) => {
   return (
     <PlanCardHeaderUI

@@ -117,7 +117,7 @@ const migrateMedicsNew = async () => {
                 .catch((duree) => [{ laboratoire: null, duree }])
             : undefined,
           commentaires: await parseJSONPromise(
-            ((med.commentaire as string) || "").replaceAll("\\'", "'"),
+            ((med.commentaire!) || "").replaceAll("\\'", "'"),
             true,
           )
             .then((json) => {

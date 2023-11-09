@@ -5,9 +5,9 @@ import Navigation from "@/components/navigation/Navigation";
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
 
-interface Props {
+type Props = {
   params: { id: string };
-}
+};
 
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();

@@ -20,7 +20,6 @@ import {
 import { TypographyH4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
-import type { PlanSettings } from "@/types/plan";
 import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
@@ -33,7 +32,7 @@ const SettingsButton = () => {
   const planId = usePlanStore((state) => state.id);
   const { settings, setSetting } = usePlanStore((state) => ({
     setSetting: state.setSetting,
-    settings: state.settings as unknown as PlanSettings,
+    settings: state.settings,
   }));
 
   const { mutateAsync: saveSettings } = trpc.plan.saveSettings.useMutation();
@@ -100,7 +99,7 @@ const SettingsButton = () => {
                   {PlanPrisePosologies[posologie]}
                 </Label>
                 <Switch
-                  checked={settings.posos[posologie]}
+                  checked={settings.posos?.[posologie]}
                   className="focus-visible:ring-0 focus-visible:ring-offset-0"
                   id={posologie}
                   onCheckedChange={(value) =>

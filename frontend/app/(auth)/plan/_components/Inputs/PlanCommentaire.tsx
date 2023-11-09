@@ -1,7 +1,4 @@
-import {
-  extractCommentaire,
-  parseData,
-} from "@/app/(auth)/plan/_lib/functions";
+import { extractCommentaire } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -17,8 +14,7 @@ const PlanCommentaire = ({
   medicament: Medicament;
 }) => {
   const data = usePlanStore(
-    (state) =>
-      parseData(state.data)?.[medicament.id]?.commentaires?.[commentaire.id],
+    (state) => state.data?.[medicament.id]?.commentaires?.[commentaire.id],
   );
   const setData = usePlanStore((state) => state.setData);
 
