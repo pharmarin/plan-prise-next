@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
-import { PLAN_NEW } from "@/app/(auth)/plan/_lib/constants";
 import Navigation from "@/components/navigation/Navigation";
+
+import { PLAN_NEW } from "@plan-prise/api/constants";
 
 const PlanNew = () => {
   const plan = useMemo(

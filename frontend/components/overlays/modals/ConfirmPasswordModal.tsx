@@ -6,10 +6,11 @@ import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
 import { Button } from "@/components/ui/button";
-import type { AppRouter } from "@/trpc/routers/app";
-import { passwordVerifySchema } from "@/validation/users";
 import type { TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
+
+import type { AppRouter } from "@plan-prise/api";
+import { passwordVerifySchema } from "@plan-prise/api/validation/users";
 
 const ConfirmPasswordModal: React.FC<{
   error?: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]> | null;

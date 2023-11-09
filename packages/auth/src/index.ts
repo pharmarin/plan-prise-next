@@ -12,6 +12,8 @@ import checkRecaptcha from "./lib/check-recaptcha";
 import { checkPassword } from "./lib/password-utils";
 import type { UserSafe, UserSession } from "./types";
 
+export type { Session } from "next-auth";
+
 declare module "next-auth" {
   interface Session {
     user: UserSession;

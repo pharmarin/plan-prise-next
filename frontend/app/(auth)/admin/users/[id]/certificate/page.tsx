@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/client";
+import { trpc } from "@/utils/api";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 import PP_Error from "@plan-prise/errors";

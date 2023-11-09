@@ -1,14 +1,11 @@
+import type { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { startCase, upperCase } from "lodash";
 import { revalidatePath } from "next/cache";
-import { MUTATION_SUCCESS } from "@/trpc/responses";
-import {
-  adminProcedure,
-  authProcedure,
-  guestProcedure,
-  router,
-} from "@/trpc/trpc";
-import { signJWT, verifyJWT } from "@/utils/json-web-token";
-import sendMail from "@/utils/mail";
-import getUrl from "@/utils/url";
+import { MUTATION_SUCCESS } from "../constants";
+import { signJWT, verifyJWT } from "../utils/json-web-token";
+import sendMail from "../utils/mail";
+import getUrl from "../utils/url";
 import {
   approveUserSchema,
   deleteUserSchema,
@@ -19,10 +16,7 @@ import {
   resetPasswordSchema,
   updateUserPasswordSchema,
   updateUserSchema,
-} from "@/validation/users";
-import type { User } from "@prisma/client";
-import { Prisma } from "@prisma/client";
-import { startCase, upperCase } from "lodash";
+} from "../validation/users";
 
 import { findOne } from "@plan-prise/api-pharmaciens";
 import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
@@ -31,6 +25,7 @@ import {
   hashPassword,
 } from "@plan-prise/auth/lib/password-utils";
 import PP_Error from "@plan-prise/errors";
+import { adminProcedure, authProcedure, createTRPCRouter, publicProcedure } from "../trpc";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -86,7 +81,7 @@ const formatLastName = (lastName: string) => upperCase(lastName);
 const formatDisplayName = (displayName?: string | null) =>
   displayName ? startCase(displayName.toLowerCase()) : null;
 
-const usersRouter = router({
+const usersRouter = createTRPCRouter({
   /**
    * Get all users
    *
@@ -149,7 +144,7 @@ const usersRouter = router({
   current: authProcedure.query(async ({ ctx }) =>
     excludePassword(
       await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: ctx.user.id },
+        where: { id: ctx.session.user.id },
       }),
     ),
   ),
@@ -171,7 +166,7 @@ const usersRouter = router({
   deleteCurrent: authProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.user.delete({
       where: {
-        id: ctx.user.id,
+        id: ctx.session.user.id,
       },
     });
   }),
@@ -208,7 +203,7 @@ const usersRouter = router({
    *
    * @throws Error on fail
    */
-  register: guestProcedure
+  register: publicProcedure
     .input(registerSchemaServer)
     .mutation(async ({ ctx, input }) => {
       const recaptcha = await checkRecaptcha(input.recaptcha || "");
@@ -262,7 +257,7 @@ const usersRouter = router({
 
           await sendMailApproved({ email: input.email, firstName, lastName });
 
-          await fetch(process.env.NTFY_ADMIN_URL || "", {
+          await fetch(process.env.NTFY_ADMIN_URL ?? "", {
             method: "POST",
             body: `${(
               await ctx.prisma.user.count({ where: { approvedAt: null } })
@@ -275,7 +270,7 @@ const usersRouter = router({
         } else {
           await sendMailRegistered({ email: input.email, firstName, lastName });
 
-          await fetch(process.env.NTFY_ADMIN_URL || "", {
+          await fetch(process.env.NTFY_ADMIN_URL ?? "", {
             method: "POST",
             body: `${(
               await ctx.prisma.user.count({ where: { approvedAt: null } })
@@ -306,7 +301,7 @@ const usersRouter = router({
    * @throws {PP_Error} If invalid token
    * @throws {PrismaError} If unknown User.id
    */
-  resetPassword: guestProcedure
+  resetPassword: publicProcedure
     .input(resetPasswordSchema)
     .mutation(async ({ ctx, input }) => {
       const { password, token } = input;
@@ -338,7 +333,7 @@ const usersRouter = router({
    *
    * @throws Error on fail
    */
-  sendPasswordResetLink: guestProcedure
+  sendPasswordResetLink: publicProcedure
     .input(forgotPasswordSchema)
     .mutation(async ({ ctx, input }) => {
       const recaptcha = await checkRecaptcha(input.recaptcha ?? "");
@@ -416,13 +411,13 @@ const usersRouter = router({
     .input(updateUserPasswordSchema)
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: ctx.user.id },
+        where: { id: ctx.session.user.id },
         select: { password: true },
       });
 
       if (await checkPassword(input.current_password, user.password)) {
         await ctx.prisma.user.update({
-          where: { id: ctx.user.id },
+          where: { id: ctx.session.user.id },
           data: { password: await hashPassword(input.password) },
         });
 

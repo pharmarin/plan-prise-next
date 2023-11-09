@@ -1,10 +1,10 @@
-import { signJWT } from "@/utils/json-web-token";
 import type { NextFetchEvent } from "next/server";
 import { NextResponse } from "next/server";
-
-import { NEXT_AUTH_PAGES } from "@plan-prise/auth/config";
 import type { NextRequestWithAuth } from "next-auth/middleware";
 import { withAuth } from "next-auth/middleware";
+
+import { signJWT } from "@plan-prise/api/utils/json-web-token";
+import { NEXT_AUTH_PAGES } from "@plan-prise/auth/config";
 
 const toLegacy = (path: string, destination?: string) =>
   process.env.BACKEND_URL + (destination ?? path);

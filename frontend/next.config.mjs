@@ -5,6 +5,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   transpilePackages: [
+    "@plan-prise/api",
     "@plan-prise/api-pharmaciens",
     "@plan-prise/auth",
     "@plan-prise/db-prisma",

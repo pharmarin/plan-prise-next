@@ -1,9 +1,9 @@
-import { authProcedure, router } from "@/trpc/trpc";
 import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
+import { authProcedure, createTRPCRouter } from "../trpc";
 
-const medicsRouter = router({
+const medicsRouter = createTRPCRouter({
   unique: authProcedure.input(z.string().cuid2()).query(({ input }) =>
     prisma.medicament.findUniqueOrThrow({
       where: { id: input },

@@ -7,7 +7,7 @@ import Logo from "@/components/navigation/Logo";
 import NavbarLink from "@/components/navigation/NavbarLink";
 import Dropdown from "@/components/overlays/Dropdown";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { trpc } from "@/trpc/client";
+import { trpc } from "@/utils/api";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";

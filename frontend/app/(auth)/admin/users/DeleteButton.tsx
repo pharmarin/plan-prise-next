@@ -1,6 +1,6 @@
 import Spinner from "@/components/icons/Spinner";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/client";
+import { trpc } from "@/utils/api";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
 import type { User } from "@plan-prise/db-prisma";

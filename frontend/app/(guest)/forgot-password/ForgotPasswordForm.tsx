@@ -5,12 +5,12 @@ import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/client";
-import { MUTATION_SUCCESS } from "@/trpc/responses";
-import { forgotPasswordSchema } from "@/validation/users";
+import { trpc } from "@/utils/api";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
+import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { forgotPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
 
 const ForgotPasswordForm = () => {

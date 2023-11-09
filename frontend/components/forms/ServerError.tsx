@@ -1,6 +1,6 @@
-import type { AppRouter } from "@/trpc/routers/app";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
+import type { AppRouter } from "@plan-prise/api";
 import { DEFAULT_ERROR } from "@plan-prise/errors";
 
 const ServerError: React.FC<{

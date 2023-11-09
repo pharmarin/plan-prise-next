@@ -7,11 +7,12 @@ import TextInput from "@/components/forms/inputs/TextInput";
 import ServerError from "@/components/forms/ServerError";
 import InfosModal from "@/components/overlays/modals/InfosModal";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/client";
-import { updateUserSchema } from "@/validation/users";
+import { trpc } from "@/utils/api";
 import type { User } from "@prisma/client";
 import { Formik } from "formik";
 import { twMerge } from "tailwind-merge";
+
+import { updateUserSchema } from "@plan-prise/api/validation/users";
 
 const EditInformations: React.FC<{
   user: User;
