@@ -1,16 +1,17 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
+import { useNavigation } from "@/components/NavigationContextProvider";
 import { Initials } from "@/components/icons/Initials";
 import Logo from "@/components/navigation/Logo";
 import NavbarLink from "@/components/navigation/NavbarLink";
-import { useNavigation } from "@/components/NavigationContextProvider";
 import Dropdown from "@/components/overlays/Dropdown";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { trpc } from "@/trpc/client";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
 import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {

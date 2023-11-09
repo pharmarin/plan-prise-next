@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
+import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +12,8 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2, Printer } from "lucide-react";
+import { useState } from "react";
+
 import { useSession } from "next-auth/react";
 
 const PrintButton = () => {

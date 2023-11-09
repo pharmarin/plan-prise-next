@@ -11,7 +11,7 @@
   "githubPullRequests.ignoredPullRequestBranches": ["master"],
   "tailwindCSS.experimental.configFile": "./config/tailwind/index.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": "./frontend/node_modules/typescript/lib",
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.preferences.autoImportFileExcludePatterns": [
     "next/router.d.ts",
     "next/dist/client/router.d.ts"

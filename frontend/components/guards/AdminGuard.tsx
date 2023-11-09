@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react";
-import { getServerSession } from "@/next-auth/get-session";
-import PP_Error from "@/utils/errors";
+
+import { getServerSession } from "@plan-prise/auth/get-session";
+import PP_Error from "@plan-prise/errors";
 
 const AdminGuard = async ({ children }: PropsWithChildren) => {
   const session = await getServerSession();

@@ -1,7 +1,8 @@
+import { signJWT } from "@/utils/json-web-token";
 import type { NextFetchEvent } from "next/server";
 import { NextResponse } from "next/server";
-import { NEXT_AUTH_PAGES } from "@/next-auth/config";
-import { signJWT } from "@/utils/json-web-token";
+
+import { NEXT_AUTH_PAGES } from "@plan-prise/auth/config";
 import type { NextRequestWithAuth } from "next-auth/middleware";
 import { withAuth } from "next-auth/middleware";
 

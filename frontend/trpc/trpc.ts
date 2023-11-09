@@ -1,7 +1,8 @@
 import type { ContextType } from "@/trpc/context";
-import PP_Error from "@/utils/errors";
 import { initTRPC } from "@trpc/server";
 import SuperJSON from "superjson";
+
+import PP_Error from "@plan-prise/errors";
 
 const tRPC = initTRPC.context<ContextType>().create({
   errorFormatter: ({ shape, error }) => {

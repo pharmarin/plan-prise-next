@@ -6,11 +6,8 @@ import {
   guestProcedure,
   router,
 } from "@/trpc/trpc";
-import checkRecaptcha from "@/utils/check-recaptcha";
-import PP_Error from "@/utils/errors";
 import { signJWT, verifyJWT } from "@/utils/json-web-token";
 import sendMail from "@/utils/mail";
-import { hashPassword } from "@/utils/password-utils";
 import getUrl from "@/utils/url";
 import {
   approveUserSchema,
@@ -25,10 +22,15 @@ import {
 } from "@/validation/users";
 import type { User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
-import bcrypt from "bcrypt";
 import { startCase, upperCase } from "lodash";
 
 import { findOne } from "@plan-prise/api-pharmaciens";
+import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
+import {
+  checkPassword,
+  hashPassword,
+} from "@plan-prise/auth/lib/password-utils";
+import PP_Error from "@plan-prise/errors";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -191,7 +193,7 @@ const usersRouter = router({
         select: { password: true },
       });
 
-      if (await bcrypt.compare(input.password, user.password)) {
+      if (await checkPassword(input.password, user.password)) {
         return MUTATION_SUCCESS;
       }
 
@@ -233,7 +235,7 @@ const usersRouter = router({
             student: input.student ?? false,
             certificate: input.certificate,
             rpps: input.rpps ? BigInt(input.rpps) : undefined,
-            password: await bcrypt.hash(input.password, 10),
+            password: await hashPassword(input.password),
           },
         });
       } catch (error) {
@@ -418,10 +420,10 @@ const usersRouter = router({
         select: { password: true },
       });
 
-      if (await bcrypt.compare(input.current_password, user.password)) {
+      if (await checkPassword(input.current_password, user.password)) {
         await ctx.prisma.user.update({
           where: { id: ctx.user.id },
-          data: { password: await bcrypt.hash(input.password, 10) },
+          data: { password: await hashPassword(input.password) },
         });
 
         return MUTATION_SUCCESS;
