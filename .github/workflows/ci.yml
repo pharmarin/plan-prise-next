@@ -39,19 +39,10 @@ jobs:
         run: pnpm install
 
       - name: Build, lint and type-check
-        run: pnpm turbo build lint format typecheck --filter=!@plan-prise/db-migration
+        run: pnpm turbo lint format typecheck --filter=!@plan-prise/db-migration
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-
-      - name: Archive build files
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: |
-            frontend/.next
-            !frontend/.next/cache
-          retention-days: 1
 
   base-test:
     runs-on: ubuntu-latest
@@ -86,22 +77,16 @@ jobs:
       - name: Install deps (with cache)
         run: pnpm install
 
-      - name: Download archived build
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: frontend/.next
-
       - name: Run tests
         run: pnpm test
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-
-      - name: Upload report
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: playwright-report
-          path: frontend/playwright-report/
-          retention-days: 30
+#
+#      - name: Upload report
+#        uses: actions/upload-artifact@v3
+#        if: failure()
+#        with:
+#          name: playwright-report
+#          path: frontend/playwright-report/
+#          retention-days: 30
