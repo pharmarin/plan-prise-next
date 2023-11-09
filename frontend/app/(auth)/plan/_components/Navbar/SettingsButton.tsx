@@ -20,12 +20,13 @@ import {
 import { TypographyH4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
+import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
 
 const posologies = Object.keys(
-  PP.Plan.PlanPrisePosologies,
-) as (keyof typeof PP.Plan.PlanPrisePosologies)[];
+  PlanPrisePosologies,
+) as (keyof typeof PlanPrisePosologies)[];
 
 const SettingsButton = () => {
   const planId = usePlanStore((state) => state.id);
@@ -95,7 +96,7 @@ const SettingsButton = () => {
                 className="flex items-center justify-between"
               >
                 <Label htmlFor={posologie}>
-                  {PP.Plan.PlanPrisePosologies[posologie]}
+                  {PlanPrisePosologies[posologie]}
                 </Label>
                 <Switch
                   checked={settings.posos?.[posologie]}

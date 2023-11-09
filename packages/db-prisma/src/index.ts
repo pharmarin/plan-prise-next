@@ -1,7 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { PrismaClient } from "@prisma/client";
 
-import "./types";
+export * from "./types";
 
 export * from "@prisma/client";
 

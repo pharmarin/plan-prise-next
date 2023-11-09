@@ -9,6 +9,7 @@ import {
   extractVoieAdministration,
 } from "@/app/(auth)/plan/_lib/functions";
 import { Cell, Header, Row, Table } from "@/components/PDF";
+import { PlanPrisePosologies } from "@/types/plan";
 import type { UserSession } from "@/types/user";
 import PP_Error from "@/utils/errors";
 import { isCuid } from "@paralleldrive/cuid2";
@@ -105,8 +106,8 @@ const PrintPDF = ({
                 }`}
               >
                 {
-                  PP.Plan.PlanPrisePosologies[
-                    posologie as keyof typeof PP.Plan.PlanPrisePosologies
+                  PlanPrisePosologies[
+                    posologie as keyof typeof PlanPrisePosologies
                   ]
                 }
               </Header>
@@ -228,7 +229,7 @@ const PrintPDF = ({
                     ]?.body} p-0`}
                   >
                     {rowData?.posologies?.[
-                      posologie as keyof typeof PP.Plan.PlanPrisePosologies
+                      posologie as keyof typeof PlanPrisePosologies
                     ] ?? ""}
                   </Cell>
                 ))}
