@@ -4,9 +4,7 @@
   "version": "0.1.0",
   "exports": {
     ".": "./index.ts",
-    "./exports": "./src/exports.ts",
-    "./lib/*": "./src/lib/*",
-    "./get-session": "./src/get-session"
+    "./*": "./src/*"
   },
   "typesVersions": {
     "*": {

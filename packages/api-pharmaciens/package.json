@@ -13,7 +13,10 @@
     "unzipper": "0.10.14"
   },
   "scripts": {
+    "clean": "rm -rf .turbo node_modules",
     "download": "ts-node download.ts",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   }
 }
