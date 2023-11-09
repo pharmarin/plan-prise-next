@@ -1,0 +1,42 @@
+{
+  "name": "@plan-prise/db-drizzle",
+  "private": true,
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@planetscale/database": "1.11.0",
+    "drizzle-orm": "0.28.6"
+  },
+  "devDependencies": {
+    "@plan-prise/eslint-config": "0.2.0",
+    "@plan-prise/prettier-config": "0.1.0",
+    "@plan-prise/tsconfig": "^0.1.0",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "7.3.0",
+    "drizzle-kit": "0.19.13",
+    "eslint": "8.53.0",
+    "typescript": "5.2.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@plan-prise/eslint-config/base"
+    ]
+  },
+  "prettier": "@plan-prise/prettier-config"
+}

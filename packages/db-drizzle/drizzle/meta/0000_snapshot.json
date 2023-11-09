@@ -1,0 +1,948 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "_MedicamentToPlan": {
+      "name": "_MedicamentToPlan",
+      "columns": {
+        "A": {
+          "autoincrement": false,
+          "name": "A",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "B": {
+          "autoincrement": false,
+          "name": "B",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "_MedicamentToPlan_B_index": {
+          "name": "_MedicamentToPlan_B_index",
+          "columns": [
+            "B"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "_MedicamentToPlan_AB_unique": {
+          "name": "_MedicamentToPlan_AB_unique",
+          "columns": [
+            "A",
+            "B"
+          ]
+        }
+      }
+    },
+    "_MedicamentToPrincipeActif": {
+      "name": "_MedicamentToPrincipeActif",
+      "columns": {
+        "A": {
+          "autoincrement": false,
+          "name": "A",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "B": {
+          "autoincrement": false,
+          "name": "B",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "_MedicamentToPrincipeActif_B_index": {
+          "name": "_MedicamentToPrincipeActif_B_index",
+          "columns": [
+            "B"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "_MedicamentToPrincipeActif_AB_unique": {
+          "name": "_MedicamentToPrincipeActif_AB_unique",
+          "columns": [
+            "A",
+            "B"
+          ]
+        }
+      }
+    },
+    "accounts": {
+      "name": "accounts",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "autoincrement": false,
+          "name": "userId",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "autoincrement": false,
+          "name": "type",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "autoincrement": false,
+          "name": "provider",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "autoincrement": false,
+          "name": "providerAccountId",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "autoincrement": false,
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token": {
+          "autoincrement": false,
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "autoincrement": false,
+          "name": "expires_at",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token_type": {
+          "autoincrement": false,
+          "name": "token_type",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "autoincrement": false,
+          "name": "scope",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "autoincrement": false,
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_state": {
+          "autoincrement": false,
+          "name": "session_state",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "accounts_id": {
+          "name": "accounts_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {
+        "accounts_userId_idx": {
+          "name": "accounts_userId_idx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "accounts_provider_providerAccountId_key": {
+          "name": "accounts_provider_providerAccountId_key",
+          "columns": [
+            "provider",
+            "providerAccountId"
+          ]
+        }
+      }
+    },
+    "calendriers_old": {
+      "name": "calendriers_old",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user": {
+          "autoincrement": false,
+          "name": "user",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "autoincrement": false,
+          "name": "data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TIME": {
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "name": "TIME",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "calendriers_old_id": {
+          "name": "calendriers_old_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "commentaires": {
+      "name": "commentaires",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "voieAdministration": {
+          "autoincrement": false,
+          "name": "voieAdministration",
+          "type": "enum('ORALE','CUTANEE','AURICULAIRE','NASALE','INHALEE','VAGINALE','OCULAIRE','RECTALE','SOUS_CUTANEE','INTRA_MUSCULAIRE','INTRA_VEINEUX','INTRA_URETRALE','AUTRE')",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "population": {
+          "autoincrement": false,
+          "name": "population",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "texte": {
+          "autoincrement": false,
+          "name": "texte",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "medicamentId": {
+          "autoincrement": false,
+          "name": "medicamentId",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "commentaires_id": {
+          "name": "commentaires_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {
+        "commentaires_medicamentId_idx": {
+          "name": "commentaires_medicamentId_idx",
+          "columns": [
+            "medicamentId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "medicaments": {
+      "name": "medicaments",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "denomination": {
+          "autoincrement": false,
+          "name": "denomination",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "indications": {
+          "autoincrement": false,
+          "name": "indications",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "conservationFrigo": {
+          "autoincrement": false,
+          "name": "conservationFrigo",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "conservationDuree": {
+          "autoincrement": false,
+          "name": "conservationDuree",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "voiesAdministration": {
+          "autoincrement": false,
+          "name": "voiesAdministration",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "medics_simpleId": {
+          "autoincrement": false,
+          "name": "medics_simpleId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "precautionId": {
+          "autoincrement": false,
+          "name": "precautionId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "precaution_old": {
+          "autoincrement": false,
+          "name": "precaution_old",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "medicaments_id": {
+          "name": "medicaments_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {
+        "medicaments_medics_simpleId_idx": {
+          "name": "medicaments_medics_simpleId_idx",
+          "columns": [
+            "medics_simpleId"
+          ],
+          "isUnique": false
+        },
+        "medicaments_precautionId_idx": {
+          "name": "medicaments_precautionId_idx",
+          "columns": [
+            "precautionId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "medicaments_denomination_key": {
+          "name": "medicaments_denomination_key",
+          "columns": [
+            "denomination"
+          ]
+        }
+      }
+    },
+    "medics_simple": {
+      "name": "medics_simple",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nomMedicament": {
+          "autoincrement": false,
+          "name": "nomMedicament",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nomGenerique": {
+          "autoincrement": false,
+          "name": "nomGenerique",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "indication": {
+          "autoincrement": false,
+          "name": "indication",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frigo": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "frigo",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dureeConservation": {
+          "autoincrement": false,
+          "name": "dureeConservation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "voieAdministration": {
+          "autoincrement": false,
+          "name": "voieAdministration",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "matin": {
+          "autoincrement": false,
+          "name": "matin",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "midi": {
+          "autoincrement": false,
+          "name": "midi",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "soir": {
+          "autoincrement": false,
+          "name": "soir",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coucher": {
+          "autoincrement": false,
+          "name": "coucher",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "commentaire": {
+          "autoincrement": false,
+          "name": "commentaire",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "modifie": {
+          "default": "'NOW()'",
+          "autoincrement": false,
+          "name": "modifie",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "precaution": {
+          "autoincrement": false,
+          "name": "precaution",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "qui": {
+          "autoincrement": false,
+          "name": "qui",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "relecture": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "relecture",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stat": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "stat",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "medics_simple_id": {
+          "name": "medics_simple_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "plans": {
+      "name": "plans",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "medicsOrder": {
+          "autoincrement": false,
+          "name": "medicsOrder",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "autoincrement": false,
+          "name": "data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "settings": {
+          "autoincrement": false,
+          "name": "settings",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "userId": {
+          "autoincrement": false,
+          "name": "userId",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "displayId": {
+          "autoincrement": false,
+          "name": "displayId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "plans_id": {
+          "name": "plans_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {
+        "plans_userId_idx": {
+          "name": "plans_userId_idx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "plans_old": {
+      "name": "plans_old",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user": {
+          "autoincrement": false,
+          "name": "user",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "autoincrement": false,
+          "name": "data",
+          "type": "mediumtext",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "options": {
+          "autoincrement": false,
+          "name": "options",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TIME": {
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "name": "TIME",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "plans_old_id": {
+          "name": "plans_old_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "precautions": {
+      "name": "precautions",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mot_cle": {
+          "autoincrement": false,
+          "name": "mot_cle",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "titre": {
+          "autoincrement": false,
+          "name": "titre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contenu": {
+          "autoincrement": false,
+          "name": "contenu",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "couleur": {
+          "autoincrement": false,
+          "name": "couleur",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "precautions_id": {
+          "name": "precautions_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "precautions_mot_cle_key": {
+          "name": "precautions_mot_cle_key",
+          "columns": [
+            "mot_cle"
+          ]
+        }
+      }
+    },
+    "principes_actifs": {
+      "name": "principes_actifs",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "denomination": {
+          "autoincrement": false,
+          "name": "denomination",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "principes_actifs_id": {
+          "name": "principes_actifs_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "principes_actifs_denomination_key": {
+          "name": "principes_actifs_denomination_key",
+          "columns": [
+            "denomination"
+          ]
+        }
+      }
+    },
+    "sessions": {
+      "name": "sessions",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sessionToken": {
+          "autoincrement": false,
+          "name": "sessionToken",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "autoincrement": false,
+          "name": "userId",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "autoincrement": false,
+          "name": "expires",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "sessions_id": {
+          "name": "sessions_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {
+        "sessions_userId_idx": {
+          "name": "sessions_userId_idx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "sessions_sessionToken_key": {
+          "name": "sessions_sessionToken_key",
+          "columns": [
+            "sessionToken"
+          ]
+        }
+      }
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "admin": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "admin",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "displayName": {
+          "autoincrement": false,
+          "name": "displayName",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student": {
+          "autoincrement": false,
+          "name": "student",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "certificate": {
+          "autoincrement": false,
+          "name": "certificate",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rpps": {
+          "autoincrement": false,
+          "name": "rpps",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "autoincrement": false,
+          "name": "password",
+          "type": "varchar(191)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "default": "CURRENT_TIMESTAMP(3)",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedAt": {
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approvedAt": {
+          "autoincrement": false,
+          "name": "approvedAt",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maxId": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "maxId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "users_id": {
+          "name": "users_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "users_email_key": {
+          "name": "users_email_key",
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
