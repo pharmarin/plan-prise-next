@@ -415,14 +415,17 @@ importers:
 
   packages/auth:
     dependencies:
+      '@next-auth/prisma-adapter':
+        specifier: 1.0.7
+        version: 1.0.7(next-auth@4.24.4)
       '@plan-prise/db-prisma':
         specifier: '*'
         version: link:../db-prisma
       '@plan-prise/errors':
-        specifier: ^0.1.0
+        specifier: 0.1.0
         version: link:../errors
       bcrypt:
-        specifier: ^5.1.1
+        specifier: 5.1.1
         version: 5.1.1
       next:
         specifier: 14.0.1
@@ -441,13 +444,13 @@ importers:
         specifier: 0.2.0
         version: link:../../config/eslint
       '@plan-prise/prettier-config':
-        specifier: ^0.1.0
+        specifier: 0.1.0
         version: link:../../config/prettier
       '@plan-prise/tsconfig':
-        specifier: ^0.1.0
+        specifier: 0.1.0
         version: link:../../config/typescript
       '@types/bcrypt':
-        specifier: ^5.0.2
+        specifier: 5.0.2
         version: 5.0.2
       eslint:
         specifier: 8.53.0
@@ -1117,6 +1120,15 @@ packages:
       tar: 6.1.14
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@next-auth/prisma-adapter@1.0.7(next-auth@4.24.4):
+    resolution: {integrity: sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==}
+    peerDependencies:
+      '@prisma/client': '>=2.26.0 || >=3'
+      next-auth: ^4
+    dependencies:
+      next-auth: 4.24.4(next@14.0.1)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/env@14.0.1:

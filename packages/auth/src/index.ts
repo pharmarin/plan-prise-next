@@ -127,8 +127,4 @@ export const nextAuthOptions: NextAuthOptions = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-export const {
-  handlers: { GET, POST },
-  auth,
-  CSRF_experimental,
-} = NextAuth(nextAuthOptions);
+export const handler = NextAuth(nextAuthOptions);
