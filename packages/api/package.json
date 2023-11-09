@@ -28,6 +28,8 @@
     "@plan-prise/db-prisma": "*",
     "@plan-prise/errors": "*",
     "@trpc/server": "10.43.2",
+    "jose": "4.15.4",
+    "mailersend": "2.2.0",
     "superjson": "1.13.3",
     "yup": "1.3.2",
     "yup-locales": "1.2.20",
