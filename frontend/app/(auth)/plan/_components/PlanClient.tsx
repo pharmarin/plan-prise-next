@@ -11,11 +11,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/trpc/client";
 import type { MedicamentIdentifier } from "@/types/medicament";
 import type { PlanData, PlanInclude } from "@/types/plan";
-import errors from "@/utils/errors/errors.json";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
+
+import errors from "@plan-prise/errors/errors.json";
 
 interface SelectValueType {
   denomination: string;

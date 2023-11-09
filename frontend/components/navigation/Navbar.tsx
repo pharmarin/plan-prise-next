@@ -11,7 +11,8 @@ import Dropdown from "@/components/overlays/Dropdown";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { trpc } from "@/trpc/client";
 import { Loader2 } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+
+import { signOut, useSession } from "@plan-prise/auth/exports";
 
 const Navbar = () => {
   const pathname = usePathname();

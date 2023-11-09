@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { MUTATION_SUCCESS } from "@/trpc/responses";
 import type { User } from "@prisma/client";
-import { signOut } from "next-auth/react";
+
+import { signOut } from "@plan-prise/auth/exports";
 
 const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
   const [showForm, setShowForm] = useState(false);

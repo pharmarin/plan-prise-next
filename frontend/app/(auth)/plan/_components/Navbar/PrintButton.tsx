@@ -13,7 +13,8 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2, Printer } from "lucide-react";
-import { useSession } from "next-auth/react";
+
+import { useSession } from "@plan-prise/auth/exports";
 
 const PrintButton = () => {
   const [isPrinting, setIsPrinting] = useState(false);

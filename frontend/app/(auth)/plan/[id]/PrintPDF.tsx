@@ -12,13 +12,14 @@ import {
 import { Cell, Header, Row, Table } from "@/components/PDF";
 import type { PlanInclude, PlanSettings } from "@/types/plan";
 import { PlanPrisePosologies } from "@/types/plan";
-import type { UserSession } from "@/types/user";
-import PP_Error from "@/utils/errors";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution, Prisma } from "@prisma/client";
 import { Document, Page, Text, View } from "@react-pdf/renderer";
 import Html from "react-pdf-html";
 import { createTw } from "react-pdf-tailwind";
+
+import type { UserSession } from "@plan-prise/auth/types";
+import PP_Error from "@plan-prise/errors";
 
 const PrintPDF = ({
   plan,

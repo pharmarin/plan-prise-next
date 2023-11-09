@@ -1,14 +1,31 @@
-import { NEXT_AUTH_PAGES } from "@/next-auth/config";
-import type { UserSafe } from "@/types/user";
-import checkRecaptcha from "@/utils/check-recaptcha";
-import PP_Error from "@/utils/errors";
-import { checkPassword } from "@/utils/password-utils";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import type { PrismaClient } from "@prisma/client";
+import type { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import type { NextAuthOptions } from "node_modules/next-auth";
 
 import prisma from "@plan-prise/db-prisma";
+import PP_Error from "@plan-prise/errors";
+
+import { NEXT_AUTH_PAGES } from "./config";
+import checkRecaptcha from "./lib/check-recaptcha";
+import { checkPassword } from "./lib/password-utils";
+import type { UserSafe, UserSession } from "./types";
+
+declare module "next-auth" {
+  interface Session {
+    user: UserSession;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface User extends UserSafe {}
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    user: UserSession;
+  }
+}
 
 export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient),
@@ -75,10 +92,10 @@ export const nextAuthOptions: NextAuthOptions = {
 
         if (
           user &&
-          checkPassword(
+          (await checkPassword(
             credentials.password,
             user.password.replace(/^\$2y/, "$2a"),
-          )
+          ))
         ) {
           const { password: _password, ...sessionUser } = user;
 
@@ -108,3 +125,10 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   session: { strategy: "jwt" },
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+export const {
+  handlers: { GET, POST },
+  auth,
+  CSRF_experimental,
+} = NextAuth(nextAuthOptions);

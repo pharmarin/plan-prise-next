@@ -1,8 +1,8 @@
 import Link from "@/components/navigation/Link";
 import Navigation from "@/components/navigation/Navigation";
-import { getServerSession } from "@/next-auth/get-session";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
+import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
 
 const PlansIndex = async () => {

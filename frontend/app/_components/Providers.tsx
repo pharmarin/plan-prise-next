@@ -8,9 +8,10 @@ import { trpc } from "@/trpc/client";
 import getUrl from "@/utils/url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
-import { SessionProvider } from "next-auth/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
+
+import { SessionProvider } from "@plan-prise/auth/exports";
 
 export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { getServerSession } from "@/next-auth/get-session";
 
+import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
 
 const AuthGuard = async ({

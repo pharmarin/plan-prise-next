@@ -7,7 +7,8 @@ import type {
   MedicamentIdentifier,
   MedicamentInclude,
 } from "@/types/medicament";
-import PP_Error from "@/utils/errors";
+
+import PP_Error from "@plan-prise/errors";
 
 const PlanCard = ({
   medicamentData,

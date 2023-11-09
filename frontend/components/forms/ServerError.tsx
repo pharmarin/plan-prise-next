@@ -1,6 +1,7 @@
 import type { AppRouter } from "@/trpc/routers/app";
-import { DEFAULT_ERROR } from "@/utils/errors";
 import type { TRPCClientErrorLike } from "@trpc/client";
+
+import { DEFAULT_ERROR } from "@plan-prise/errors";
 
 const ServerError: React.FC<{
   error: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]>;
