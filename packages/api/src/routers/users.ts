@@ -1,8 +1,23 @@
+import { revalidatePath } from "next/cache";
 import type { User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 import { startCase, upperCase } from "lodash";
-import { revalidatePath } from "next/cache";
+
+import { findOne } from "@plan-prise/api-pharmaciens";
+import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
+import {
+  checkPassword,
+  hashPassword,
+} from "@plan-prise/auth/lib/password-utils";
+import PP_Error from "@plan-prise/errors";
+
 import { MUTATION_SUCCESS } from "../constants";
+import {
+  adminProcedure,
+  authProcedure,
+  createTRPCRouter,
+  publicProcedure,
+} from "../trpc";
 import { signJWT, verifyJWT } from "../utils/json-web-token";
 import sendMail from "../utils/mail";
 import getUrl from "../utils/url";
@@ -17,15 +32,6 @@ import {
   updateUserPasswordSchema,
   updateUserSchema,
 } from "../validation/users";
-
-import { findOne } from "@plan-prise/api-pharmaciens";
-import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
-import {
-  checkPassword,
-  hashPassword,
-} from "@plan-prise/auth/lib/password-utils";
-import PP_Error from "@plan-prise/errors";
-import { adminProcedure, authProcedure, createTRPCRouter, publicProcedure } from "../trpc";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -383,7 +389,7 @@ const usersRouter = createTRPCRouter({
     .mutation(async ({ ctx, input: { id, ...input } }) => {
       const user = excludePassword(
         await ctx.prisma.user.update({
-          where: { id },
+          where: { id: id as string },
           data: {
             ...input,
             firstName: formatFirstName(input.firstName),

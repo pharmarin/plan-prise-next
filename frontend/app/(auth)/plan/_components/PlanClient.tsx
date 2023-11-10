@@ -16,11 +16,11 @@ import ReactSelect from "react-select";
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
 
-interface SelectValueType {
+type SelectValueType = {
   denomination: string;
   principesActifs: string[];
   id: string;
-}
+};
 
 const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
