@@ -1,11 +1,12 @@
 import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
-import { planSettingsSchema } from "../validation/plan";
 
 import PP_Error from "@plan-prise/errors";
+
 import { MUTATION_SUCCESS, PLAN_NEW } from "../constants";
 import { authProcedure, createTRPCRouter } from "../trpc";
+import { planSettingsSchema } from "../validation/plan";
 
 const addMedic = (medicId: string, medicsOrder: Plan["medicsOrder"]) => ({
   medics: { connect: { id: medicId } },

@@ -8,7 +8,7 @@ export type CalendarsTable = {
     data: string;
     TIME: string;
   }[];
-}
+};
 
 export type MedicsTable = {
   type: "table";
@@ -33,7 +33,7 @@ export type MedicsTable = {
     relecture?: number;
     stat: number;
   }[];
-}
+};
 
 export type PlansTable = {
   type: "table";
@@ -46,7 +46,7 @@ export type PlansTable = {
     options: string;
     TIME: string;
   }[];
-}
+};
 
 export type PrecautionsTable = {
   type: "table";
@@ -59,7 +59,7 @@ export type PrecautionsTable = {
     contenu: string;
     couleur: string;
   }[];
-}
+};
 
 export type UsersTable = {
   type: "table";
@@ -79,7 +79,7 @@ export type UsersTable = {
     status: string;
     inscription: string;
   }[];
-}
+};
 
 export type MySQLExport<DatabaseName = "plandepr_medics"> = (
   | { type: "header"; version: string; comment: string }

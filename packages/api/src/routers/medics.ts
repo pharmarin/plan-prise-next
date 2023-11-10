@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
+
 import { authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
