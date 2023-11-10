@@ -555,7 +555,7 @@ importers:
         specifier: 5.5.2
         version: 5.5.2
       prisma-json-types-generator:
-        specifier: ^3.0.3
+        specifier: 3.0.3
         version: 3.0.3(prisma@5.5.2)(typescript@5.2.2)
       typescript:
         specifier: 5.2.2
@@ -1139,6 +1139,7 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2010,6 +2011,8 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/image@2.2.2:
@@ -2018,6 +2021,8 @@ packages:
       '@babel/runtime': 7.23.2
       '@react-pdf/png-js': 2.2.0
       cross-fetch: 3.1.8
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/layout@3.6.3:
@@ -2035,6 +2040,8 @@ packages:
       cross-fetch: 3.1.8
       emoji-regex: 10.2.1
       queue: 6.0.2
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.0.2:
@@ -2091,6 +2098,8 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.1.8:
@@ -2139,7 +2148,7 @@ packages:
     resolution: {integrity: sha512-5lxnyLEYFskErRPenYItLRSge5DjrJngYKdVjRSrWfza9G6KkgHEXi0vUZiyUeMU5JfXH1YnvXZzSp8ul88o2Q==}
     dependencies:
       legacy-swc-helpers: /@swc/helpers@0.4.14
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /@swc/helpers@0.5.2:
@@ -2723,7 +2732,7 @@ packages:
     resolution: {integrity: sha512-xcLxITLe2HYa1cnYnwCjkOO1PqUHQpozB8x9AR0OgWN2woOBi5kSDVxKfd0b7sb1hw5qFeJhXm9H1nu3xSfLeQ==}
     engines: {node: '>=10'}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /aria-query@5.3.0:
@@ -2911,6 +2920,7 @@ packages:
       '@mapbox/node-pre-gyp': 1.0.11
       node-addon-api: 5.1.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -3075,6 +3085,7 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -3333,6 +3344,8 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -4293,6 +4306,7 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -4981,6 +4995,8 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -5257,6 +5273,7 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -5541,6 +5558,8 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
@@ -5973,6 +5992,7 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6352,6 +6372,7 @@ packages:
       '@react-pdf/renderer': 3.1.14(react@18.2.0)
       tailwindcss: 3.3.5
     transitivePeerDependencies:
+      - encoding
       - react
       - ts-node
     dev: false
@@ -6378,6 +6399,7 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6394,7 +6416,7 @@ packages:
       '@types/react': 18.2.37
       react: 18.2.0
       react-style-singleton: 2.2.1(@types/react@18.2.37)(react@18.2.0)
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /react-remove-scroll@2.5.5(@types/react@18.2.37)(react@18.2.0):
@@ -6411,7 +6433,7 @@ packages:
       react: 18.2.0
       react-remove-scroll-bar: 2.3.4(@types/react@18.2.37)(react@18.2.0)
       react-style-singleton: 2.2.1(@types/react@18.2.37)(react@18.2.0)
-      tslib: 2.5.0
+      tslib: 2.6.2
       use-callback-ref: 1.3.0(@types/react@18.2.37)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.37)(react@18.2.0)
     dev: false
@@ -6451,7 +6473,7 @@ packages:
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 18.2.0
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /react-textarea-autosize@8.5.3(@types/react@18.2.37)(react@18.2.0):
@@ -6677,7 +6699,7 @@ packages:
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /safe-array-concat@1.0.1:
@@ -7497,7 +7519,7 @@ packages:
     dependencies:
       '@types/react': 18.2.37
       react: 18.2.0
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /use-composed-ref@1.3.0(react@18.2.0):
@@ -7548,7 +7570,7 @@ packages:
       '@types/react': 18.2.37
       detect-node-es: 1.1.0
       react: 18.2.0
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /use-sync-external-store@1.2.0(react@18.2.0):
