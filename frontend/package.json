@@ -73,7 +73,7 @@
     "zustand": "4.4.6"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.2.0",
+    "@faker-js/faker": "8.3.1",
     "@next/env": "14.0.2",
     "@paralleldrive/cuid2": "2.2.2",
     "@playwright/test": "1.39.0",
