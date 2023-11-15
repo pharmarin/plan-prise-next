@@ -166,13 +166,16 @@ importers:
         specifier: '*'
         version: link:../packages/api-pharmaciens
       '@plan-prise/auth':
-        specifier: ^0.1.0
+        specifier: 0.1.0
         version: link:../packages/auth
+      '@plan-prise/db-drizzle':
+        specifier: '*'
+        version: link:../packages/db-drizzle
       '@plan-prise/db-prisma':
         specifier: '*'
         version: link:../packages/db-prisma
       '@plan-prise/errors':
-        specifier: ^0.1.0
+        specifier: 0.1.0
         version: link:../packages/errors
       '@plan-prise/eslint-config':
         specifier: 0.2.0

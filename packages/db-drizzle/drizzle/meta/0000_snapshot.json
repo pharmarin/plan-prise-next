@@ -26,9 +26,7 @@
       "indexes": {
         "_MedicamentToPlan_B_index": {
           "name": "_MedicamentToPlan_B_index",
-          "columns": [
-            "B"
-          ],
+          "columns": ["B"],
           "isUnique": false
         }
       },
@@ -36,10 +34,7 @@
       "uniqueConstraints": {
         "_MedicamentToPlan_AB_unique": {
           "name": "_MedicamentToPlan_AB_unique",
-          "columns": [
-            "A",
-            "B"
-          ]
+          "columns": ["A", "B"]
         }
       }
     },
@@ -65,9 +60,7 @@
       "indexes": {
         "_MedicamentToPrincipeActif_B_index": {
           "name": "_MedicamentToPrincipeActif_B_index",
-          "columns": [
-            "B"
-          ],
+          "columns": ["B"],
           "isUnique": false
         }
       },
@@ -75,10 +68,7 @@
       "uniqueConstraints": {
         "_MedicamentToPrincipeActif_AB_unique": {
           "name": "_MedicamentToPrincipeActif_AB_unique",
-          "columns": [
-            "A",
-            "B"
-          ]
+          "columns": ["A", "B"]
         }
       }
     },
@@ -173,17 +163,13 @@
       "compositePrimaryKeys": {
         "accounts_id": {
           "name": "accounts_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {
         "accounts_userId_idx": {
           "name": "accounts_userId_idx",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": false
         }
       },
@@ -191,10 +177,7 @@
       "uniqueConstraints": {
         "accounts_provider_providerAccountId_key": {
           "name": "accounts_provider_providerAccountId_key",
-          "columns": [
-            "provider",
-            "providerAccountId"
-          ]
+          "columns": ["provider", "providerAccountId"]
         }
       }
     },
@@ -234,9 +217,7 @@
       "compositePrimaryKeys": {
         "calendriers_old_id": {
           "name": "calendriers_old_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {},
@@ -285,17 +266,13 @@
       "compositePrimaryKeys": {
         "commentaires_id": {
           "name": "commentaires_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {
         "commentaires_medicamentId_idx": {
           "name": "commentaires_medicamentId_idx",
-          "columns": [
-            "medicamentId"
-          ],
+          "columns": ["medicamentId"],
           "isUnique": false
         }
       },
@@ -372,24 +349,18 @@
       "compositePrimaryKeys": {
         "medicaments_id": {
           "name": "medicaments_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {
         "medicaments_medics_simpleId_idx": {
           "name": "medicaments_medics_simpleId_idx",
-          "columns": [
-            "medics_simpleId"
-          ],
+          "columns": ["medics_simpleId"],
           "isUnique": false
         },
         "medicaments_precautionId_idx": {
           "name": "medicaments_precautionId_idx",
-          "columns": [
-            "precautionId"
-          ],
+          "columns": ["precautionId"],
           "isUnique": false
         }
       },
@@ -397,9 +368,7 @@
       "uniqueConstraints": {
         "medicaments_denomination_key": {
           "name": "medicaments_denomination_key",
-          "columns": [
-            "denomination"
-          ]
+          "columns": ["denomination"]
         }
       }
     },
@@ -533,9 +502,7 @@
       "compositePrimaryKeys": {
         "medics_simple_id": {
           "name": "medics_simple_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {},
@@ -591,17 +558,13 @@
       "compositePrimaryKeys": {
         "plans_id": {
           "name": "plans_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {
         "plans_userId_idx": {
           "name": "plans_userId_idx",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": false
         }
       },
@@ -651,9 +614,7 @@
       "compositePrimaryKeys": {
         "plans_old_id": {
           "name": "plans_old_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {},
@@ -702,9 +663,7 @@
       "compositePrimaryKeys": {
         "precautions_id": {
           "name": "precautions_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {},
@@ -712,9 +671,7 @@
       "uniqueConstraints": {
         "precautions_mot_cle_key": {
           "name": "precautions_mot_cle_key",
-          "columns": [
-            "mot_cle"
-          ]
+          "columns": ["mot_cle"]
         }
       }
     },
@@ -739,9 +696,7 @@
       "compositePrimaryKeys": {
         "principes_actifs_id": {
           "name": "principes_actifs_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {},
@@ -749,9 +704,7 @@
       "uniqueConstraints": {
         "principes_actifs_denomination_key": {
           "name": "principes_actifs_denomination_key",
-          "columns": [
-            "denomination"
-          ]
+          "columns": ["denomination"]
         }
       }
     },
@@ -790,17 +743,13 @@
       "compositePrimaryKeys": {
         "sessions_id": {
           "name": "sessions_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {
         "sessions_userId_idx": {
           "name": "sessions_userId_idx",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": false
         }
       },
@@ -808,9 +757,7 @@
       "uniqueConstraints": {
         "sessions_sessionToken_key": {
           "name": "sessions_sessionToken_key",
-          "columns": [
-            "sessionToken"
-          ]
+          "columns": ["sessionToken"]
         }
       }
     },
@@ -922,9 +869,7 @@
       "compositePrimaryKeys": {
         "users_id": {
           "name": "users_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "indexes": {},
@@ -932,9 +877,7 @@
       "uniqueConstraints": {
         "users_email_key": {
           "name": "users_email_key",
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }
