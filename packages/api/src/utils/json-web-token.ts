@@ -1,7 +1,7 @@
-import { jwtVerify, SignJWT  } from "jose";
-import type {JWTPayload} from "jose";
+import { jwtVerify, SignJWT } from "jose";
+import type { JWTPayload } from "jose";
 
-const secret = new TextEncoder().encode(process.env.CROSS_SITE_SECRET || "");
+const secret = new TextEncoder().encode(process.env.CROSS_SITE_SECRET ?? "");
 
 export const signJWT = async (payload: JWTPayload, expiration = "2h") =>
   await new SignJWT(payload)

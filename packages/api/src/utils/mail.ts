@@ -1,12 +1,12 @@
 import { EmailParams, MailerSend, Recipient, Sender } from "mailersend";
 
 const mailerSend = new MailerSend({
-  apiKey: process.env.MAILERSEND_API_KEY || "",
+  apiKey: process.env.MAILERSEND_API_KEY ?? "",
 });
 
 const sentFrom = new Sender(
-  process.env.MAIL_FROM_ADDRESS || "",
-  process.env.APP_NAME
+  process.env.MAIL_FROM_ADDRESS ?? "",
+  process.env.APP_NAME,
 );
 
 const sendMail = async (
@@ -16,7 +16,7 @@ const sendMail = async (
   },
   subject: string,
   templateId?: string,
-  variables?: Record<string, string>
+  variables?: Record<string, string>,
 ) => {
   const emailParams = new EmailParams()
     .setFrom(sentFrom)

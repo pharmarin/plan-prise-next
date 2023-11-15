@@ -1,4 +1,5 @@
 import * as yup from "yup";
+
 import setLanguage from "./locale";
 
 setLanguage();
