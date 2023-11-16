@@ -20,7 +20,7 @@
     {
       "packagePatterns": [".*"],
       "updateTypes": ["major"],
-      "branchName": "renovate/major-{{{branchTopic}}}"
+      "additionalBranchPrefix": "major-"
     }
   ]
 }
