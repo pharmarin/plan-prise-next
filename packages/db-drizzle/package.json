@@ -13,8 +13,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@planetscale/database": "1.11.0",
-    "drizzle-orm": "0.28.6"
+    "drizzle-orm": "0.28.6",
+    "mysql2": "^3.6.3"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",

@@ -1,5 +1,5 @@
-import { Client } from "@planetscale/database";
-import { drizzle } from "drizzle-orm/planetscale-serverless";
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 
 import * as auth from "./schema/auth";
 import * as calendrier from "./schema/calendrier";
@@ -10,9 +10,8 @@ export const schema = { ...auth, ...medicament, ...plan, ...calendrier };
 
 export * from "drizzle-orm";
 
-export const db = drizzle(
-  new Client({
-    url: process.env.DATABASE_URL,
-  }).connection(),
-  { schema },
-);
+const connection = await mysql.createConnection({
+  uri: process.env.DATABASE_URL,
+});
+
+export const db = drizzle(connection, { mode: "default", schema: schema });
