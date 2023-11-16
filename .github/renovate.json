@@ -5,7 +5,6 @@
     ":automergeBranch",
     ":automergeMinor",
     ":automergeTypes",
-    ":onlyNpm",
     ":pinVersions",
     ":prConcurrentLimitNone",
     ":separateMajorReleases"
