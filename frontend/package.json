@@ -54,7 +54,7 @@
     "immer": "10.0.3",
     "lodash": "4.17.21",
     "lucide-react": "0.292.0",
-    "next": "14.0.2",
+    "next": "14.0.3",
     "next-auth": "4.24.5",
     "next-superjson-plugin": "0.5.10",
     "react": "18.2.0",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.3.1",
-    "@next/env": "14.0.2",
+    "@next/env": "14.0.3",
     "@paralleldrive/cuid2": "2.2.2",
     "@playwright/test": "1.39.0",
     "@types/lodash": "4.14.201",
