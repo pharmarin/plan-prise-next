@@ -4,6 +4,7 @@ import type { PrismaClient } from "@prisma/client";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
@@ -29,6 +30,12 @@ declare module "next-auth/jwt" {
     user: UserSession;
   }
 }
+
+const credentialsSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8).max(20),
+  recaptcha: z.string(),
+});
 
 export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient),
@@ -66,15 +73,9 @@ export const nextAuthOptions: NextAuthOptions = {
   providers: [
     Credentials({
       authorize: async (credentials): Promise<UserSafe | null> => {
-        if (
-          !credentials?.email ||
-          !credentials.password ||
-          !credentials.recaptcha
-        ) {
-          return null;
-        }
+        const credentialsParsed = credentialsSchema.parse(credentials);
 
-        const recaptcha = await checkRecaptcha(credentials.recaptcha);
+        const recaptcha = await checkRecaptcha(credentialsParsed.recaptcha);
 
         if (!recaptcha) {
           throw new PP_Error("RECAPTCHA_LOADING_ERROR");
@@ -86,7 +87,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
         // Add logic here to look up the user from the credentials supplied
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: credentialsParsed.email },
         });
 
         if (user && !user.approvedAt) {
@@ -96,7 +97,7 @@ export const nextAuthOptions: NextAuthOptions = {
         if (
           user &&
           (await checkPassword(
-            credentials.password,
+            credentialsParsed.password,
             user.password.replace(/^\$2y/, "$2a"),
           ))
         ) {

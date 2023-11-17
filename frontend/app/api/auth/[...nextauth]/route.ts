@@ -1,4 +1,1 @@
-import { handler } from "@plan-prise/auth";
-
-export { handler as GET, handler as POST };
-
+export { GET, POST } from "@plan-prise/auth";
