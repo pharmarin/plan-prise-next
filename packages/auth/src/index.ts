@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import type { PrismaClient } from "@prisma/client";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
+import type { Adapter } from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 
+import { db } from "@plan-prise/db-drizzle";
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
@@ -25,6 +26,11 @@ declare module "next-auth" {
   interface User extends UserSafe {}
 }
 
+declare module "@auth/core" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface User extends UserSafe {}
+}
+
 declare module "next-auth/jwt" {
   interface JWT {
     user: UserSession;
@@ -38,7 +44,7 @@ const credentialsSchema = z.object({
 });
 
 export const nextAuthOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma as PrismaClient),
+  adapter: DrizzleAdapter(db) as Adapter,
   callbacks: {
     jwt: ({ token, user }) => {
       if (user?.approvedAt) {
