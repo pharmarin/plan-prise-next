@@ -21,8 +21,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@trpc/client": "10.43.3",
-    "@trpc/server": "10.43.3"
+    "@trpc/client": "10.43.4",
+    "@trpc/server": "10.43.4"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",
