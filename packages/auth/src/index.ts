@@ -48,32 +48,29 @@ export const nextAuthOptions: NextAuthOptions = {
   callbacks: {
     jwt: ({ token, user }) => {
       if (user?.approvedAt) {
-        if (!token.user) {
-          token.user = {
-            id: user.id,
-            admin: user.admin,
-            displayName: user.displayName,
-            lastName: user.lastName,
-            firstName: user.firstName,
-          };
-        }
+        token.user = {
+          id: user.id,
+          admin: user.admin,
+          displayName: user.displayName,
+          lastName: user.lastName,
+          firstName: user.firstName,
+        };
       }
 
       return token;
     },
-    session: ({ session, user, token }) => {
-      if (!user && !token?.user) {
-        return session;
-      }
-
-      session.user.id = token?.user?.id ?? user.id;
-      session.user.admin = token?.user?.admin ?? user.admin;
-      session.user.displayName = token?.user?.displayName ?? user.displayName;
-      session.user.firstName = token?.user?.firstName ?? user.firstName;
-      session.user.lastName = token?.user?.lastName ?? user.lastName;
-
-      return session;
-    },
+    session: ({ session, user, token }) => ({
+      ...session,
+      user: token?.user
+        ? token.user
+        : {
+            id: user.id,
+            admin: user.admin,
+            displayName: user.displayName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+          },
+    }),
   },
   pages: NEXT_AUTH_PAGES,
   providers: [
@@ -88,6 +85,7 @@ export const nextAuthOptions: NextAuthOptions = {
         }
 
         if (recaptcha <= 0.5) {
+          console.error("Recaptcha result too low: ", recaptcha);
           throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
         }
 

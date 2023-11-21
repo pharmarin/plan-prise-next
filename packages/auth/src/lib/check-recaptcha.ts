@@ -12,7 +12,10 @@ const checkRecaptcha = async (
       })
         .then((reCaptchaRes) => reCaptchaRes.json())
         .then((reCaptchaRes) => reCaptchaRes?.score as number | undefined)
-        .catch(() => undefined);
+        .catch((error) => {
+          console.error("Error resolving captcha: ", error);
+          return undefined;
+        });
 };
 
 export default checkRecaptcha;
