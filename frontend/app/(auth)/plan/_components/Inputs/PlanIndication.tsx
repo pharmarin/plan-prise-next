@@ -40,7 +40,7 @@ const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
           onChange={(event) =>
             setData(`${medicament.id}.indication`, event.currentTarget.value)
           }
-          value={extracted[0]}
+          value={extracted[0] ?? ""}
         />
       ) : (
         <Select
