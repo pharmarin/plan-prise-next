@@ -39,7 +39,6 @@ const PlanCard = ({
   }
 
   if (!medicamentData && !medicament && !isLoading) {
-    console.error(medicamentData, medicament, isLoading);
     throw new PP_Error("MEDICAMENT_LOADING_ERROR");
   }
 
