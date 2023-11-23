@@ -1,3 +1,4 @@
+import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
@@ -41,7 +42,7 @@ const medicsRouter = createTRPCRouter({
         : [],
     ),
   findPrecautionsByMedicId: authProcedure
-    .input(z.array(z.string().cuid2()).optional())
+    .input(z.array(z.string()).optional())
     .query(({ ctx, input }) => {
       if (!input) {
         return [];
@@ -51,7 +52,7 @@ const medicsRouter = createTRPCRouter({
         where: {
           medicaments: {
             some: {
-              OR: input.map((id) => ({ id })),
+              OR: input.filter((id) => isCuid(id)).map((id) => ({ id })),
             },
           },
         },
