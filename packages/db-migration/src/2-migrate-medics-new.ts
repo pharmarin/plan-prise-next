@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { SingleBar } from "cli-progress";
 import { trim } from "lodash";
 
-import type {
-  MedicamentConservationDuree,
-  medics_simple,
-} from "@plan-prise/db-prisma";
+import type { medics_simple } from "@plan-prise/db-prisma";
 import prisma, { Prisma, VoieAdministration } from "@plan-prise/db-prisma";
 
 /*
@@ -91,9 +90,9 @@ const migrateMedicsNew = async () => {
             connect: { id: med.id },
           },
           denomination: trim(med.nomMedicament),
-          indications: trim(med.indication || "").split(" OU "),
+          indications: trim(med.indication ?? "").split(" OU "),
           principesActifs: {
-            connectOrCreate: trim(med.nomGenerique || "")
+            connectOrCreate: trim(med.nomGenerique ?? "")
               .split(" + ")
               .map((principeActif) => ({
                 where: { denomination: principeActif },
@@ -109,7 +108,7 @@ const migrateMedicsNew = async () => {
                     return Object.entries(json).map(([laboratoire, duree]) => ({
                       laboratoire,
                       duree,
-                    })) as MedicamentConservationDuree;
+                    })) as PP.Medicament.ConservationDuree;
                   } else {
                     console.error("Wrong format received");
                     process.exit(1);
@@ -158,7 +157,11 @@ const migrateMedicsNew = async () => {
               console.log(med.commentaire?.split("{"));
               process.exit(1);
             }),
-          precaution: med.precaution,
+          precaution: med.precaution
+            ? {
+                connect: { mot_cle: med.precaution },
+              }
+            : undefined,
         },
       });
     } catch (error) {

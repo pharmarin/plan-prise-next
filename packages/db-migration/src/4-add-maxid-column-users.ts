@@ -20,7 +20,7 @@ export const addMaxIdColumn = async () => {
     });
     await prisma.user.update({
       where: { id: user.id },
-      data: { maxId: maxId._max.id || undefined },
+      data: { maxId: maxId._max.id ?? undefined },
     });
 
     progressBar.increment();

@@ -1,41 +1,49 @@
 import prisma from "@plan-prise/db-prisma";
+
 import {
   migrateCalendars,
   migrateMedics,
   migratePlans,
   migratePrecautions,
   migrateUsers,
-} from "@plan-prise/db-prisma/migration/1-migrate-old-db";
-import migrateMedicsNew from "@plan-prise/db-prisma/migration/2-migrate-medics-new";
-import { migratePlanNew } from "@plan-prise/db-prisma/migration/3-migrate-plans";
-import { addMaxIdColumn } from "@plan-prise/db-prisma/migration/4-add-maxid-column-users";
-import { migrateRenamePrecautions } from "@plan-prise/db-prisma/migration/5-rename-precautions";
-import { migrateMedicamentPrecautions } from "@plan-prise/db-prisma/migration/6-migrate-precautions";
+} from "./1-migrate-old-db";
+import migrateMedicsNew from "./2-migrate-medics-new";
+import { migratePlanNew } from "./3-migrate-plans";
+import { addMaxIdColumn } from "./4-add-maxid-column-users";
+import { migrateRenamePrecautions } from "./5-rename-precautions";
+import { migrateMedicamentPrecautions } from "./6-migrate-precautions";
 
 const seeder = async () => {
   switch (process.argv?.[2]) {
-    case "1":
+    case "1": {
       const users = await migrateUsers();
       await migrateMedics();
       await migratePrecautions();
       await migrateCalendars(users);
       await migratePlans(users);
       process.exit();
+      break;
+    }
     case "2":
       await migrateMedicsNew();
       process.exit();
+      break;
     case "3":
       await migratePlanNew();
       process.exit();
+      break;
     case "4":
       await addMaxIdColumn();
       process.exit();
+      break;
     case "5":
       await migrateRenamePrecautions();
       process.exit();
+      break;
     case "6":
       await migrateMedicamentPrecautions();
       process.exit();
+      break;
     default:
       console.info("Vous devez fournir au moins un argument");
       process.exit(1);

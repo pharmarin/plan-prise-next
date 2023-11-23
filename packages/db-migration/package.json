@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "exports": {
-    ".": "./index.ts"
+    ".": "./index.ts",
+    "./src/*": "./src/*"
   },
   "typesVersions": {
     "*": {
@@ -17,7 +18,7 @@
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "migrate": "ts-node ./prisma/migration/index.ts",
+    "migrate": "ts-node ./index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
