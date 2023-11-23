@@ -57,7 +57,7 @@ const PlanCardHeader = ({
             !medicament && "h-4 w-1/4 animate-pulse rounded bg-gray-300",
           )}
         >
-          {medicament?.voiesAdministration &&
+          {medicament?.voiesAdministration.length > 0 &&
             `Voie 
           ${extractVoieAdministration(medicament).join(" ou ")}`}
         </small>
