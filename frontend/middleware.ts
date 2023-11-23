@@ -34,26 +34,25 @@ export const middleware = (
   request: NextRequestWithAuth,
   event: NextFetchEvent,
 ) => {
-  const legacyUrl = toLegacy(request.nextUrl.pathname) + request.nextUrl.search;
+  const pathname = request.nextUrl.pathname;
+  const legacyUrl = toLegacy(pathname) + request.nextUrl.search;
 
   if (
-    request.nextUrl.pathname.startsWith("/ajax") ||
-    request.nextUrl.pathname.startsWith("/calendrier")
+    process.env.MAINTENANCE_MODE === "true" &&
+    !pathname.startsWith("/_next")
   ) {
+    return NextResponse.rewrite(new URL("/maintenance", request.url));
+  }
+
+  if (pathname.startsWith("/ajax") || pathname.startsWith("/calendrier")) {
     return withAuthMiddleware(request, event);
-  } else {
+  } else if (
+    pathname.startsWith("/css") ||
+    pathname.startsWith("/fonts") ||
+    pathname.startsWith("/js") ||
+    pathname.startsWith("/img") ||
+    pathname.startsWith("/files")
+  ) {
     return NextResponse.rewrite(legacyUrl);
   }
-};
-
-export const config = {
-  matcher: [
-    "/css/:css*",
-    "/fonts/:font*",
-    "/js/:js*",
-    "/img/:img*",
-    "/files/:file*",
-    "/ajax/:file*",
-    "/calendrier/:file*",
-  ],
 };
