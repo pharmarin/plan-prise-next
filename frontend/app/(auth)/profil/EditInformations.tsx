@@ -1,33 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Form from "@/components/forms/Form";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import TextInput from "@/components/forms/inputs/TextInput";
 import ServerError from "@/components/forms/ServerError";
 import InfosModal from "@/components/overlays/modals/InfosModal";
-import { trpc } from "@/trpc/client";
-import { updateUserSchema } from "@/validation/users";
-import { type User } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/utils/api";
+import type { User } from "@prisma/client";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+
+import { updateUserSchema } from "@plan-prise/api/validation/users";
 
 const EditInformations: React.FC<{
   user: User;
 }> = ({ user }) => {
   const [showModal, setShowModal] = useState<true | false | undefined>(
-    undefined
+    undefined,
   );
 
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
   const { error, mutateAsync } = trpc.users.update.useMutation();
 
   useEffect(() => {
     if (showModal === undefined && user) {
       if (
-        (user.firstName || "").length > 0 &&
-        (user.lastName || "").length > 0
+        (user.firstName ?? "").length > 0 &&
+        (user.lastName ?? "").length > 0
       ) {
         setShowModal(false);
       } else {
@@ -41,12 +42,12 @@ const EditInformations: React.FC<{
   }
 
   const initialValues = {
-    displayName: user.displayName || "",
-    email: user.email || "",
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    rpps: user.rpps?.toString() || "",
-    student: user.student || false,
+    displayName: user.displayName ?? "",
+    email: user.email ?? "",
+    firstName: user.firstName ?? "",
+    lastName: user.lastName ?? "",
+    rpps: user.rpps?.toString() ?? "",
+    student: user.student ?? false,
   };
 
   return (
@@ -66,13 +67,13 @@ const EditInformations: React.FC<{
         }
         footer={
           <Button
-            className="w-full sm:mt-0 sm:ml-3 sm:w-auto"
+            className="w-full sm:ml-3 sm:mt-0 sm:w-auto"
             onClick={() => setShowModal(false)}
           >
             Mettre à jour mes informations
           </Button>
         }
-        show={showModal || false}
+        show={showModal ?? false}
         title="Information importante"
         toggle={() => setShowModal(!showModal)}
       />
@@ -116,8 +117,8 @@ const EditInformations: React.FC<{
             {values.student && (
               <Button
                 className={twMerge("mt-2")}
-                color="link"
                 onClick={() => setFieldValue("student", false)}
+                variant="link"
               >
                 Modifier en compte pharmacien
               </Button>

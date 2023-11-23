@@ -1,20 +1,21 @@
 "use client";
 
+import { useState } from "react";
+import type { Route } from "next";
+import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@/components/forms/Form";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import Link from "@/components/navigation/Link";
-import type { AppRouter } from "@/trpc/routers/app";
-import PP_Error from "@/utils/errors";
-import { loginSchema } from "@/validation/users";
+import { Button } from "@/components/ui/button";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import { Formik } from "formik";
-import type { Route } from "next";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
+import type { AppRouter } from "@plan-prise/api";
+import { loginSchema } from "@plan-prise/api/validation/users";
+import PP_Error from "@plan-prise/errors";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -55,8 +56,8 @@ const LoginForm = () => {
               new PP_Error(
                 signInResponse?.error === "CredentialsSignin"
                   ? "USER_LOGIN_ERROR"
-                  : "SERVER_ERROR"
-              ).toTRPCError()
+                  : "SERVER_ERROR",
+              ).toTRPCError(),
             );
           }
         }}
@@ -96,10 +97,10 @@ const LoginForm = () => {
 
             <Button
               className="mt-4"
-              color="gradient"
               disabled={"email" in errors || "password" in errors}
               loading={isSubmitting}
               type="submit"
+              variant="gradient"
             >
               Se connecter
             </Button>

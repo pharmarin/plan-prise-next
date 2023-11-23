@@ -1,12 +1,12 @@
 "use client";
-// Because of the use of tRPC (useMutation)
 
-import Button from "@/components/forms/inputs/Button";
 import Spinner from "@/components/icons/Spinner";
-import { trpc } from "@/trpc/client";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/utils/api";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { type User } from "next-auth";
 import React from "react";
+
+import type { User } from "@plan-prise/db-prisma";
 
 const ApproveButton: React.FC<{
   user: Partial<User> & { id: User["id"] };
@@ -16,7 +16,6 @@ const ApproveButton: React.FC<{
 
   return (
     <Button
-      color="primary"
       disabled={isLoading}
       onClick={async () => {
         try {
@@ -24,7 +23,7 @@ const ApproveButton: React.FC<{
           onSuccess();
         } catch {
           console.error(
-            "Une erreur est survenue lors de l'approbation de l'utilisateur"
+            "Une erreur est survenue lors de l'approbation de l'utilisateur",
           );
         }
       }}

@@ -1,1 +1,0 @@
-export const MUTATION_SUCCESS = "MUTATION_SUCCESS";

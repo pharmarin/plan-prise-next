@@ -1,20 +1,7 @@
 {
+  "extends": "@plan-prise/tsconfig/base.json",
   "compilerOptions": {
-    "allowJs": true,
     "baseUrl": ".",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
     "paths": {
       "@/*": ["./*"]
     },
@@ -23,18 +10,8 @@
         "name": "next"
       }
     ],
-    "target": "es2017",
-    "types": ["node"]
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "include": [
-    "next-env.d.ts",
-    ".eslintrc.js",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "/Users/Marin/Sites/plan-prise/client/.next/types/**/*.ts",
-    "next-auth/index",
-    "__tests__"
-  ],
-  "exclude": ["node_modules", "./prisma/migration"]
+  "include": [".", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

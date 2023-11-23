@@ -2,15 +2,16 @@
 
 import Form from "@/components/forms/Form";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
-import { trpc } from "@/trpc/client";
-import { MUTATION_SUCCESS } from "@/trpc/responses";
-import PP_Error from "@/utils/errors";
-import { forgotPasswordSchema } from "@/validation/users";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/utils/api";
 import { Formik } from "formik";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
+import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { forgotPasswordSchema } from "@plan-prise/api/validation/users";
+import PP_Error from "@plan-prise/errors";
 
 const ForgotPasswordForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -73,10 +74,10 @@ const ForgotPasswordForm = () => {
 
           <Button
             className="mt-4 w-full"
-            color="gradient"
             disabled={"email" in errors}
             loading={isSubmitting}
             type="submit"
+            variant="gradient"
           >
             Envoyer le mail de réinitialisation
           </Button>

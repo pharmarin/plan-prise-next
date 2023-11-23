@@ -1,15 +1,16 @@
+import React from "react";
 import Form from "@/components/forms/Form";
-import Button from "@/components/forms/inputs/Button";
 import FormikField from "@/components/forms/inputs/FormikField";
 import ServerError from "@/components/forms/ServerError";
 import Modal from "@/components/overlays/modals/Modal";
 import ModalContent from "@/components/overlays/modals/ModalContent";
 import ModalFooter from "@/components/overlays/modals/ModalFooter";
-import { type AppRouter } from "@/trpc/routers/app";
-import { passwordVerifySchema } from "@/validation/users";
-import { type TRPCClientErrorLike } from "@trpc/react-query";
+import { Button } from "@/components/ui/button";
+import type { TRPCClientErrorLike } from "@trpc/react-query";
 import { Formik } from "formik";
-import React from "react";
+
+import type { AppRouter } from "@plan-prise/api";
+import { passwordVerifySchema } from "@plan-prise/api/validation/users";
 
 const ConfirmPasswordModal: React.FC<{
   error?: TRPCClientErrorLike<AppRouter["users"]["passwordVerify"]> | null;
@@ -38,7 +39,7 @@ const ConfirmPasswordModal: React.FC<{
                   Une fois la procédure amorcée, toutes les données rattachées à
                   votre compte seront définitivement supprimées.
                 </p>
-                <p className="text-red-600">
+                <p className="text-red-500">
                   Aucune annulation n&apos;est possible après avoir confirmé la
                   suppression de votre compte.
                 </p>
@@ -56,10 +57,14 @@ const ConfirmPasswordModal: React.FC<{
               </div>
             </ModalContent>
             <ModalFooter>
-              <Button color="red" loading={isSubmitting} type="submit">
+              <Button
+                loading={isSubmitting}
+                type="submit"
+                variant="destructive"
+              >
                 Confirmer
               </Button>
-              <Button color="white" onClick={onCancel}>
+              <Button onClick={onCancel} variant="outline">
                 Annuler
               </Button>
             </ModalFooter>

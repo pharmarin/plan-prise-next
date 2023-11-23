@@ -1,5 +1,19 @@
 {
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+  "eslint.workingDirectories": [
+    { "pattern": "apps/*/" },
+    { "pattern": "packages/*/" },
+    { "pattern": "config/*/" }
+  ],
+  "githubPullRequests.ignoredPullRequestBranches": ["master"],
+  "tailwindCSS.experimental.configFile": "./config/tailwind/index.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.inlayHints.propertyDeclarationTypes.enabled": false,
-  "typescript.tsdk": "./frontend/node_modules/typescript/lib"
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "next/router.d.ts",
+    "next/dist/client/router.d.ts"
+  ]
 }

@@ -40,18 +40,6 @@ Route::middleware("token")->group(function () {
     include LEGACY_PATH . "/ajax/" . $file;
   });
 
-  Route::get("/plan/{file?}", function ($file = "index.php") {
-    if (in_array($file, ["select2.css", "edit.js", "select.js", "load.js"])) {
-      return Response::file(LEGACY_PATH . "/plan/" . $file);
-    }
-
-    include LEGACY_PATH . "/plan/" . $file;
-  });
-
-  Route::post("/plan/{file?}", function ($file = "index.php") {
-    include LEGACY_PATH . "/plan/" . $file;
-  })->withoutMiddleware(VerifyCsrfToken::class);
-
   Route::get("/calendrier/{file?}", function ($file = "index.php") {
     include LEGACY_PATH . "/calendrier/" . $file;
   });

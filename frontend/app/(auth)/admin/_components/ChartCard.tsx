@@ -1,6 +1,7 @@
 import Card from "@/components/Card";
 import Chart from "@/components/Chart";
-import prisma from "@/prisma";
+
+import prisma from "@plan-prise/db-prisma";
 
 const ChartCard = async ({ type }: { type: "users" | "plans" }) => {
   const data: { month: number; count: bigint }[] =

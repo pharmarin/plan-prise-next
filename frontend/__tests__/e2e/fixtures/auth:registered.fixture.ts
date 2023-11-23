@@ -1,13 +1,11 @@
-import {
-  test as auth,
-  type FakeUser,
-} from "@/__tests__/e2e/fixtures/auth.fixture";
+import type { FakeUser } from "@/__tests__/e2e/fixtures/auth.fixture";
+import { test as auth } from "@/__tests__/e2e/fixtures/auth.fixture";
 import { RegisterPage } from "@/__tests__/e2e/pages/auth/register.page";
 
-type ApprovedFixtures = {
+interface ApprovedFixtures {
   registerPage: RegisterPage;
   registeredUser: FakeUser;
-};
+}
 
 const test = auth.extend<ApprovedFixtures>({
   registerPage: async ({ page }, use) => {

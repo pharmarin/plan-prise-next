@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@/trpc/client";
+import { trpc } from "@/utils/api";
 
 const StatusPage = () => {
   const guestQuery = trpc.tests.guestQuery.useQuery();

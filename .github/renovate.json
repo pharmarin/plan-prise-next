@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":automergeBranch",
+    ":automergeMinor",
+    ":automergeTypes",
+    ":pinVersions",
+    ":prConcurrentLimitNone",
+    ":separateMajorReleases"
+  ],
+  "baseBranches": ["master"],
+  "enabledManagers": ["npm"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^@plan-prise/"],
+      "enabled": false
+    },
+    {
+      "packagePatterns": [".*"],
+      "updateTypes": ["major"],
+      "additionalBranchPrefix": "major-"
+    }
+  ]
+}

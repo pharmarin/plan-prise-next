@@ -1,9 +1,10 @@
+import { notFound } from "next/navigation";
 import LinkExpired from "@/app/(guest)/password-reset/LinkExpired";
 import PasswordResetForm from "@/app/(guest)/password-reset/PasswordResetForm";
 import FormSubmitSuccess from "@/components/forms/FormSubmitSuccess";
 import Link from "@/components/navigation/Link";
-import { verifyJWT } from "@/utils/json-web-token";
-import { notFound } from "next/navigation";
+
+import { verifyJWT } from "@plan-prise/api/utils/json-web-token";
 
 const PasswordReset = async ({
   searchParams,

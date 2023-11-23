@@ -1,5 +1,7 @@
 "use client";
 
+import { useMemo, useState } from "react";
+import Link from "next/link";
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import DeleteButton from "@/app/(auth)/admin/users/DeleteButton";
 import TextInput from "@/components/forms/inputs/TextInput";
@@ -14,13 +16,13 @@ import TableFooter from "@/components/table/TableFooter";
 import TableHead from "@/components/table/TableHead";
 import TableHeadCell from "@/components/table/TableHeadCell";
 import TableRow from "@/components/table/TableRow";
-import { trpc } from "@/trpc/client";
-import { type RouterOutputs } from "@/trpc/types";
+import { trpc } from "@/utils/api";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { rankItem } from "@tanstack/match-sorter-utils";
+import type { ColumnFiltersState, FilterFn } from "@tanstack/react-table";
 import {
   createColumnHelper,
   flexRender,
@@ -28,20 +30,20 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-  type ColumnFiltersState,
-  type FilterFn,
 } from "@tanstack/react-table";
 import debounce from "lodash/debounce";
 import startCase from "lodash/startCase";
 import upperCase from "lodash/upperCase";
-import Link from "next/link";
-import { useMemo, useState } from "react";
+
+import type { RouterOutputs } from "@plan-prise/api";
 
 type User = RouterOutputs["users"]["all"][0];
+type FilterState = "all" | "pending";
 
-const filters: {
-  [key: string]: { label: string; filter: ColumnFiltersState };
-} = {
+const filters: Record<
+  FilterState,
+  { label: string; filter: ColumnFiltersState }
+> = {
   all: { label: "Tous les utilisateurs", filter: [] },
   pending: {
     label: "Utilisateurs à valider",
@@ -51,6 +53,7 @@ const filters: {
 
 const fuzzyFilter: FilterFn<User> = (row, columnId, value, addMeta) => {
   // Rank the item
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const itemRank = rankItem(row.getValue(columnId), value);
 
   // Store the itemRank info
@@ -68,13 +71,11 @@ const UsersTable = () => {
     {
       initialData: [],
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   const columnHelper = createColumnHelper<User>();
-  const [columnFilter, setColumnFilter] = useState<keyof typeof filters>(
-    Object.keys(filters)[1]
-  );
+  const [columnFilter, setColumnFilter] = useState<FilterState>("pending");
   const [globalFilter, setGlobalFilter] = useState("");
 
   const setGlobalFilterDebounced = debounce((query: string) => {
@@ -84,15 +85,15 @@ const UsersTable = () => {
   const columns = useMemo(
     () => [
       columnHelper.accessor("lastName", {
-        cell: (props) => upperCase(props.getValue() || ""),
+        cell: (props) => upperCase(props.getValue() ?? ""),
         header: "Nom",
       }),
       columnHelper.accessor("firstName", {
-        cell: (props) => startCase(props.getValue()?.toLowerCase() || ""),
+        cell: (props) => startCase(props.getValue()?.toLowerCase() ?? ""),
         header: "Prénom",
       }),
       columnHelper.accessor("displayName", {
-        cell: (props) => startCase(props.getValue()?.toLowerCase() || ""),
+        cell: (props) => startCase(props.getValue()?.toLowerCase() ?? ""),
         header: "Affichage",
       }),
       columnHelper.accessor("student", {
@@ -137,7 +138,7 @@ const UsersTable = () => {
         cell: (props) =>
           props.row.original.approvedAt
             ? new Date(props.row.original.approvedAt).toLocaleDateString(
-                "fr-FR"
+                "fr-FR",
               )
             : undefined,
         header: "Validation",
@@ -156,7 +157,7 @@ const UsersTable = () => {
       }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [columnHelper]
+    [columnHelper],
   );
 
   const table = useReactTable({
@@ -210,9 +211,9 @@ const UsersTable = () => {
                 "py-2 px-3 bg-white shadow-md rounded-lg text-gray-600 font-medium",
             }}
             items={Object.keys(filters).map((key) => ({
-              label: filters[key].label,
+              label: filters[key as keyof typeof filters].label,
               action: () => {
-                setColumnFilter(key);
+                setColumnFilter(key as keyof typeof filters);
                 table.setPageIndex(0);
               },
             }))}
@@ -229,7 +230,7 @@ const UsersTable = () => {
                   ? null
                   : flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
               </TableHeadCell>
             ))}
@@ -254,7 +255,7 @@ const UsersTable = () => {
               return (
                 <TableRow>
                   <TableCell colSpan={columns.length}>
-                    <div className="text-center text-red-600">
+                    <div className="text-center text-red-500">
                       Une erreur est survenue pendant le chargement
                     </div>
                   </TableCell>

@@ -1,13 +1,15 @@
 "use client";
 
-import { useNavigationDispatch } from "@/components/NavigationContextProvider";
-import { NavigationActionKind, type NavigationState } from "@/types";
 import { useEffect } from "react";
+import { useNavigationDispatch } from "@/components/NavigationContextProvider";
+import type { NavigationState } from "@/types/navigation";
+import { NavigationActionKind } from "@/types/navigation";
 
 const Navigation: React.FC<{
+  loading?: NavigationState["loading"];
   returnTo?: NavigationState["returnTo"];
   title: NavigationState["title"];
-}> = ({ returnTo, title }) => {
+}> = ({ loading, returnTo, title }) => {
   const dispatch = useNavigationDispatch();
 
   useEffect(() => {
@@ -15,8 +17,9 @@ const Navigation: React.FC<{
       throw new Error("Dispatch n'est pas disponible hors contexte");
     }
 
-    dispatch({ type: NavigationActionKind.SET_TITLE, payload: title });
+    dispatch({ type: NavigationActionKind.SET_LOADING, payload: loading });
     dispatch({ type: NavigationActionKind.SET_RETURNTO, payload: returnTo });
+    dispatch({ type: NavigationActionKind.SET_TITLE, payload: title });
   });
 
   return null;

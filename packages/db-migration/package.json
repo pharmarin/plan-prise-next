@@ -1,0 +1,46 @@
+{
+  "name": "@plan-prise/db-migration",
+  "private": true,
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "lint": "eslint .",
+    "migrate": "ts-node ./prisma/migration/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@plan-prise/db-prisma": "*"
+  },
+  "devDependencies": {
+    "@paralleldrive/cuid2": "2.2.2",
+    "@plan-prise/eslint-config": "0.2.0",
+    "@plan-prise/prettier-config": "^0.1.0",
+    "@plan-prise/tsconfig": "^0.1.0",
+    "@types/cli-progress": "3.11.5",
+    "@types/lodash": "4.14.202",
+    "cli-progress": "3.12.0",
+    "eslint": "8.54.0",
+    "lodash": "4.17.21",
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.3.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@plan-prise/eslint-config/base"
+    ]
+  },
+  "prettier": "@plan-prise/prettier-config"
+}

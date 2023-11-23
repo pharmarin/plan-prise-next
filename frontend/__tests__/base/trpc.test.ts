@@ -1,5 +1,6 @@
-import PP_Error from "@/utils/errors";
 import { expect, test } from "@playwright/test";
+
+import PP_Error from "@plan-prise/errors";
 
 test.describe("tRPC tests", () => {
   test("should succeed guest query", async ({ page }) => {
@@ -16,7 +17,7 @@ test.describe("tRPC tests", () => {
     await page.getByTitle("Auth Query Result").waitFor();
 
     await expect(page.getByTitle("Auth Query Result")).toHaveText(
-      new PP_Error("UNAUTHORIZED_AUTH").message
+      new PP_Error("UNAUTHORIZED_AUTH").message,
     );
   });
 });

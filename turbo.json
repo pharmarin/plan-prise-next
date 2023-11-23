@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "globalDependencies": ["**/.env"],
+  "pipeline": {
+    "topo": {
+      "dependsOn": ["^topo"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "format": {
+      "outputs": ["node_modules/.cache/.prettiercache"],
+      "outputMode": "new-only"
+    },
+    "lint": {
+      "dependsOn": ["^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"]
+    },
+    "pretest": { "cache": false },
+    "test": {
+      "dependsOn": ["build", "pretest"],
+      "outputs": ["playwright-report/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^topo"],
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
+    }
+  }
+}

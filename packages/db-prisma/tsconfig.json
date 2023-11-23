@@ -1,0 +1,10 @@
+{
+  "extends": "@plan-prise/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["*.ts", "src", "src/types.ts"],
+  "exclude": ["node_modules"]
+}

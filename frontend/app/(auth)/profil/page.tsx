@@ -2,16 +2,17 @@ import DeleteUser from "@/app/(auth)/profil/DeleteUser";
 import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
 import Title from "@/components/navigation/Navigation";
-import { getServerSession } from "@/next-auth/get-session";
-import prisma from "@/prisma";
-import PP_Error from "@/utils/errors";
+
+import { getServerSession } from "@plan-prise/auth/get-session";
+import prisma from "@plan-prise/db-prisma";
+import PP_Error from "@plan-prise/errors";
 
 const PAGE_TITLE = "Profil";
 
 const Profil = async () => {
   const session = await getServerSession();
   const user = await prisma.user.findUnique({
-    where: { id: session?.user.id || "" },
+    where: { id: session?.user.id ?? "" },
   });
 
   if (!user) {
@@ -37,6 +38,9 @@ const Profil = async () => {
           </div>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
+          {/*
+            TODO: Remove usage of superjson plugin
+          */}
           <EditInformations user={user} data-superjson />
         </div>
       </div>

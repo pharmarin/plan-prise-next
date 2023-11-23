@@ -1,13 +1,15 @@
-import { GlobalProviders } from "@/app/Providers";
-import background from "public/home-bg.jpg";
-import React, { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import React from "react";
+import { GlobalProviders } from "@/app/_components/Providers";
+import background from "@/public/home-bg.jpg";
+
 import "./globals.css";
 
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="fr">
       <body
-        className="min-h-screen w-screen bg-white/30  bg-cover px-2 backdrop-blur-sm"
+        className="flex min-h-screen w-screen flex-col bg-white/30  bg-cover px-2 backdrop-blur-sm"
         style={{ backgroundImage: `url(${background.src})` }}
       >
         <GlobalProviders>{children}</GlobalProviders>

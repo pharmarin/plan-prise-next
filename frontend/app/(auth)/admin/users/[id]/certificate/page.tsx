@@ -1,12 +1,14 @@
 "use client";
 
-import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
-import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
-import Button from "@/components/forms/inputs/Button";
-import { trpc } from "@/trpc/client";
-import PP_Error from "@/utils/errors";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
+import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
+import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/utils/api";
+import { XMarkIcon } from "@heroicons/react/20/solid";
+
+import PP_Error from "@plan-prise/errors";
+
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
@@ -39,14 +41,17 @@ const ApproveStudent = ({ params }: { params: { id: string } }) => {
             onSuccess={() => router.push("/admin/users")}
             user={user}
           />
-          <Button color="red" onClick={() => router.push("/admin/users")}>
+          <Button
+            onClick={() => router.push("/admin/users")}
+            variant="destructive"
+          >
             <XMarkIcon className="h-4 w-4" />
           </Button>
         </div>
       </div>
       {(() => {
         if (
-          user.certificate?.startsWith("data:image/jpeg") ||
+          user.certificate?.startsWith("data:image/jpeg") ??
           user.certificate?.startsWith("data:image/png")
         ) {
           return (
