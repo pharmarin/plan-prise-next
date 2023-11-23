@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createId } from "@paralleldrive/cuid2";
 import { SingleBar } from "cli-progress";
 import { difference, trim } from "lodash";
 
-import type {
-  medics_simple,
-  PlanDataItem,
-  Prisma,
-} from "@plan-prise/db-prisma";
+import type { medics_simple, Prisma } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
 const decodeUnicode = (value: string) =>
@@ -66,7 +64,7 @@ export const migratePlanNew = async () => {
           ? prisma.medicament.findFirstOrThrow({
               where: {
                 denomination: decodeUnicode(
-                  trim(medicament.nomMedicament || ""),
+                  trim(medicament.nomMedicament ?? ""),
                 )
                   .replace("UN-ALPHA", "UN-ALFA")
                   .replace(
@@ -84,7 +82,7 @@ export const migratePlanNew = async () => {
       ),
     );
 
-    const medicData: Record<string, PlanDataItem> = Object.fromEntries(
+    const medicData: Record<string, PP.Plan.DataItem> = Object.fromEntries(
       medicamentArray.map((medicament) => {
         const customData = data.find((old) =>
           "id" in medicament && "id" in old
@@ -92,21 +90,21 @@ export const migratePlanNew = async () => {
             : old.nomMedicament === medicament.denomination,
         );
 
-        const dataObject: PlanDataItem = {
+        const dataObject: PP.Plan.DataItem = {
           indication:
             "id" in medicament
               ? Array.isArray(medicament.indications) &&
                 medicament.indications.length === 1 &&
                 medicament.indications[0] === customData?.indication
                 ? undefined
-                : formatString(customData?.indication || "")
-              : formatString(customData?.indication || ""),
+                : formatString(customData?.indication ?? "")
+              : formatString(customData?.indication ?? ""),
           posologies:
-            customData?.lever ||
-            customData?.matin ||
-            customData?.midi ||
-            customData?.dixhuith ||
-            customData?.soir ||
+            customData?.lever ??
+            customData?.matin ??
+            customData?.midi ??
+            customData?.dixhuith ??
+            customData?.soir ??
             customData?.coucher
               ? {
                   poso_lever:

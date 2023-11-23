@@ -1,11 +1,14 @@
 {
-  "extends": "@plan-prise/tsconfig/base.json",
+  //"extends": "@plan-prise/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "incremental": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "moduleResolution": "Node",
+    "target": "ES2021"
   },
   "include": ["*.ts", "src"],
   "exclude": ["node_modules"],

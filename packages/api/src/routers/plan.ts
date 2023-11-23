@@ -119,7 +119,7 @@ const planRouter = createTRPCRouter({
       z.object({
         planId: z.string().cuid2(),
         data: z.record(
-          z.string().cuid2(),
+          z.string(),
           z.object({
             indication: z.string().optional(),
             conservation: z.string().optional(),

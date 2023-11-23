@@ -21,6 +21,7 @@
   "dependencies": {
     "@headlessui/react": "1.7.17",
     "@heroicons/react": "2.0.18",
+    "@paralleldrive/cuid2": "2.2.2",
     "@plan-prise/api": "*",
     "@plan-prise/auth": "^0.1.0",
     "@plan-prise/db-prisma": "*",
@@ -68,14 +69,13 @@
     "react-select": "5.8.0",
     "react-textarea-autosize": "8.5.3",
     "superjson": "1.13.3",
-    "tailwind-merge": "1.14.0",
+    "tailwind-merge": "2.0.0",
     "typescript": "5.3.2",
     "zustand": "4.4.6"
   },
   "devDependencies": {
     "@faker-js/faker": "8.3.1",
     "@next/env": "14.0.3",
-    "@paralleldrive/cuid2": "2.2.2",
     "@playwright/test": "1.40.0",
     "@types/lodash": "4.14.202",
     "@types/node": "20.9.4",

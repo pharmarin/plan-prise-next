@@ -1,30 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { SingleBar } from "cli-progress";
 import { trim } from "lodash";
 
-import type {
-  MedicamentConservationDuree,
-  medics_simple,
-} from "@plan-prise/db-prisma";
+import type { medics_simple } from "@plan-prise/db-prisma";
 import prisma, { Prisma, VoieAdministration } from "@plan-prise/db-prisma";
 
 /*
-  TODO: 
+  INSTRUCTIONS: 
 
   pnpm prisma db push
   pnpm seed 2
-
-  WARNING: 
-  - Phloroglucinol: Missing [] arround commentaire value
-  - \' cause error
 */
 
-const parseJSONPromise = (json: string, nested = false) =>
-  new Promise(async (resolve, reject) => {
+const parseJSONPromise = (json: string, nested = false) => {
+  if (json.startsWith("{")) {
+    json = `[${json}]`;
+  }
+
+  return new Promise((resolve, reject) => {
     try {
       return resolve(JSON.parse(json));
     } catch (error) {
       if (nested) {
-        await parseJSONPromise(`[${json}]`)
+        parseJSONPromise(`[${json}]`)
           .then((data) => resolve(data))
           .catch((data) => reject(data));
       }
@@ -32,6 +31,7 @@ const parseJSONPromise = (json: string, nested = false) =>
       return reject(json);
     }
   });
+};
 
 const switchVoieAdministration = (med: medics_simple) => {
   switch (med.voieAdministration) {
@@ -90,9 +90,9 @@ const migrateMedicsNew = async () => {
             connect: { id: med.id },
           },
           denomination: trim(med.nomMedicament),
-          indications: trim(med.indication || "").split(" OU "),
+          indications: trim(med.indication ?? "").split(" OU "),
           principesActifs: {
-            connectOrCreate: trim(med.nomGenerique || "")
+            connectOrCreate: trim(med.nomGenerique ?? "")
               .split(" + ")
               .map((principeActif) => ({
                 where: { denomination: principeActif },
@@ -108,7 +108,7 @@ const migrateMedicsNew = async () => {
                     return Object.entries(json).map(([laboratoire, duree]) => ({
                       laboratoire,
                       duree,
-                    })) as MedicamentConservationDuree;
+                    })) as PP.Medicament.ConservationDuree;
                   } else {
                     console.error("Wrong format received");
                     process.exit(1);
@@ -157,7 +157,11 @@ const migrateMedicsNew = async () => {
               console.log(med.commentaire?.split("{"));
               process.exit(1);
             }),
-          precaution: med.precaution,
+          precaution: med.precaution
+            ? {
+                connect: { mot_cle: med.precaution },
+              }
+            : undefined,
         },
       });
     } catch (error) {
