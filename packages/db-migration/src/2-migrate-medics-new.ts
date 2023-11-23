@@ -8,23 +8,23 @@ import type {
 import prisma, { Prisma, VoieAdministration } from "@plan-prise/db-prisma";
 
 /*
-  TODO: 
+  INSTRUCTIONS: 
 
   pnpm prisma db push
   pnpm seed 2
-
-  WARNING: 
-  - Phloroglucinol: Missing [] arround commentaire value
-  - \' cause error
 */
 
-const parseJSONPromise = (json: string, nested = false) =>
-  new Promise(async (resolve, reject) => {
+const parseJSONPromise = (json: string, nested = false) => {
+  if (json.startsWith("{")) {
+    json = `[${json}]`;
+  }
+
+  return new Promise((resolve, reject) => {
     try {
       return resolve(JSON.parse(json));
     } catch (error) {
       if (nested) {
-        await parseJSONPromise(`[${json}]`)
+        parseJSONPromise(`[${json}]`)
           .then((data) => resolve(data))
           .catch((data) => reject(data));
       }
@@ -32,6 +32,7 @@ const parseJSONPromise = (json: string, nested = false) =>
       return reject(json);
     }
   });
+};
 
 const switchVoieAdministration = (med: medics_simple) => {
   switch (med.voieAdministration) {
