@@ -23,6 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "2.2.2",
     "@plan-prise/api-pharmaciens": "*",
     "@plan-prise/auth": "*",
     "@plan-prise/db-prisma": "*",
