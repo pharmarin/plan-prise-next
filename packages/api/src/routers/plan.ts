@@ -1,3 +1,4 @@
+import { isCuid } from "@paralleldrive/cuid2";
 import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
@@ -8,17 +9,31 @@ import { MUTATION_SUCCESS, PLAN_NEW } from "../constants";
 import { authProcedure, createTRPCRouter } from "../trpc";
 import { planSettingsSchema } from "../validation/plan";
 
-const addMedic = (medicId: string, medicsOrder: Plan["medicsOrder"]) => ({
-  medics: { connect: { id: medicId } },
-  medicsOrder: [...(Array.isArray(medicsOrder) ? medicsOrder : []), medicId],
-});
+const addMedic = (medicId: string, medicsOrder: Plan["medicsOrder"]) => {
+  if (isCuid(medicId)) {
+    return {
+      medics: { connect: { id: medicId } },
+      medicsOrder: [
+        ...(Array.isArray(medicsOrder) ? medicsOrder : []),
+        medicId,
+      ],
+    };
+  } else {
+    return {
+      medicsOrder: [
+        ...(Array.isArray(medicsOrder) ? medicsOrder : []),
+        medicId,
+      ],
+    };
+  }
+};
 
 const planRouter = createTRPCRouter({
   addMedic: authProcedure
     .input(
       z.object({
         planId: z.string().cuid2().or(z.literal(PLAN_NEW)),
-        medicId: z.string().cuid2(),
+        medicId: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -85,9 +100,7 @@ const planRouter = createTRPCRouter({
       return MUTATION_SUCCESS;
     }),
   removeMedic: authProcedure
-    .input(
-      z.object({ planId: z.string().cuid2(), medicId: z.string().cuid2() }),
-    )
+    .input(z.object({ planId: z.string().cuid2(), medicId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const plan = await ctx.prisma.plan.findUniqueOrThrow({
         where: { id: input.planId, user: { id: ctx.session.user.id } },
@@ -97,7 +110,9 @@ const planRouter = createTRPCRouter({
       await ctx.prisma.plan.update({
         where: { id: input.planId },
         data: {
-          medics: { disconnect: { id: input.medicId } },
+          medics: isCuid(input.medicId)
+            ? { disconnect: { id: input.medicId } }
+            : undefined,
           medicsOrder: Array.isArray(plan.medicsOrder)
             ? plan.medicsOrder.filter((id) => id !== input.medicId)
             : [],

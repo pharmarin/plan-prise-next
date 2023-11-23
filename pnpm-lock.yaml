@@ -229,14 +229,14 @@ importers:
         specifier: 8.10.7
         version: 8.10.7(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
-        specifier: 10.44.0
-        version: 10.44.0(@trpc/server@10.44.0)
+        specifier: 10.44.1
+        version: 10.44.1(@trpc/server@10.44.1)
       '@trpc/react-query':
-        specifier: 10.44.0
-        version: 10.44.0(@tanstack/react-query@4.36.1)(@trpc/client@10.44.0)(@trpc/server@10.44.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.44.1
+        version: 10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
-        specifier: 10.44.0
-        version: 10.44.0
+        specifier: 10.44.1
+        version: 10.44.1
       chart.js:
         specifier: 4.4.0
         version: 4.4.0
@@ -371,8 +371,8 @@ importers:
         specifier: '*'
         version: link:../errors
       '@trpc/server':
-        specifier: 10.44.0
-        version: 10.44.0
+        specifier: 10.44.1
+        version: 10.44.1
       jose:
         specifier: 4.15.4
         version: 4.15.4
@@ -567,11 +567,11 @@ importers:
   packages/errors:
     dependencies:
       '@trpc/client':
-        specifier: 10.44.0
-        version: 10.44.0(@trpc/server@10.44.0)
+        specifier: 10.44.1
+        version: 10.44.1(@trpc/server@10.44.1)
       '@trpc/server':
-        specifier: 10.44.0
-        version: 10.44.0
+        specifier: 10.44.1
+        version: 10.44.1
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -1142,6 +1142,7 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2013,6 +2014,8 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/image@2.2.2:
@@ -2021,6 +2024,8 @@ packages:
       '@babel/runtime': 7.23.2
       '@react-pdf/png-js': 2.2.0
       cross-fetch: 3.1.8
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/layout@3.6.3:
@@ -2038,6 +2043,8 @@ packages:
       cross-fetch: 3.1.8
       emoji-regex: 10.2.1
       queue: 6.0.2
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.0.2:
@@ -2094,6 +2101,8 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.1.8:
@@ -2220,32 +2229,32 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: false
 
-  /@trpc/client@10.44.0(@trpc/server@10.44.0):
-    resolution: {integrity: sha512-6PAL5rXMGTMlsKKGW9aBsij8XFBbLUbOCJ7jNVX3IripGqiQG3b/VJyTsHRWkss/oaz/sZMOn62amhfev1UVfg==}
+  /@trpc/client@10.44.1(@trpc/server@10.44.1):
+    resolution: {integrity: sha512-vTWsykNcgz1LnwePVl2fKZnhvzP9N3GaaLYPkfGINo314ZOS0OBqe9x0ytB2LLUnRVTAAZ2WoONzARd8nHiqrA==}
     peerDependencies:
-      '@trpc/server': 10.44.0
+      '@trpc/server': 10.44.1
     dependencies:
-      '@trpc/server': 10.44.0
+      '@trpc/server': 10.44.1
     dev: false
 
-  /@trpc/react-query@10.44.0(@tanstack/react-query@4.36.1)(@trpc/client@10.44.0)(@trpc/server@10.44.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-0l9mar1kSamm/sePnHOuhX8v9LFQbgpVJ2U2s/hWnScNexBFzV03SpCjLAkXtiIapw5lkIG0QlveZXu4G86Xnw==}
+  /@trpc/react-query@10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Sgi/v0YtdunOXjBRi7om9gILGkOCFYXPzn5KqLuEHiZw5dr5w4qGHFwCeMAvndZxmwfblJrl1tk2AznmsVu8MA==}
     peerDependencies:
       '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.44.0
-      '@trpc/server': 10.44.0
+      '@trpc/client': 10.44.1
+      '@trpc/server': 10.44.1
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
       '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.44.0(@trpc/server@10.44.0)
-      '@trpc/server': 10.44.0
+      '@trpc/client': 10.44.1(@trpc/server@10.44.1)
+      '@trpc/server': 10.44.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@10.44.0:
-    resolution: {integrity: sha512-QBq/FnjyU6a7CAl9p2dv6kApn2i8MFuPt8uVLyGr0oa2aFv31rHaX0m+ibdsviE/3fOJIC8EUOfMYOJma5uK2w==}
+  /@trpc/server@10.44.1:
+    resolution: {integrity: sha512-mF7B+K6LjuboX8I1RZgKE5GA/fJhsJ8tKGK2UBt3Bwik7hepEPb4NJgNr7vO6BK5IYwPdBLRLTctRw6XZx0sRg==}
     engines: {node: '>=18.0.0'}
     dev: false
 
@@ -2914,6 +2923,7 @@ packages:
       '@mapbox/node-pre-gyp': 1.0.11
       node-addon-api: 5.1.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -3078,6 +3088,7 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -3336,6 +3347,8 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -4296,6 +4309,7 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -4984,6 +4998,8 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -5260,6 +5276,7 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -5544,6 +5561,8 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
@@ -5976,6 +5995,7 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6355,6 +6375,7 @@ packages:
       '@react-pdf/renderer': 3.1.14(react@18.2.0)
       tailwindcss: 3.3.5
     transitivePeerDependencies:
+      - encoding
       - react
       - ts-node
     dev: false
@@ -6381,6 +6402,7 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
