@@ -24,7 +24,7 @@ const LoadingIndicator = () => {
       {isSaving ? (
         <Tooltip>
           <TooltipTrigger>
-            <Loader2 className="h-4 w-4 text-teal-900" />
+            <Loader2 className="h-4 w-4 animate-spin text-teal-900" />
           </TooltipTrigger>
           <TooltipContent>
             <p>⏳ Sauvegarde en cours</p>
