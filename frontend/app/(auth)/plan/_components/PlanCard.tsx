@@ -38,18 +38,17 @@ const PlanCard = ({
     return <PlanCardLoading type="fetching" />;
   }
 
-  if (!medicamentData || (!medicament && !isLoading)) {
-    console.error(medicamentData, medicament, isLoading);
+  if (!medicamentData && !medicament && !isLoading) {
     throw new PP_Error("MEDICAMENT_LOADING_ERROR");
   }
 
   return (
     <PlanCardUI>
       <PlanCardHeader
-        medicament={medicamentData ?? medicament}
+        medicament={medicamentData ?? medicament!}
         removeMedic={removeMedic}
       />
-      <PlanCardBody medicament={medicamentData ?? medicament} />
+      <PlanCardBody medicament={medicamentData ?? medicament!} />
     </PlanCardUI>
   );
 };

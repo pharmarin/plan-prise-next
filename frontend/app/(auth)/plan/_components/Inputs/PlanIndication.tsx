@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useIndication } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { FormItem } from "@/components/ui/form";
@@ -14,7 +15,6 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import type { Medicament } from "@prisma/client";
-import { useEffect } from "react";
 
 const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   const { setData, setCanPrint } = usePlanStore((state) => ({
@@ -35,12 +35,12 @@ const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   return (
     <FormItem className={cn({ "action-required": extracted.length > 1 })}>
       <Label>Indication</Label>
-      {extracted.length === 1 ? (
+      {extracted.length <= 1 ? (
         <Input
           onChange={(event) =>
             setData(`${medicament.id}.indication`, event.currentTarget.value)
           }
-          value={extracted[0]}
+          value={extracted[0] ?? ""}
         />
       ) : (
         <Select

@@ -1,13 +1,21 @@
 "use client";
 
+import ErrorSkeleton from "@/components/pages/ErrorSkeleton";
 import { Button } from "@/components/ui/button";
 
-const Error = ({ reset }: { error: Error; reset: () => void }) => {
+const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
+  console.log("error: ", error.message);
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-4">
-      <h2 className="text-bold text-xl">Une erreur est survenue</h2>
-      <Button onClick={() => reset()}>Réessayer</Button>
-    </div>
+    <ErrorSkeleton
+      title="Une erreur est survenue"
+      subtitle={error.message || ""}
+      action={
+        <div className="flex space-x-4">
+          <Button onClick={() => reset()}>Réessayer</Button>
+          <Button onClick={() => window.location.reload()}>Recharger</Button>
+        </div>
+      }
+    />
   );
 };
 

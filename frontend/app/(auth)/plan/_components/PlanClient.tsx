@@ -20,6 +20,7 @@ type SelectValueType = {
   denomination: string;
   principesActifs: string[];
   id: string;
+  custom?: boolean;
 };
 
 const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
@@ -201,7 +202,10 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
             }
             setAddingMedics((state) => [
               ...state,
-              { id: value.id, denomination: value.denomination },
+              {
+                id: value.id,
+                denomination: value.custom ? value.id : value.denomination,
+              },
             ]);
             await addMedicServer({
               planId: plan.id,
@@ -234,13 +238,26 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
         }}
         onInputChange={(value) => setSearchValueDebounced(value)}
         openMenuOnFocus={true}
-        options={(searchResults ?? []).map((result) => ({
-          denomination: result.denomination,
-          principesActifs: result.principesActifs.map(
-            (principeActif) => principeActif.denomination,
-          ),
-          id: result.id,
-        }))}
+        options={
+          searchResults
+            ? searchResults.length > 0
+              ? searchResults.map((result) => ({
+                  denomination: result.denomination,
+                  principesActifs: result.principesActifs.map(
+                    (principeActif) => principeActif.denomination,
+                  ),
+                  id: result.id,
+                }))
+              : [
+                  {
+                    id: searchValue.toUpperCase(),
+                    denomination: `Ajouter ${searchValue.toUpperCase()}`,
+                    principesActifs: [""],
+                    custom: true,
+                  },
+                ]
+            : undefined
+        }
         placeholder="Ajouter un médicament"
         ref={(ref) => {
           selectRef.current = ref;

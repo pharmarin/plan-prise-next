@@ -161,9 +161,10 @@ const PrintPDF = ({
                   .join(", ")
               : "";
 
-          const rowVoiesAdministration = `Voie ${extractVoieAdministration(
-            medicament,
-          ).join(" ou ")}`;
+          const rowVoiesAdministration =
+            "id" in medicament
+              ? `Voie ${extractVoieAdministration(medicament).join(" ou ")}`
+              : "";
 
           const rowCommentaires =
             "commentaires" in medicament

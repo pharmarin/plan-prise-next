@@ -16,17 +16,17 @@
     "typecheck": "turbo typecheck --filter=!@plan-prise/db-migration"
   },
   "dependencies": {
-    "@manypkg/cli": "0.21.0",
+    "@manypkg/cli": "0.21.1",
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "*",
     "@prettier/plugin-php": "0.21.0",
     "@turbo/gen": "1.10.16",
-    "@types/node": "20.9.0",
+    "@types/node": "20.10.0",
     "prettier": "3.1.0",
     "prettier-plugin-tailwindcss": "0.5.7",
     "turbo": "1.10.16",
-    "typescript": "5.2.2"
+    "typescript": "5.3.2"
   },
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@8.11.0",
   "prettier": "@plan-prise/prettier-config"
 }

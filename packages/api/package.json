@@ -23,11 +23,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "2.2.2",
     "@plan-prise/api-pharmaciens": "*",
     "@plan-prise/auth": "*",
     "@plan-prise/db-prisma": "*",
     "@plan-prise/errors": "*",
-    "@trpc/server": "10.43.3",
+    "@trpc/server": "10.44.1",
     "jose": "4.15.4",
     "mailersend": "2.2.0",
     "superjson": "1.13.3",
@@ -39,8 +40,8 @@
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "^0.1.0",
     "@plan-prise/tsconfig": "^0.1.0",
-    "eslint": "8.53.0",
-    "typescript": "5.2.2"
+    "eslint": "8.54.0",
+    "typescript": "5.3.2"
   },
   "eslintConfig": {
     "extends": [
