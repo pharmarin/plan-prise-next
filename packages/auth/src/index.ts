@@ -7,7 +7,6 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 
 import { db } from "@plan-prise/db-drizzle";
-import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
 import { NEXT_AUTH_PAGES } from "./config";
@@ -90,8 +89,8 @@ export const nextAuthOptions: NextAuthOptions = {
         }
 
         // Add logic here to look up the user from the credentials supplied
-        const user = await prisma.user.findUnique({
-          where: { email: credentialsParsed.email },
+        const user = await db.query.users.findFirst({
+          where: (fields, { eq }) => eq(fields.email, credentialsParsed.email),
         });
 
         if (user && !user.approvedAt) {

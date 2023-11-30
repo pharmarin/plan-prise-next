@@ -1,5 +1,6 @@
-import type { User } from "@prisma/client";
 import bcrypt from "bcrypt";
+
+import type { User } from "@plan-prise/db-drizzle";
 
 export const checkPassword = (
   formPassword: string,

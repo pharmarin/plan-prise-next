@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import {
   bigint,
+  boolean,
   datetime,
   index,
   int,
@@ -8,7 +9,6 @@ import {
   mysqlTable,
   primaryKey,
   text,
-  tinyint,
   unique,
   varchar,
 } from "drizzle-orm/mysql-core";
@@ -18,11 +18,11 @@ export const users = mysqlTable(
   {
     id: varchar("id", { length: 191 }).notNull(),
     email: varchar("email", { length: 191 }).notNull(),
-    admin: tinyint("admin").default(0).notNull(),
+    admin: boolean("admin").default(false).notNull(),
     firstName: varchar("firstName", { length: 191 }),
     lastName: varchar("lastName", { length: 191 }),
     displayName: varchar("displayName", { length: 191 }),
-    student: tinyint("student").notNull(),
+    student: boolean("student").notNull(),
     certificate: longtext("certificate"),
     rpps: bigint("rpps", { mode: "number" }),
     password: varchar("password", { length: 191 }).notNull(),
@@ -40,6 +40,8 @@ export const users = mysqlTable(
     };
   },
 );
+
+export type User = typeof users.$inferSelect;
 
 export const accounts = mysqlTable(
   "accounts",

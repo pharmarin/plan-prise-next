@@ -9,6 +9,7 @@ import * as plan from "./schema/plan";
 export const schema = { ...auth, ...medicament, ...plan, ...calendrier };
 
 export * from "drizzle-orm";
+export * from "./schema/auth";
 
 const connection = await mysql.createConnection({
   uri: process.env.DATABASE_URL,
