@@ -1,5 +1,7 @@
+import "server-only";
+
 import type { User } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const checkPassword = (
   formPassword: string,
