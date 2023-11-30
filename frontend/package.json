@@ -7,6 +7,7 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",
     "env:generate": "gen-env-types .env",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json,tsx}\"",
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "lint:fix": "pnpm lint --fix",
     "start": "pnpm with-env next start",

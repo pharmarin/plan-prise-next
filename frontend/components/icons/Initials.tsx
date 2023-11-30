@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export const Initials: React.FC<{ firstName: string; lastName: string }> = ({
   firstName,

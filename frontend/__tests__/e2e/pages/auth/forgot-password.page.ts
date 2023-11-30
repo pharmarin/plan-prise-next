@@ -20,7 +20,7 @@ export class ForgotPasswordPage {
     const response = this.page.waitForResponse(
       (response) =>
         new URL(response.url()).pathname ===
-        "/api/v1/users.sendPasswordResetLink"
+        "/api/v1/users.sendPasswordResetLink",
     );
 
     await this.page.click('button[type="submit"]');

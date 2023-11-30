@@ -37,5 +37,5 @@ export const TypographySmall = ({ children }: { children: ReactNode }) => (
 );
 
 export const TypographyMuted = ({ children }: { children: ReactNode }) => (
-  <p className="text-muted-foreground text-sm">{children}</p>
+  <p className="text-sm text-muted-foreground">{children}</p>
 );

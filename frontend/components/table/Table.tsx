@@ -9,7 +9,7 @@ const Table: React.FC<React.ComponentPropsWithoutRef<"table">> = ({
     <table
       className={twMerge(
         "whitespace-no-wrap relative w-full table-auto border-collapse overflow-y-auto rounded-lg bg-white shadow-md",
-        className
+        className,
       )}
       {...props}
     >

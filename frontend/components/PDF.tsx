@@ -69,10 +69,10 @@ const Line = ({
           bold && italic
             ? "Helvetica-BoldOblique"
             : bold
-            ? "Helvetica-Bold"
-            : italic
-            ? "Helvetica-Oblique"
-            : "Helvetica",
+              ? "Helvetica-Bold"
+              : italic
+                ? "Helvetica-Oblique"
+                : "Helvetica",
       },
     ]}
   >
