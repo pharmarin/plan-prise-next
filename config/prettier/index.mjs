@@ -1,4 +1,5 @@
 import { fileURLToPath } from "url";
+import sortImportsPlugin from "@ianvs/prettier-plugin-sort-imports";
 
 /** @typedef  {import("prettier").Config} PrettierConfig */
 /** @typedef {import("prettier-plugin-tailwindcss").PluginOptions} TailwindConfig */
@@ -6,10 +7,7 @@ import { fileURLToPath } from "url";
 
 /** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
 const config = {
-  plugins: [
-    "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss",
-  ],
+  plugins: [sortImportsPlugin, "prettier-plugin-tailwindcss"],
   tailwindConfig: fileURLToPath(
     new URL("../../config/tailwind/index.ts", import.meta.url),
   ),
