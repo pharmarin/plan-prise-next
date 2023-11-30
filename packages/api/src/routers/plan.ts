@@ -3,6 +3,7 @@ import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
 
+import { eq, users } from "@plan-prise/db-drizzle";
 import PP_Error from "@plan-prise/errors";
 
 import { MUTATION_SUCCESS, PLAN_NEW } from "../constants";
@@ -38,17 +39,30 @@ const planRouter = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       if (input.planId === PLAN_NEW) {
-        const user = await ctx.prisma.user.update({
-          where: { id: ctx.session.user.id },
-          data: {
-            maxId: { increment: 1 },
-          },
-          select: { maxId: true },
+        const maxId = await ctx.db.transaction(async (tx) => {
+          const [user] = await tx
+            .select({ maxId: users.maxId })
+            .from(users)
+            .where(eq(users.id, ctx.session.user.id));
+
+          await tx
+            .update(users)
+            .set({
+              maxId: (user?.maxId ?? 0) + 1,
+            })
+            .where(eq(users.id, ctx.session.user.id));
+
+          const [incrementedUser] = await tx
+            .select({ maxId: users.maxId })
+            .from(users)
+            .where(eq(users.id, ctx.session.user.id));
+
+          return incrementedUser?.maxId ?? 1;
         });
 
         const plan = await ctx.prisma.plan.create({
           data: {
-            displayId: user.maxId,
+            displayId: maxId,
             ...addMedic(input.medicId, []),
             user: {
               connect: {

@@ -370,6 +370,9 @@ importers:
       '@plan-prise/auth':
         specifier: '*'
         version: link:../auth
+      '@plan-prise/db-drizzle':
+        specifier: '*'
+        version: link:../db-drizzle
       '@plan-prise/db-prisma':
         specifier: '*'
         version: link:../db-prisma

@@ -43,13 +43,9 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const [searchValue, setSearchValue] = useState("");
   const setSearchValueDebounced = debounce(setSearchValue, 500);
   const { data: searchResults, isLoading: isLoadingResults } =
-    trpc.medics.findAll.useQuery(
-      {
-        fields: ["denomination"],
-        value: searchValue,
-      },
-      { enabled: searchValue.length > 2 },
-    );
+    trpc.medics.findManyByDenomination.useQuery(searchValue, {
+      enabled: searchValue.length > 2,
+    });
 
   const [addingMedics, setAddingMedics] = useState<
     { id: string; denomination: string }[]
@@ -243,8 +239,8 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
             ? searchResults.length > 0
               ? searchResults.map((result) => ({
                   denomination: result.denomination,
-                  principesActifs: result.principesActifs.map(
-                    (principeActif) => principeActif.denomination,
+                  principesActifs: result.medicamentToPrincipeActif.map(
+                    (relation) => relation.principeActif.denomination,
                   ),
                   id: result.id,
                 }))

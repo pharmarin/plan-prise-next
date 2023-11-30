@@ -3,6 +3,7 @@ import superjson from "superjson";
 
 import type { Session } from "@plan-prise/auth";
 import { getServerSession } from "@plan-prise/auth/get-session";
+import { db } from "@plan-prise/db-drizzle";
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
@@ -32,6 +33,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
+    db,
   };
 };
 

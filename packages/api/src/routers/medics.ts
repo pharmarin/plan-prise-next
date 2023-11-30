@@ -1,46 +1,34 @@
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import prisma from "@plan-prise/db-prisma";
+import { db } from "@plan-prise/db-drizzle";
 
 import { authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
-  unique: authProcedure.input(z.string().cuid2()).query(({ input }) =>
-    prisma.medicament.findUniqueOrThrow({
-      where: { id: input },
-      include: { commentaires: true, principesActifs: true },
+  unique: authProcedure.input(z.string().cuid2()).query(({ ctx, input }) =>
+    ctx.db.query.medicaments.findFirst({
+      where: (fields, { eq }) => eq(fields.id, input),
+      with: {
+        commentaires: true,
+        medicamentToPrincipeActif: { with: { principeActif: true } },
+      },
     }),
   ),
-  findAll: authProcedure
-    .input(
-      z.object({
-        fields: z.array(
-          z
-            .string()
-            .refine((field) =>
-              Object.keys(prisma.medicament.fields).includes(field),
-            ),
-        ),
-        value: z.string(),
-      }),
-    )
-    .query(({ input }) =>
-      input.value && input.value.length > 0
-        ? prisma.medicament.findMany({
-            where: {
-              OR: input.fields.map((field) => ({
-                [field]: { contains: input.value },
-              })),
-            },
-            select: {
-              id: true,
-              denomination: true,
-              principesActifs: true,
-            },
-          })
-        : [],
-    ),
+  findManyByDenomination: authProcedure.input(z.string()).query(({ input }) =>
+    input && input.length > 0
+      ? db.query.medicaments.findMany({
+          where: (fields, { like }) => like(fields.denomination, `${input}%`),
+          columns: {
+            id: true,
+            denomination: true,
+          },
+          with: {
+            medicamentToPrincipeActif: { with: { principeActif: true } },
+          },
+        })
+      : [],
+  ),
   findPrecautionsByMedicId: authProcedure
     .input(z.array(z.string()).optional())
     .query(({ ctx, input }) => {
@@ -48,12 +36,14 @@ const medicsRouter = createTRPCRouter({
         return [];
       }
 
-      return ctx.prisma.precaution.findMany({
-        where: {
+      return ctx.db.query.precautions.findMany({
+        with: {
           medicaments: {
-            some: {
-              OR: input.filter((id) => isCuid(id)).map((id) => ({ id })),
-            },
+            where: (field, { inArray }) =>
+              inArray(
+                field.id,
+                input.filter((id) => isCuid(id)),
+              ),
           },
         },
       });
