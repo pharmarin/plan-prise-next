@@ -370,15 +370,39 @@ importers:
       '@plan-prise/errors':
         specifier: '*'
         version: link:../errors
+      '@tanstack/react-query':
+        specifier: 4.36.1
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: 10.44.1
+        version: 10.44.1(@trpc/server@10.44.1)
+      '@trpc/react-query':
+        specifier: 10.44.1
+        version: 10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: 10.44.1
         version: 10.44.1
+      '@types/lodash':
+        specifier: 4.14.202
+        version: 4.14.202
       jose:
         specifier: 4.15.4
         version: 4.15.4
+      lodash:
+        specifier: 4.17.21
+        version: 4.17.21
       mailersend:
         specifier: 2.2.0
         version: 2.2.0
+      next:
+        specifier: 14.0.3
+        version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
       superjson:
         specifier: 1.13.3
         version: 1.13.3
@@ -2394,7 +2418,6 @@ packages:
 
   /@types/lodash@4.14.202:
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
-    dev: true
 
   /@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
