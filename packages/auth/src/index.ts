@@ -37,11 +37,11 @@ export const nextAuthOptions: NextAuthOptions = {
       if (user?.approvedAt) {
         if (!token.user) {
           token.user = {
-            id: user.id,
-            admin: user.admin,
-            displayName: user.displayName,
-            lastName: user.lastName,
-            firstName: user.firstName,
+            id: user?.id,
+            admin: user?.admin,
+            displayName: user?.displayName,
+            lastName: user?.lastName,
+            firstName: user?.firstName,
           };
         }
       }
@@ -53,11 +53,11 @@ export const nextAuthOptions: NextAuthOptions = {
         return session;
       }
 
-      session.user.id = token?.user?.id ?? user.id;
-      session.user.admin = token?.user?.admin ?? user.admin;
-      session.user.displayName = token?.user?.displayName ?? user.displayName;
-      session.user.firstName = token?.user?.firstName ?? user.firstName;
-      session.user.lastName = token?.user?.lastName ?? user.lastName;
+      session.user.id = token?.user?.id ?? user?.id;
+      session.user.admin = token?.user?.admin ?? user?.admin;
+      session.user.displayName = token?.user?.displayName ?? user?.displayName;
+      session.user.firstName = token?.user?.firstName ?? user?.firstName;
+      session.user.lastName = token?.user?.lastName ?? user?.lastName;
 
       return session;
     },
