@@ -1,6 +1,6 @@
 "use client";
-// Because of the use of react-pdf
 
+// Because of the use of react-pdf
 import { Document, Page, pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(

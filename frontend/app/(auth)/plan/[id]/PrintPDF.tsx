@@ -246,7 +246,7 @@ const PrintPDF = ({
           <View
             key={precaution.id}
             style={[
-              tw("rounded-lg border p-4 shadow-md mt-4"),
+              tw("rounded-lg border p-4 mt-4"),
               { borderColor: precaution.couleur },
             ]}
             wrap={false}
