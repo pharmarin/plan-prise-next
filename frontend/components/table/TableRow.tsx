@@ -8,7 +8,7 @@ const TableRow: React.FC<
       className={twMerge(
         hover && "hover:bg-gray-100",
         stripped && "odd:bg-white even:bg-slate-50",
-        className
+        className,
       )}
       {...props}
     >

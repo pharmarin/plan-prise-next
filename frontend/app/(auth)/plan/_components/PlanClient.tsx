@@ -12,6 +12,7 @@ import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
+import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
@@ -92,6 +93,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
           });
         }
       },
+      { equalityFn: shallow },
     );
 
     return unsubscribe;

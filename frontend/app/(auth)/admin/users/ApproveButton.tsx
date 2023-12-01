@@ -1,10 +1,10 @@
 "use client";
 
+import React from "react";
 import Spinner from "@/components/icons/Spinner";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/api";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import React from "react";
 
 import type { User } from "@plan-prise/db-prisma";
 

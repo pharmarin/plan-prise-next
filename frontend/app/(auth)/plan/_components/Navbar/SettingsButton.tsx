@@ -22,6 +22,7 @@ import { PlanPrisePosologies } from "@/types/plan";
 import { trpc } from "@/utils/api";
 import { debounce } from "lodash";
 import { SettingsIcon } from "lucide-react";
+import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 
@@ -57,6 +58,7 @@ const SettingsButton = () => {
           });
         }
       },
+      { equalityFn: shallow },
     );
 
     return unsubscribe;

@@ -12,7 +12,7 @@ const TableCell: React.FC<
       className={twMerge(
         "border-t border-dashed border-gray-200 text-gray-700",
         !link && "px-6 py-3",
-        className
+        className,
       )}
       {...props}
     >

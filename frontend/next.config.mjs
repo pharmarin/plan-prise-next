@@ -12,6 +12,7 @@ const nextConfig = {
     "@plan-prise/errors",
   ],
   webpack: (config) => {
+    // Added for PDF ?
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     config.module.rules.push({
       test: /\.node/,
