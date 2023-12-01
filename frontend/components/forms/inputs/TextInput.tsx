@@ -1,5 +1,5 @@
-import { Label } from "@/components/ui/label";
 import { forwardRef } from "react";
+import { Label } from "@/components/ui/label";
 import { twMerge } from "tailwind-merge";
 
 // eslint-disable-next-line react/display-name

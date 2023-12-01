@@ -1,5 +1,6 @@
-import { appRouter, createTRPCContext } from "@plan-prise/api";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+
+import { appRouter, createTRPCContext } from "@plan-prise/api";
 
 /**
  * Configure basic CORS headers
@@ -20,17 +21,17 @@ export function OPTIONS() {
   return response;
 }
 
-const handler = async (req: Request) =>
-  {const response  = await fetchRequestHandler({
+const handler = async (req: Request) => {
+  const response = await fetchRequestHandler({
     endpoint: "/api/v1",
     req,
     router: appRouter,
-    createContext: createTRPCContext
-  })
+    createContext: createTRPCContext,
+  });
 
   setCorsHeaders(response);
 
-  return response
+  return response;
 };
 
 export { handler as GET, handler as POST };
