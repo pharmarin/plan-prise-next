@@ -37,7 +37,7 @@
     "@plan-prise/prettier-config": "0.1.0",
     "@plan-prise/tsconfig": "0.1.0",
     "@types/bcryptjs": "2.4.6",
-    "eslint": "8.54.0",
+    "eslint": "8.55.0",
     "typescript": "5.3.2"
   },
   "eslintConfig": {
