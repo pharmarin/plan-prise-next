@@ -116,7 +116,7 @@ importers:
     dependencies:
       '@tailwindcss/typography':
         specifier: 0.5.10
-        version: 0.5.10(tailwindcss@3.3.5)
+        version: 0.5.10(tailwindcss@3.3.6)
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.32)
@@ -124,11 +124,11 @@ importers:
         specifier: 8.4.32
         version: 8.4.32
       tailwindcss:
-        specifier: 3.3.5
-        version: 3.3.5
+        specifier: 3.3.6
+        version: 3.3.6
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.3.5)
+        version: 1.0.7(tailwindcss@3.3.6)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: ^0.2.0
@@ -356,8 +356,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
       tailwindcss:
-        specifier: 3.3.5
-        version: 3.3.5
+        specifier: 3.3.6
+        version: 3.3.6
 
   packages/api:
     dependencies:
@@ -2417,7 +2417,7 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tailwindcss/typography@0.5.10(tailwindcss@3.3.5):
+  /@tailwindcss/typography@0.5.10(tailwindcss@3.3.6):
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
@@ -2426,7 +2426,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.3.5
+      tailwindcss: 3.3.6
     dev: false
 
   /@tanstack/match-sorter-utils@8.8.4:
@@ -6682,7 +6682,7 @@ packages:
     resolution: {integrity: sha512-CRBCmkhSA9Nl13DVKbOLNQcAPFEFHpLPr4qyqqLQYLlF8+3aoNQ68869oF0360zhcA/jWUUxq2kbLFzs1Nl0IA==}
     dependencies:
       '@react-pdf/renderer': 3.1.14(react@18.2.0)
-      tailwindcss: 3.3.5
+      tailwindcss: 3.3.6
     transitivePeerDependencies:
       - encoding
       - react
@@ -6933,14 +6933,6 @@ packages:
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
-
-  /resolve@1.22.2:
-    resolution: {integrity: sha512-Sb+mjNHOULsBv818T40qSPeRiuWLyaGMa5ewydRLFimneixmVy2zdivRl+AF6jaYPC8ERxGDmFSiqui6SfPd+g==}
-    hasBin: true
-    dependencies:
-      is-core-module: 2.13.1
-      path-parse: 1.0.7
-      supports-preserve-symlinks-flag: 1.0.0
 
   /resolve@1.22.8:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
@@ -7412,16 +7404,16 @@ packages:
       '@babel/runtime': 7.23.5
     dev: false
 
-  /tailwindcss-animate@1.0.7(tailwindcss@3.3.5):
+  /tailwindcss-animate@1.0.7(tailwindcss@3.3.6):
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
-      tailwindcss: 3.3.5
+      tailwindcss: 3.3.6
     dev: false
 
-  /tailwindcss@3.3.5:
-    resolution: {integrity: sha512-5SEZU4J7pxZgSkv7FP1zY8i2TIAOooNZ1e/OGtxIEv6GltpoiXUqWvLy89+a10qYTB1N5Ifkuw9lqQkN9sscvA==}
+  /tailwindcss@3.3.6:
+    resolution: {integrity: sha512-AKjF7qbbLvLaPieoKeTjG1+FyNZT6KaJMJPFeQyLfIp7l82ggH1fbHJSsYIvnbTFQOlkh+gBYpyby5GT1LIdLw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -7445,7 +7437,7 @@ packages:
       postcss-load-config: 4.0.1(postcss@8.4.32)
       postcss-nested: 6.0.1(postcss@8.4.32)
       postcss-selector-parser: 6.0.12
-      resolve: 1.22.2
+      resolve: 1.22.8
       sucrase: 3.32.0
     transitivePeerDependencies:
       - ts-node
