@@ -38,7 +38,7 @@
     "@plan-prise/tsconfig": "0.1.0",
     "@types/bcryptjs": "2.4.6",
     "eslint": "8.55.0",
-    "typescript": "5.3.2"
+    "typescript": "5.3.3"
   },
   "eslintConfig": {
     "extends": [
