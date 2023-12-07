@@ -3,16 +3,16 @@
 import { useRouter } from "next/navigation";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
-import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/api";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { XIcon } from "lucide-react";
 
 import PP_Error from "@plan-prise/errors";
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-import Navigation from "@/components/navigation/Navigation";
+import Navigation from "@/app/_components/Navigation";
 
 const ApproveStudent = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -50,7 +50,7 @@ const ApproveStudent = ({ params }: { params: { id: string } }) => {
               onClick={() => router.push("/admin/users")}
               variant="destructive"
             >
-              <XMarkIcon className="h-4 w-4" />
+              <XIcon className="h-4 w-4" />
             </Button>
           </div>
         </div>

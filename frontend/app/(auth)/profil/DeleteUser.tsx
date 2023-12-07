@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import ConfirmPasswordModal from "@/components/overlays/modals/ConfirmPasswordModal";
-import { Button } from "@/components/ui/button";
+import ConfirmPasswordModal from "@/app/(auth)/profil/_components/ConfirmPasswordModal";
 import { trpc } from "@/utils/api";
 import type { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const DeleteUser: React.FC<{ id: User["id"] }> = ({ id }) => {
   const [showForm, setShowForm] = useState(false);

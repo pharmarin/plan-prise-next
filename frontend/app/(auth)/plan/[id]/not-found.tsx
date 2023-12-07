@@ -1,4 +1,4 @@
-import Error404 from "@/components/pages/404";
+import Error404 from "@plan-prise/ui/components/pages/404";
 
 const PlanNotFound = () => (
   <Error404 title="Plan de prise introuvable" returnTo="/plan" />

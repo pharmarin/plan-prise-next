@@ -3,7 +3,7 @@ import React from "react";
 import { GlobalProviders } from "@/app/_components/Providers";
 import background from "@/public/home-bg.jpg";
 
-import "./globals.css";
+import "@plan-prise/ui/styles/globals.css";
 
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (

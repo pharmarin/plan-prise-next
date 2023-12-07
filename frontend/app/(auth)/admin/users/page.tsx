@@ -1,5 +1,5 @@
+import Navigation from "@/app/_components/Navigation";
 import UsersTable from "@/app/(auth)/admin/users/UsersTable";
-import Navigation from "@/components/navigation/Navigation";
 
 const PAGE_TITLE = "Utilisateurs";
 

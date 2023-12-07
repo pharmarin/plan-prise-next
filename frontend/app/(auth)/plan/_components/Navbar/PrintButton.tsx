@@ -3,24 +3,25 @@
 import { useState } from "react";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
+import { trpc } from "@/utils/api";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Download, Loader2, Printer } from "lucide-react";
+import { useSession } from "next-auth/react";
+
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@plan-prise/ui/shadcn/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
-import { trpc } from "@/utils/api";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { Download, Loader2, Printer } from "lucide-react";
-import { useSession } from "next-auth/react";
+} from "@plan-prise/ui/shadcn/ui/tooltip";
 
 const PrintButton = () => {
   const [open, setOpen] = useState(false);

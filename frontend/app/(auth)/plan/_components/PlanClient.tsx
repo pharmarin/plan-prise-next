@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import LoadingScreen from "@/components/overlays/screens/LoadingScreen";
-import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/utils/api";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
@@ -16,6 +14,8 @@ import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
+import LoadingScreen from "@plan-prise/ui/components/overlays/screens/LoadingScreen";
+import { useToast } from "@plan-prise/ui/shadcn/ui/use-toast";
 
 type SelectValueType = {
   denomination: string;

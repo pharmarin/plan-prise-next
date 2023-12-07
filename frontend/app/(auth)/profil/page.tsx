@@ -1,7 +1,7 @@
+import Title from "@/app/_components/Navigation";
 import DeleteUser from "@/app/(auth)/profil/DeleteUser";
 import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
-import Title from "@/components/navigation/Navigation";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";

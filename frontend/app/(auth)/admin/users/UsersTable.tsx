@@ -4,23 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import DeleteButton from "@/app/(auth)/admin/users/DeleteButton";
-import TextInput from "@/components/forms/inputs/TextInput";
-import Spinner from "@/components/icons/Spinner";
-import Pagination from "@/components/navigation/Pagination";
-import Dropdown from "@/components/overlays/Dropdown";
-import Pill from "@/components/Pill";
-import Table from "@/components/table/Table";
-import TableBody from "@/components/table/TableBody";
-import TableCell from "@/components/table/TableCell";
-import TableFooter from "@/components/table/TableFooter";
-import TableHead from "@/components/table/TableHead";
-import TableHeadCell from "@/components/table/TableHeadCell";
-import TableRow from "@/components/table/TableRow";
 import { trpc } from "@/utils/api";
-import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/20/solid";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import type { ColumnFiltersState, FilterFn } from "@tanstack/react-table";
 import {
@@ -34,8 +18,21 @@ import {
 import debounce from "lodash/debounce";
 import startCase from "lodash/startCase";
 import upperCase from "lodash/upperCase";
+import { ChevronDownIcon, SearchIcon } from "lucide-react";
 
 import type { RouterOutputs } from "@plan-prise/api";
+import TextInput from "@plan-prise/ui/components/forms/inputs/TextInput";
+import Spinner from "@plan-prise/ui/components/icons/Spinner";
+import Pagination from "@plan-prise/ui/components/navigation/Pagination";
+import Dropdown from "@plan-prise/ui/components/overlays/Dropdown";
+import Pill from "@plan-prise/ui/components/Pill";
+import Table from "@plan-prise/ui/components/table/Table";
+import TableBody from "@plan-prise/ui/components/table/TableBody";
+import TableCell from "@plan-prise/ui/components/table/TableCell";
+import TableFooter from "@plan-prise/ui/components/table/TableFooter";
+import TableHead from "@plan-prise/ui/components/table/TableHead";
+import TableHeadCell from "@plan-prise/ui/components/table/TableHeadCell";
+import TableRow from "@plan-prise/ui/components/table/TableRow";
 
 type User = RouterOutputs["users"]["all"][0];
 type FilterState = "all" | "pending";
@@ -193,7 +190,7 @@ const UsersTable = () => {
               type="search"
             />
             <div className="absolute left-0 top-0 inline-flex items-center p-2">
-              <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />
+              <SearchIcon className="h-6 w-6 text-gray-400" />
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ const nextConfig = {
     "@plan-prise/auth",
     "@plan-prise/db-prisma",
     "@plan-prise/errors",
+    "@plan-prise/ui",
   ],
   webpack: (config) => {
     // Added for PDF ?

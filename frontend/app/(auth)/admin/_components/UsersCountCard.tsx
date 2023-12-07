@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Card from "@/components/Card";
 
 import prisma from "@plan-prise/db-prisma";
+import Card from "@plan-prise/ui/components/Card";
 
 const UsersCountCard = async () => {
   const count = await prisma.user.count();

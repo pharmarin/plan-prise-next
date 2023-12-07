@@ -7,7 +7,7 @@ export default {
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./node_modules/@plan-prise/ui/**/*.{ts,tsx}",
   ],
   presets: [baseConfig],
 } satisfies Config;

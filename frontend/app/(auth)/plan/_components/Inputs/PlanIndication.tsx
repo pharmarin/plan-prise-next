@@ -3,18 +3,19 @@
 import { useEffect } from "react";
 import { useIndication } from "@/app/(auth)/plan/_lib/hooks";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import { FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import type { Medicament } from "@prisma/client";
+
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
+import { FormItem } from "@plan-prise/ui/shadcn/ui/form";
+import { Input } from "@plan-prise/ui/shadcn/ui/input";
+import { Label } from "@plan-prise/ui/shadcn/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import type { Medicament } from "@prisma/client";
+} from "@plan-prise/ui/shadcn/ui/select";
 
 const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   const { setData, setCanPrint } = usePlanStore((state) => ({

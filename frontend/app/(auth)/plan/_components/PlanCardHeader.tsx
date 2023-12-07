@@ -1,8 +1,9 @@
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
 import { extractVoieAdministration } from "@/app/(auth)/plan/_lib/functions";
-import { Button } from "@/components/ui/button";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { XIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const PlanCardHeader = ({
   medicament,
@@ -28,7 +29,7 @@ const PlanCardHeader = ({
           <small className="mr-auto">
             Supprimer<span className="hidden sm:inline"> la ligne</span>
           </small>
-          <XMarkIcon className="h-3 w-3" />
+          <XIcon className="h-3 w-3" />
         </Button>
       }
     >

@@ -1,4 +1,4 @@
-import type { navbarIcons } from "@/components/navigation/NavbarLink";
+import type { navbarIcons } from "@/app/_components/NavbarLink";
 
 export enum NavigationActionKind {
   SET_LOADING = "SET_LOADING",

@@ -1,9 +1,9 @@
-import Link from "@/components/navigation/Link";
-import Navigation from "@/components/navigation/Navigation";
-import { PlusIcon } from "@heroicons/react/20/solid";
+import Navigation from "@/app/_components/Navigation";
+import { PlusIcon } from "lucide-react";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
+import Link from "@plan-prise/ui/components/navigation/Link";
 
 const PlansIndex = async () => {
   const session = await getServerSession();

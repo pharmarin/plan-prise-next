@@ -1,9 +1,10 @@
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { createId } from "@paralleldrive/cuid2";
 import type { Medicament } from "@prisma/client";
+import { PlusIcon, XIcon } from "lucide-react";
+
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
 
 const PlanCommentaireCustomItem = ({
   commentId,
@@ -33,7 +34,7 @@ const PlanCommentaireCustomItem = ({
         }}
         variant="link"
       >
-        <XMarkIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
+        <XIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
       </Button>
       <Textarea
         onChange={(event) =>

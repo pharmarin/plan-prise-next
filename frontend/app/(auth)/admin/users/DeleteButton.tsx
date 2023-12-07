@@ -1,9 +1,9 @@
-import Spinner from "@/components/icons/Spinner";
-import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/api";
-import { TrashIcon } from "@heroicons/react/20/solid";
+import { TrashIcon } from "lucide-react";
 
 import type { User } from "@plan-prise/db-prisma";
+import Spinner from "@plan-prise/ui/components/icons/Spinner";
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const DeleteButton: React.FC<{
   user: Partial<User> & { id: User["id"] };

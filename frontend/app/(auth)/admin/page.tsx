@@ -1,7 +1,7 @@
+import Navigation from "@/app/_components/Navigation";
 import ChartCard from "@/app/(auth)/admin/_components/ChartCard";
 import PlansCountCard from "@/app/(auth)/admin/_components/PlansCountCard";
 import UsersCountCard from "@/app/(auth)/admin/_components/UsersCountCard";
-import Navigation from "@/components/navigation/Navigation";
 
 const AdminDashboard = () => {
   return (

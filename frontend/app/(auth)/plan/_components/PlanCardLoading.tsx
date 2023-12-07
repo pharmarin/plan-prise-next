@@ -2,7 +2,8 @@
 
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
 import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
-import Logo from "@/components/navigation/Logo";
+
+import Logo from "@plan-prise/ui/components/navigation/Logo";
 
 const PlanCardLoading = (
   props:
