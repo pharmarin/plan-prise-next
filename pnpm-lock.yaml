@@ -289,8 +289,8 @@ importers:
         specifier: 7.49.0
         version: 7.49.0(react@18.2.0)
       react-pdf:
-        specifier: 7.5.1
-        version: 7.5.1(@types/react@18.2.43)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 7.6.0
+        version: 7.6.0(@types/react@18.2.43)(react-dom@18.2.0)(react@18.2.0)
       react-pdf-html:
         specifier: 1.1.18
         version: 1.1.18(@react-pdf/renderer@3.1.14)(react@18.2.0)
@@ -6704,8 +6704,8 @@ packages:
       - ts-node
     dev: false
 
-  /react-pdf@7.5.1(@types/react@18.2.43)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-NVno97L3wfX3RLGB3C+QtroOiQrgCKPHLMFKMSQaRqDlH3gkq2CB2NyXJ+IDQNLrT/gSMPPgtZQL8cOUySc/3w==}
+  /react-pdf@7.6.0(@types/react@18.2.43)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-b2/8V6xhe5pn4Y01ELKTQZ+RhdZl1KpSAMGbN+HCZ/kwhYTIc4Pn5ctz1wRQUu1gOJbIEG4CcjMD9vTCzNdwjw==}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
