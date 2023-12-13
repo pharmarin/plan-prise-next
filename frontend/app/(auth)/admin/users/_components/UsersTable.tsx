@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
-import DeleteButton from "@/app/(auth)/admin/users/DeleteButton";
+import ApproveButton from "@/app/(auth)/admin/users/_components/ApproveButton";
+import DeleteButton from "@/app/(auth)/admin/users/_components/DeleteButton";
 import { trpc } from "@/utils/api";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import type { ColumnFiltersState, FilterFn } from "@tanstack/react-table";

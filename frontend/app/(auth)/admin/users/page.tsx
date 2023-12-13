@@ -1,13 +1,14 @@
 import Navigation from "@/app/_components/Navigation";
-import UsersTable from "@/app/(auth)/admin/users/UsersTable";
+import UsersClient from "@/app/(auth)/admin/users/client";
 
 const PAGE_TITLE = "Utilisateurs";
 
-const Users = () => {
+const Users = async () => {
   return (
     <>
       <Navigation title={PAGE_TITLE} returnTo="/admin" />
-      <UsersTable />
+
+      <UsersClient />
     </>
   );
 };

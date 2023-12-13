@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import ApproveButton from "@/app/(auth)/admin/users/_components/ApproveButton";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
-import ApproveButton from "@/app/(auth)/admin/users/ApproveButton";
 import { trpc } from "@/utils/api";
 import { XIcon } from "lucide-react";
 
