@@ -9,7 +9,6 @@ import { default as PlanNavbarStack } from "app/(auth)/plan/_components/Navbar/N
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
-import { Initials } from "@plan-prise/ui/components/icons/Initials";
 import Logo from "@plan-prise/ui/components/navigation/Logo";
 import Dropdown from "@plan-prise/ui/components/overlays/Dropdown";
 import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
@@ -58,10 +57,12 @@ const Navbar = () => {
               <>
                 <span className="sr-only">Ouvrir le menu utilisateur</span>
                 {user ? (
-                  <Initials
-                    firstName={user.firstName ?? "P"}
-                    lastName={user.lastName ?? "P"}
-                  />
+                  <Avatar>
+                    <AvatarFallback className="bg-teal-500 text-white">
+                      {user.firstName?.[0] ?? "P"}
+                      {user.lastName?.[0] ?? "P"}
+                    </AvatarFallback>
+                  </Avatar>
                 ) : (
                   <Avatar>
                     <AvatarFallback>
