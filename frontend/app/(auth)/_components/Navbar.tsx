@@ -81,8 +81,12 @@ const Navbar = () => {
               ...(data?.user?.admin
                 ? [
                     {
+                      label: "Dashboard",
+                      path: "/admin",
+                    },
+                    {
                       label: "Utilisateurs",
-                      path: "/admin/users" as const,
+                      path: "/admin/users",
                     },
                   ]
                 : []),
