@@ -3,7 +3,7 @@ import UsersClient from "@/app/(auth)/admin/users/client";
 
 const PAGE_TITLE = "Utilisateurs";
 
-const Users = async () => {
+const UsersServer = async () => {
   return (
     <>
       <Navigation title={PAGE_TITLE} returnTo="/admin" />
@@ -13,7 +13,7 @@ const Users = async () => {
   );
 };
 
-export default Users;
+export default UsersServer;
 
 export const metadata = {
   title: PAGE_TITLE,
