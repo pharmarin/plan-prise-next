@@ -10,8 +10,15 @@ import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import Logo from "@plan-prise/ui/components/navigation/Logo";
-import Dropdown from "@plan-prise/ui/components/overlays/Dropdown";
 import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@plan-prise/ui/shadcn/ui/dropdown-menu";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -48,58 +55,51 @@ const Navbar = () => {
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">
-          <Dropdown
-            buttonProps={{
-              className:
-                "bg-white flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mx-3",
-            }}
-            buttonContent={
-              <>
-                <span className="sr-only">Ouvrir le menu utilisateur</span>
-                {user ? (
-                  <Avatar>
-                    <AvatarFallback className="bg-teal-500 text-white">
-                      {user.firstName?.[0] ?? "P"}
-                      {user.lastName?.[0] ?? "P"}
-                    </AvatarFallback>
-                  </Avatar>
-                ) : (
-                  <Avatar>
-                    <AvatarFallback>
-                      <Loader2 className="animate-spin text-gray-800" />
-                    </AvatarFallback>
-                  </Avatar>
-                )}
-              </>
-            }
-            className="z-20"
-            items={[
-              {
-                label: "Profil",
-                path: "/profil",
-              },
-              ...(data?.user?.admin
-                ? [
-                    {
-                      label: "Dashboard",
-                      path: "/admin",
-                    },
-                    {
-                      label: "Utilisateurs",
-                      path: "/admin/users",
-                    },
-                  ]
-                : []),
-              {
-                label: "Déconnexion",
-                action: async () => {
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              {user ? (
+                <Avatar>
+                  <AvatarFallback className="bg-teal-500 text-white">
+                    {user.firstName?.[0] ?? "P"}
+                    {user.lastName?.[0] ?? "P"}
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <Avatar>
+                  <AvatarFallback>
+                    <Loader2 className="animate-spin text-gray-800" />
+                  </AvatarFallback>
+                </Avatar>
+              )}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {data?.user?.admin && (
+                <>
+                  <DropdownMenuLabel>Administration</DropdownMenuLabel>
+                  <DropdownMenuItem onClick={() => router.push("/admin")}>
+                    Dashboard
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push("/admin/users")}>
+                    Utilisateurs
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+              <DropdownMenuItem onClick={() => router.push("/profil")}>
+                Profil
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={async () => {
                   await signOut({ redirect: false }).finally(() =>
                     router.refresh(),
                   );
-                },
-              },
-            ]}
-          />
+                }}
+              >
+                Déconnexion
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </div>
