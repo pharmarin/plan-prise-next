@@ -1,8 +1,8 @@
 import { isCuid } from "@paralleldrive/cuid2";
-import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
 
+import type { Plan } from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
 import { MUTATION_SUCCESS, PLAN_NEW } from "../constants";
