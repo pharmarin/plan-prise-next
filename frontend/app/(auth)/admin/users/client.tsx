@@ -26,7 +26,7 @@ const UsersClient = ({ users }: { users: CleanUser[] }) => {
       column: "approvedAt",
       value: null,
       label: "Utilisateurs à approuver",
-      default: true,
+      default: users.filter((user) => !user.approvedAt).length > 0,
     },
   };
 
