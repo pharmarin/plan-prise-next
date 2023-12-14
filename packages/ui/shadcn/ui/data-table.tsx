@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -58,12 +59,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filters?: DataTableColumnFilter<TData>[];
+  link?: (data: TData) => string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   filters,
+  link,
 }: DataTableProps<TData, TValue>) {
   const defaultColumnFilter = (filters || [])
     .filter((filter) => filter.default === true)
@@ -77,6 +80,8 @@ export function DataTable<TData, TValue>({
     })),
   );
   const [sorting, setSorting] = useState<SortingState>([]);
+
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -167,7 +172,11 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  className={cn({ "cursor-pointer": link !== undefined })}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() =>
+                    link ? router.push(link(row.original)) : undefined
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

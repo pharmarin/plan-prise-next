@@ -1,4 +1,4 @@
-import RegisterForm from "@/app/(guest)/register/RegisterForm";
+import RegisterForm from "@/app/(guest)/register/client";
 
 const Register = () => <RegisterForm />;
 

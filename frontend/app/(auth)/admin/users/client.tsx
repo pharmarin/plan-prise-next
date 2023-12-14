@@ -1,40 +1,22 @@
 "use client";
 
-import Link from "next/link";
-import ApproveButton from "@/app/(auth)/admin/users/_components/ApproveButton";
-import DeleteButton from "@/app/(auth)/admin/users/_components/DeleteButton";
-import { trpc } from "@/utils/api";
-import type { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+import { CleanUser } from "@/app/(auth)/admin/users/page";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import startCase from "lodash/startCase";
 import upperCase from "lodash/upperCase";
 
-import type { RouterOutputs } from "@plan-prise/api";
-import Pill from "@plan-prise/ui/components/Pill";
+import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
 import {
   DataTable,
   DataTableColumnFilter,
   DataTableColumnHeader,
 } from "@plan-prise/ui/shadcn/ui/data-table";
 
-type User = RouterOutputs["users"]["all"][0];
 type FilterKey = "PENDING" | "ALL";
 
-const isFilteredColumn = (
-  filter: DataTableColumnFilter<User>,
-  state: ColumnFiltersState,
-) => state[0]?.id === filter.column && state[0].value === filter.value;
-
-const UsersClient = () => {
-  const { data, isFetching, isError, refetch } = trpc.users.all.useQuery(
-    undefined,
-    {
-      initialData: [],
-      refetchOnWindowFocus: false,
-    },
-  );
-
-  const filters: Record<FilterKey, DataTableColumnFilter<User>> = {
+const UsersClient = ({ users }: { users: CleanUser[] }) => {
+  const filters: Record<FilterKey, DataTableColumnFilter<CleanUser>> = {
     ALL: {
       column: "approvedAt",
       value: undefined,
@@ -48,9 +30,9 @@ const UsersClient = () => {
     },
   };
 
-  const columnHelper = createColumnHelper<User>();
+  const columnHelper = createColumnHelper<CleanUser>();
 
-  const columns: ColumnDef<User, any>[] = [
+  const columns: ColumnDef<CleanUser, any>[] = [
     columnHelper.accessor("lastName", {
       cell: ({ getValue }) => upperCase(getValue() ?? ""),
       header: ({ column }) => (
@@ -72,35 +54,15 @@ const UsersClient = () => {
     columnHelper.accessor("student", {
       cell: ({ row }) =>
         row.original.admin ? (
-          <Pill className="bg-red-400">Admin</Pill>
+          <Badge className="bg-red-400">Admin</Badge>
         ) : row.original.student ? (
-          <Pill className="bg-green-400">Étudiant</Pill>
+          <Badge className="bg-green-400">Étudiant</Badge>
         ) : (
-          <Pill className="bg-green-500">Pharmacien</Pill>
+          <Badge className="bg-green-500">Pharmacien</Badge>
         ),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Statut" />
       ),
-    }),
-    columnHelper.accessor("rpps", {
-      cell: ({ row, table }) => {
-        if (
-          isFilteredColumn(filters.PENDING, table.getState().columnFilters) &&
-          row.original.student &&
-          !row.original.approvedAt
-        ) {
-          return (
-            <Link
-              href={`/admin/users/${row.original.id}/certificate`}
-              prefetch={false}
-            >
-              Justificatif
-            </Link>
-          );
-        }
-        return row.original?.rpps ? row.original.rpps.toString() : "";
-      },
-      header: "RPPS",
     }),
     columnHelper.accessor("createdAt", {
       cell: ({ row }) =>
@@ -119,22 +81,15 @@ const UsersClient = () => {
       ),
       filterFn: (row) => !row.original.approvedAt,
     }),
-    columnHelper.display({
-      id: "actions",
-      cell: ({ row, table }) => (
-        <div className="flex flex-row justify-end space-x-2">
-          {isFilteredColumn(
-            filters.PENDING,
-            table.getState().columnFilters,
-          ) && <ApproveButton user={row.original} onSuccess={refetch} />}
-          <DeleteButton user={row.original} onSuccess={refetch} />
-        </div>
-      ),
-    }),
   ];
 
   return (
-    <DataTable columns={columns} data={data} filters={Object.values(filters)} />
+    <DataTable
+      columns={columns}
+      data={users}
+      filters={Object.values(filters)}
+      link={(data) => `/admin/users/${data.id}`}
+    />
   );
 };
 

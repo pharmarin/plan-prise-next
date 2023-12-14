@@ -657,6 +657,9 @@ importers:
       react-hook-form:
         specifier: 7.48.2
         version: 7.48.2(react@18.2.0)
+      react-pdf:
+        specifier: 7.5.1
+        version: 7.5.1(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       react-pdf-tailwind:
         specifier: 2.1.0
         version: 2.1.0(react@18.2.0)
@@ -685,6 +688,9 @@ importers:
       eslint:
         specifier: 8.55.0
         version: 8.55.0
+      tailwindcss:
+        specifier: 3.3.6
+        version: 3.3.6
       typescript:
         specifier: 5.3.2
         version: 5.3.2
