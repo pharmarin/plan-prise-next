@@ -14,7 +14,7 @@ import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
-import LoadingScreen from "@plan-prise/ui/components/overlays/screens/LoadingScreen";
+import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/ui/use-toast";
 
 type SelectValueType = {

@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-import Logo from "../../navigation/Logo";
+import Logo from "../navigation/Logo";
 
 const LoadingScreen: React.FC<{ fullscreen?: boolean }> = ({ fullscreen }) => {
   return (

@@ -1,4 +1,4 @@
-import LoadingScreen from "@plan-prise/ui/components/overlays/screens/LoadingScreen";
+import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 
 const AppLoading = () => <LoadingScreen fullscreen />;
 
