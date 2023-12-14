@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useNavigation } from "@/app/_components/NavigationContextProvider";
-import PlanNavbarStack from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
+import NavbarLink from "@/app/(auth)/_components/NavbarLink";
+import { useNavigationState } from "@/state/navigation";
 import { trpc } from "@/utils/api";
+import { default as PlanNavbarStack } from "app/(auth)/plan/_components/Navbar/NavbarStack";
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -13,13 +14,12 @@ import Logo from "@plan-prise/ui/components/navigation/Logo";
 import Dropdown from "@plan-prise/ui/components/overlays/Dropdown";
 import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
 
-import NavbarLink from "./NavbarLink";
-
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();
-  const { returnTo, title } = useNavigation();
+  const title = useNavigationState((state) => state.title);
+  const returnTo = useNavigationState((state) => state.returnTo);
   const { data: user } = trpc.users.current.useQuery();
 
   const isHome = pathname === "/";

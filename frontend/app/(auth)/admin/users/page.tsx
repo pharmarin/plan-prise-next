@@ -1,5 +1,5 @@
-import Navigation from "@/app/_components/Navigation";
 import UsersClient from "@/app/(auth)/admin/users/client";
+import { Navigation } from "@/state/navigation";
 
 const PAGE_TITLE = "Utilisateurs";
 
@@ -7,7 +7,6 @@ const UsersServer = async () => {
   return (
     <>
       <Navigation title={PAGE_TITLE} returnTo="/admin" />
-
       <UsersClient />
     </>
   );

@@ -5,6 +5,8 @@ import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
 
 import Logo from "@plan-prise/ui/components/navigation/Logo";
 
+// TODO: Move to UI package
+
 const PlanCardLoading = (
   props:
     | {
@@ -25,11 +27,6 @@ const PlanCardLoading = (
               `Suppression de ${props.denomination} en cours...`}
             {props.type === "fetching" && "Chargement en cours..."}
           </span>
-          {/* <PlanCardHeader
-            medicament={medicament}
-            open={showDetails}
-            toggle={() => setShowDetails((showDetails) => !showDetails)}
-          /> */}
         </div>
         <div className="flex h-24 flex-grow flex-col">
           <span className="mb-2 h-6 w-1/3 rounded bg-gray-300"></span>

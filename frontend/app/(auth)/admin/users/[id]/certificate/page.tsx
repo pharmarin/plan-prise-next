@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import ApproveButton from "@/app/(auth)/admin/users/_components/ApproveButton";
 import ShowPDF from "@/app/(auth)/admin/users/[id]/certificate/ShowPDF";
+import { Navigation } from "@/state/navigation";
 import { trpc } from "@/utils/api";
 import { XIcon } from "lucide-react";
 
@@ -11,8 +12,6 @@ import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-
-import Navigation from "@/app/_components/Navigation";
 
 const ApproveStudent = ({ params }: { params: { id: string } }) => {
   const router = useRouter();

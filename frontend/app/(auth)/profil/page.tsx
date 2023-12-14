@@ -1,7 +1,7 @@
-import Title from "@/app/_components/Navigation";
 import DeleteUser from "@/app/(auth)/profil/DeleteUser";
 import EditInformations from "@/app/(auth)/profil/EditInformations";
 import EditPassword from "@/app/(auth)/profil/EditPassword";
+import { Navigation } from "@/state/navigation";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
@@ -21,8 +21,7 @@ const Profil = async () => {
 
   return (
     <>
-      <Title title={PAGE_TITLE} />
-
+      <Navigation title={PAGE_TITLE} />
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">

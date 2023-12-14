@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import type { NavigationItem } from "@/types/navigation";
+import type { NavbarIcons, NavigationItem } from "@/types/navigation";
 import { ArrowLeftIcon, HomeIcon } from "lucide-react";
 
-export const navbarIcons = {
+export const navbarIcons: NavbarIcons = {
   arrowLeft: ArrowLeftIcon,
   home: HomeIcon,
-} as const;
+};
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   const NavbarIcon = navbarIcons[icon];

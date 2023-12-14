@@ -2,7 +2,6 @@
 
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
-import NavigationContextProvider from "@/app/_components/NavigationContextProvider";
 import { trpc } from "@/utils/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
@@ -59,8 +58,4 @@ export const GuestProviders: React.FC<PropsWithChildren> = ({ children }) => (
   >
     {children}
   </GoogleReCaptchaProvider>
-);
-
-export const AuthProviders: React.FC<PropsWithChildren> = ({ children }) => (
-  <NavigationContextProvider>{children}</NavigationContextProvider>
 );

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 import React from "react";
-import { GlobalProviders } from "@/app/_components/Providers";
+import { GlobalProviders } from "@/app/providers";
 import background from "@/public/home-bg.jpg";
 
 import "@plan-prise/ui/styles/globals.css";

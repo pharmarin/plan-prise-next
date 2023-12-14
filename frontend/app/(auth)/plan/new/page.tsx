@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import Navigation from "@/app/_components/Navigation";
 import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
+import { Navigation } from "@/state/navigation";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 

@@ -1,4 +1,4 @@
-import Navigation from "@/app/_components/Navigation";
+import { Navigation } from "@/state/navigation";
 import { PlusIcon } from "lucide-react";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
