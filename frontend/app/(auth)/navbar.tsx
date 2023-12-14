@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import NavbarLink from "@/app/(auth)/_components/NavbarLink";
 import { useNavigationState } from "@/state/navigation";
+import type { NavbarIcons, NavigationItem } from "@/types/navigation";
 import { trpc } from "@/utils/api";
 import { default as PlanNavbarStack } from "app/(auth)/plan/_components/Navbar/NavbarStack";
-import { Loader2 } from "lucide-react";
+import { ArrowLeftIcon, HomeIcon, Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import Logo from "@plan-prise/ui/components/navigation/Logo";
@@ -20,7 +20,26 @@ import {
   DropdownMenuTrigger,
 } from "@plan-prise/ui/shadcn/ui/dropdown-menu";
 
-const Navbar = () => {
+export const navbarIcons: NavbarIcons = {
+  arrowLeft: ArrowLeftIcon,
+  home: HomeIcon,
+};
+
+const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
+  const NavbarIcon = navbarIcons[icon];
+
+  if ("path" in props) {
+    return (
+      <Link className="p-2" href={props.path}>
+        <NavbarIcon className="h-5 w-5 text-gray-700" />
+      </Link>
+    );
+  } else {
+    return null;
+  }
+};
+
+export const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import Navbar from "@/app/(auth)/_components/Navbar";
 import AuthGuard from "@/app/(auth)/guard";
+import { Navbar } from "@/app/(auth)/navbar";
 
 const AuthLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
