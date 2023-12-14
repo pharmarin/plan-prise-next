@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { trpc } from "@/utils/api";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";

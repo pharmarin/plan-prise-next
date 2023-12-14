@@ -8,16 +8,18 @@ import {
   CaretSortIcon,
   EyeNoneIcon,
 } from "@radix-ui/react-icons";
-import {
+import type {
   Column,
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
+} from "@tanstack/react-table";
+import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -50,17 +52,17 @@ import {
 
 export type DataTableColumnFilter<TData> = {
   column: Extract<keyof TData, string>;
-  value: any;
+  value: unknown;
   label: string;
   default?: boolean;
 };
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filters?: DataTableColumnFilter<TData>[];
   link?: (data: TData) => string;
-}
+};
 
 export function DataTable<TData, TValue>({
   columns,
@@ -68,7 +70,7 @@ export function DataTable<TData, TValue>({
   filters,
   link,
 }: DataTableProps<TData, TValue>) {
-  const defaultColumnFilter = (filters || [])
+  const defaultColumnFilter = (filters ?? [])
     .filter((filter) => filter.default === true)
     .filter((_, index) => index === 0);
 
@@ -206,12 +208,11 @@ export function DataTable<TData, TValue>({
   );
 }
 
-interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
+type DataTableColumnHeaderProps<TData, TValue> = {
   column: Column<TData, TValue>;
   title: string;
   menu?: boolean;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export function DataTableColumnHeader<TData, TValue>({
   column,

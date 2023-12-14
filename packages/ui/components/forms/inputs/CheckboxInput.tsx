@@ -1,7 +1,6 @@
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-// eslint-disable-next-line react/display-name
 const CheckboxInput = forwardRef<
   HTMLInputElement,
   Omit<

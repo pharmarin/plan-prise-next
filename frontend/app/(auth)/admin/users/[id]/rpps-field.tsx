@@ -1,16 +1,19 @@
 "use client";
 
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
+
 const RPPSField = ({ rpps }: { rpps: string }) => {
   return (
-    <div
+    <Button
       className="cursor-pointer"
-      onClick={() => {
-        navigator.clipboard.writeText(rpps);
+      onClick={async () => {
+        await navigator.clipboard.writeText(rpps);
         window.open("https://annuaire.sante.fr");
       }}
+      variant="link"
     >
       {rpps}
-    </div>
+    </Button>
   );
 };
 

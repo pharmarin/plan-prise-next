@@ -31,7 +31,7 @@ const User = async ({ params }: { params: { id: string } }) => {
           </div>
           <div className="space-y-1">
             <Label>Affichage</Label>
-            <div>{user.displayName || ""}</div>
+            <div>{user.displayName ?? ""}</div>
           </div>
           <div className="space-y-1">
             <Label>Statut</Label>
@@ -53,7 +53,7 @@ const User = async ({ params }: { params: { id: string } }) => {
           </div>
           {user.student ? (
             <div className="space-y-1">
-              <Label>Justificatif d'inscription</Label>
+              <Label>Justificatif d&apos;inscription</Label>
               <div>
                 {(() => {
                   if (

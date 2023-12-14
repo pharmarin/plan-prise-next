@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 
 import { Label } from "../../../shadcn/ui/label";
 
-// eslint-disable-next-line react/display-name
 const TextInput = forwardRef<
   HTMLInputElement,
   Omit<

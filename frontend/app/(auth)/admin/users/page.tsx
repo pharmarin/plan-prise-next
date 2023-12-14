@@ -1,7 +1,8 @@
 import UsersClient from "@/app/(auth)/admin/users/client";
 import { Navigation } from "@/state/navigation";
 
-import prisma, { User } from "@plan-prise/db-prisma";
+import type { User } from "@plan-prise/db-prisma";
+import prisma from "@plan-prise/db-prisma";
 
 const PAGE_TITLE = "Utilisateurs";
 

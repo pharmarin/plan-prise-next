@@ -1,15 +1,15 @@
 "use client";
 
-import { CleanUser } from "@/app/(auth)/admin/users/page";
+import type { CleanUser } from "@/app/(auth)/admin/users/page";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import startCase from "lodash/startCase";
 import upperCase from "lodash/upperCase";
 
 import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
+import type { DataTableColumnFilter } from "@plan-prise/ui/shadcn/ui/data-table";
 import {
   DataTable,
-  DataTableColumnFilter,
   DataTableColumnHeader,
 } from "@plan-prise/ui/shadcn/ui/data-table";
 
@@ -32,21 +32,22 @@ const UsersClient = ({ users }: { users: CleanUser[] }) => {
 
   const columnHelper = createColumnHelper<CleanUser>();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns: ColumnDef<CleanUser, any>[] = [
     columnHelper.accessor("lastName", {
-      cell: ({ getValue }) => upperCase(getValue() ?? ""),
+      cell: ({ row }) => upperCase(row.getValue("lastName") ?? ""),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Nom" />
       ),
     }),
     columnHelper.accessor("firstName", {
-      cell: ({ getValue }) => startCase(getValue()?.toLowerCase() ?? ""),
+      cell: ({ row }) => startCase(row.getValue("firstName") ?? ""),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Prénom" />
       ),
     }),
     columnHelper.accessor("displayName", {
-      cell: ({ getValue }) => startCase(getValue()?.toLowerCase() ?? ""),
+      cell: ({ row }) => startCase(row.getValue("displayName") ?? ""),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Affichage" />
       ),
