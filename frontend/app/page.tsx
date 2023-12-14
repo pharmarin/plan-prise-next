@@ -1,14 +1,17 @@
 import AuthLayout from "@/app/(auth)/layout";
-import Title from "@/components/navigation/Navigation";
-import Home from "@/components/pages/Home";
+import { Navigation } from "@/state/navigation";
+
+import Home from "@plan-prise/ui/components/pages/Home";
 
 import "../../packages/db-prisma/src/types";
 
-const Index = () => (
-  <AuthLayout>
-    <Title title="Bienvenue" />
-    <Home />
-  </AuthLayout>
-);
+const Index = () => {
+  return (
+    <AuthLayout>
+      <Navigation title="Bienvenue" />
+      <Home />
+    </AuthLayout>
+  );
+};
 
 export default Index;

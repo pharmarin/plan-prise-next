@@ -1,15 +1,15 @@
 import { useRouter } from "next/navigation";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { trpc } from "@/utils/api";
+import { Loader2, Trash2 } from "lucide-react";
+
+import { PLAN_NEW } from "@plan-prise/api/constants";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { trpc } from "@/utils/api";
-import { Loader2, Trash2 } from "lucide-react";
-
-import { PLAN_NEW } from "@plan-prise/api/constants";
+} from "@plan-prise/ui/shadcn/ui/tooltip";
 
 const DeleteButton = () => {
   const router = useRouter();

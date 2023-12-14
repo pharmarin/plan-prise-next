@@ -128,7 +128,14 @@ const usersRouter = createTRPCRouter({
         }),
       );
 
-      await sendMailApproved(user);
+      try {
+        await sendMailApproved(user);
+      } catch (error) {
+        console.error(
+          "Une erreur est survenue lors de l'envoi du mail d'activation. ",
+          error,
+        );
+      }
 
       return MUTATION_SUCCESS;
     }),

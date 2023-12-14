@@ -1,15 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Form from "@/components/forms/Form";
-import FormikField from "@/components/forms/inputs/FormikField";
-import ServerError from "@/components/forms/ServerError";
-import { Button } from "@/components/ui/button";
+import ServerError from "@/app/_components/ServerError";
 import { trpc } from "@/utils/api";
 import { Formik } from "formik";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { resetPasswordSchema } from "@plan-prise/api/validation/users";
+import Form from "@plan-prise/ui/components/forms/Form";
+import FormikField from "@plan-prise/ui/components/forms/inputs/FormikField";
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
   email,

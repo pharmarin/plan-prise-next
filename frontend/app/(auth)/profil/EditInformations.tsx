@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Form from "@/components/forms/Form";
-import FormikField from "@/components/forms/inputs/FormikField";
-import TextInput from "@/components/forms/inputs/TextInput";
-import ServerError from "@/components/forms/ServerError";
-import InfosModal from "@/components/overlays/modals/InfosModal";
-import { Button } from "@/components/ui/button";
+import ServerError from "@/app/_components/ServerError";
 import { trpc } from "@/utils/api";
 import type { User } from "@prisma/client";
 import { Formik } from "formik";
 import { twMerge } from "tailwind-merge";
 
 import { updateUserSchema } from "@plan-prise/api/validation/users";
+import Form from "@plan-prise/ui/components/forms/Form";
+import FormikField from "@plan-prise/ui/components/forms/inputs/FormikField";
+import TextInput from "@plan-prise/ui/components/forms/inputs/TextInput";
+import InfosModal from "@plan-prise/ui/components/overlays/modals/InfosModal";
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const EditInformations: React.FC<{
   user: User;

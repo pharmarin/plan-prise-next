@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import { GuestProviders } from "@/app/_components/Providers";
-import AuthGuard from "@/components/guards/AuthGuard";
+import AuthGuard from "@/app/(auth)/guard";
+import { GuestProviders } from "@/app/providers";
 
 const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (

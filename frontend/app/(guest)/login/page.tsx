@@ -1,4 +1,4 @@
-import LoginForm from "@/app/(guest)/login/LoginForm";
+import LoginForm from "@/app/(guest)/login/client";
 
 const LoginPage = () => <LoginForm />;
 
