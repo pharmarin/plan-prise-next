@@ -649,8 +649,8 @@ importers:
         specifier: 7.49.2
         version: 7.49.2(react@18.2.0)
       react-pdf:
-        specifier: 7.5.1
-        version: 7.5.1(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 7.6.0
+        version: 7.6.0(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
       react-pdf-tailwind:
         specifier: 2.1.0
         version: 2.1.0(react@18.2.0)
@@ -3381,6 +3381,7 @@ packages:
   /agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
+    requiresBuild: true
     dependencies:
       debug: 4.3.4
     transitivePeerDependencies:
@@ -7372,8 +7373,8 @@ packages:
       - ts-node
     dev: false
 
-  /react-pdf@7.5.1(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-NVno97L3wfX3RLGB3C+QtroOiQrgCKPHLMFKMSQaRqDlH3gkq2CB2NyXJ+IDQNLrT/gSMPPgtZQL8cOUySc/3w==}
+  /react-pdf@7.6.0(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-b2/8V6xhe5pn4Y01ELKTQZ+RhdZl1KpSAMGbN+HCZ/kwhYTIc4Pn5ctz1wRQUu1gOJbIEG4CcjMD9vTCzNdwjw==}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0

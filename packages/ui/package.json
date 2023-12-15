@@ -60,7 +60,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.49.2",
-    "react-pdf": "7.5.1",
+    "react-pdf": "7.6.0",
     "react-pdf-tailwind": "2.1.0",
     "react-textarea-autosize": "8.5.3",
     "tailwind-merge": "2.1.0",
