@@ -21,8 +21,8 @@ importers:
         specifier: '*'
         version: link:config/prettier
       '@prettier/plugin-php':
-        specifier: 0.21.0
-        version: 0.21.0(prettier@3.1.1)
+        specifier: 0.22.1
+        version: 0.22.1(prettier@3.1.1)
       '@turbo/gen':
         specifier: 1.11.2
         version: 1.11.2(@types/node@20.10.4)(typescript@5.3.3)
@@ -1438,12 +1438,12 @@ packages:
       config-chain: 1.1.13
     dev: false
 
-  /@prettier/plugin-php@0.21.0(prettier@3.1.1):
-    resolution: {integrity: sha512-vWC6HIUUfhvl/7F5IxVQ0ItGB/7ZY+jDlX7KsTqvfKMODW/zvzj8r1Ab4harS22+O3xxHykVVd5jvylmxMMctg==}
+  /@prettier/plugin-php@0.22.1(prettier@3.1.1):
+    resolution: {integrity: sha512-TN7tzC2/jCM1/H/mlUjqPos8lIV+vm8Qwp83KofuZclGlG9PoUWHU7m0yqskjAoCy+R4ZCV0hxdBLPBkU69S2Q==}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
-      linguist-languages: 7.21.0
+      linguist-languages: 7.27.0
       mem: 9.0.2
       php-parser: 3.1.5
       prettier: 3.1.1
@@ -6070,8 +6070,8 @@ packages:
   /lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
-  /linguist-languages@7.21.0:
-    resolution: {integrity: sha512-KrWJJbFOvlDhjlt5OhUipVlXg+plUfRurICAyij1ZVxQcqPt/zeReb9KiUVdGUwwhS/2KS9h3TbyfYLA5MDlxQ==}
+  /linguist-languages@7.27.0:
+    resolution: {integrity: sha512-Wzx/22c5Jsv2ag+uKy+ITanGA5hzvBZngrNGDXLTC7ZjGM6FLCYGgomauTkxNJeP9of353OM0pWqngYA180xgw==}
     dev: false
 
   /listenercount@1.0.1:
