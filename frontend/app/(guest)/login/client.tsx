@@ -1,37 +1,113 @@
 "use client";
 
-import { useState } from "react";
 import type { Route } from "next";
 import { useRouter, useSearchParams } from "next/navigation";
-import ServerError from "@/app/_components/ServerError";
-import type { TRPCClientErrorLike } from "@trpc/client";
-import { Formik } from "formik";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 
-import type { AppRouter } from "@plan-prise/api";
 import { loginSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
-import Form from "@plan-prise/ui/components/forms/Form";
-import FormikField from "@plan-prise/ui/components/forms/inputs/FormikField";
 import Link from "@plan-prise/ui/components/navigation/Link";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormServerError,
+  SERVER_ERROR,
+} from "@plan-prise/ui/shadcn/ui/form";
+import { Input } from "@plan-prise/ui/shadcn/ui/input";
 
 const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const [error, setError] = useState<
-    TRPCClientErrorLike<AppRouter> | undefined
-  >(undefined);
+  const form = useForm<z.infer<typeof loginSchema>>({
+    mode: "all",
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    if (!executeRecaptcha) {
+      throw new PP_Error("RECAPTCHA_LOADING_ERROR");
+    }
+
+    const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+
+    const signInResponse = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      recaptcha,
+      redirect: false,
+    }).catch((error) => console.log("error: ", error));
+
+    if (!signInResponse?.error) {
+      router.push((searchParams?.get("redirectTo") ?? "/") as Route);
+    } else {
+      form.setError(
+        SERVER_ERROR,
+        new PP_Error(
+          signInResponse?.error === "CredentialsSignin"
+            ? "USER_LOGIN_ERROR"
+            : "SERVER_ERROR",
+        ),
+      );
+    }
+  };
 
   return (
     <>
-      <Formik
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Adresse mail</FormLabel>
+                <FormControl>
+                  <Input placeholder="Adresse mail" type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mot de passe</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Mot de passe"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormServerError />
+          <Button type="submit">Se connecter</Button>
+        </form>
+      </Form>
+      {/* <Formik
         initialValues={{
-          email: searchParams?.get("email") ?? "",
-          password: searchParams?.get("password") ?? "",
+          email: "",
+          password: "",
         }}
         onSubmit={async (values) => {
           if (!executeRecaptcha) {
@@ -108,7 +184,7 @@ const LoginForm = () => {
             {error && <ServerError error={error} />}
           </Form>
         )}
-      </Formik>
+      </Formik> */}
       <Link className="mt-4" href="/register">
         Je n&apos;ai pas de compte : S&apos;inscrire
       </Link>

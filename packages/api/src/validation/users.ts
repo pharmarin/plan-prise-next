@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { z } from "zod";
 
 import setLanguage from "./locale";
 
@@ -29,9 +30,9 @@ export const forgotPasswordSchema = yup.object({
 
 export const getUniqueUserSchema = yup.string().required();
 
-export const loginSchema = yup.object({
-  email: yup.string().email().required().label("Adresse mail"),
-  password: yup.string().required(),
+export const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
 });
 
 export const passwordVerifySchema = yup.object({
