@@ -119,7 +119,7 @@ importers:
     dependencies:
       '@tailwindcss/typography':
         specifier: 0.5.10
-        version: 0.5.10(tailwindcss@3.3.7)
+        version: 0.5.10(tailwindcss@3.4.0)
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.32)
@@ -127,11 +127,11 @@ importers:
         specifier: 8.4.32
         version: 8.4.32
       tailwindcss:
-        specifier: 3.3.7
-        version: 3.3.7
+        specifier: 3.4.0
+        version: 3.4.0
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.3.7)
+        version: 1.0.7(tailwindcss@3.4.0)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: ^0.2.0
@@ -206,7 +206,7 @@ importers:
         version: 8.11.0(react-dom@18.2.0)(react@18.2.0)
       '@tremor/react':
         specifier: 3.12.1
-        version: 3.12.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.7)
+        version: 3.12.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.0)
       '@trpc/client':
         specifier: 10.44.1
         version: 10.44.1(@trpc/server@10.44.1)
@@ -314,8 +314,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2(webpack@5.89.0)
       tailwindcss:
-        specifier: 3.3.7
-        version: 3.3.7
+        specifier: 3.4.0
+        version: 3.4.0
       webpack:
         specifier: 5.89.0
         version: 5.89.0
@@ -635,7 +635,7 @@ importers:
         version: 3.1.14(react@18.2.0)
       '@tailwindcss/typography':
         specifier: 0.5.10
-        version: 0.5.10(tailwindcss@3.3.7)
+        version: 0.5.10(tailwindcss@3.4.0)
       '@tanstack/react-table':
         specifier: 8.11.0
         version: 8.11.0(react-dom@18.2.0)(react@18.2.0)
@@ -677,7 +677,7 @@ importers:
         version: 2.1.0
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.3.7)
+        version: 1.0.7(tailwindcss@3.4.0)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -695,8 +695,8 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       tailwindcss:
-        specifier: 3.3.7
-        version: 3.3.7
+        specifier: 3.4.0
+        version: 3.4.0
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -1136,13 +1136,13 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@headlessui/tailwindcss@0.1.3(tailwindcss@3.3.7):
+  /@headlessui/tailwindcss@0.1.3(tailwindcss@3.4.0):
     resolution: {integrity: sha512-3aMdDyYZx9A15euRehpppSyQnb2gIw2s/Uccn2ELIoLQ9oDy0+9oRygNWNjXCD5Dt+w1pxo7C+XoiYvGcqA4Kg==}
     engines: {node: '>=10'}
     peerDependencies:
       tailwindcss: ^3.0
     dependencies:
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: false
 
   /@hookform/resolvers@3.3.2(react-hook-form@7.49.2):
@@ -2634,7 +2634,7 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tailwindcss/typography@0.5.10(tailwindcss@3.3.7):
+  /@tailwindcss/typography@0.5.10(tailwindcss@3.4.0):
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
@@ -2643,7 +2643,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: false
 
   /@tanstack/query-core@4.36.1:
@@ -2689,7 +2689,7 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: false
 
-  /@tremor/react@3.12.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.7):
+  /@tremor/react@3.12.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.0):
     resolution: {integrity: sha512-SkwNPKB3Z64HMHsm1uR7prqAPWNE0SEatIv8eG/PmktlRayoqZkNdGF/mPpUdzdIcYfPHAYcSYJIuKXmR3/UjQ==}
     peerDependencies:
       react: ^18.0.0
@@ -2697,7 +2697,7 @@ packages:
     dependencies:
       '@floating-ui/react': 0.19.2(react-dom@18.2.0)(react@18.2.0)
       '@headlessui/react': 1.7.17(react-dom@18.2.0)(react@18.2.0)
-      '@headlessui/tailwindcss': 0.1.3(tailwindcss@3.3.7)
+      '@headlessui/tailwindcss': 0.1.3(tailwindcss@3.4.0)
       date-fns: 2.30.0
       react: 18.2.0
       react-day-picker: 8.9.1(date-fns@2.30.0)(react@18.2.0)
@@ -7198,7 +7198,7 @@ packages:
     resolution: {integrity: sha512-T/XeFfSvp+HvreKQF9f1CVL5XX60cEvKKAFAqgoRBYYiM2DptTcXdGa2TMFvqkN2ZgeNiPI1UzB6HOSSZzhiEA==}
     dependencies:
       '@react-pdf/renderer': 3.1.14(react@18.2.0)
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     transitivePeerDependencies:
       - encoding
       - react
@@ -7991,16 +7991,16 @@ packages:
       '@babel/runtime': 7.23.5
     dev: false
 
-  /tailwindcss-animate@1.0.7(tailwindcss@3.3.7):
+  /tailwindcss-animate@1.0.7(tailwindcss@3.4.0):
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: false
 
-  /tailwindcss@3.3.7:
-    resolution: {integrity: sha512-pjgQxDZPvyS/nG3ZYkyCvsbONJl7GdOejfm24iMt2ElYQQw8Jc4p0m8RdMp7mznPD0kUhfzwV3zAwa80qI0zmQ==}
+  /tailwindcss@3.4.0:
+    resolution: {integrity: sha512-VigzymniH77knD1dryXbyxR+ePHihHociZbXnLZHUyzf2MMs2ZVqlUrZ3FvpXP8pno9JzmILt1sZPD19M3IxtA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
