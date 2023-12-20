@@ -1,6 +1,4 @@
 import i18next from "i18next";
-import { setLocale } from "yup";
-import { fr } from "yup-locales";
 import { z } from "zod";
 import { zodI18nMap } from "zod-i18n-map";
 // Import your language translation files
@@ -15,7 +13,3 @@ void i18next.init({
 });
 
 z.setErrorMap(zodI18nMap);
-
-const setLanguage = () => setLocale(fr);
-
-export default setLanguage;

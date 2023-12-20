@@ -1,10 +1,6 @@
 import * as yup from "yup";
 import { z } from "zod";
 
-import setLanguage from "./locale";
-
-setLanguage();
-
 export const ALLOWED_UPLOADED_FILE_TYPES = [
   "image/png",
   "image/jpg",
