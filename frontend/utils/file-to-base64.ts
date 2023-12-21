@@ -1,12 +1,20 @@
-const convertToBase64 = (file: Blob) => {
-  return new Promise<string | null>((resolve, reject) => {
+const convertToBase64 = (file: File) => {
+  return new Promise<string>((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
+
     fileReader.onload = () => {
-      resolve(fileReader.result as string | null);
+      const result = fileReader.result;
+
+      if (typeof result !== "string") {
+        return reject();
+      }
+
+      return resolve(result);
     };
+
     fileReader.onerror = (error) => {
-      reject(error);
+      return reject(error);
     };
   });
 };

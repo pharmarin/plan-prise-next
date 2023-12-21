@@ -27,7 +27,7 @@ import {
   forgotPasswordSchema,
   getUniqueUserSchema,
   passwordVerifySchema,
-  registerSchemaServer,
+  registerSchema,
   resetPasswordSchema,
   updateUserPasswordSchema,
   updateUserSchema,
@@ -217,9 +217,9 @@ const usersRouter = createTRPCRouter({
    * @throws Error on fail
    */
   register: publicProcedure
-    .input(registerSchemaServer)
+    .input(registerSchema)
     .mutation(async ({ ctx, input }) => {
-      const recaptcha = await checkRecaptcha(input.recaptcha || "");
+      const recaptcha = await checkRecaptcha(input.recaptcha ?? "");
 
       if (!recaptcha) {
         throw new PP_Error("RECAPTCHA_LOADING_ERROR");
@@ -241,7 +241,10 @@ const usersRouter = createTRPCRouter({
             lastName,
             displayName,
             student: input.student ?? false,
-            certificate: input.certificate,
+            certificate:
+              input.certificate && "data" in input.certificate
+                ? input.certificate.data
+                : undefined,
             rpps: input.rpps ? BigInt(input.rpps) : undefined,
             password: await hashPassword(input.password),
           },
@@ -392,11 +395,11 @@ const usersRouter = createTRPCRouter({
    * @argument {Partial<User>} input EditInformations values
    */
   update: authProcedure
-    .input(updateUserSchema(true))
+    .input(updateUserSchema)
     .mutation(async ({ ctx, input: { id, ...input } }) => {
       const user = excludePassword(
         await ctx.prisma.user.update({
-          where: { id: id as string },
+          where: { id },
           data: {
             ...input,
             firstName: formatFirstName(input.firstName),
