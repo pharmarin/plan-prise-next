@@ -123,7 +123,7 @@ const usersRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const user = excludePassword(
         await ctx.prisma.user.update({
-          where: { id: input },
+          where: { id: input.id },
           data: { approvedAt: new Date() },
         }),
       );
@@ -171,7 +171,7 @@ const usersRouter = createTRPCRouter({
   delete: adminProcedure
     .input(deleteUserSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.prisma.user.delete({ where: { id: input } });
+      await ctx.prisma.user.delete({ where: { id: input.id } });
     }),
   /**
    * Delete current logged in user

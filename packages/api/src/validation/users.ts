@@ -14,9 +14,13 @@ export const MAX_UPLOADED_FILE_SIZE = 2000000;
 
 const password = z.string().min(8).max(20);
 
-export const approveUserSchema = yup.string().required();
+export const approveUserSchema = z.object({
+  id: z.string().cuid2(),
+});
 
-export const deleteUserSchema = yup.string().required();
+export const deleteUserSchema = z.object({
+  id: z.string().cuid2(),
+});
 
 export const forgotPasswordSchema = yup.object({
   email: yup.string().email().required().label("Adresse mail"),
