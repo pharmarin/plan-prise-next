@@ -20,7 +20,7 @@
     "with-env": "dotenv -e ../.env --"
   },
   "dependencies": {
-    "@hookform/resolvers": "3.3.2",
+    "@hookform/resolvers": "3.3.3",
     "@paralleldrive/cuid2": "2.2.2",
     "@plan-prise/api": "0.1.0",
     "@plan-prise/auth": "0.1.0",
