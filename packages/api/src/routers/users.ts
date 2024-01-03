@@ -154,6 +154,7 @@ const usersRouter = createTRPCRouter({
    *
    * @returns {User}
    */
+  // TODO: Add output validation... -> should not return entire user for use in navbar
   current: authProcedure.query(async ({ ctx }) =>
     excludePassword(
       await ctx.prisma.user.findUniqueOrThrow({

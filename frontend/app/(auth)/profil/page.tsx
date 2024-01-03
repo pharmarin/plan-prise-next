@@ -37,10 +37,18 @@ const Profil = async () => {
           </div>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
-          {/*
-            TODO: Remove usage of superjson plugin
-          */}
-          <EditInformations user={user} data-superjson />
+          <EditInformations
+            user={{
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              displayName: user.displayName,
+              rpps: user.rpps,
+              email: user.email,
+              student: user.student,
+            }}
+            data-superjson
+          />
         </div>
       </div>
 
@@ -63,7 +71,7 @@ const Profil = async () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <EditPassword user={user} data-superjson />
+            <EditPassword user={{ email: user.email }} data-superjson />
           </div>
         </div>
       </div>

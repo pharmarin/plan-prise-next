@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import ServerError from "@/app/_components/ServerError";
 import { trpc } from "@/utils/api";
 import type { User } from "@prisma/client";
@@ -13,10 +12,9 @@ import FormikField from "@plan-prise/ui/components/forms/inputs/FormikField";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const EditPassword: React.FC<
-  { user: User } | { email: string; token: string }
+  { user: Pick<User, "email"> } | { email: string; token: string }
 > = (props) => {
-  const { mutateAsync, error } = trpc.users.updatePassword.useMutation();
-  const [success, setSuccess] = useState(false);
+  const { data, mutateAsync, error } = trpc.users.updatePassword.useMutation();
 
   return (
     <Formik
@@ -28,8 +26,6 @@ const EditPassword: React.FC<
         token: "token" in props ? props.token : "",
       }}
       onSubmit={async (values, { resetForm }) => {
-        setSuccess(false);
-
         const response = await mutateAsync({
           current_password: values.current_password,
           password: values.password,
@@ -37,7 +33,6 @@ const EditPassword: React.FC<
         });
 
         if (response === MUTATION_SUCCESS) {
-          setSuccess(true);
           resetForm();
         }
       }}
@@ -81,7 +76,7 @@ const EditPassword: React.FC<
 
           {error && <ServerError error={error} />}
 
-          {success && (
+          {data === MUTATION_SUCCESS && (
             <p className="mt-1 text-xs text-green-500">
               Le mot de passe a été mis à jour
             </p>

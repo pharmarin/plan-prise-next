@@ -95,6 +95,7 @@ const RegisterFormStep2 = ({
                 <Input
                   autoComplete="email"
                   placeholder="Adresse mail"
+                  required
                   type="email"
                   {...field}
                 />
@@ -116,6 +117,7 @@ const RegisterFormStep2 = ({
                 <Input
                   autoComplete="new-password"
                   placeholder="Mot de passe"
+                  required
                   type="password"
                   {...field}
                 />
@@ -134,6 +136,7 @@ const RegisterFormStep2 = ({
                 <Input
                   autoComplete="new-password"
                   placeholder="Confirmation du mot de passe"
+                  required
                   type="password"
                   {...field}
                 />

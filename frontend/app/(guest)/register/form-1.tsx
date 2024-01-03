@@ -75,6 +75,7 @@ const RegisterFormStep1 = ({
                 <Input
                   autoComplete="family-name"
                   placeholder="Nom"
+                  required
                   {...field}
                 />
               </FormControl>
@@ -92,6 +93,7 @@ const RegisterFormStep1 = ({
                 <Input
                   autoComplete="given-name"
                   placeholder="Prénom"
+                  required
                   {...field}
                 />
               </FormControl>

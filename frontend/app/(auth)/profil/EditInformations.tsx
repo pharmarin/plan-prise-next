@@ -1,28 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ServerError from "@/app/_components/ServerError";
 import { trpc } from "@/utils/api";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@prisma/client";
-import { Formik } from "formik";
+import { TRPCClientError } from "@trpc/client";
+import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
+import type { z } from "zod";
 
 import { updateUserSchema } from "@plan-prise/api/validation/users";
-import Form from "@plan-prise/ui/components/forms/Form";
-import FormikField from "@plan-prise/ui/components/forms/inputs/FormikField";
-import TextInput from "@plan-prise/ui/components/forms/inputs/TextInput";
 import InfosModal from "@plan-prise/ui/components/overlays/modals/InfosModal";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormServerError,
+  SERVER_ERROR,
+} from "@plan-prise/ui/shadcn/ui/form";
+import { Input } from "@plan-prise/ui/shadcn/ui/input";
+import { Label } from "@plan-prise/ui/shadcn/ui/label";
 
 const EditInformations: React.FC<{
-  user: User;
+  user: Pick<
+    User,
+    | "id"
+    | "firstName"
+    | "lastName"
+    | "displayName"
+    | "email"
+    | "rpps"
+    | "student"
+  >;
 }> = ({ user }) => {
   const [showModal, setShowModal] = useState<true | false | undefined>(
     undefined,
   );
 
   const trpcContext = trpc.useUtils();
-  const { error, mutateAsync } = trpc.users.update.useMutation();
+  const { mutateAsync } = trpc.users.update.useMutation();
 
   useEffect(() => {
     if (showModal === undefined && user) {
@@ -37,18 +58,38 @@ const EditInformations: React.FC<{
     }
   }, [showModal, user]);
 
+  const form = useForm<z.infer<typeof updateUserSchema>>({
+    mode: "all",
+    resolver: zodResolver(updateUserSchema),
+    defaultValues: {
+      displayName: user.displayName ?? "",
+      email: user.email ?? "",
+      firstName: user.firstName ?? "",
+      lastName: user.lastName ?? "",
+      rpps: user.rpps?.toString() ?? "",
+      student: user.student ?? false,
+    },
+  });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
+
+  const onSubmit = async (values: z.infer<typeof updateUserSchema>) => {
+    try {
+      await mutateAsync({ id: user.id, ...values });
+    } catch (error) {
+      if (error instanceof TRPCClientError) {
+        form.setError(SERVER_ERROR, error);
+      }
+    }
+
+    await trpcContext.users.current.invalidate();
+  };
+
   if (!user) {
     return <span>Erreur lors du chargement... </span>;
   }
-
-  const initialValues = {
-    displayName: user.displayName ?? "",
-    email: user.email ?? "",
-    firstName: user.firstName ?? "",
-    lastName: user.lastName ?? "",
-    rpps: user.rpps?.toString() ?? "",
-    student: user.student ?? false,
-  };
 
   return (
     <>
@@ -77,90 +118,126 @@ const EditInformations: React.FC<{
         title="Information importante"
         toggle={() => setShowModal(!showModal)}
       />
-      <Formik
-        enableReinitialize
-        initialValues={initialValues}
-        onSubmit={async (values) => {
-          await mutateAsync({ id: user.id, ...values });
-
-          await trpcContext.users.current.invalidate();
-        }}
-        validateOnMount
-        validationSchema={updateUserSchema()}
-      >
-        {({ handleSubmit, isSubmitting, setFieldValue, values }) => (
-          <Form onSubmit={handleSubmit}>
-            <FormikField
-              autoComplete="last-name"
-              disableOnSubmit
-              displayErrors
-              label="Nom"
-              name="lastName"
-              placeholder="Nom"
-              required
-            />
-            <FormikField
-              autoComplete="first-name"
-              disableOnSubmit
-              displayErrors
-              label="Prénom"
-              name="firstName"
-              placeholder="Prénom"
-              required
-            />
-            <TextInput
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nom</FormLabel>
+                <FormControl>
+                  <Input
+                    autoComplete="last-name"
+                    placeholder="Nom"
+                    required
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Prénom</FormLabel>
+                <FormControl>
+                  <Input
+                    autoComplete="first-name"
+                    placeholder="Prénom"
+                    required
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="space-y-1">
+            <Label>Statut</Label>
+            <Input
               disabled
-              label="Statut"
               name="student"
-              value={values.student ? "Étudiant" : "Pharmacien"}
+              value={form.getValues("student") ? "Étudiant" : "Pharmacien"}
             />
-            {values.student && (
-              <Button
-                className={twMerge("mt-2")}
-                onClick={() => setFieldValue("student", false)}
-                variant="link"
-              >
-                Modifier en compte pharmacien
-              </Button>
-            )}
-            {!values.student && (
-              <FormikField
-                autoComplete="off"
-                disableOnSubmit
-                displayErrors
-                label="N° RPPS"
-                name="rpps"
-                placeholder="N° RPPS"
-              />
-            )}
-            <FormikField
-              autoComplete="off"
-              disableOnSubmit
-              displayErrors
-              info="Si indiqué, le nom de la structure apparaitra à la place de votre nom sur le plan de prise"
-              label="Nom de la structure (optionnel)"
-              name="displayName"
-              placeholder="Nom de la structure"
-            />
-
-            <FormikField
-              autoComplete="email"
-              disableOnSubmit
-              displayErrors
-              label="Adresse mail"
-              name="email"
-              placeholder="Adresse mail"
-              type="email"
-            />
-
-            {error && <ServerError error={error} />}
-
-            <Button loading={isSubmitting} type="submit">
-              Mettre à jour les informations
+          </div>
+          {form.getValues("student") ? (
+            <Button
+              className={twMerge("mt-2")}
+              onClick={() => form.setValue("student", false)}
+              variant="link"
+            >
+              Modifier en compte pharmacien
             </Button>
-          </Form>
-        )}
-      </Formik>
+          ) : (
+            <FormField
+              control={form.control}
+              name="rpps"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>N° RPPS</FormLabel>
+                  <FormControl>
+                    <Input
+                      autoComplete="off"
+                      placeholder="N° RPPS"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          <FormField
+            control={form.control}
+            name="displayName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nom de la structure (optionnel)</FormLabel>
+                <FormControl>
+                  <Input
+                    autoComplete="off"
+                    placeholder="Nom de la structure"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Si indiqué, le nom de la structure apparaitra à la place de
+                  votre nom sur le plan de prise
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Adresse mail</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Adresse mail"
+                    required
+                    type="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormServerError />
+
+          <Button loading={isSubmitting} type="submit">
+            Mettre à jour les informations
+          </Button>
+        </form>
+      </Form>
     </>
   );
 };
