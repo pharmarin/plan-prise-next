@@ -43,6 +43,14 @@ const exclude = <User, Key extends keyof User>(
   return user;
 };
 
+const pick = <User, Key extends keyof User>(object: User, keys: Key[]) =>
+  keys.reduce((obj, key) => {
+    if (object && object.hasOwnProperty(key)) {
+      obj[key] = object[key];
+    }
+    return obj;
+  }, {} as User);
+
 const excludePassword = <User extends { password?: string }>(
   user: User,
 ): Omit<User, "password"> => exclude(user, ["password"]);
@@ -154,12 +162,12 @@ const usersRouter = createTRPCRouter({
    *
    * @returns {User}
    */
-  // TODO: Add output validation... -> should not return entire user for use in navbar
   current: authProcedure.query(async ({ ctx }) =>
-    excludePassword(
+    pick(
       await ctx.prisma.user.findUniqueOrThrow({
         where: { id: ctx.session.user.id },
       }),
+      ["admin", "firstName", "lastName"],
     ),
   ),
   /**
