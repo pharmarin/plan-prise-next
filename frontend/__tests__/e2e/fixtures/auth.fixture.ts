@@ -7,14 +7,14 @@ import type { User } from "@prisma/client";
 
 export type FakeUser = Omit<
   User,
-  "id" | "approvedAt" | "createdAt" | "updatedAt" | "certificate"
->; //& { mailSlurpInboxId: string };
+  "id" | "approvedAt" | "createdAt" | "updatedAt" | "certificate" | "maxId"
+>;
 
-interface AuthFixtures {
+type AuthFixtures = {
   forgotPasswordPage: ForgotPasswordPage;
   loginPage: LoginPage;
   fakeUser: FakeUser;
-}
+};
 
 export const test = base.extend<AuthFixtures>({
   forgotPasswordPage: async ({ page }, use) => {
@@ -27,29 +27,21 @@ export const test = base.extend<AuthFixtures>({
     await loginPage.goto();
     await use(loginPage);
   },
-  fakeUser: async (_, use) => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    /* const { emailAddress: email, id: mailSlurpInboxId } =
-      await mailslurp.createInbox(); */
-    const email = faker.internet.email(
-      firstName,
-      lastName,
-      (process.env.MAIL_TEST_DOMAIN || "").replace(/^./, ""),
-    );
+  fakeUser: async ({ page: _ }, use) => {
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const email = faker.internet.email({ firstName, lastName });
 
     await use({
       firstName,
       lastName,
       displayName: `${firstName} ${lastName} Display`,
       email,
-      //mailSlurpInboxId,
       password: faker.internet.password(),
       admin: false,
       student: false,
       rpps: BigInt(faker.string.numeric(11)),
-      maxId: faker.number.int(),
-    });
+    } satisfies FakeUser);
 
     await prisma.user.deleteMany({ where: { email } });
   },

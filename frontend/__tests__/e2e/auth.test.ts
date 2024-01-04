@@ -10,7 +10,7 @@ test.describe("auth", () => {
     await page.goto("/");
     await expect(page).toHaveURL(
       `${
-        process.env.PLAYWRIGHT_TEST_BASE_URL || "http://localhost:3000"
+        process.env.PLAYWRIGHT_TEST_BASE_URL || "http://127.0.0.1:3000"
       }/login`,
     );
   });
