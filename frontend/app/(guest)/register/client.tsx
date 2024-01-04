@@ -52,7 +52,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <div>
+    <div className="md:w-2/3">
       {step === 1 && (
         <RegisterFormStep1
           formData={formData}
