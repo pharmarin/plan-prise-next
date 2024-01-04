@@ -1,17 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { trpc } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@prisma/client";
 import { TRPCClientError } from "@trpc/client";
+import { AlertTriangle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import type { z } from "zod";
 
 import { updateUserSchema } from "@plan-prise/api/validation/users";
-import InfosModal from "@plan-prise/ui/components/overlays/modals/InfosModal";
+import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+} from "@plan-prise/ui/shadcn/ui/dialog";
 import {
   Form,
   FormControl,
@@ -38,25 +44,8 @@ const EditInformations: React.FC<{
     | "student"
   >;
 }> = ({ user }) => {
-  const [showModal, setShowModal] = useState<true | false | undefined>(
-    undefined,
-  );
-
   const trpcContext = trpc.useUtils();
   const { mutateAsync } = trpc.users.update.useMutation();
-
-  useEffect(() => {
-    if (showModal === undefined && user) {
-      if (
-        (user.firstName ?? "").length > 0 &&
-        (user.lastName ?? "").length > 0
-      ) {
-        setShowModal(false);
-      } else {
-        setShowModal(true);
-      }
-    }
-  }, [showModal, user]);
 
   const form = useForm<z.infer<typeof updateUserSchema>>({
     mode: "all",
@@ -93,31 +82,36 @@ const EditInformations: React.FC<{
 
   return (
     <>
-      <InfosModal
-        content={
-          <>
-            <p>
-              Suite à des changements sur le site plandeprise.fr nous avons
-              besoin de connaitre votre nom et votre prénom.
-            </p>
-            <p>
-              Ils apparaitront sur les plans de prise ou calendriers exportés
-              sauf si vous remplissez le champ &quot;Nom de la structure&quot;.
-            </p>
-          </>
+      <Dialog
+        defaultOpen={
+          (user.firstName ?? "").length === 0 &&
+          (user.lastName ?? "").length === 0
         }
-        footer={
-          <Button
-            className="w-full sm:ml-3 sm:mt-0 sm:w-auto"
-            onClick={() => setShowModal(false)}
-          >
-            Mettre à jour mes informations
-          </Button>
-        }
-        show={showModal ?? false}
-        title="Information importante"
-        toggle={() => setShowModal(!showModal)}
-      />
+      >
+        <DialogContent>
+          <DialogHeader>Information importante</DialogHeader>
+          <div className="flex space-x-4">
+            <div>
+              <Avatar>
+                <AvatarFallback className="bg-red-100">
+                  <AlertTriangle className="h-5 w-5 text-red-500" />
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            <div className="space-y-4">
+              <DialogDescription>
+                Suite à des changements sur le site plandeprise.fr nous avons
+                besoin de connaitre votre nom et votre prénom.
+              </DialogDescription>
+              <DialogDescription>
+                Ils apparaitront sur les plans de prise ou calendriers exportés
+                sauf si vous remplissez le champ &quot;Nom de la
+                structure&quot;.
+              </DialogDescription>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
           <FormField
