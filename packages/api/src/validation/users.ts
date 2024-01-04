@@ -22,9 +22,9 @@ export const deleteUserSchema = z.object({
   id: z.string().cuid2(),
 });
 
-export const forgotPasswordSchema = yup.object({
-  email: yup.string().email().required().label("Adresse mail"),
-  recaptcha: yup.string(),
+export const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+  recaptcha: z.string(),
 });
 
 export const getUniqueUserSchema = yup.string().required();

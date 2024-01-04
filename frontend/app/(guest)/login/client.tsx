@@ -110,8 +110,16 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
+          <Link className="!mt-1 px-0 py-0 text-xs" href="/forgot-password">
+            Mot de passe oublié ?
+          </Link>
           <FormServerError />
-          <Button disabled={!isValid} loading={isSubmitting} type="submit">
+          <Button
+            className="flex"
+            disabled={!isValid}
+            loading={isSubmitting}
+            type="submit"
+          >
             Se connecter
           </Button>
         </form>
