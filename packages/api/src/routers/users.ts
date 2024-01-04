@@ -23,10 +23,10 @@ import sendMail from "../utils/mail";
 import getUrl from "../utils/url";
 import {
   approveUserSchema,
+  confirmPasswordSchema,
   deleteUserSchema,
   forgotPasswordSchema,
   getUniqueUserSchema,
-  passwordVerifySchema,
   registerSchema,
   resetPasswordSchema,
   updateUserPasswordSchema,
@@ -45,7 +45,7 @@ const exclude = <User, Key extends keyof User>(
 
 const pick = <User, Key extends keyof User>(object: User, keys: Key[]) =>
   keys.reduce((obj, key) => {
-    if (object && object.hasOwnProperty(key)) {
+    if (object && Object.prototype.hasOwnProperty.call(object, key)) {
       obj[key] = object[key];
     }
     return obj;
@@ -185,32 +185,21 @@ const usersRouter = createTRPCRouter({
   /**
    * Delete current logged in user
    */
-  deleteCurrent: authProcedure.mutation(async ({ ctx }) => {
-    await ctx.prisma.user.delete({
-      where: {
-        id: ctx.session.user.id,
-      },
-    });
-  }),
-  /**
-   * Verify that password matches records
-   *
-   * @argument {string} id User id
-   * @argument {string} password Password value
-   *
-   * @returns {string} MUTATION_SUCCESS on succeed
-   *
-   * @throws {PasswordMismatch}
-   */
-  passwordVerify: authProcedure
-    .input(passwordVerifySchema)
+  deleteCurrent: authProcedure
+    .input(confirmPasswordSchema)
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: input.id },
+        where: { id: ctx.session.user.id },
         select: { password: true },
       });
 
       if (await checkPassword(input.password, user.password)) {
+        await ctx.prisma.user.delete({
+          where: {
+            id: ctx.session.user.id,
+          },
+        });
+
         return MUTATION_SUCCESS;
       }
 

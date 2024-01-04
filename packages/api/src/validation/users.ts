@@ -34,9 +34,8 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
-export const passwordVerifySchema = yup.object({
-  id: yup.string().required(),
-  password: yup.string().min(8).max(20).required().label("Mot de passe"),
+export const confirmPasswordSchema = z.object({
+  password,
 });
 
 export const registerSchemaCertificate = z
@@ -142,17 +141,8 @@ export const updateUserSchema = z
     }),
   );
 
-export const updateUserPasswordSchema = yup.object({
-  current_password: yup.string().required().label("Mot de passe actuel"),
-  password: yup
-    .string()
-    .min(8)
-    .max(20)
-    .required()
-    .label("Nouveau mot de passe"),
-  password_confirmation: yup
-    .string()
-    .oneOf([yup.ref("password")])
-    .required()
-    .label("Confirmation du nouveau mot de passe"),
+export const updateUserPasswordSchema = z.object({
+  current_password: password,
+  password: password,
+  password_confirmation: password,
 });
