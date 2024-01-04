@@ -10,7 +10,7 @@ import type { z } from "zod";
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { forgotPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
-import FormSubmitSuccess from "@plan-prise/ui/components/forms/FormSubmitSuccess";
+import FormSubmitSuccess from "@plan-prise/ui/components/pages/FormSubmitSuccess";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,

@@ -12,8 +12,8 @@ import type { z } from "zod";
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { resetPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
-import FormSubmitSuccess from "@plan-prise/ui/components/forms/FormSubmitSuccess";
 import Link from "@plan-prise/ui/components/navigation/Link";
+import FormSubmitSuccess from "@plan-prise/ui/components/pages/FormSubmitSuccess";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,
