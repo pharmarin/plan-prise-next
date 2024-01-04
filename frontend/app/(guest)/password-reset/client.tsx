@@ -1,13 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { trpc } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
-import { updateUserPasswordSchema } from "@plan-prise/api/validation/users";
+import { resetPasswordSchema } from "@plan-prise/api/validation/users";
+import PP_Error from "@plan-prise/errors";
+import FormSubmitSuccess from "@plan-prise/ui/components/forms/FormSubmitSuccess";
+import Link from "@plan-prise/ui/components/navigation/Link";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,
@@ -21,15 +27,28 @@ import {
 } from "@plan-prise/ui/shadcn/ui/form";
 import { Input } from "@plan-prise/ui/shadcn/ui/input";
 
-const EditPassword = () => {
-  const { data, mutateAsync } = trpc.users.updatePassword.useMutation();
+const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
+  email,
+  token,
+}) => {
+  const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { data, mutateAsync } = trpc.users.resetPassword.useMutation();
 
-  const form = useForm<z.infer<typeof updateUserPasswordSchema>>({
-    resolver: zodResolver(updateUserPasswordSchema),
+  const [credentials] = useState({ email, token });
+
+  useEffect(() => {
+    router.push("/password-reset");
+  }, [router]);
+
+  const form = useForm<z.infer<typeof resetPasswordSchema>>({
+    mode: "all",
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      current_password: "",
+      ...credentials,
       password: "",
       password_confirmation: "",
+      recaptcha: "",
     },
   });
 
@@ -37,13 +56,20 @@ const EditPassword = () => {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = async (values: z.infer<typeof updateUserPasswordSchema>) => {
+  const onSubmit = async (values: z.infer<typeof resetPasswordSchema>) => {
     try {
-      const response = await mutateAsync(values);
-
-      if (response === MUTATION_SUCCESS) {
-        form.reset();
+      if (!executeRecaptcha) {
+        throw new PP_Error("RECAPTCHA_LOADING_ERROR");
       }
+
+      const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+
+      await mutateAsync({
+        ...credentials,
+        password: values.password,
+        password_confirmation: values.password_confirmation,
+        recaptcha,
+      });
     } catch (error) {
       if (error instanceof TRPCClientError) {
         form.setError(SERVER_ERROR, { message: error.message });
@@ -51,28 +77,26 @@ const EditPassword = () => {
     }
   };
 
+  if (data === MUTATION_SUCCESS) {
+    return (
+      <FormSubmitSuccess
+        content={
+          <>
+            <p>
+              Vous pouvez maintenant vous connecter avec votre nouveau mot de
+              passe.
+            </p>
+            <Link href="/login">Se connecter</Link>
+          </>
+        }
+        title="Réinitialisation du mot de passe terminée"
+      />
+    );
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="current_password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mot de passe actuel</FormLabel>
-              <FormControl>
-                <Input
-                  autoComplete="current-password"
-                  placeholder="Mot de passe actuel"
-                  required
-                  type="password"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="password"
@@ -112,17 +136,11 @@ const EditPassword = () => {
           )}
         />
         <FormServerError />
-        {data === MUTATION_SUCCESS && (
-          <p className="mt-1 text-xs text-green-500">
-            Le mot de passe a été mis à jour
-          </p>
-        )}
-        <Button loading={isSubmitting} type="submit">
-          Mettre à jour le mot de passe
+        <Button className="w-full" loading={isSubmitting} type="submit">
+          Réinitialiser le mot de passe
         </Button>
       </form>
     </Form>
   );
 };
-
-export default EditPassword;
+export default PasswordResetForm;

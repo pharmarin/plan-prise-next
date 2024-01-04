@@ -54,7 +54,7 @@ const LoginForm = () => {
       password: values.password,
       recaptcha,
       redirect: false,
-    }).catch((error) => console.log("error: ", error));
+    });
 
     if (!signInResponse?.error) {
       router.push((searchParams?.get("redirectTo") ?? "/") as Route);

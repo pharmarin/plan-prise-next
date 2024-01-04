@@ -89,7 +89,7 @@ export const registerSchemaStep2 = z
       .optional()
       .transform((value?: string) => (value === "" ? undefined : value)),
     password,
-    password_confirmation: z.string(),
+    password_confirmation: password,
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Les deux mots de passe ne correspondent pas",
@@ -107,19 +107,18 @@ export const registerSchema = registerSchemaStep1.and(registerSchemaStep2).and(
   }),
 );
 
-export const resetPasswordSchema = yup.object({
-  token: yup.string().required(),
-  email: yup.string().email().required(),
-  password: yup.string().min(8).max(20).required().label("Mot de passe"),
-  password_confirmation: yup
-    .string()
-    .oneOf(
-      [yup.ref("password")],
-      "Les deux mots de passe ne correspondent pas. ",
-    )
-    .required()
-    .label("Confirmation du mot de passe"),
-});
+export const resetPasswordSchema = z
+  .object({
+    token: z.string(),
+    email: z.string().email(),
+    password: password,
+    password_confirmation: password,
+    recaptcha: z.string(),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Les deux mots de passe ne correspondent pas",
+    path: ["password_confirmation"],
+  });
 
 export const updateUserSchema = z
   .discriminatedUnion("student", [
@@ -141,8 +140,13 @@ export const updateUserSchema = z
     }),
   );
 
-export const updateUserPasswordSchema = z.object({
-  current_password: password,
-  password: password,
-  password_confirmation: password,
-});
+export const updateUserPasswordSchema = z
+  .object({
+    current_password: password,
+    password: password,
+    password_confirmation: password,
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Les deux mots de passe ne correspondent pas",
+    path: ["password_confirmation"],
+  });

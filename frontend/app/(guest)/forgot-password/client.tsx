@@ -52,7 +52,7 @@ const ForgotPasswordForm = () => {
       await mutateAsync({ email: values.email, recaptcha });
     } catch (error) {
       if (error instanceof TRPCClientError) {
-        form.setError(SERVER_ERROR, error);
+        form.setError(SERVER_ERROR, { message: error.message });
       }
     }
   };
