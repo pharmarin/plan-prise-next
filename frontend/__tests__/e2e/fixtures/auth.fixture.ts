@@ -12,6 +12,7 @@ type AuthFixtures = {
   forgotPasswordPage: ForgotPasswordPage;
   loginPage: LoginPage;
   fakeUserApproved: FakeUser;
+  fakeUserNotApproved: FakeUser;
 };
 
 export const test = base.extend<AuthFixtures>({
@@ -34,6 +35,24 @@ export const test = base.extend<AuthFixtures>({
         from: userBase.createdAt,
         to: new Date(),
       }),
+    };
+
+    await prisma.user.create({
+      data: {
+        ...fakeUserApproved,
+        password: await hashPassword(fakeUserApproved.password),
+      },
+    });
+
+    await use(fakeUserApproved);
+
+    await prisma.user.deleteMany({ where: { email: fakeUserApproved.email } });
+  },
+  fakeUserNotApproved: async ({ page: _ }, use) => {
+    const userBase = fakeUserBase();
+
+    const fakeUserApproved = {
+      ...userBase,
     };
 
     await prisma.user.create({

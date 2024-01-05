@@ -15,13 +15,30 @@ test.describe("auth", () => {
 
   test("should display an error if the user is not registered", async ({
     loginPage,
-    page,
   }) => {
     await loginPage.goto();
     await loginPage.populateForm("fake.mail@mail.com", "fake_password");
     await loginPage.submitForm();
 
-    await expect(page.getByText(errors.USER_LOGIN_ERROR)).toBeVisible();
+    await expect(
+      loginPage.page.getByText(errors.USER_LOGIN_ERROR),
+    ).toBeVisible();
+  });
+
+  test("should display an error if the user is not approved", async ({
+    loginPage,
+    fakeUserNotApproved,
+  }) => {
+    await loginPage.goto();
+    await loginPage.populateForm(
+      fakeUserNotApproved.email,
+      fakeUserNotApproved.password,
+    );
+    await loginPage.submitForm();
+
+    await expect(
+      loginPage.page.getByText(errors.USER_NOT_APPROVED.message),
+    ).toBeVisible();
   });
 
   test("should log user in if user is registered", async ({
