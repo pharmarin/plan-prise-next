@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import type { User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
-import { startCase, upperCase } from "lodash";
+import { startCase, toUpper } from "lodash";
 
 import { findOne } from "@plan-prise/api-pharmaciens";
 import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
@@ -91,7 +91,7 @@ const sendMailReinitPassword = (
 
 const formatFirstName = (firstName: string) =>
   startCase(firstName.toLowerCase());
-const formatLastName = (lastName: string) => upperCase(lastName);
+const formatLastName = (lastName: string) => toUpper(lastName);
 const formatDisplayName = (displayName?: string | null) =>
   displayName ? startCase(displayName.toLowerCase()) : null;
 
