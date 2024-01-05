@@ -1,4 +1,5 @@
 import { test } from "@/__tests__/e2e/fixtures/auth.fixture";
+import { baseUrl } from "@/__tests__/e2e/helpers/url";
 import { expect } from "@playwright/test";
 
 import errors from "@plan-prise/errors/errors.json";
@@ -8,11 +9,8 @@ test.describe("auth", () => {
     page,
   }) => {
     await page.goto("/");
-    await expect(page).toHaveURL(
-      `${
-        process.env.PLAYWRIGHT_TEST_BASE_URL || "http://127.0.0.1:3000"
-      }/login`,
-    );
+
+    await expect(page).toHaveURL(`${baseUrl}/login`);
   });
 
   test("should display an error if the user is not registered", async ({
@@ -22,6 +20,24 @@ test.describe("auth", () => {
     await loginPage.goto();
     await loginPage.populateForm("fake.mail@mail.com", "fake_password");
     await loginPage.submitForm();
+
     await expect(page.getByText(errors.USER_LOGIN_ERROR)).toBeVisible();
+  });
+
+  test("should log user in if user is registered", async ({
+    loginPage,
+    fakeUserApproved,
+    page,
+  }) => {
+    await loginPage.goto();
+    await loginPage.populateForm(
+      fakeUserApproved.email,
+      fakeUserApproved.password,
+    );
+    await loginPage.submitForm();
+
+    await expect(page).toHaveURL(`${baseUrl}/`);
+
+    await expect(page.getByTestId("title")).toHaveText("Bienvenue");
   });
 });

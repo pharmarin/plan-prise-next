@@ -69,7 +69,7 @@ export const Navbar = () => {
         id="navbar-center"
         className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
-        <div>{title}</div>
+        <div data-testid="title">{title}</div>
         {pathname.startsWith("/plan/") && <PlanNavbarStack />}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">

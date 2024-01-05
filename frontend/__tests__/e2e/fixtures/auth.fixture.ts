@@ -1,19 +1,17 @@
 import prisma from "@/__tests__/e2e/helpers/prisma";
+import type { FakeUser } from "@/__tests__/e2e/helpers/user";
+import { fakeUserBase } from "@/__tests__/e2e/helpers/user";
 import { ForgotPasswordPage } from "@/__tests__/e2e/pages/auth/forgot-password.page";
 import { LoginPage } from "@/__tests__/e2e/pages/auth/login.page";
 import { faker } from "@faker-js/faker";
 import { test as base } from "@playwright/test";
-import type { User } from "@prisma/client";
 
-export type FakeUser = Omit<
-  User,
-  "id" | "approvedAt" | "createdAt" | "updatedAt" | "certificate" | "maxId"
->;
+import { hashPassword } from "../../../../packages/auth/src/lib/password-utils";
 
 type AuthFixtures = {
   forgotPasswordPage: ForgotPasswordPage;
   loginPage: LoginPage;
-  fakeUser: FakeUser;
+  fakeUserApproved: FakeUser;
 };
 
 export const test = base.extend<AuthFixtures>({
@@ -27,22 +25,26 @@ export const test = base.extend<AuthFixtures>({
     await loginPage.goto();
     await use(loginPage);
   },
-  fakeUser: async ({ page: _ }, use) => {
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-    const email = faker.internet.email({ firstName, lastName });
+  fakeUserApproved: async ({ page: _ }, use) => {
+    const userBase = fakeUserBase();
 
-    await use({
-      firstName,
-      lastName,
-      displayName: `${firstName} ${lastName} Display`,
-      email,
-      password: faker.internet.password(),
-      admin: false,
-      student: false,
-      rpps: BigInt(faker.string.numeric(11)),
-    } satisfies FakeUser);
+    const fakeUserApproved = {
+      ...userBase,
+      approvedAt: faker.date.between({
+        from: userBase.createdAt,
+        to: new Date(),
+      }),
+    };
 
-    await prisma.user.deleteMany({ where: { email } });
+    await prisma.user.create({
+      data: {
+        ...fakeUserApproved,
+        password: await hashPassword(fakeUserApproved.password),
+      },
+    });
+
+    await use(fakeUserApproved);
+
+    await prisma.user.deleteMany({ where: { email: fakeUserApproved.email } });
   },
 });
