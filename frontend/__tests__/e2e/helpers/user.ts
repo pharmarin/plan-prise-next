@@ -17,7 +17,7 @@ export const fakeUserBase = (): FakeUser => {
     password: faker.internet.password(),
     admin: false,
     student: false,
-    rpps: BigInt(faker.string.numeric(11)),
+    rpps: BigInt(`10101${faker.string.numeric(6)}`),
     certificate: null,
     createdAt: creationDate,
     updatedAt: null,
