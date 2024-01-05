@@ -18,6 +18,10 @@ const sendMail = async (
   templateId?: string,
   variables?: Record<string, string>,
 ) => {
+  if (process.env.NODE_ENV === "test") {
+    return;
+  }
+
   const emailParams = new EmailParams()
     .setFrom(sentFrom)
     .setTo([new Recipient(recipient.email, recipient.name)])

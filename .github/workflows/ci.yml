@@ -83,6 +83,8 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
+          NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
 #
 #      - name: Upload report
 #        uses: actions/upload-artifact@v3
