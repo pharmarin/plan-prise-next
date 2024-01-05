@@ -59,13 +59,12 @@ const LoginForm = () => {
     if (!signInResponse?.error) {
       router.push((searchParams?.get("redirectTo") ?? "/") as Route);
     } else {
-      const error = new PP_Error(
-        signInResponse?.error === "CredentialsSignin"
-          ? "USER_LOGIN_ERROR"
-          : "SERVER_ERROR",
-      );
-
-      form.setError(SERVER_ERROR, { message: error.message });
+      form.setError(SERVER_ERROR, {
+        message:
+          signInResponse?.error === "CredentialsSignin"
+            ? new PP_Error("USER_LOGIN_ERROR").message
+            : signInResponse?.error,
+      });
     }
   };
 
