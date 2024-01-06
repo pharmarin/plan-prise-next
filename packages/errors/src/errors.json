@@ -16,7 +16,7 @@
     "infos": "Le certificat est dans un format de fichier non géré pour le moment"
   },
   "USER_LOADING_ERROR": "Les données de l'utilisateur n'ont pas pu être chargées",
-  "USER_LOGIN_ERROR": "Ces identifiants nous ont pas permis de vous connecter",
+  "USER_LOGIN_ERROR": "Ces identifiants ne nous ont pas permis de vous connecter",
   "USER_NOT_APPROVED": {
     "message": "Inscription non validée",
     "infos": "Vous recevrez un mail dès que votre compte sera activé"

@@ -29,7 +29,7 @@ const TestButton = ({
       })}
       disabled={isLoading || approved}
       onClick={async () => {
-        const response = await mutateAsync(userId);
+        const response = await mutateAsync({ id: userId });
 
         if (response === MUTATION_SUCCESS) {
           setIsApproved(true);

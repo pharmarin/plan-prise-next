@@ -38,6 +38,10 @@ const LoginForm = () => {
     },
   });
 
+  const {
+    formState: { isSubmitting, isValid },
+  } = form;
+
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     if (!executeRecaptcha) {
       throw new PP_Error("RECAPTCHA_LOADING_ERROR");
@@ -50,26 +54,27 @@ const LoginForm = () => {
       password: values.password,
       recaptcha,
       redirect: false,
-    }).catch((error) => console.log("error: ", error));
+    });
 
     if (!signInResponse?.error) {
       router.push((searchParams?.get("redirectTo") ?? "/") as Route);
     } else {
-      form.setError(
-        SERVER_ERROR,
-        new PP_Error(
+      form.setError(SERVER_ERROR, {
+        message:
           signInResponse?.error === "CredentialsSignin"
-            ? "USER_LOGIN_ERROR"
-            : "SERVER_ERROR",
-        ),
-      );
+            ? new PP_Error("USER_LOGIN_ERROR").message
+            : signInResponse?.error,
+      });
     }
   };
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 py-4 md:w-2/3"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -77,7 +82,12 @@ const LoginForm = () => {
               <FormItem>
                 <FormLabel>Adresse mail</FormLabel>
                 <FormControl>
-                  <Input placeholder="Adresse mail" type="email" {...field} />
+                  <Input
+                    placeholder="Adresse mail"
+                    required
+                    type="email"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -92,6 +102,7 @@ const LoginForm = () => {
                 <FormControl>
                   <Input
                     placeholder="Mot de passe"
+                    required
                     type="password"
                     {...field}
                   />
@@ -100,91 +111,21 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
+          <Link className="!mt-1 px-0 py-0 text-xs" href="/forgot-password">
+            Mot de passe oublié ?
+          </Link>
           <FormServerError />
-          <Button type="submit">Se connecter</Button>
+          <Button
+            className="flex"
+            disabled={!isValid}
+            loading={isSubmitting}
+            type="submit"
+          >
+            Se connecter
+          </Button>
         </form>
       </Form>
-      {/* <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        onSubmit={async (values) => {
-          if (!executeRecaptcha) {
-            throw new PP_Error("RECAPTCHA_LOADING_ERROR");
-          }
 
-          const recaptcha = await executeRecaptcha("enquiryFormSubmit");
-
-          const signInResponse = await signIn("credentials", {
-            email: values.email,
-            password: values.password,
-            recaptcha,
-            redirect: false,
-          });
-
-          console.log("signInResponse: ", signInResponse);
-
-          if (!signInResponse?.error) {
-            router.push((searchParams?.get("redirectTo") ?? "/") as Route);
-          } else {
-            setError(
-              new PP_Error(
-                signInResponse?.error === "CredentialsSignin"
-                  ? "USER_LOGIN_ERROR"
-                  : "SERVER_ERROR",
-              ).toTRPCError(),
-            );
-          }
-        }}
-        validateOnMount
-        validationSchema={loginSchema}
-      >
-        {({ errors, handleSubmit, isSubmitting }) => (
-          <Form
-            className="flex flex-col justify-center"
-            onSubmit={handleSubmit}
-          >
-            <h3 className="mb-4 text-center text-lg font-bold">Connexion</h3>
-
-            <div className="space-y-2">
-              <FormikField
-                id="login_email"
-                label="Adresse mail"
-                name="email"
-                placeholder="Adresse mail"
-                required
-                slideLabel
-                type="email"
-              />
-              <FormikField
-                id="login_password"
-                label="Mot de passe"
-                name="password"
-                placeholder="Mot de passe"
-                required
-                slideLabel
-                type="password"
-              />
-              <Link className="!mt-1 px-0 py-0 text-xs" href="/forgot-password">
-                Mot de passe oublié ?
-              </Link>
-            </div>
-
-            <Button
-              className="mt-4"
-              disabled={"email" in errors || "password" in errors}
-              loading={isSubmitting}
-              type="submit"
-              variant="gradient"
-            >
-              Se connecter
-            </Button>
-
-            {error && <ServerError error={error} />}
-          </Form>
-        )}
-      </Formik> */}
       <Link className="mt-4" href="/register">
         Je n&apos;ai pas de compte : S&apos;inscrire
       </Link>

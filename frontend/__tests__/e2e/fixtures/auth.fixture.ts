@@ -1,20 +1,21 @@
 import prisma from "@/__tests__/e2e/helpers/prisma";
+import type { FakeUser } from "@/__tests__/e2e/helpers/user";
+import { fakeUserBase } from "@/__tests__/e2e/helpers/user";
 import { ForgotPasswordPage } from "@/__tests__/e2e/pages/auth/forgot-password.page";
 import { LoginPage } from "@/__tests__/e2e/pages/auth/login.page";
+import { RegisterPage } from "@/__tests__/e2e/pages/auth/register.page";
 import { faker } from "@faker-js/faker";
 import { test as base } from "@playwright/test";
-import type { User } from "@prisma/client";
 
-export type FakeUser = Omit<
-  User,
-  "id" | "approvedAt" | "createdAt" | "updatedAt" | "certificate"
->; //& { mailSlurpInboxId: string };
+import { hashPassword } from "../../../../packages/auth/src/lib/password-utils";
 
-interface AuthFixtures {
+type AuthFixtures = {
   forgotPasswordPage: ForgotPasswordPage;
   loginPage: LoginPage;
-  fakeUser: FakeUser;
-}
+  registerPage: RegisterPage;
+  fakeUserApproved: FakeUser;
+  fakeUserNotApproved: FakeUser;
+};
 
 export const test = base.extend<AuthFixtures>({
   forgotPasswordPage: async ({ page }, use) => {
@@ -27,30 +28,49 @@ export const test = base.extend<AuthFixtures>({
     await loginPage.goto();
     await use(loginPage);
   },
-  fakeUser: async (_, use) => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    /* const { emailAddress: email, id: mailSlurpInboxId } =
-      await mailslurp.createInbox(); */
-    const email = faker.internet.email(
-      firstName,
-      lastName,
-      (process.env.MAIL_TEST_DOMAIN || "").replace(/^./, ""),
-    );
+  registerPage: async ({ page }, use) => {
+    const registerPage = new RegisterPage(page);
+    await registerPage.goto();
+    await use(registerPage);
+  },
+  fakeUserApproved: async ({ page: _ }, use) => {
+    const userBase = fakeUserBase();
 
-    await use({
-      firstName,
-      lastName,
-      displayName: `${firstName} ${lastName} Display`,
-      email,
-      //mailSlurpInboxId,
-      password: faker.internet.password(),
-      admin: false,
-      student: false,
-      rpps: BigInt(faker.string.numeric(11)),
-      maxId: faker.number.int(),
+    const fakeUserApproved = {
+      ...userBase,
+      approvedAt: faker.date.between({
+        from: userBase.createdAt,
+        to: new Date(),
+      }),
+    };
+
+    await prisma.user.create({
+      data: {
+        ...fakeUserApproved,
+        password: await hashPassword(fakeUserApproved.password),
+      },
     });
 
-    await prisma.user.deleteMany({ where: { email } });
+    await use(fakeUserApproved);
+
+    await prisma.user.deleteMany({ where: { email: fakeUserApproved.email } });
+  },
+  fakeUserNotApproved: async ({ page: _ }, use) => {
+    const userBase = fakeUserBase();
+
+    const fakeUserApproved = {
+      ...userBase,
+    };
+
+    await prisma.user.create({
+      data: {
+        ...fakeUserApproved,
+        password: await hashPassword(fakeUserApproved.password),
+      },
+    });
+
+    await use(fakeUserApproved);
+
+    await prisma.user.deleteMany({ where: { email: fakeUserApproved.email } });
   },
 });

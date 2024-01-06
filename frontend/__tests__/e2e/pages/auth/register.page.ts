@@ -1,4 +1,4 @@
-import type { FakeUser } from "@/__tests__/e2e/fixtures/auth.fixture";
+import type { FakeUser } from "@/__tests__/e2e/helpers/user";
 import type { Page } from "@playwright/test";
 
 export class RegisterPage {
@@ -10,7 +10,7 @@ export class RegisterPage {
 
   async goto() {
     await this.page.goto("/register");
-    await this.page.waitForURL("/register");
+    await this.page.waitForLoadState("networkidle");
   }
 
   async populateForm(fakeUser: FakeUser) {

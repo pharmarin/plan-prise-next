@@ -18,10 +18,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
 
-      - name: Setup Node 18
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -45,7 +45,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
-  base-test:
+  auth-test:
     runs-on: ubuntu-latest
 
     needs: "build-lint"
@@ -57,10 +57,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
 
-      - name: Setup Node 18
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -83,6 +83,9 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
+          NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+          NEXTAUTH_URL: http://127.0.0.1:3000
 #
 #      - name: Upload report
 #        uses: actions/upload-artifact@v3

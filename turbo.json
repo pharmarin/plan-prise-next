@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": ["**/.env"],
+  "globalDotEnv": [".env"],
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]
