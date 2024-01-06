@@ -39,7 +39,6 @@
     "@trpc/client": "10.45.0",
     "@trpc/react-query": "10.45.0",
     "@trpc/server": "10.45.0",
-    "formik": "2.4.5",
     "immer": "10.0.3",
     "lodash": "4.17.21",
     "lucide-react": "0.306.0",
