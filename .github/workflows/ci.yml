@@ -87,6 +87,7 @@ jobs:
           NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
           NEXTAUTH_URL: http://127.0.0.1:3000
           CROSS_SITE_SECRET: ${{ secrets.CROSS_SITE_SECRET }}
+          BACKEND_URL: https://api.plandeprise.fr
 #
 #      - name: Upload report
 #        uses: actions/upload-artifact@v3
