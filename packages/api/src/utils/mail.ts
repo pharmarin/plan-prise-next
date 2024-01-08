@@ -18,6 +18,12 @@ const sendMail = async (
   templateId?: string,
   variables?: Record<string, string>,
 ) => {
+  console.log(
+    "env values (CI, NODE_ENV): ",
+    process.env.CI,
+    process.env.NODE_ENV,
+  );
+
   if (process.env.CI) {
     console.log("Skipping sending email in CI");
     return;

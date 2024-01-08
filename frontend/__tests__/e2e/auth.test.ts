@@ -81,5 +81,9 @@ test.describe("auth", () => {
     expect(registeredUser?.admin).toBe(false);
     expect(registeredUser?.student).toBe(false);
     expect(registeredUser?.approvedAt).toBe(null);
+
+    expect(registerPage.page.getByTestId("form-success-title")).toBe(
+      "Demande d'inscription terminée",
+    );
   });
 });
