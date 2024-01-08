@@ -7,6 +7,8 @@ import { startCase, toUpper } from "lodash";
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
 
+import { checkPassword } from "../../../packages/auth/src/lib/password-utils";
+
 test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({
     page,
@@ -71,6 +73,7 @@ test.describe("auth", () => {
     });
 
     expect(registeredUser?.email).toBe(fakeUser.email);
+    expect(checkPassword(fakeUser.password, registeredUser?.password ?? ""));
     expect(registeredUser?.firstName).toBe(
       startCase((fakeUser.firstName ?? "").toLowerCase()),
     );
@@ -85,5 +88,7 @@ test.describe("auth", () => {
     expect(page.getByTestId("form-success-title")).toBe(
       "Demande d'inscription terminée",
     );
+
+    await prisma.user.delete({ where: { id: registeredUser?.id } });
   });
 });
