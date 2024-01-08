@@ -58,7 +58,7 @@ test.describe("auth", () => {
     await expect(page.getByTestId("title")).toHaveText("Bienvenue");
   });
 
-  test("should register user", async ({ registerPage }) => {
+  test("should register user", async ({ registerPage, page }) => {
     const fakeUser = fakeUserBase();
 
     await registerPage.populateForm(fakeUser);
@@ -82,7 +82,7 @@ test.describe("auth", () => {
     expect(registeredUser?.student).toBe(false);
     expect(registeredUser?.approvedAt).toBe(null);
 
-    expect(registerPage.page.getByTestId("form-success-title")).toBe(
+    expect(page.getByTestId("form-success-title")).toBe(
       "Demande d'inscription terminée",
     );
   });
