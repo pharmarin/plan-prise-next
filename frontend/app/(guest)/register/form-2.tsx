@@ -2,11 +2,17 @@
 
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
+import { trpc } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TRPCClientError } from "@trpc/client";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
+import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import type { registerSchema } from "@plan-prise/api/validation/users";
 import { registerSchemaStep2 } from "@plan-prise/api/validation/users";
+import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,
@@ -25,15 +31,18 @@ const RegisterFormStep2 = ({
   formData,
   serverError,
   setFormData,
+  setNextStep,
   setPreviousStep,
-  submitForm,
 }: {
-  formData: z.infer<typeof registerSchemaStep2>;
+  formData: z.infer<typeof registerSchema>;
   serverError?: string;
   setFormData: Dispatch<SetStateAction<z.infer<typeof registerSchemaStep2>>>;
+  setNextStep: () => void;
   setPreviousStep: () => void;
-  submitForm: (values: z.infer<typeof registerSchemaStep2>) => Promise<void>;
 }) => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { mutateAsync } = trpc.users.register.useMutation();
+
   const form = useForm<z.infer<typeof registerSchemaStep2>>({
     mode: "all",
     resolver: zodResolver(registerSchemaStep2),
@@ -55,7 +64,28 @@ const RegisterFormStep2 = ({
 
   const onSubmit = async (values: z.infer<typeof registerSchemaStep2>) => {
     setFormData(values);
-    await submitForm(values);
+
+    try {
+      if (!executeRecaptcha) {
+        throw new PP_Error("RECAPTCHA_LOADING_ERROR");
+      }
+
+      const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+
+      const response = await mutateAsync({
+        ...formData,
+        ...values,
+        recaptcha,
+      });
+
+      if (response === MUTATION_SUCCESS) {
+        setNextStep();
+      }
+    } catch (error) {
+      if (error instanceof TRPCClientError) {
+        form.setError(SERVER_ERROR, { message: error.message });
+      }
+    }
   };
 
   return (
