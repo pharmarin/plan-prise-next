@@ -41,7 +41,7 @@
     "@trpc/server": "10.45.0",
     "immer": "10.0.3",
     "lodash": "4.17.21",
-    "lucide-react": "0.307.0",
+    "lucide-react": "0.308.0",
     "next": "14.0.4",
     "next-auth": "4.24.5",
     "next-superjson-plugin": "0.5.10",
