@@ -82,7 +82,7 @@ test.describe("auth", () => {
     expect(registeredUser?.student).toBe(false);
     expect(registeredUser?.approvedAt).toBe(null);
 
-    expect(page.getByTestId("form-success-title")).toBe(
+    await expect(page.getByTestId("form-success-title")).toHaveText(
       "Demande d'inscription terminée",
     );
   });
