@@ -4,10 +4,6 @@ import { defineConfig, devices } from "@playwright/test";
 const projectDir = process.cwd();
 loadEnvConfig(projectDir);
 
-console.log("env: ", Object.keys(process.env));
-
-console.log("CI: ", process.env.CI);
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv

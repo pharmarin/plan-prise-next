@@ -253,6 +253,8 @@ const usersRouter = createTRPCRouter({
             throw new PP_Error("USER_REGISTER_CONFLICT");
           }
         }
+
+        console.error("Error registering: ", error);
         throw new PP_Error("USER_REGISTER_ERROR");
       }
 
@@ -298,7 +300,7 @@ const usersRouter = createTRPCRouter({
           });
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error sending registration mail: ", error);
 
         throw new PP_Error("USER_REGISTER_WARNING");
       }

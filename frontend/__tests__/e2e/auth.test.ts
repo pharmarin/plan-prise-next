@@ -1,5 +1,4 @@
 import { test } from "@/__tests__/e2e/fixtures/auth.fixture";
-import { baseUrl } from "@/__tests__/e2e/helpers/url";
 import { fakeUserBase } from "@/__tests__/e2e/helpers/user";
 import { expect } from "@playwright/test";
 import { startCase, toUpper } from "lodash";
@@ -7,6 +6,7 @@ import { startCase, toUpper } from "lodash";
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
 
+import getUrl from "../../../packages/api/src/utils/url";
 import { checkPassword } from "../../../packages/auth/src/lib/password-utils";
 
 test.describe("auth", () => {
@@ -15,7 +15,7 @@ test.describe("auth", () => {
   }) => {
     await page.goto("/");
 
-    await expect(page).toHaveURL(`${baseUrl}/login`);
+    await expect(page).toHaveURL(getUrl("/login"));
   });
 
   test("should display an error if the user is not registered", async ({
@@ -55,7 +55,7 @@ test.describe("auth", () => {
     );
     await loginPage.submitForm();
 
-    await expect(page).toHaveURL(`${baseUrl}/`);
+    await expect(page).toHaveURL(getUrl("/"));
 
     await expect(page.getByTestId("title")).toHaveText("Bienvenue");
   });
