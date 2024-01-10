@@ -285,24 +285,28 @@ const usersRouter = createTRPCRouter({
           });
         } else {
           await sendMailRegistered({ email: input.email, firstName, lastName });
-
-          await fetch(process.env.NTFY_ADMIN_URL ?? "", {
-            method: "POST",
-            body: `${(
-              await ctx.prisma.user.count({ where: { approvedAt: null } })
-            ).toString()} en attente`,
-            headers: {
-              Actions: `view, Approuver, ${getUrl("/admin/users")}`,
-              Click: getUrl("/admin/users"),
-              Tags: "+1",
-              Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
-            },
-          });
         }
       } catch (error) {
         console.error("Error sending registration mail: ", error);
 
         throw new PP_Error("USER_REGISTER_WARNING");
+      }
+
+      try {
+        await fetch(process.env.NTFY_ADMIN_URL ?? "", {
+          method: "POST",
+          body: `${(
+            await ctx.prisma.user.count({ where: { approvedAt: null } })
+          ).toString()} en attente`,
+          headers: {
+            Actions: `view, Approuver, ${getUrl("/admin/users")}`,
+            Click: getUrl("/admin/users"),
+            Tags: "+1",
+            Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+          },
+        });
+      } catch (error) {
+        console.error("Error sending registration admin notification: ", error);
       }
 
       return MUTATION_SUCCESS;
