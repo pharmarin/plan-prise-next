@@ -122,7 +122,9 @@ const RegisterFormStep1 = ({
         />
         {form.getValues("student") ? (
           <div className="space-y-1">
-            <Label>Justificatif d&apos;études de pharmacie</Label>
+            <Label htmlFor="certificate">
+              Justificatif d&apos;études de pharmacie
+            </Label>
             {form.watch("certificate.data") ? (
               <div className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent py-1 pl-3 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
                 <span>{form.watch("certificate.fileName")}</span>
@@ -139,6 +141,7 @@ const RegisterFormStep1 = ({
                   accept={ALLOWED_UPLOADED_FILE_TYPES.join(",")}
                   placeholder="Ajouter un fichier... "
                   type="file"
+                  id="certificate"
                   name="_certificate"
                   onChange={async (event) => {
                     try {
