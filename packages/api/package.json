@@ -5,11 +5,17 @@
   "exports": {
     ".": "./index.ts",
     "./constants": "./src/constants.ts",
-    "./utils/*": "./src/utils/*",
-    "./validation/*": "./src/validation/*"
+    "./utils/*": "./utils/*",
+    "./validation/*": "./validation/*"
   },
   "typesVersions": {
     "*": {
+      "utils/*": [
+        "utils/*"
+      ],
+      "validation/*": [
+        "validation/*"
+      ],
       "*": [
         "src/*"
       ]

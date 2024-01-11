@@ -6,7 +6,7 @@ import { startCase, toUpper } from "lodash";
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
 
-import getUrl from "../../packages/api/src/utils/url";
+import getUrl from "../../packages/api/utils/url";
 import { checkPassword } from "../../packages/auth/src/lib/password-utils";
 
 test.describe("auth", () => {
