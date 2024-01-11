@@ -13,9 +13,7 @@
     "lint:fix": "pnpm lint --fix",
     "start": "pnpm with-env next start",
     "pretest": "playwright install --with-deps",
-    "test": "pnpm test:e2e",
-    "test:e2e": "playwright test __tests__/e2e/",
-    "test:utils": "playwright test __tests__/utils/",
+    "test": "playwright test __tests__/",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../.env --"
   },

@@ -1,4 +1,4 @@
-import type { FakeUser } from "@/__tests__/e2e/helpers/user";
+import type { FakeUser } from "@/__tests__/helpers/user";
 import type { Page } from "@playwright/test";
 
 export class RegisterPage {

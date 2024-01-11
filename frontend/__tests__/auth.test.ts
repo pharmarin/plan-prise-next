@@ -1,13 +1,13 @@
-import { test } from "@/__tests__/e2e/fixtures/auth.fixture";
-import { fakeUserBase } from "@/__tests__/e2e/helpers/user";
+import { test } from "@/__tests__/fixtures/auth.fixture";
+import { fakeUserBase } from "@/__tests__/helpers/user";
 import { expect } from "@playwright/test";
 import { startCase, toUpper } from "lodash";
 
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
 
-import getUrl from "../../../packages/api/src/utils/url";
-import { checkPassword } from "../../../packages/auth/src/lib/password-utils";
+import getUrl from "../../packages/api/src/utils/url";
+import { checkPassword } from "../../packages/auth/src/lib/password-utils";
 
 test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({

@@ -1,4 +1,4 @@
-import { baseUrl } from "@/__tests__/e2e/helpers/url";
+import { baseUrl } from "@/__tests__/helpers/url";
 import type { Page } from "@playwright/test";
 
 export class LoginPage {
