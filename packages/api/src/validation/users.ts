@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import { z } from "zod";
 
 import "./locale";
@@ -27,7 +26,7 @@ export const forgotPasswordSchema = z.object({
   recaptcha: z.string(),
 });
 
-export const getUniqueUserSchema = yup.string().required();
+export const getUniqueUserSchema = z.string();
 
 export const loginSchema = z.object({
   email: z.string().email(),
