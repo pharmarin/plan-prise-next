@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import "./locale";
+
 export const planSettingsSchema = z.object({
   posos: z.object({
     poso_lever: z.boolean().optional().default(false),

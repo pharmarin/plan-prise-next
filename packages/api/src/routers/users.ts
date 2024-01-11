@@ -11,16 +11,9 @@ import {
 } from "@plan-prise/auth/lib/password-utils";
 import PP_Error from "@plan-prise/errors";
 
-import { MUTATION_SUCCESS } from "../constants";
-import {
-  adminProcedure,
-  authProcedure,
-  createTRPCRouter,
-  publicProcedure,
-} from "../trpc";
-import { signJWT, verifyJWT } from "../utils/json-web-token";
-import sendMail from "../utils/mail";
-import getUrl from "../utils/url";
+import { signJWT, verifyJWT } from "../../utils/json-web-token";
+import sendMail from "../../utils/mail";
+import getUrl from "../../utils/url";
 import {
   approveUserSchema,
   confirmPasswordSchema,
@@ -31,7 +24,14 @@ import {
   resetPasswordSchema,
   updateUserPasswordSchema,
   updateUserSchema,
-} from "../validation/users";
+} from "../../validation/users";
+import { MUTATION_SUCCESS } from "../constants";
+import {
+  adminProcedure,
+  authProcedure,
+  createTRPCRouter,
+  publicProcedure,
+} from "../trpc";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
