@@ -1,3 +1,4 @@
+import path from "path";
 import type { FakeUser } from "@/__tests__/helpers/user";
 import type { Page } from "@playwright/test";
 
@@ -17,10 +18,18 @@ export class RegisterPage {
     await this.page.fill('input[name="lastName"]', fakeUser.lastName ?? "");
     await this.page.fill('input[name="firstName"]', fakeUser.firstName ?? "");
     await this.page.fill('input[name="lastName"]', fakeUser.lastName ?? "");
-    await this.page.fill(
-      'input[name="rpps"]',
-      fakeUser.rpps ? fakeUser.rpps.toString() : "",
-    );
+
+    if (fakeUser.student) {
+      await this.page.getByLabel("Étudiant").check();
+      await this.page
+        .getByLabel("Justificatif d'études de pharmacie")
+        .setInputFiles(path.join(__dirname, "test_pdf.pdf"));
+    } else {
+      await this.page.fill(
+        'input[name="rpps"]',
+        fakeUser.rpps ? fakeUser.rpps.toString() : "",
+      );
+    }
 
     await this.page.click('button[type="submit"]');
 
