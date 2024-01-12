@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import type { User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
-import { startCase, upperCase } from "lodash";
+import { startCase, toUpper } from "lodash";
 
 import { findOne } from "@plan-prise/api-pharmaciens";
 import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
@@ -11,6 +11,20 @@ import {
 } from "@plan-prise/auth/lib/password-utils";
 import PP_Error from "@plan-prise/errors";
 
+import { signJWT, verifyJWT } from "../../utils/json-web-token";
+import sendMail from "../../utils/mail";
+import getUrl from "../../utils/url";
+import {
+  approveUserSchema,
+  confirmPasswordSchema,
+  deleteUserSchema,
+  forgotPasswordSchema,
+  getUniqueUserSchema,
+  registerSchema,
+  resetPasswordSchema,
+  updateUserPasswordSchema,
+  updateUserSchema,
+} from "../../validation/users";
 import { MUTATION_SUCCESS } from "../constants";
 import {
   adminProcedure,
@@ -18,20 +32,6 @@ import {
   createTRPCRouter,
   publicProcedure,
 } from "../trpc";
-import { signJWT, verifyJWT } from "../utils/json-web-token";
-import sendMail from "../utils/mail";
-import getUrl from "../utils/url";
-import {
-  approveUserSchema,
-  deleteUserSchema,
-  forgotPasswordSchema,
-  getUniqueUserSchema,
-  passwordVerifySchema,
-  registerSchemaServer,
-  resetPasswordSchema,
-  updateUserPasswordSchema,
-  updateUserSchema,
-} from "../validation/users";
 
 const exclude = <User, Key extends keyof User>(
   user: User,
@@ -42,6 +42,14 @@ const exclude = <User, Key extends keyof User>(
   }
   return user;
 };
+
+const pick = <User, Key extends keyof User>(object: User, keys: Key[]) =>
+  keys.reduce((obj, key) => {
+    if (object && Object.prototype.hasOwnProperty.call(object, key)) {
+      obj[key] = object[key];
+    }
+    return obj;
+  }, {} as User);
 
 const excludePassword = <User extends { password?: string }>(
   user: User,
@@ -83,7 +91,7 @@ const sendMailReinitPassword = (
 
 const formatFirstName = (firstName: string) =>
   startCase(firstName.toLowerCase());
-const formatLastName = (lastName: string) => upperCase(lastName);
+const formatLastName = (lastName: string) => toUpper(lastName);
 const formatDisplayName = (displayName?: string | null) =>
   displayName ? startCase(displayName.toLowerCase()) : null;
 
@@ -123,12 +131,19 @@ const usersRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const user = excludePassword(
         await ctx.prisma.user.update({
-          where: { id: input },
+          where: { id: input.id },
           data: { approvedAt: new Date() },
         }),
       );
 
-      await sendMailApproved(user);
+      try {
+        await sendMailApproved(user);
+      } catch (error) {
+        console.error(
+          "Une erreur est survenue lors de l'envoi du mail d'activation. ",
+          error,
+        );
+      }
 
       return MUTATION_SUCCESS;
     }),
@@ -148,10 +163,11 @@ const usersRouter = createTRPCRouter({
    * @returns {User}
    */
   current: authProcedure.query(async ({ ctx }) =>
-    excludePassword(
+    pick(
       await ctx.prisma.user.findUniqueOrThrow({
         where: { id: ctx.session.user.id },
       }),
+      ["admin", "firstName", "lastName"],
     ),
   ),
   /**
@@ -164,37 +180,26 @@ const usersRouter = createTRPCRouter({
   delete: adminProcedure
     .input(deleteUserSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.prisma.user.delete({ where: { id: input } });
+      await ctx.prisma.user.delete({ where: { id: input.id } });
     }),
   /**
    * Delete current logged in user
    */
-  deleteCurrent: authProcedure.mutation(async ({ ctx }) => {
-    await ctx.prisma.user.delete({
-      where: {
-        id: ctx.session.user.id,
-      },
-    });
-  }),
-  /**
-   * Verify that password matches records
-   *
-   * @argument {string} id User id
-   * @argument {string} password Password value
-   *
-   * @returns {string} MUTATION_SUCCESS on succeed
-   *
-   * @throws {PasswordMismatch}
-   */
-  passwordVerify: authProcedure
-    .input(passwordVerifySchema)
+  deleteCurrent: authProcedure
+    .input(confirmPasswordSchema)
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: input.id },
+        where: { id: ctx.session.user.id },
         select: { password: true },
       });
 
       if (await checkPassword(input.password, user.password)) {
+        await ctx.prisma.user.delete({
+          where: {
+            id: ctx.session.user.id,
+          },
+        });
+
         return MUTATION_SUCCESS;
       }
 
@@ -210,9 +215,9 @@ const usersRouter = createTRPCRouter({
    * @throws Error on fail
    */
   register: publicProcedure
-    .input(registerSchemaServer)
+    .input(registerSchema)
     .mutation(async ({ ctx, input }) => {
-      const recaptcha = await checkRecaptcha(input.recaptcha || "");
+      const recaptcha = await checkRecaptcha(input.recaptcha ?? "");
 
       if (!recaptcha) {
         throw new PP_Error("RECAPTCHA_LOADING_ERROR");
@@ -234,7 +239,10 @@ const usersRouter = createTRPCRouter({
             lastName,
             displayName,
             student: input.student ?? false,
-            certificate: input.certificate,
+            certificate:
+              input.certificate && "data" in input.certificate
+                ? input.certificate.data
+                : undefined,
             rpps: input.rpps ? BigInt(input.rpps) : undefined,
             password: await hashPassword(input.password),
           },
@@ -245,6 +253,8 @@ const usersRouter = createTRPCRouter({
             throw new PP_Error("USER_REGISTER_CONFLICT");
           }
         }
+
+        console.error("Error registering: ", error);
         throw new PP_Error("USER_REGISTER_ERROR");
       }
 
@@ -275,24 +285,28 @@ const usersRouter = createTRPCRouter({
           });
         } else {
           await sendMailRegistered({ email: input.email, firstName, lastName });
-
-          await fetch(process.env.NTFY_ADMIN_URL ?? "", {
-            method: "POST",
-            body: `${(
-              await ctx.prisma.user.count({ where: { approvedAt: null } })
-            ).toString()} en attente`,
-            headers: {
-              Actions: `view, Approuver, ${getUrl("/admin/users")}`,
-              Click: getUrl("/admin/users"),
-              Tags: "+1",
-              Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
-            },
-          });
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error sending registration mail: ", error);
 
         throw new PP_Error("USER_REGISTER_WARNING");
+      }
+
+      try {
+        await fetch(process.env.NTFY_ADMIN_URL ?? "", {
+          method: "POST",
+          body: `${(
+            await ctx.prisma.user.count({ where: { approvedAt: null } })
+          ).toString()} en attente`,
+          headers: {
+            Actions: `view, Approuver, ${getUrl("/admin/users")}`,
+            Click: getUrl("/admin/users"),
+            Tags: "+1",
+            Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+          },
+        });
+      } catch (error) {
+        console.error("Error sending registration admin notification: ", error);
       }
 
       return MUTATION_SUCCESS;
@@ -385,11 +399,11 @@ const usersRouter = createTRPCRouter({
    * @argument {Partial<User>} input EditInformations values
    */
   update: authProcedure
-    .input(updateUserSchema(true))
+    .input(updateUserSchema)
     .mutation(async ({ ctx, input: { id, ...input } }) => {
       const user = excludePassword(
         await ctx.prisma.user.update({
-          where: { id: id as string },
+          where: { id },
           data: {
             ...input,
             firstName: formatFirstName(input.firstName),

@@ -50,3 +50,6 @@ export const PLAN_POSOLOGIE_COLOR: Record<
     body: "bg-blue-200",
   },
 };
+
+export const PLAN_NO_MEDIC_WARNING =
+  "Veuillez ajouter des médicaments pour imprimer le plan de prise";

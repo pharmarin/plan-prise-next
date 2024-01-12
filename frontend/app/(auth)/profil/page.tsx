@@ -1,7 +1,7 @@
-import DeleteUser from "@/app/(auth)/profil/DeleteUser";
-import EditInformations from "@/app/(auth)/profil/EditInformations";
-import EditPassword from "@/app/(auth)/profil/EditPassword";
-import Title from "@/components/navigation/Navigation";
+import DeleteUser from "@/app/(auth)/profil/form-delete";
+import EditInformations from "@/app/(auth)/profil/form-informations";
+import EditPassword from "@/app/(auth)/profil/form-password";
+import { Navigation } from "@/state/navigation";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
@@ -21,8 +21,7 @@ const Profil = async () => {
 
   return (
     <>
-      <Title title={PAGE_TITLE} />
-
+      <Navigation title={PAGE_TITLE} />
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
@@ -38,10 +37,18 @@ const Profil = async () => {
           </div>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
-          {/*
-            TODO: Remove usage of superjson plugin
-          */}
-          <EditInformations user={user} data-superjson />
+          <EditInformations
+            user={{
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              displayName: user.displayName,
+              rpps: user.rpps,
+              email: user.email,
+              student: user.student,
+            }}
+            data-superjson
+          />
         </div>
       </div>
 
@@ -64,7 +71,7 @@ const Profil = async () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <EditPassword user={user} data-superjson />
+            <EditPassword />
           </div>
         </div>
       </div>
@@ -88,7 +95,7 @@ const Profil = async () => {
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <DeleteUser id={user.id} />
+            <DeleteUser />
           </div>
         </div>
       </div>

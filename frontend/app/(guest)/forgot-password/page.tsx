@@ -1,4 +1,4 @@
-import ForgotPasswordForm from "@/app/(guest)/forgot-password/ForgotPasswordForm";
+import ForgotPasswordForm from "@/app/(guest)/forgot-password/client";
 
 const ForgotPasswordPage = () => <ForgotPasswordForm />;
 

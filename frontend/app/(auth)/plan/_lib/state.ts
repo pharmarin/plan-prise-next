@@ -1,6 +1,9 @@
 "use client";
 
-import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/_lib/constants";
+import {
+  PLAN_NO_MEDIC_WARNING,
+  PLAN_SETTINGS_DEFAULT,
+} from "@/app/(auth)/plan/_lib/constants";
 import type { Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 import { merge, set, unset } from "lodash";
@@ -28,9 +31,6 @@ type Actions = {
   setCanPrint: (canPrint: boolean | string) => void;
 };
 
-const PLAN_NO_MEDIC_WARNING =
-  "Veuillez ajouter des médicaments pour imprimer le plan de prise";
-
 const usePlanStore = create(
   subscribeWithSelector(
     immer<State & Actions>((setState) => ({
@@ -49,9 +49,7 @@ const usePlanStore = create(
             : [];
           state.settings = merge(PLAN_SETTINGS_DEFAULT, plan.settings);
           state.canPrint =
-            (state.medics || []).length > 0
-              ? true
-              : "Veuillez ajouter des médicaments pour imprimer le plan de prise";
+            (state.medics || []).length > 0 ? true : PLAN_NO_MEDIC_WARNING;
         }),
       setData: (path, value) => {
         setState((state) => {

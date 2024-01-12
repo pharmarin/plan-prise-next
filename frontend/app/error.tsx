@@ -1,10 +1,16 @@
 "use client";
 
-import ErrorSkeleton from "@/components/pages/ErrorSkeleton";
-import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import * as Sentry from "@sentry/nextjs";
+
+import ErrorSkeleton from "@plan-prise/ui/components/pages/ErrorSkeleton";
+import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
-  console.log("error: ", error.message);
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
+
   return (
     <ErrorSkeleton
       title="Une erreur est survenue"

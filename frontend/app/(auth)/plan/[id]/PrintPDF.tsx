@@ -8,7 +8,6 @@ import {
   extractPosologiesSettings,
   extractVoieAdministration,
 } from "@/app/(auth)/plan/_lib/functions";
-import { Cell, Header, Row, Table } from "@/components/PDF";
 import { PlanPrisePosologies } from "@/types/plan";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution } from "@prisma/client";
@@ -18,6 +17,7 @@ import { createTw } from "react-pdf-tailwind";
 
 import type { UserSession } from "@plan-prise/auth/types";
 import PP_Error from "@plan-prise/errors";
+import { Cell, Header, Row, Table } from "@plan-prise/ui/components/PDF";
 
 const PrintPDF = ({
   plan,

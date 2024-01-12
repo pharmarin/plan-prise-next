@@ -5,8 +5,9 @@ import PlanIndication from "@/app/(auth)/plan/_components/Inputs/PlanIndication"
 import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
 import { extractPosologiesSettings } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import { Label } from "@/components/ui/label";
 import { ThermometerSnowflake } from "lucide-react";
+
+import { Label } from "@plan-prise/ui/shadcn/ui/label";
 
 const PlanCardBody = ({
   medicament,

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import { GuestProviders } from "@/app/_components/Providers";
-import AuthGuard from "@/components/guards/AuthGuard";
+import AuthGuard from "@/app/(auth)/guard";
+import { GuestProviders } from "@/app/providers";
 
 const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -32,7 +32,7 @@ const GuestLayout: React.FC<PropsWithChildren> = ({ children }) => {
               </p>
             </div>
             <div className="flex flex-col items-center justify-center bg-white p-8 sm:w-1/2">
-              <div className="my-auto flex w-full flex-col px-4 md:w-2/3">
+              <div className="my-auto flex w-full flex-col px-4">
                 {children}
               </div>
             </div>

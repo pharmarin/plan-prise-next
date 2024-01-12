@@ -12,6 +12,7 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue --filter=!@plan-prise/db-migration -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "start": "turbo start --parallel",
     "test": "turbo test",
     "typecheck": "turbo typecheck --filter=!@plan-prise/db-migration"
   },
@@ -20,14 +21,15 @@
     "@manypkg/cli": "0.21.1",
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "*",
-    "@prettier/plugin-php": "0.21.0",
-    "@turbo/gen": "1.10.16",
-    "@types/node": "20.10.1",
-    "prettier": "3.1.0",
-    "prettier-plugin-tailwindcss": "0.5.7",
-    "turbo": "1.10.16",
-    "typescript": "5.3.2"
+    "@prettier/plugin-php": "0.22.1",
+    "@turbo/gen": "1.11.3",
+    "@types/node": "20.11.0",
+    "eslint": "8.56.0",
+    "prettier": "3.1.1",
+    "prettier-plugin-tailwindcss": "0.5.11",
+    "turbo": "1.11.3",
+    "typescript": "5.3.3"
   },
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.14.1",
   "prettier": "@plan-prise/prettier-config"
 }

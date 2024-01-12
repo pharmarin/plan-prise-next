@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { createId } from "@paralleldrive/cuid2";
 import { SingleBar } from "cli-progress";
 import { difference, trim } from "lodash";

@@ -1,10 +1,11 @@
 import { extractPosologie } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import { FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { PlanPrisePosologies } from "@/types/plan";
 import type { Medicament } from "@prisma/client";
+
+import { FormItem } from "@plan-prise/ui/shadcn/ui/form";
+import { Input } from "@plan-prise/ui/shadcn/ui/input";
+import { Label } from "@plan-prise/ui/shadcn/ui/label";
 
 const PlanPosologie = ({
   medicament,

@@ -1,10 +1,11 @@
 import { extractCommentaire } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import type { Commentaire, Medicament } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
+
+import { Checkbox } from "@plan-prise/ui/shadcn/ui/checkbox";
+import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
 
 const PlanCommentaire = ({
   commentaire,

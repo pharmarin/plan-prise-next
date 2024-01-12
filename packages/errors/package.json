@@ -21,15 +21,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@trpc/client": "10.44.1",
-    "@trpc/server": "10.44.1"
+    "@trpc/client": "10.45.0",
+    "@trpc/server": "10.45.0"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "^0.1.0",
     "@plan-prise/tsconfig": "^0.1.0",
-    "eslint": "8.54.0",
-    "typescript": "5.3.2"
+    "eslint": "8.56.0",
+    "typescript": "5.3.3"
   },
   "eslintConfig": {
     "extends": [

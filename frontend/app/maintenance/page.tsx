@@ -1,4 +1,4 @@
-import Maintenance from "@/components/pages/Maintenance";
+import Maintenance from "@plan-prise/ui/components/pages/Maintenance";
 
 const MaintenanceMode = () => <Maintenance />;
 

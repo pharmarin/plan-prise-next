@@ -1,13 +1,13 @@
 import { isCuid } from "@paralleldrive/cuid2";
-import type { Plan } from "@prisma/client";
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
 
+import type { Plan } from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
+import { planSettingsSchema } from "../../validation/plan";
 import { MUTATION_SUCCESS, PLAN_NEW } from "../constants";
 import { authProcedure, createTRPCRouter } from "../trpc";
-import { planSettingsSchema } from "../validation/plan";
 
 const addMedic = (medicId: string, medicsOrder: Plan["medicsOrder"]) => {
   if (isCuid(medicId)) {

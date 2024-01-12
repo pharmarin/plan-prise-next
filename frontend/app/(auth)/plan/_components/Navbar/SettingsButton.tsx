@@ -1,23 +1,5 @@
 import { useEffect } from "react";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { FormItem } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { TypographyH4 } from "@/components/ui/typography";
-import { cn } from "@/lib/utils";
 import { PlanPrisePosologies } from "@/types/plan";
 import { trpc } from "@/utils/api";
 import { debounce } from "lodash";
@@ -25,6 +7,24 @@ import { SettingsIcon } from "lucide-react";
 import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@plan-prise/ui/shadcn/ui/dialog";
+import { FormItem } from "@plan-prise/ui/shadcn/ui/form";
+import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { Switch } from "@plan-prise/ui/shadcn/ui/switch";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@plan-prise/ui/shadcn/ui/tooltip";
+import { TypographyH4 } from "@plan-prise/ui/shadcn/ui/typography";
 
 const posologies = Object.keys(
   PlanPrisePosologies,
