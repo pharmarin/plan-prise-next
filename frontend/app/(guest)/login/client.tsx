@@ -69,12 +69,9 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <div className="mx-auto md:w-2/3">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 py-4 md:w-2/3"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
           <FormField
             control={form.control}
             name="email"
@@ -129,7 +126,7 @@ const LoginForm = () => {
       <Link className="mt-4" href="/register">
         Je n&apos;ai pas de compte : S&apos;inscrire
       </Link>
-    </>
+    </div>
   );
 };
 
