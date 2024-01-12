@@ -1,5 +1,6 @@
 import type { NextFetchEvent } from "next/server";
 import { NextResponse } from "next/server";
+import { env } from "@/env.mjs";
 import type { NextRequestWithAuth } from "next-auth/middleware";
 import { withAuth } from "next-auth/middleware";
 
@@ -7,7 +8,7 @@ import { signJWT } from "@plan-prise/api/utils/json-web-token";
 import { NEXT_AUTH_PAGES } from "@plan-prise/auth/config";
 
 const toLegacy = (path: string, destination?: string) =>
-  process.env.BACKEND_URL + (destination ?? path);
+  env.BACKEND_URL + (destination ?? path);
 
 const withAuthMiddleware = withAuth(
   async (request: NextRequestWithAuth) => {
@@ -37,10 +38,7 @@ export const middleware = (
   const pathname = request.nextUrl.pathname;
   const legacyUrl = toLegacy(pathname) + request.nextUrl.search;
 
-  if (
-    process.env.MAINTENANCE_MODE === "true" &&
-    !pathname.startsWith("/_next")
-  ) {
+  if (env.MAINTENANCE_MODE && !pathname.startsWith("/_next")) {
     return NextResponse.rewrite(new URL("/maintenance", request.url));
   }
 

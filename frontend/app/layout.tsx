@@ -5,6 +5,8 @@ import background from "@/public/home-bg.jpg";
 
 import "@plan-prise/ui/styles/globals.css";
 
+import { env } from "@/env.mjs";
+
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="fr">
@@ -23,6 +25,6 @@ export default RootLayout;
 export const metadata = {
   title: {
     default: "Plan de prise.fr",
-    template: `%s • ${process.env.APP_NAME}`,
+    template: `%s • ${env.APP_NAME}`,
   },
 };

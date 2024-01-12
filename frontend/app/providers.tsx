@@ -2,6 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
+import { env } from "@/env.mjs";
 import { trpc } from "@/utils/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
@@ -17,7 +18,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { retry: process.env.NODE_ENV === "test" ? false : 3 },
+          queries: { retry: env.NODE_ENV === "test" ? false : 3 },
         },
       }),
   );
@@ -48,7 +49,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
 
 export const GuestProviders: React.FC<PropsWithChildren> = ({ children }) => (
   <GoogleReCaptchaProvider
-    reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
+    reCaptchaKey={env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
     scriptProps={{
       async: false,
       defer: false,
