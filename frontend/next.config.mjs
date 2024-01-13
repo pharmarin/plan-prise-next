@@ -6,7 +6,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 import { env } from "./env.mjs";
 
 const withBundleAnalyzer = bundleAnalyzer({
-  enabled: env.ANALYZE,
+  enabled: !!env.ANALYZE,
 });
 
 /** @type {import('next').NextConfig} */
