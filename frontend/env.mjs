@@ -8,18 +8,17 @@ const envBoolean = z
     z.literal("false"),
     z.literal("1"),
     z.literal("0"),
-    z.undefined(),
   ])
-  .transform((s) => (s === undefined ? undefined : s === "true" || s === "1"));
+  .transform((s) => s === "true" || s === "1");
 
 export const env = createEnv({
   server: {
-    ANALYZE: envBoolean,
+    ANALYZE: envBoolean.optional(),
     APP_NAME: z.string(),
-    CI: envBoolean,
+    CI: envBoolean.optional(),
     DATABASE_URL: z.string().url(),
     BACKEND_URL: z.string().url(),
-    MAINTENANCE_MODE: envBoolean,
+    MAINTENANCE_MODE: envBoolean.optional(),
     NODE_ENV: z.enum(["development", "production", "test"]),
     PLAYWRIGHT_TEST_BASE_URL: z.string().url().optional(),
   },
