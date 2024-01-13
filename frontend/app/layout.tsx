@@ -23,6 +23,6 @@ export default RootLayout;
 export const metadata = {
   title: {
     default: "Plan de prise.fr",
-    template: `%s • ${process.env.APP_NAME}`,
+    template: `%s • Plan de prise.fr`,
   },
 };
