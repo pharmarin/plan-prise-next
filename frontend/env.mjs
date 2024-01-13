@@ -4,17 +4,18 @@ import { z } from "zod";
 
 const envBoolean = z
   .string()
-  .refine((s) => s === "true" || s === "false")
-  .transform((s) => s === "true");
+  .optional()
+  .refine((s) => s === undefined || s === "true" || s === "false")
+  .transform((s) => (s === undefined ? undefined : s === "true"));
 
 export const env = createEnv({
   server: {
-    ANALYZE: envBoolean.optional(),
+    ANALYZE: envBoolean,
     APP_NAME: z.string(),
-    CI: envBoolean.optional(),
+    CI: envBoolean,
     DATABASE_URL: z.string().url(),
     BACKEND_URL: z.string().url(),
-    MAINTENANCE_MODE: envBoolean.optional(),
+    MAINTENANCE_MODE: envBoolean,
     NODE_ENV: z.enum(["development", "production", "test"]),
     PLAYWRIGHT_TEST_BASE_URL: z.string().url().optional(),
   },
