@@ -14,7 +14,6 @@ const envBoolean = z
 export const env = createEnv({
   server: {
     ANALYZE: envBoolean.optional(),
-    APP_NAME: z.string(),
     CI: envBoolean.optional(),
     DATABASE_URL: z.string().url(),
     BACKEND_URL: z.string().url(),
@@ -25,7 +24,6 @@ export const env = createEnv({
   client: { NEXT_PUBLIC_CAPTCHA_SITE_KEY: z.string() },
   runtimeEnv: {
     ANALYZE: process.env.ANALYZE,
-    APP_NAME: process.env.APP_NAME,
     CI: process.env.CI,
     DATABASE_URL: process.env.DATABASE_URL,
     BACKEND_URL: process.env.BACKEND_URL,
