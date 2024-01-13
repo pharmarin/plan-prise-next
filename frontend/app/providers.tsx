@@ -18,7 +18,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { retry: env.NODE_ENV === "test" ? false : 3 },
+          queries: { retry: process.env.NODE_ENV === "test" ? false : 3 },
         },
       }),
   );

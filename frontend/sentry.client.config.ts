@@ -2,11 +2,10 @@
 // The config you add here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import { env } from "@/env.mjs";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
-  enabled: env.NODE_ENV !== "development",
+  enabled: process.env.NODE_ENV !== "development",
 
   dsn: "https://08dfd92ac31791d1bd25b1b2bb6303fa@o4506332907634688.ingest.sentry.io/4506332908814336",
 
