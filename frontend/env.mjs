@@ -3,10 +3,14 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 const envBoolean = z
-  .string()
-  .optional()
-  .refine((s) => s === undefined || s === "true" || s === "false")
-  .transform((s) => (s === undefined ? undefined : s === "true"));
+  .union([
+    z.literal("true"),
+    z.literal("false"),
+    z.literal("1"),
+    z.literal("0"),
+    z.undefined(),
+  ])
+  .transform((s) => (s === undefined ? undefined : s === "true" || s === "1"));
 
 export const env = createEnv({
   server: {
