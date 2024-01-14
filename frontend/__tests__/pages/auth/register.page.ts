@@ -1,6 +1,7 @@
 import path from "path";
-import type { FakeUser } from "@/__tests__/helpers/user";
 import type { Page } from "@playwright/test";
+
+import type { FakeUser } from "@plan-prise/tests/helpers/user";
 
 export class RegisterPage {
   readonly page: Page;

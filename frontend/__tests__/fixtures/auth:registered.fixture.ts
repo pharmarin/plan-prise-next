@@ -1,14 +1,14 @@
 import { existsSync } from "fs";
 import path from "path";
-import { test as auth } from "@/__tests__/fixtures/auth.fixture";
-import type { FakeUser } from "@/__tests__/helpers/user";
-import { fakeUserBase } from "@/__tests__/helpers/user";
-import { LoginPage } from "@/__tests__/pages/auth/login.page";
-import { RegisterPage } from "@/__tests__/pages/auth/register.page";
 import { faker } from "@faker-js/faker";
 
 import { hashPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
+import { test as auth } from "@plan-prise/tests/fixtures/auth.fixture";
+import type { FakeUser } from "@plan-prise/tests/helpers/user";
+import { fakeUserBase } from "@plan-prise/tests/helpers/user";
+import { LoginPage } from "@plan-prise/tests/pages/auth/login.page";
+import { RegisterPage } from "@plan-prise/tests/pages/auth/register.page";
 
 type ApprovedFixtures = {
   registerPage: RegisterPage;
