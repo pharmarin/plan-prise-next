@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
-        version: 4.1.1(prettier@3.2.1)
+        version: 4.1.1(prettier@3.2.2)
       '@manypkg/cli':
         specifier: 0.21.1
         version: 0.21.1
@@ -22,7 +22,7 @@ importers:
         version: link:config/prettier
       '@prettier/plugin-php':
         specifier: 0.22.1
-        version: 0.22.1(prettier@3.2.1)
+        version: 0.22.1(prettier@3.2.2)
       '@turbo/gen':
         specifier: 1.11.3
         version: 1.11.3(@types/node@20.11.0)(typescript@5.3.3)
@@ -33,11 +33,11 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.1
-        version: 3.2.1
+        specifier: 3.2.2
+        version: 3.2.2
       prettier-plugin-tailwindcss:
         specifier: 0.5.11
-        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.1)
+        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.2)
       turbo:
         specifier: 1.11.3
         version: 1.11.3
@@ -97,13 +97,13 @@ importers:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
-        version: 4.1.1(prettier@3.2.1)
+        version: 4.1.1(prettier@3.2.2)
       prettier:
-        specifier: 3.2.1
-        version: 3.2.1
+        specifier: 3.2.2
+        version: 3.2.2
       prettier-plugin-tailwindcss:
         specifier: 0.5.11
-        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.1)
+        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.2)
     devDependencies:
       '@plan-prise/tsconfig':
         specifier: ^0.1.0
@@ -146,8 +146,8 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.1
-        version: 3.2.1
+        specifier: 3.2.2
+        version: 3.2.2
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -268,8 +268,8 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
       usehooks-ts:
-        specifier: 2.9.2
-        version: 2.9.2(react-dom@18.2.0)(react@18.2.0)
+        specifier: 2.9.4
+        version: 2.9.4(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -679,8 +679,8 @@ importers:
         specifier: 1.0.7
         version: 1.0.7(tailwindcss@3.4.1)
       usehooks-ts:
-        specifier: 2.9.2
-        version: 2.9.2(react-dom@18.2.0)(react@18.2.0)
+        specifier: 2.9.4
+        version: 2.9.4(react-dom@18.2.0)(react@18.2.0)
       vaul:
         specifier: 0.8.0
         version: 0.8.0(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0)
@@ -1170,7 +1170,7 @@ packages:
   /@humanwhocodes/object-schema@2.0.1:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
 
-  /@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.2.1):
+  /@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.2.2):
     resolution: {integrity: sha512-kJhXq63ngpTQ2dxgf5GasbPJWsJA3LgoOdd7WGhpUSzLgLgI4IsIzYkbJf9kmpOHe7Vdm/o3PcRA3jmizXUuAQ==}
     peerDependencies:
       '@vue/compiler-sfc': '>=3.0.0'
@@ -1184,7 +1184,7 @@ packages:
       '@babel/parser': 7.23.0
       '@babel/traverse': 7.23.2
       '@babel/types': 7.23.0
-      prettier: 3.2.1
+      prettier: 3.2.2
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
@@ -1473,7 +1473,7 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@prettier/plugin-php@0.22.1(prettier@3.2.1):
+  /@prettier/plugin-php@0.22.1(prettier@3.2.2):
     resolution: {integrity: sha512-TN7tzC2/jCM1/H/mlUjqPos8lIV+vm8Qwp83KofuZclGlG9PoUWHU7m0yqskjAoCy+R4ZCV0hxdBLPBkU69S2Q==}
     peerDependencies:
       prettier: ^3.0.0
@@ -1481,7 +1481,7 @@ packages:
       linguist-languages: 7.27.0
       mem: 9.0.2
       php-parser: 3.1.5
-      prettier: 3.2.1
+      prettier: 3.2.2
     dev: false
 
   /@prisma/client@5.8.0(prisma@5.8.0):
@@ -6974,7 +6974,7 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  /prettier-plugin-tailwindcss@0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.1):
+  /prettier-plugin-tailwindcss@0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.2):
     resolution: {integrity: sha512-AvI/DNyMctyyxGOjyePgi/gqj5hJYClZ1avtQvLlqMT3uDZkRbi4HhGUpok3DRzv9z7Lti85Kdj3s3/1CeNI0w==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
@@ -7023,12 +7023,12 @@ packages:
       prettier-plugin-twig-melody:
         optional: true
     dependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.2.1)
-      prettier: 3.2.1
+      '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.2.2)
+      prettier: 3.2.2
     dev: false
 
-  /prettier@3.2.1:
-    resolution: {integrity: sha512-qSUWshj1IobVbKc226Gw2pync27t0Kf0EdufZa9j7uBSJay1CC+B3K5lAAZoqgX3ASiKuWsk6OmzKRetXNObWg==}
+  /prettier@3.2.2:
+    resolution: {integrity: sha512-HTByuKZzw7utPiDO523Tt2pLtEyK7OibUD9suEJQrPUCYQqrHr74GGX6VidMrovbf/I50mPqr8j/II6oBAuc5A==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -8540,10 +8540,9 @@ packages:
       react: 18.2.0
     dev: false
 
-  /usehooks-ts@2.9.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-fOzPeG01rs51CGYzqgioP/zs9v1Cgpe+zcXeqJPlDHYfdfG/wjsdjBWHJi+Ph1JgQAGUrDo5sJbPlaZd+Z9lxw==}
+  /usehooks-ts@2.9.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VOSEbA+BGGORLttsICowNb5CG0D2/IEoVvMEl9OuuOoQi99W6XuNipo3SPFhWo3Bhdwi0Swj1D+IMQDQB9KrwQ==}
     engines: {node: '>=16.15.0'}
-    requiresBuild: true
     peerDependencies:
       react: ^16.8.0  || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0

@@ -1,5 +1,6 @@
-import logConsole from "@/__tests__/helpers/console-log";
 import type { Page } from "@playwright/test";
+
+import logConsole from "@plan-prise/tests/helpers/console-log";
 
 export class LoginPage {
   readonly page: Page;

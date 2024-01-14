@@ -1,7 +1,8 @@
 import path from "path";
-import logConsole from "@/__tests__/helpers/console-log";
-import type { FakeUser } from "@/__tests__/helpers/user";
 import type { Page } from "@playwright/test";
+
+import logConsole from "@plan-prise/tests/helpers/console-log";
+import type { FakeUser } from "@plan-prise/tests/helpers/user";
 
 export class RegisterPage {
   readonly page: Page;
