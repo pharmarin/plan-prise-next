@@ -1,3 +1,4 @@
+import logConsole from "@/__tests__/helpers/console-log";
 import type { Page } from "@playwright/test";
 
 export class LoginPage {
@@ -5,6 +6,7 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
+    logConsole(page);
   }
 
   async goto() {

@@ -1,4 +1,5 @@
 import path from "path";
+import logConsole from "@/__tests__/helpers/console-log";
 import type { FakeUser } from "@/__tests__/helpers/user";
 import type { Page } from "@playwright/test";
 
@@ -7,6 +8,7 @@ export class RegisterPage {
 
   constructor(page: Page) {
     this.page = page;
+    logConsole(page);
   }
 
   async goto() {
