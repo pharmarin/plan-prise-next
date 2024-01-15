@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
-    "@manypkg/cli": "0.21.1",
+    "@manypkg/cli": "0.21.2",
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "*",
     "@prettier/plugin-php": "0.22.1",
