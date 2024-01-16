@@ -1,13 +1,12 @@
 import { EmailParams, MailerSend, Recipient, Sender } from "mailersend";
 
+import { env } from "../env.mjs";
+
 const mailerSend = new MailerSend({
-  apiKey: process.env.MAILERSEND_API_KEY ?? "",
+  apiKey: env.MAILERSEND_API_KEY ?? "",
 });
 
-const sentFrom = new Sender(
-  process.env.MAIL_FROM_ADDRESS ?? "",
-  process.env.APP_NAME,
-);
+const sentFrom = new Sender(env.MAIL_FROM_ADDRESS ?? "", env.APP_NAME);
 
 const sendMail = async (
   recipient: {
@@ -18,12 +17,6 @@ const sendMail = async (
   templateId?: string,
   variables?: Record<string, string>,
 ) => {
-  console.log(
-    "env values (CI, NODE_ENV): ",
-    process.env.CI,
-    process.env.NODE_ENV,
-  );
-
   if (process.env.CI) {
     console.log("Skipping sending email in CI");
     return;
