@@ -64,7 +64,7 @@
     "@next/env": "14.0.4",
     "@playwright/test": "1.40.1",
     "@types/lodash": "4.14.202",
-    "@types/node": "20.11.3",
+    "@types/node": "20.11.4",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "autoprefixer": "10.4.16",
