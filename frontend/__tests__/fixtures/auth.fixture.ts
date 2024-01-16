@@ -1,13 +1,13 @@
-import prisma from "@/__tests__/helpers/prisma";
-import type { FakeUser } from "@/__tests__/helpers/user";
-import { fakeUserBase } from "@/__tests__/helpers/user";
-import { ForgotPasswordPage } from "@/__tests__/pages/auth/forgot-password.page";
-import { LoginPage } from "@/__tests__/pages/auth/login.page";
-import { RegisterPage } from "@/__tests__/pages/auth/register.page";
 import { faker } from "@faker-js/faker";
 import { test as base } from "@playwright/test";
 
-import { hashPassword } from "../../../packages/auth/src/lib/password-utils";
+import { hashPassword } from "@plan-prise/auth/lib/password-utils";
+import prisma from "@plan-prise/tests/helpers/prisma";
+import type { FakeUser } from "@plan-prise/tests/helpers/user";
+import { fakeUserBase } from "@plan-prise/tests/helpers/user";
+import { ForgotPasswordPage } from "@plan-prise/tests/pages/auth/forgot-password.page";
+import { LoginPage } from "@plan-prise/tests/pages/auth/login.page";
+import { RegisterPage } from "@plan-prise/tests/pages/auth/register.page";
 
 type AuthFixtures = {
   forgotPasswordPage: ForgotPasswordPage;

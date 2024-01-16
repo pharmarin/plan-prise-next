@@ -98,9 +98,9 @@ const PrintPDF = ({
             {posologies.map((posologie) => (
               <Header
                 key={`header_${posologie}`}
-                className={`flex-initial ${POSOLOGIE_WIDTH} ${PLAN_POSOLOGIE_COLOR?.[
-                  posologie as "poso_matin"
-                ]?.header} ${
+                className={`flex-initial ${POSOLOGIE_WIDTH} ${
+                  PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.header
+                } ${
                   posologies.length > 6 && posologie === "poso_coucher"
                     ? "text-xs"
                     : ""
@@ -226,9 +226,9 @@ const PrintPDF = ({
                 {posologies.map((posologie) => (
                   <Cell
                     key={`cell_${medicamentId}_${posologie}`}
-                    className={`flex-initial ${POSOLOGIE_WIDTH} ${PLAN_POSOLOGIE_COLOR?.[
-                      posologie as "poso_matin"
-                    ]?.body} p-0`}
+                    className={`flex-initial ${POSOLOGIE_WIDTH} ${
+                      PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.body
+                    } p-0`}
                   >
                     {rowData?.posologies?.[
                       posologie as keyof typeof PlanPrisePosologies

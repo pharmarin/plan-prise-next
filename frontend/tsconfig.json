@@ -13,5 +13,5 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [".", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "playwright-report"]
+  "exclude": ["node_modules", "playwright-report", "__tests__"]
 }

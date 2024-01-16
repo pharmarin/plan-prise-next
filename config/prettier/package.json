@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
-    "prettier": "3.2.1",
+    "prettier": "3.2.2",
     "prettier-plugin-tailwindcss": "0.5.11"
   },
   "devDependencies": {
     "@plan-prise/tsconfig": "^0.1.0",
-    "@types/node": "20.11.0",
+    "@types/node": "20.11.3",
     "typescript": "5.3.3"
   },
   "prettier": "@plan-prise/prettier-config"

@@ -1,4 +1,3 @@
-import { baseUrl } from "@/__tests__/helpers/url";
 import type { Page } from "@playwright/test";
 
 export class LoginPage {
@@ -9,7 +8,7 @@ export class LoginPage {
   }
 
   async goto() {
-    await this.page.goto(`${baseUrl}/login`);
+    await this.page.goto("/login");
     await this.page.waitForLoadState("networkidle");
   }
 
