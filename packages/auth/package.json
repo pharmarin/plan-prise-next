@@ -25,7 +25,7 @@
     "@plan-prise/db-prisma": "*",
     "@plan-prise/errors": "0.1.0",
     "@prisma/client": "5.8.1",
-    "@t3-oss/env-nextjs": "0.7.1",
+    "@t3-oss/env-nextjs": "0.7.3",
     "bcryptjs": "2.4.3",
     "next": "14.0.4",
     "next-auth": "4.24.5",
