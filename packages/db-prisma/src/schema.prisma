@@ -122,6 +122,9 @@ model Medicament {
   medics_simpleId     Int
   plans               Plan[]
   precautionId        Int?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime?
+  approvedAt          DateTime?
 
   @@index([medics_simpleId])
   @@index([precautionId])
@@ -151,6 +154,9 @@ model Plan {
   user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String?
   displayId   Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?
+  approvedAt  DateTime?
 
   @@index([userId])
   @@map("plans")
