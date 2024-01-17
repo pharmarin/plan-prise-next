@@ -78,7 +78,7 @@ jobs:
         # https://docs.github.com/en/actions/learn-github-actions/expressions#failure
         if: ${{ failure() }}
         run: |
-          pnpm turbo format:fix
+          pnpm format:fix
           git diff -- . ':(exclude)package-lock.json' ':(exclude)package.json' > diff.txt
           pnpm install -g diff2html-cli
           diff2html -i file -s side -F diff.html -- diff.txt
