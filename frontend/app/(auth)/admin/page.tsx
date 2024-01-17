@@ -25,7 +25,7 @@ const AdminDashboard = async () => {
       DATE_FORMAT(TIME, '%Y-%m') AS month,
       COUNT(*) AS count
     FROM
-      plans
+      plans_old
     WHERE
       TIME >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
     GROUP BY
