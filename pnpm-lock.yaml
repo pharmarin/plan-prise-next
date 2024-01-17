@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
-        version: 4.1.1(prettier@3.2.2)
+        version: 4.1.1(prettier@3.2.4)
       '@manypkg/cli':
         specifier: 0.21.2
         version: 0.21.2
@@ -22,22 +22,22 @@ importers:
         version: link:config/prettier
       '@prettier/plugin-php':
         specifier: 0.22.1
-        version: 0.22.1(prettier@3.2.2)
+        version: 0.22.1(prettier@3.2.4)
       '@turbo/gen':
         specifier: 1.11.3
-        version: 1.11.3(@types/node@20.11.4)(typescript@5.3.3)
+        version: 1.11.3(@types/node@20.11.5)(typescript@5.3.3)
       '@types/node':
-        specifier: 20.11.4
-        version: 20.11.4
+        specifier: 20.11.5
+        version: 20.11.5
       eslint:
         specifier: 8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.2
-        version: 3.2.2
+        specifier: 3.2.4
+        version: 3.2.4
       prettier-plugin-tailwindcss:
         specifier: 0.5.11
-        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.2)
+        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.4)
       turbo:
         specifier: 1.11.3
         version: 1.11.3
@@ -97,20 +97,20 @@ importers:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
-        version: 4.1.1(prettier@3.2.2)
+        version: 4.1.1(prettier@3.2.4)
       prettier:
-        specifier: 3.2.2
-        version: 3.2.2
+        specifier: 3.2.4
+        version: 3.2.4
       prettier-plugin-tailwindcss:
         specifier: 0.5.11
-        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.2)
+        version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.4)
     devDependencies:
       '@plan-prise/tsconfig':
         specifier: ^0.1.0
         version: link:../typescript
       '@types/node':
-        specifier: 20.11.4
-        version: 20.11.4
+        specifier: 20.11.5
+        version: 20.11.5
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -146,8 +146,8 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.2
-        version: 3.2.2
+        specifier: 3.2.4
+        version: 3.2.4
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -199,8 +199,8 @@ importers:
         specifier: 7.93.0
         version: 7.93.0(next@14.0.4)(react@18.2.0)(webpack@5.89.0)
       '@t3-oss/env-nextjs':
-        specifier: 0.7.1
-        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
+        specifier: 0.7.3
+        version: 0.7.3(typescript@5.3.3)(zod@3.22.4)
       '@tanstack/react-query':
         specifier: 4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -226,8 +226,8 @@ importers:
         specifier: 4.17.21
         version: 4.17.21
       lucide-react:
-        specifier: 0.309.0
-        version: 0.309.0(react@18.2.0)
+        specifier: 0.311.0
+        version: 0.311.0(react@18.2.0)
       next:
         specifier: 14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -250,8 +250,8 @@ importers:
         specifier: 7.49.3
         version: 7.49.3(react@18.2.0)
       react-pdf-html:
-        specifier: 1.1.18
-        version: 1.1.18(@react-pdf/renderer@3.1.17)(react@18.2.0)
+        specifier: 1.1.19
+        version: 1.1.19(@react-pdf/renderer@3.1.17)(react@18.2.0)
       react-pdf-tailwind:
         specifier: 2.2.1
         version: 2.2.1(react@18.2.0)
@@ -293,8 +293,8 @@ importers:
         specifier: 4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: 20.11.4
-        version: 20.11.4
+        specifier: 20.11.5
+        version: 20.11.5
       '@types/react':
         specifier: 18.2.48
         version: 18.2.48
@@ -347,8 +347,8 @@ importers:
         specifier: '*'
         version: link:../errors
       '@t3-oss/env-nextjs':
-        specifier: 0.7.1
-        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
+        specifier: 0.7.3
+        version: 0.7.3(typescript@5.3.3)(zod@3.22.4)
       '@tanstack/react-query':
         specifier: 4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -417,8 +417,8 @@ importers:
         specifier: '*'
         version: link:../../config/typescript
       '@types/node':
-        specifier: 20.11.4
-        version: 20.11.4
+        specifier: 20.11.5
+        version: 20.11.5
       '@types/node-fetch':
         specifier: 2.6.11
         version: 2.6.11
@@ -433,7 +433,7 @@ importers:
         version: 2.7.0
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@20.11.4)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.5)(typescript@5.3.3)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -456,8 +456,8 @@ importers:
         specifier: 5.8.1
         version: 5.8.1(prisma@5.8.1)
       '@t3-oss/env-nextjs':
-        specifier: 0.7.1
-        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
+        specifier: 0.7.3
+        version: 0.7.3(typescript@5.3.3)(zod@3.22.4)
       bcryptjs:
         specifier: 2.4.3
         version: 2.4.3
@@ -534,7 +534,7 @@ importers:
         version: 4.17.21
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@20.11.4)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.5)(typescript@5.3.3)
       tsconfig-paths:
         specifier: 4.2.0
         version: 4.2.0
@@ -658,8 +658,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
       lucide-react:
-        specifier: 0.309.0
-        version: 0.309.0(react@18.2.0)
+        specifier: 0.311.0
+        version: 0.311.0(react@18.2.0)
       next:
         specifier: 14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -1179,7 +1179,7 @@ packages:
   /@humanwhocodes/object-schema@2.0.1:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
 
-  /@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.2.2):
+  /@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.2.4):
     resolution: {integrity: sha512-kJhXq63ngpTQ2dxgf5GasbPJWsJA3LgoOdd7WGhpUSzLgLgI4IsIzYkbJf9kmpOHe7Vdm/o3PcRA3jmizXUuAQ==}
     peerDependencies:
       '@vue/compiler-sfc': '>=3.0.0'
@@ -1193,7 +1193,7 @@ packages:
       '@babel/parser': 7.23.0
       '@babel/traverse': 7.23.2
       '@babel/types': 7.23.0
-      prettier: 3.2.2
+      prettier: 3.2.4
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
@@ -1305,6 +1305,7 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -1482,7 +1483,7 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@prettier/plugin-php@0.22.1(prettier@3.2.2):
+  /@prettier/plugin-php@0.22.1(prettier@3.2.4):
     resolution: {integrity: sha512-TN7tzC2/jCM1/H/mlUjqPos8lIV+vm8Qwp83KofuZclGlG9PoUWHU7m0yqskjAoCy+R4ZCV0hxdBLPBkU69S2Q==}
     peerDependencies:
       prettier: ^3.0.0
@@ -1490,7 +1491,7 @@ packages:
       linguist-languages: 7.27.0
       mem: 9.0.2
       php-parser: 3.1.5
-      prettier: 3.2.2
+      prettier: 3.2.4
     dev: false
 
   /@prisma/client@5.8.1(prisma@5.8.1):
@@ -2303,6 +2304,8 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/image@2.2.3:
@@ -2311,6 +2314,8 @@ packages:
       '@babel/runtime': 7.23.5
       '@react-pdf/png-js': 2.2.0
       cross-fetch: 3.1.8
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/layout@3.8.0:
@@ -2328,6 +2333,8 @@ packages:
       emoji-regex: 10.2.1
       queue: 6.0.2
       yoga-layout: 2.0.1
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.0.4:
@@ -2384,6 +2391,8 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.1.9:
@@ -2487,6 +2496,7 @@ packages:
       proxy-from-env: 1.1.0
       which: 2.0.2
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2536,6 +2546,7 @@ packages:
       stacktrace-parser: 0.1.10
       webpack: 5.89.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2605,6 +2616,7 @@ packages:
       '@sentry/cli': 1.77.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2639,8 +2651,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@t3-oss/env-core@0.7.1(typescript@5.3.3)(zod@3.22.4):
-    resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
+  /@t3-oss/env-core@0.7.3(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-hhtj59TKC6TKVdwJ0CcbKsvkr9R8Pc/SNKd4IgGUIC9T9X6moB8EZZ3FTJdABA/h9UABCK4J+KsF8gzmvMvHPg==}
     peerDependencies:
       typescript: '>=4.7.2'
       zod: ^3.0.0
@@ -2652,8 +2664,8 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@t3-oss/env-nextjs@0.7.1(typescript@5.3.3)(zod@3.22.4):
-    resolution: {integrity: sha512-tQDbNLGCOvKGi+JoGuJ/CJInJI7/kLWJqtgGppAKS7ZFLdVOqZYR/uRjxlXOWPnxmUKF8VswOAsq7fXUpNZDhA==}
+  /@t3-oss/env-nextjs@0.7.3(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-90TNffS17vjkQwfYyMUb4Zw9yqHwFV40f78qFug4JiQa5+N6DydTdlLOpzOcj8Cna/qpAVDwMSypofF/TVQDuA==}
     peerDependencies:
       typescript: '>=4.7.2'
       zod: ^3.0.0
@@ -2661,7 +2673,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.7.1(typescript@5.3.3)(zod@3.22.4)
+      '@t3-oss/env-core': 0.7.3(typescript@5.3.3)(zod@3.22.4)
       typescript: 5.3.3
       zod: 3.22.4
     dev: false
@@ -2797,7 +2809,7 @@ packages:
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  /@turbo/gen@1.11.3(@types/node@20.11.4)(typescript@5.3.3):
+  /@turbo/gen@1.11.3(@types/node@20.11.5)(typescript@5.3.3):
     resolution: {integrity: sha512-cHGRj7Jn7Hw1cA7NuwWYfYdhEliQX4LuSfEB9L1m8ifGkHalU3bbYXcehzLThmckpGpUQGnXYx0UtVudbQ42HA==}
     hasBin: true
     dependencies:
@@ -2809,7 +2821,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.3.1
-      ts-node: 10.9.2(@types/node@20.11.4)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.5)(typescript@5.3.3)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -2845,13 +2857,13 @@ packages:
   /@types/cli-progress@3.11.5:
     resolution: {integrity: sha512-D4PbNRbviKyppS5ivBGyFO29POlySLmA2HyUFE4p5QGazAMM3CwkKWcvTl8gvElSuxRh6FPKL8XmidX873ou4g==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
     dev: true
 
   /@types/cross-spawn@6.0.3:
     resolution: {integrity: sha512-BDAkU7WHHRHnvBf5z89lcvACsvkz/n7Tv+HyD/uW76O29HoH1Tk/W6iQrepaZVbisvlEek4ygwT8IW7ow9XLAA==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
     dev: true
 
   /@types/d3-array@3.2.1:
@@ -2921,7 +2933,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
     dev: false
 
   /@types/http-cache-semantics@4.0.4:
@@ -2956,12 +2968,12 @@ packages:
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       form-data: 4.0.0
     dev: true
 
-  /@types/node@20.11.4:
-    resolution: {integrity: sha512-6I0fMH8Aoy2lOejL3s4LhyIYX34DPwY8bl5xlNjBvUEk8OHrcuzsFt+Ied4LvJihbtXPM+8zUqdydfIti86v9g==}
+  /@types/node@20.11.5:
+    resolution: {integrity: sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==}
     dependencies:
       undici-types: 5.26.5
 
@@ -3005,7 +3017,7 @@ packages:
   /@types/through@0.0.32:
     resolution: {integrity: sha512-7XsfXIsjdfJM2wFDRAtEWp3zb2aVPk5QeyZxGlVK57q4u26DczMHhJmlhr0Jqv0THwxam/L8REXkj8M2I/lcvw==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
     dev: false
 
   /@types/tinycolor2@1.4.5:
@@ -3015,7 +3027,7 @@ packages:
   /@types/unzipper@0.10.9:
     resolution: {integrity: sha512-vHbmFZAw8emNAOVkHVbS3qBnbr0x/qHQZ+ei1HE7Oy6Tyrptl+jpqnOX+BF5owcu/HZLOV0nJK+K9sjs1Ox2JA==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.19.0(@typescript-eslint/parser@6.19.0)(eslint@8.56.0)(typescript@5.3.3):
@@ -3747,6 +3759,7 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -4023,6 +4036,8 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -5087,6 +5102,7 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -5804,6 +5820,8 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -5820,7 +5838,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -6077,8 +6095,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /lucide-react@0.309.0(react@18.2.0):
-    resolution: {integrity: sha512-zNVPczuwFrCfksZH3zbd1UDE6/WYhYAdbe2k7CImVyPAkXLgIwbs6eXQ4loigqDnUFjyFYCI5jZ1y10Kqal0dg==}
+  /lucide-react@0.311.0(react@18.2.0):
+    resolution: {integrity: sha512-kyMc6YyVepMVnmZT2X1sl7iyf7w6l8YdhEVKmcBLiT0lMlXqcPGsr2/drYP1/VaGf7DmBJ4/CjQAmOpDd8R8uw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -6099,6 +6117,7 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6398,6 +6417,8 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
@@ -6837,6 +6858,7 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6977,7 +6999,7 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  /prettier-plugin-tailwindcss@0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.2):
+  /prettier-plugin-tailwindcss@0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.4):
     resolution: {integrity: sha512-AvI/DNyMctyyxGOjyePgi/gqj5hJYClZ1avtQvLlqMT3uDZkRbi4HhGUpok3DRzv9z7Lti85Kdj3s3/1CeNI0w==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
@@ -7026,12 +7048,12 @@ packages:
       prettier-plugin-twig-melody:
         optional: true
     dependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.2.2)
-      prettier: 3.2.2
+      '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.2.4)
+      prettier: 3.2.4
     dev: false
 
-  /prettier@3.2.2:
-    resolution: {integrity: sha512-HTByuKZzw7utPiDO523Tt2pLtEyK7OibUD9suEJQrPUCYQqrHr74GGX6VidMrovbf/I50mPqr8j/II6oBAuc5A==}
+  /prettier@3.2.4:
+    resolution: {integrity: sha512-FWu1oLHKCrtpO1ypU6J0SbK2d9Ckwysq6bHj/uaCP26DxrPpppCLQRGVuqAxSTvhF00AcvDRyYrLNW7ocBhFFQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -7205,8 +7227,8 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-pdf-html@1.1.18(@react-pdf/renderer@3.1.17)(react@18.2.0):
-    resolution: {integrity: sha512-F/WIlNVsiX8QAh19VCQu3E0Z17lpPlpb3KwAUpAWU4fjhPSFaHsiaRDV+cQ104ds/rvfaq3avIqciMj8cIrzxw==}
+  /react-pdf-html@1.1.19(@react-pdf/renderer@3.1.17)(react@18.2.0):
+    resolution: {integrity: sha512-9flCUWgiKpmjVw0svUd4Epnt3S30aj9dR7UR03gt5X8jM/sTfpS21jTc+cXd3GoTdC/Ven1B8ArfaCUnz+mqoQ==}
     peerDependencies:
       '@react-pdf/renderer': '>=2'
       react: '>=16'
@@ -7224,6 +7246,7 @@ packages:
       '@react-pdf/renderer': 3.1.17(react@18.2.0)
       tailwindcss: 3.4.1
     transitivePeerDependencies:
+      - encoding
       - react
       - ts-node
     dev: false
@@ -7251,6 +7274,7 @@ packages:
       tiny-invariant: 1.3.1
       warning: 4.0.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -8196,7 +8220,7 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.2(@types/node@20.11.4)(typescript@5.3.3):
+  /ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -8215,7 +8239,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       acorn: 8.9.0
       acorn-walk: 8.2.0
       arg: 4.1.3
