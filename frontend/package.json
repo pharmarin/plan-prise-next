@@ -13,7 +13,6 @@
     "lint:fix": "pnpm lint --fix",
     "start": "pnpm with-env next start",
     "pretest": "playwright install --with-deps",
-    "test": "pnpm with-env playwright test __tests__/",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../.env --"
   },
@@ -60,10 +59,7 @@
     "zustand": "4.4.7"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.3.1",
     "@next/bundle-analyzer": "14.0.4",
-    "@next/env": "14.0.4",
-    "@playwright/test": "1.41.0",
     "@types/lodash": "4.14.202",
     "@types/node": "20.11.4",
     "@types/react": "18.2.48",

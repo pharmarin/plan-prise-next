@@ -8,6 +8,7 @@ import type {
   PrecautionsTable,
   UsersTable,
 } from "./database";
+// @ts-expect-error Error importing json
 import database from "./plandepr_medics.json";
 
 type UsersMap = Record<string, string>;
@@ -23,7 +24,7 @@ export const migrateUsers = async (): Promise<UsersMap> => {
     (database as MySQLExport).find(
       (data): data is UsersTable =>
         data.type === "table" && data.name === "users",
-    )?.data || [];
+    )?.data ?? [];
 
   console.log(
     "Migration de la table 'users' en cours, %d utilisateurs à migrer",
@@ -67,13 +68,15 @@ export const migratePrecautions = async () => {
     (database as MySQLExport).find(
       (data): data is PrecautionsTable =>
         data.type === "table" && data.name === "precautions",
-    )?.data || [];
+    )?.data ?? [];
 
   console.log(
     "Migration de la table 'precautions' en cours, %d utilisateurs à migrer",
     precautionsTable.length,
   );
 
+  // @ts-expect-error precautions_old have been replaced by precautions
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   await prisma.precautions_old.createMany({
     data: precautionsTable.map(({ id: _id, ...precaution }) => precaution),
   });
@@ -86,7 +89,7 @@ export const migrateMedics = async () => {
     (database as MySQLExport).find(
       (data): data is MedicsTable =>
         data.type === "table" && data.name === "medics_simple",
-    )?.data || [];
+    )?.data ?? [];
 
   console.log(
     "Migration de la table 'medics' en cours, %d utilisateurs à migrer",
@@ -100,11 +103,11 @@ export const migrateMedics = async () => {
       return {
         id: Number(medic.id),
         nomMedicament: medic.nomMedicament,
-        nomGenerique: medic.nomGenerique || null,
-        indication: medic.indication || null,
+        nomGenerique: medic.nomGenerique ?? null,
+        indication: medic.indication ?? null,
         frigo: medic.frigo === "1",
         dureeConservation: medic.dureeConservation || null,
-        voieAdministration: medic.voieAdministration || null,
+        voieAdministration: medic.voieAdministration ?? null,
         commentaire: medic.commentaire
           ? JSON.stringify(
               JSON.parse(
@@ -115,7 +118,7 @@ export const migrateMedics = async () => {
               ),
             )
           : null,
-        precaution: medic.precaution || null,
+        precaution: medic.precaution ?? null,
       };
     }),
   });
@@ -128,7 +131,7 @@ export const migrateCalendars = async (users: UsersMap) => {
     (database as MySQLExport).find(
       (data): data is CalendarsTable =>
         data.type === "table" && data.name === "calendriers",
-    )?.data || [];
+    )?.data ?? [];
 
   console.log(
     "Migration de la table 'calendars' en cours, %d utilisateurs à migrer",
@@ -151,7 +154,7 @@ export const migratePlans = async (users: UsersMap) => {
     (database as MySQLExport).find(
       (data): data is PlansTable =>
         data.type === "table" && data.name === "plans",
-    )?.data || [];
+    )?.data ?? [];
 
   console.log(
     "Migration de la table 'plans' en cours, %d utilisateurs à migrer",

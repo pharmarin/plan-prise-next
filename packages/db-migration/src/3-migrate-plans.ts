@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 import { createId } from "@paralleldrive/cuid2";
@@ -246,6 +247,7 @@ export const migratePlanNew = async () => {
                 connector?.id !== undefined,
             ),
         } as Prisma.PlanCreateInput["medics"],
+        // @ts-expect-error OK ?
         medicsOrder: medicamentArray.map((medicament) =>
           "id" in medicament ? medicament.id : medicament.denomination,
         ),

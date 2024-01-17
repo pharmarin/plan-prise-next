@@ -11,7 +11,6 @@ import migrateMedicsNew from "./2-migrate-medics-new";
 import { migratePlanNew } from "./3-migrate-plans";
 import { addMaxIdColumn } from "./4-add-maxid-column-users";
 import { migrateRenamePrecautions } from "./5-rename-precautions";
-import { migrateMedicamentPrecautions } from "./6-migrate-precautions";
 
 const seeder = async () => {
   switch (process.argv?.[2]) {
@@ -38,10 +37,6 @@ const seeder = async () => {
       break;
     case "5":
       await migrateRenamePrecautions();
-      process.exit();
-      break;
-    case "6":
-      await migrateMedicamentPrecautions();
       process.exit();
       break;
     default:

@@ -8,30 +8,60 @@ importers:
 
   .:
     dependencies:
+      '@faker-js/faker':
+        specifier: ^8.3.1
+        version: 8.3.1
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
         version: 4.1.1(prettier@3.2.2)
       '@manypkg/cli':
         specifier: 0.21.2
         version: 0.21.2
+      '@next/env':
+        specifier: 14.0.4
+        version: 14.0.4
+      '@plan-prise/api':
+        specifier: 0.1.0
+        version: link:packages/api
+      '@plan-prise/auth':
+        specifier: ^0.1.0
+        version: link:packages/auth
+      '@plan-prise/db-prisma':
+        specifier: ^0.1.0
+        version: link:packages/db-prisma
+      '@plan-prise/errors':
+        specifier: ^0.1.0
+        version: link:packages/errors
       '@plan-prise/eslint-config':
         specifier: 0.2.0
         version: link:config/eslint
       '@plan-prise/prettier-config':
         specifier: '*'
         version: link:config/prettier
+      '@plan-prise/tsconfig':
+        specifier: ^0.1.0
+        version: link:config/typescript
+      '@playwright/test':
+        specifier: ^1.41.0
+        version: 1.41.0
       '@prettier/plugin-php':
         specifier: 0.22.1
         version: 0.22.1(prettier@3.2.2)
       '@turbo/gen':
         specifier: 1.11.3
         version: 1.11.3(@types/node@20.11.4)(typescript@5.3.3)
+      '@types/lodash':
+        specifier: 4.14.202
+        version: 4.14.202
       '@types/node':
         specifier: 20.11.4
         version: 20.11.4
       eslint:
         specifier: 8.56.0
         version: 8.56.0
+      lodash:
+        specifier: 4.17.21
+        version: 4.17.21
       prettier:
         specifier: 3.2.2
         version: 3.2.2
@@ -277,18 +307,12 @@ importers:
         specifier: 4.4.7
         version: 4.4.7(@types/react@18.2.48)(immer@10.0.3)(react@18.2.0)
     devDependencies:
-      '@faker-js/faker':
-        specifier: 8.3.1
-        version: 8.3.1
       '@next/bundle-analyzer':
         specifier: 14.0.4
         version: 14.0.4
       '@next/env':
         specifier: 14.0.4
         version: 14.0.4
-      '@playwright/test':
-        specifier: 1.41.0
-        version: 1.41.0
       '@types/lodash':
         specifier: 4.14.202
         version: 4.14.202
@@ -1078,7 +1102,7 @@ packages:
   /@faker-js/faker@8.3.1:
     resolution: {integrity: sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
-    dev: true
+    dev: false
 
   /@floating-ui/core@1.4.1:
     resolution: {integrity: sha512-jk3WqquEJRlcyu7997NtR5PibI+y5bi+LS3hPmguVClypenMsCY3CBa3LAQnozRCtCrYWSEtAdiskpamuJRFOQ==}
@@ -1455,7 +1479,7 @@ packages:
     hasBin: true
     dependencies:
       playwright: 1.41.0
-    dev: true
+    dev: false
 
   /@pnpm/config.env-replace@1.1.0:
     resolution: {integrity: sha512-htyl8TWnKL7K/ESFa1oW2UB5lVDxuF5DpM7tBi6Hu2LNL3mWkIzNLG6N4zoCUP1lCKNxWy/3iu8mS8MvToGd6w==}
@@ -5024,7 +5048,7 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /fsevents@2.3.3:
@@ -6868,7 +6892,7 @@ packages:
     resolution: {integrity: sha512-UGKASUhXmvqm2Lxa1fNr8sFwAtqjpgBRr9jQ7XBI8Rn5uFiEowGUGwrruUQsVPIom4bk7Lt+oLGpXobnXzrBIw==}
     engines: {node: '>=16'}
     hasBin: true
-    dev: true
+    dev: false
 
   /playwright@1.41.0:
     resolution: {integrity: sha512-XOsfl5ZtAik/T9oek4V0jAypNlaCNzuKOwVhqhgYT3os6kH34PzbRb74F0VWcLYa5WFdnmxl7qyAHBXvPv7lqQ==}
@@ -6878,7 +6902,7 @@ packages:
       playwright-core: 1.41.0
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.33):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
