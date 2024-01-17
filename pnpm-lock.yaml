@@ -411,8 +411,8 @@ importers:
         specifier: 20.11.4
         version: 20.11.4
       '@types/node-fetch':
-        specifier: 2.6.10
-        version: 2.6.10
+        specifier: 2.6.11
+        version: 2.6.11
       '@types/unzipper':
         specifier: 0.10.9
         version: 0.10.9
@@ -2923,8 +2923,8 @@ packages:
     resolution: {integrity: sha512-AuHIyzR5Hea7ij0P9q7vx7xu4z0C28ucwjAZC0ja7JhINyCnOw8/DnvAPQQ9TfOlCtZAmCERKQX9+o1mgQhuOQ==}
     dev: true
 
-  /@types/node-fetch@2.6.10:
-    resolution: {integrity: sha512-PPpPK6F9ALFTn59Ka3BaL+qGuipRfxNE8qVgkp0bVixeiR2c2/L+IVOiBdu9JhhT22sWnQEp6YyHGI2b2+CMcA==}
+  /@types/node-fetch@2.6.11:
+    resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
       '@types/node': 20.11.4
       form-data: 4.0.0
