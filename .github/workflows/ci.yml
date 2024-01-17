@@ -65,10 +65,30 @@ jobs:
         run: pnpm install
 
       - name: Build, lint and type-check
-        run: pnpm turbo lint format typecheck --filter=!@plan-prise/db-migration
+        run: pnpm turbo lint typecheck --filter=!@plan-prise/db-migration
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+
+      - name: Format
+        id: prettier
+        run: pnpm turbo format --filter=!@plan-prise/db-migration
+
+      - name: Show diff
+        # https://docs.github.com/en/actions/learn-github-actions/expressions#failure
+        if: ${{ failure() }}
+        run: |
+          npx prettier . --write
+          git diff -- . ':(exclude)package-lock.json' ':(exclude)package.json' > diff.txt
+          npm install -g diff2html-cli
+          diff2html -i file -s side -F diff.html -- diff.txt
+
+      - name: Comment PR with prettier diff if exists
+        # https://docs.github.com/en/actions/learn-github-actions/expressions#failure-with-conditions
+        if: ${{ failure() && steps.prettier.conclusion == 'failure' }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: diff.html
 
   auth-test:
     runs-on: ubuntu-latest
