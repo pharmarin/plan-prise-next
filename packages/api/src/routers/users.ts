@@ -11,6 +11,7 @@ import {
 } from "@plan-prise/auth/lib/password-utils";
 import PP_Error from "@plan-prise/errors";
 
+import { env } from "../../env.mjs";
 import { signJWT, verifyJWT } from "../../utils/json-web-token";
 import sendMail from "../../utils/mail";
 import getUrl from "../../utils/url";
@@ -273,14 +274,14 @@ const usersRouter = createTRPCRouter({
 
           await sendMailApproved({ email: input.email, firstName, lastName });
 
-          await fetch(process.env.NTFY_ADMIN_URL ?? "", {
+          await fetch(env.NTFY_ADMIN_URL ?? "", {
             method: "POST",
             body: `${(
               await ctx.prisma.user.count({ where: { approvedAt: null } })
             ).toString()} en attente`,
             headers: {
               Tags: "+1",
-              Title: `Nouvelle inscription approuvée automatiquement sur ${process.env.APP_NAME}`,
+              Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
             },
           });
         } else {
@@ -293,7 +294,7 @@ const usersRouter = createTRPCRouter({
       }
 
       try {
-        await fetch(process.env.NTFY_ADMIN_URL ?? "", {
+        await fetch(env.NTFY_ADMIN_URL ?? "", {
           method: "POST",
           body: `${(
             await ctx.prisma.user.count({ where: { approvedAt: null } })
@@ -302,7 +303,7 @@ const usersRouter = createTRPCRouter({
             Actions: `view, Approuver, ${getUrl("/admin/users")}`,
             Click: getUrl("/admin/users"),
             Tags: "+1",
-            Title: `Nouvelle inscription sur ${process.env.APP_NAME}`,
+            Title: `Nouvelle inscription sur plandeprise.fr`,
           },
         });
       } catch (error) {

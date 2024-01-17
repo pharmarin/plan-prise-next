@@ -121,11 +121,11 @@ jobs:
 
       - name: Run tests
         run: pnpm test
-#
-#      - name: Upload report
-#        uses: actions/upload-artifact@v3
-#        if: failure()
-#        with:
-#          name: playwright-report
-#          path: frontend/playwright-report/
-#          retention-days: 30
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 2

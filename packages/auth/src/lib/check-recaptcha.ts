@@ -1,3 +1,5 @@
+import { env } from "../../env.mjs";
+
 const checkRecaptcha = async (
   gRecaptchaToken: string,
 ): Promise<number | undefined> => {
@@ -8,7 +10,7 @@ const checkRecaptcha = async (
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gRecaptchaToken}`,
+        body: `secret=${env.RECAPTCHA_SECRET}&response=${gRecaptchaToken}`,
       })
         .then((reCaptchaRes) => reCaptchaRes.json())
         .then((reCaptchaRes) => reCaptchaRes?.score as number | undefined)

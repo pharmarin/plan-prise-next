@@ -198,6 +198,9 @@ importers:
       '@sentry/nextjs':
         specifier: 7.93.0
         version: 7.93.0(next@14.0.4)(react@18.2.0)(webpack@5.89.0)
+      '@t3-oss/env-nextjs':
+        specifier: 0.7.1
+        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
       '@tanstack/react-query':
         specifier: 4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -206,7 +209,7 @@ importers:
         version: 8.11.6(react-dom@18.2.0)(react@18.2.0)
       '@tremor/react':
         specifier: 3.13.1
-        version: 3.13.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1)
+        version: 3.13.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1)
       '@trpc/client':
         specifier: 10.45.0
         version: 10.45.0(@trpc/server@10.45.0)
@@ -313,6 +316,9 @@ importers:
       prisma:
         specifier: 5.8.1
         version: 5.8.1
+      prop-types:
+        specifier: 15.8.1
+        version: 15.8.1
       raw-loader:
         specifier: 4.0.2
         version: 4.0.2(webpack@5.89.0)
@@ -340,6 +346,9 @@ importers:
       '@plan-prise/errors':
         specifier: '*'
         version: link:../errors
+      '@t3-oss/env-nextjs':
+        specifier: 0.7.1
+        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
       '@tanstack/react-query':
         specifier: 4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -446,6 +455,9 @@ importers:
       '@prisma/client':
         specifier: 5.8.1
         version: 5.8.1(prisma@5.8.1)
+      '@t3-oss/env-nextjs':
+        specifier: 0.7.1
+        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
       bcryptjs:
         specifier: 2.4.3
         version: 2.4.3
@@ -464,6 +476,9 @@ importers:
       server-only:
         specifier: 0.0.1
         version: 0.0.1
+      zod:
+        specifier: 3.22.4
+        version: 3.22.4
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -1290,7 +1305,6 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
     optional: true
@@ -2289,8 +2303,6 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/image@2.2.3:
@@ -2299,8 +2311,6 @@ packages:
       '@babel/runtime': 7.23.5
       '@react-pdf/png-js': 2.2.0
       cross-fetch: 3.1.8
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/layout@3.8.0:
@@ -2318,8 +2328,6 @@ packages:
       emoji-regex: 10.2.1
       queue: 6.0.2
       yoga-layout: 2.0.1
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.0.4:
@@ -2376,8 +2384,6 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.1.9:
@@ -2481,7 +2487,6 @@ packages:
       proxy-from-env: 1.1.0
       which: 2.0.2
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2531,7 +2536,6 @@ packages:
       stacktrace-parser: 0.1.10
       webpack: 5.89.0
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2601,7 +2605,6 @@ packages:
       '@sentry/cli': 1.77.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2634,6 +2637,33 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       defer-to-connect: 2.0.1
+    dev: false
+
+  /@t3-oss/env-core@0.7.1(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
+    peerDependencies:
+      typescript: '>=4.7.2'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.3.3
+      zod: 3.22.4
+    dev: false
+
+  /@t3-oss/env-nextjs@0.7.1(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-tQDbNLGCOvKGi+JoGuJ/CJInJI7/kLWJqtgGppAKS7ZFLdVOqZYR/uRjxlXOWPnxmUKF8VswOAsq7fXUpNZDhA==}
+    peerDependencies:
+      typescript: '>=4.7.2'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@t3-oss/env-core': 0.7.1(typescript@5.3.3)(zod@3.22.4)
+      typescript: 5.3.3
+      zod: 3.22.4
     dev: false
 
   /@tailwindcss/typography@0.5.10(tailwindcss@3.4.1):
@@ -2706,7 +2736,7 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: false
 
-  /@tremor/react@3.13.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1):
+  /@tremor/react@3.13.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1):
     resolution: {integrity: sha512-vWUjWO5cRKaS4jocwmDM2wkVKi8biXyJJtHOmXKAfH7KFLDRcHEmCKjjr5l34wOp97TtSuG6L3gDzAeV/VRzhw==}
     peerDependencies:
       react: ^18.0.0
@@ -2720,7 +2750,7 @@ packages:
       react-day-picker: 8.9.1(date-fns@2.30.0)(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-      recharts: 2.10.3(react-dom@18.2.0)(react@18.2.0)
+      recharts: 2.10.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       tailwind-merge: 1.14.0
     transitivePeerDependencies:
       - prop-types
@@ -3717,7 +3747,6 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
     optional: true
@@ -3994,8 +4023,6 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -5060,7 +5087,6 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -5778,8 +5804,6 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -5814,7 +5838,6 @@ packages:
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
-    dev: false
 
   /js-yaml@3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
@@ -6013,7 +6036,6 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
-    dev: false
 
   /lower-case-first@1.0.2:
     resolution: {integrity: sha512-UuxaYakO7XeONbKrZf5FEgkantPf5DUqDayzP5VXZrtRPdH86s4kN47I8B3TW10S4QKiE3ziHNf3kRN//okHjA==}
@@ -6077,7 +6099,6 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -6377,8 +6398,6 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
@@ -6818,7 +6837,6 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -7060,7 +7078,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: false
 
   /proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
@@ -7183,7 +7200,6 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: false
 
   /react-lifecycles-compat@3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
@@ -7208,7 +7224,6 @@ packages:
       '@react-pdf/renderer': 3.1.17(react@18.2.0)
       tailwindcss: 3.4.1
     transitivePeerDependencies:
-      - encoding
       - react
       - ts-node
     dev: false
@@ -7236,7 +7251,6 @@ packages:
       tiny-invariant: 1.3.1
       warning: 4.0.3
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -7296,7 +7310,7 @@ packages:
       - '@types/react'
     dev: false
 
-  /react-smooth@2.0.5(react-dom@18.2.0)(react@18.2.0):
+  /react-smooth@2.0.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-BMP2Ad42tD60h0JW6BFaib+RJuV5dsXJK9Baxiv/HlNFjvRLqA9xrNKxVWnUIZPQfzUwGXIlU/dSYLU+54YGQA==}
     peerDependencies:
       prop-types: ^15.6.0
@@ -7304,6 +7318,7 @@ packages:
       react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     dependencies:
       fast-equals: 5.0.1
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 2.9.0(react-dom@18.2.0)(react@18.2.0)
@@ -7423,7 +7438,7 @@ packages:
       decimal.js-light: 2.5.1
     dev: false
 
-  /recharts@2.10.3(react-dom@18.2.0)(react@18.2.0):
+  /recharts@2.10.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-G4J96fKTZdfFQd6aQnZjo2nVNdXhp+uuLb00+cBTGLo85pChvm1+E67K3wBOHDE/77spcYb2Cy9gYWVqiZvQCg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -7434,10 +7449,11 @@ packages:
       clsx: 2.1.0
       eventemitter3: 4.0.7
       lodash: 4.17.21
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-is: 16.13.1
-      react-smooth: 2.0.5(react-dom@18.2.0)(react@18.2.0)
+      react-smooth: 2.0.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       recharts-scale: 0.4.5
       tiny-invariant: 1.3.1
       victory-vendor: 36.7.0
