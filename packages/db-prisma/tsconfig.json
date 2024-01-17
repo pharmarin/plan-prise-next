@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./src/*"] },
   },
   "include": ["*.ts", "src", "src/types.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
