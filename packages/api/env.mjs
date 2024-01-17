@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    APP_NAME: z.string(),
     CROSS_SITE_SECRET: z.string(),
     MAIL_FROM_ADDRESS: process.env.CI
       ? z.string().email().optional()
@@ -15,7 +14,6 @@ export const env = createEnv({
   },
   client: {},
   runtimeEnv: {
-    APP_NAME: process.env.APP_NAME,
     CROSS_SITE_SECRET: process.env.CROSS_SITE_SECRET,
     MAIL_FROM_ADDRESS: process.env.MAIL_FROM_ADDRESS,
     MAILERSEND_API_KEY: process.env.MAILERSEND_API_KEY,

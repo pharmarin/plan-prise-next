@@ -281,7 +281,7 @@ const usersRouter = createTRPCRouter({
             ).toString()} en attente`,
             headers: {
               Tags: "+1",
-              Title: `Nouvelle inscription approuvée automatiquement sur ${env.APP_NAME}`,
+              Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
             },
           });
         } else {
@@ -303,7 +303,7 @@ const usersRouter = createTRPCRouter({
             Actions: `view, Approuver, ${getUrl("/admin/users")}`,
             Click: getUrl("/admin/users"),
             Tags: "+1",
-            Title: `Nouvelle inscription sur ${env.APP_NAME}`,
+            Title: `Nouvelle inscription sur plandeprise.fr`,
           },
         });
       } catch (error) {

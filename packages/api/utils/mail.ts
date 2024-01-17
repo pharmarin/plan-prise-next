@@ -6,7 +6,7 @@ const mailerSend = new MailerSend({
   apiKey: env.MAILERSEND_API_KEY ?? "",
 });
 
-const sentFrom = new Sender(env.MAIL_FROM_ADDRESS ?? "", env.APP_NAME);
+const sentFrom = new Sender(env.MAIL_FROM_ADDRESS ?? "", "plandeprise.fr");
 
 const sendMail = async (
   recipient: {
