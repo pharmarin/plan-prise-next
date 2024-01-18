@@ -101,6 +101,11 @@ export const Navbar = () => {
                   <DropdownMenuItem onClick={() => router.push("/admin/users")}>
                     Utilisateurs
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/admin/medics")}
+                  >
+                    Médicaments
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                 </>
               )}

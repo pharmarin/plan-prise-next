@@ -32,8 +32,7 @@ const UsersClient = ({ users }: { users: CleanUser[] }) => {
 
   const columnHelper = createColumnHelper<CleanUser>();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const columns: ColumnDef<CleanUser, any>[] = [
+  const columns: ColumnDef<CleanUser, never>[] = [
     columnHelper.accessor("lastName", {
       cell: ({ row }) => upperCase(row.getValue("lastName") ?? ""),
       header: ({ column }) => (
