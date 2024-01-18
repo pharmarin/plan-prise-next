@@ -2,7 +2,7 @@ import DeleteButton from "@/app/(auth)/plan/_components/Navbar/DeleteButton";
 import LoadingIndicator from "@/app/(auth)/plan/_components/Navbar/LoadingIndicator";
 import PrintButton from "@/app/(auth)/plan/_components/Navbar/PrintButton";
 import SettingsButton from "@/app/(auth)/plan/_components/Navbar/SettingsButton";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import usePlanStore from "@/app/(auth)/plan/state";
 
 const NavbarStack = () => {
   const medics = usePlanStore((state) => state.medics);

@@ -1,14 +1,14 @@
 "use client";
 
-import { PLAN_POSOLOGIE_COLOR } from "@/app/(auth)/plan/_lib/constants";
+import { PLAN_POSOLOGIE_COLOR } from "@/app/(auth)/plan/constants";
 import {
   extractCommentaire,
   extractConservation,
   extractIndication,
   extractPosologiesSettings,
-  extractVoieAdministration,
-} from "@/app/(auth)/plan/_lib/functions";
+} from "@/app/(auth)/plan/functions";
 import { PlanPrisePosologies } from "@/types/plan";
+import { extractVoieAdministration } from "@/utils/medicament";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution } from "@prisma/client";
 import { Document, Page, Text, View } from "@react-pdf/renderer";

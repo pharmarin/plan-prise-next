@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
-import { Navigation } from "@/state/navigation";
+import { Navigation } from "@/app/state-navigation";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";

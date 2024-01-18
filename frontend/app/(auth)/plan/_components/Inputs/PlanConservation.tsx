@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useConservation } from "@/app/(auth)/plan/_lib/hooks";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { useConservation } from "@/app/(auth)/plan/hooks";
+import usePlanStore from "@/app/(auth)/plan/state";
 import type { Medicament } from "@prisma/client";
 
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";

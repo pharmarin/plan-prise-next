@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import {
   extractConservation,
   extractIndication,
-} from "@/app/(auth)/plan/_lib/functions";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+} from "@/app/(auth)/plan/functions";
+import usePlanStore from "@/app/(auth)/plan/state";
 import type { Medicament } from "@prisma/client";
 
 export const useIndication = (

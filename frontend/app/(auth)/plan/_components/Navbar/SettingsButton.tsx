@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
 import { trpc } from "@/utils/api";
 import { debounce } from "lodash";

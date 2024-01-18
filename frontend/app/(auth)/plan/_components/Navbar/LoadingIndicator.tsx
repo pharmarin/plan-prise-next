@@ -1,4 +1,4 @@
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";

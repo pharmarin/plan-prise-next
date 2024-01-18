@@ -3,7 +3,7 @@
 import {
   PLAN_NO_MEDIC_WARNING,
   PLAN_SETTINGS_DEFAULT,
-} from "@/app/(auth)/plan/_lib/constants";
+} from "@/app/(auth)/plan/constants";
 import type { Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 import { merge, set, unset } from "lodash";

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { cn } from "../lib/utils";
+
 export const TypographyH1 = ({ children }: { children: ReactNode }) => (
   <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
     {children}
@@ -38,4 +40,21 @@ export const TypographySmall = ({ children }: { children: ReactNode }) => (
 
 export const TypographyMuted = ({ children }: { children: ReactNode }) => (
   <p className="text-sm text-muted-foreground">{children}</p>
+);
+
+export const TypographyList = ({
+  children,
+  ordered,
+}: {
+  children: ReactNode;
+  ordered?: boolean;
+}) => (
+  <ul
+    className={cn(
+      "my-6 ml-6 [&>li]:mt-2",
+      ordered ? "list-decimal" : "list-disc",
+    )}
+  >
+    {children}
+  </ul>
 );

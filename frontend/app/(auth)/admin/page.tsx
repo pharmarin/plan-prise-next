@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Navigation } from "@/state/navigation";
+import { Navigation } from "@/app/state-navigation";
 import { AreaChart, Card, Metric, Text } from "@tremor/react";
 
 import prisma from "@plan-prise/db-prisma";

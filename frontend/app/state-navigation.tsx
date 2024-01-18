@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { NavigationItem } from "@/types/navigation";
+import type { NavigationItem } from "@/types/navigation";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
@@ -14,13 +14,17 @@ type State = {
 
 type Actions = { setNavigation: (state: State) => void };
 
+const initialState: State = {
+  loading: undefined,
+  options: undefined,
+  returnTo: undefined,
+  title: "",
+};
+
 export const useNavigationState = create(
   immer<State & Actions>((setState) => ({
-    loading: undefined,
-    options: undefined,
-    returnTo: undefined,
-    title: "",
-    setNavigation: (state) => setState(state),
+    ...initialState,
+    setNavigation: (navigation) => setState({ ...initialState, ...navigation }),
   })),
 );
 
@@ -32,7 +36,7 @@ export const useNavigationState = create(
 export const Navigation = (state: State) => {
   const setNavigation = useNavigationState((state) => state.setNavigation);
 
-  useEffect(() => setNavigation(state), [state]);
+  useEffect(() => setNavigation(state), [setNavigation, state]);
 
   return undefined;
 };

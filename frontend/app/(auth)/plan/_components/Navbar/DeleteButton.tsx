@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { trpc } from "@/utils/api";
 import { Loader2, Trash2 } from "lucide-react";
 

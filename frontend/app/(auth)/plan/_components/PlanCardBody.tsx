@@ -3,8 +3,8 @@ import PlanCommentaireCustom from "@/app/(auth)/plan/_components/Inputs/PlanComm
 import PlanConservation from "@/app/(auth)/plan/_components/Inputs/PlanConservation";
 import PlanIndication from "@/app/(auth)/plan/_components/Inputs/PlanIndication";
 import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
-import { extractPosologiesSettings } from "@/app/(auth)/plan/_lib/functions";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { extractPosologiesSettings } from "@/app/(auth)/plan/functions";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { ThermometerSnowflake } from "lucide-react";
 
 import { Label } from "@plan-prise/ui/shadcn/ui/label";

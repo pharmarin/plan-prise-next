@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
-import { useNavigationState } from "@/state/navigation";
+import { useNavigationState } from "@/app/state-navigation";
 import type { NavbarIcons, NavigationItem } from "@/types/navigation";
 import { trpc } from "@/utils/api";
 import { ArrowLeftIcon, HomeIcon, Loader2 } from "lucide-react";

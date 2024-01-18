@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { trpc } from "@/utils/api";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";

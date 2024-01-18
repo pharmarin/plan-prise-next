@@ -1,7 +1,7 @@
 import DeleteUser from "@/app/(auth)/profil/form-delete";
 import EditInformations from "@/app/(auth)/profil/form-informations";
 import EditPassword from "@/app/(auth)/profil/form-password";
-import { Navigation } from "@/state/navigation";
+import { Navigation } from "@/app/state-navigation";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";

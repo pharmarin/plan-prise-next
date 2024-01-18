@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import TestButton from "@/app/(auth)/admin/users/[id]/approve-button";
 import RPPSField from "@/app/(auth)/admin/users/[id]/rpps-field";
-import { Navigation } from "@/state/navigation";
+import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";

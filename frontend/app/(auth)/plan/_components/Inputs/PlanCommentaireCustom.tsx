@@ -1,4 +1,4 @@
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { createId } from "@paralleldrive/cuid2";
 import type { Medicament } from "@prisma/client";
 import { PlusIcon, XIcon } from "lucide-react";

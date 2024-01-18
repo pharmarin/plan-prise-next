@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
-import PrintPDF from "@/app/(auth)/plan/[id]/PrintPDF";
+import PrintPDF from "@/app/(auth)/plan/[id]/pdf";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { trpc } from "@/utils/api";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Download, Loader2, Printer } from "lucide-react";

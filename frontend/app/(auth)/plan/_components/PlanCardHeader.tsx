@@ -1,5 +1,5 @@
 import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
-import { extractVoieAdministration } from "@/app/(auth)/plan/_lib/functions";
+import { extractVoieAdministration } from "@/utils/medicament";
 import { XIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
