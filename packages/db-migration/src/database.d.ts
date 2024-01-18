@@ -1,3 +1,5 @@
+type DatabaseName = string;
+
 export type CalendarsTable = {
   type: "table";
   name: "calendriers";

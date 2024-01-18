@@ -23,6 +23,9 @@
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "pretest": { "cache": false },
+    "start": {
+      "persistent": true
+    },
     "test": {
       "dependsOn": ["build", "pretest"],
       "outputs": ["playwright-report/**"]
