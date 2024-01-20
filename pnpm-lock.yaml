@@ -712,8 +712,8 @@ importers:
         specifier: 2.9.5
         version: 2.9.5(react-dom@18.2.0)(react@18.2.0)
       vaul:
-        specifier: 0.8.0
-        version: 0.8.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 0.8.7
+        version: 0.8.7(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -8758,8 +8758,8 @@ packages:
       builtins: 5.0.1
     dev: false
 
-  /vaul@0.8.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-9nUU2jIObJvJZxeQU1oVr/syKo5XqbRoOMoTEt0hHlWify4QZFlqTh6QSN/yxoKzNrMeEQzxbc3XC/vkPLOIqw==}
+  /vaul@0.8.7(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-xeI/qpCnaMkFWX2s0mPXZV77WP4Cj2chjNRsegl38jp+jc32ygmIob0xaqdVur/m+AmdGs9wO60NnrlSaTWvCA==}
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
       react-dom: ^16.8 || ^17.0 || ^18.0
