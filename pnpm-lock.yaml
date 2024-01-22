@@ -265,8 +265,8 @@ importers:
         specifier: 4.24.5
         version: 4.24.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
       next-superjson-plugin:
-        specifier: 0.5.10
-        version: 0.5.10(next@14.1.0)(superjson@1.13.3)
+        specifier: 0.6.1
+        version: 0.6.1(next@14.1.0)(superjson@1.13.3)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -6472,11 +6472,11 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-superjson-plugin@0.5.10(next@14.1.0)(superjson@1.13.3):
-    resolution: {integrity: sha512-y3vAKlZfZP6iEDb0R+XQ6UQ7YYDxbsZ0iZlV50/Hvw0Fzl+ScQJj+CbXdcl+ETugK9JbhCS7G7hMCGIjiGkgXQ==}
+  /next-superjson-plugin@0.6.1(next@14.1.0)(superjson@1.13.3):
+    resolution: {integrity: sha512-rhuLUey6+XZY+wUoF8uJNN146mYdkPmeKAmHZvVnCgocIVPwsYvY5qgIZBCCmeyJuEj67qctAdMk0eCXTyLmSw==}
     peerDependencies:
       next: ^13.0 || ^14.0
-      superjson: ^1
+      superjson: ^1 || ^2
     dependencies:
       hoist-non-react-statics: 3.3.2
       next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
