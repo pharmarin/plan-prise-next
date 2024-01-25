@@ -251,7 +251,7 @@ const EditMedicClient = ({
               Ajouter une durée de conservation
             </Button>
           </div>
-          {/* <div className="space-y-1 w-full">
+          <div className="space-y-1 w-full">
             <Label>Plus d&apos;informations</Label>
             <p>
               Créé le{" "}
@@ -270,7 +270,7 @@ const EditMedicClient = ({
                   },
                 )}`}
             </p>
-          </div> */}
+          </div>
           <div className="w-full space-y-1">
             <Label>Commentaires associés</Label>
             <div className="grid grid-cols-3 gap-4">

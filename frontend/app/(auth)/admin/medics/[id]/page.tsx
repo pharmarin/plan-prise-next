@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation";
 import { Navigation } from "@/app/state-navigation";
 import {
   extractVoieAdministration,
   voiesAdministrationDisplay,
 } from "@/utils/medicament";
 import { SnowflakeIcon } from "lucide-react";
+import { notFound } from "next/navigation";
 
 import prisma from "@plan-prise/db-prisma";
 import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
@@ -83,7 +83,7 @@ const Medicament = async ({ params }: { params: { id: string } }) => {
               )}
             </TypographyList>
           </div>
-          {/* <div className="space-y-1">
+          <div className="space-y-1">
             <Label>Plus d&apos;informations</Label>
             <p>
               Créé le{" "}
@@ -102,7 +102,7 @@ const Medicament = async ({ params }: { params: { id: string } }) => {
                   },
                 )}`}
             </p>
-          </div> */}
+          </div>
           <div className="space-y-1">
             <Label>Commentaires associés</Label>
             <div className="grid grid-cols-4 gap-4">
