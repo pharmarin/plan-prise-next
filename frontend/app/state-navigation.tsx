@@ -8,7 +8,7 @@ import { immer } from "zustand/middleware/immer";
 type State = {
   loading?: boolean;
   options?: NavigationItem[];
-  returnTo?: string | URL;
+  returnTo?: string;
   title: string;
 };
 

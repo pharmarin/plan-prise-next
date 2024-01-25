@@ -3,7 +3,8 @@ import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 
-import { authProcedure, createTRPCRouter } from "../trpc";
+import { updateMedicSchema } from "../../validation/medicaments";
+import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
   unique: authProcedure.input(z.string().cuid2()).query(({ input }) =>
@@ -56,6 +57,43 @@ const medicsRouter = createTRPCRouter({
             },
           },
         },
+      });
+    }),
+  update: adminProcedure
+    .input(updateMedicSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { id, commentaires, indications, principesActifs, ...data } = input;
+
+      return ctx.prisma.medicament.update({
+        where: { id },
+        data: {
+          commentaires: {
+            connect: commentaires.map((commentaire) => ({
+              id: commentaire.id,
+            })),
+          },
+          indications: indications.map((indication) => indication.value),
+          principesActifs: {
+            connect: principesActifs.map((principeActif) => ({
+              id: principeActif.id,
+            })),
+          },
+          ...data,
+        },
+      });
+    }),
+  findManyPrincipesActifs: adminProcedure
+    .input(z.string())
+    .mutation(({ ctx, input }) => {
+      if (input.length < 4) return undefined;
+
+      return ctx.prisma.principeActif.findMany({
+        where: {
+          denomination: {
+            contains: input,
+          },
+        },
+        take: 10,
       });
     }),
 });

@@ -12,28 +12,28 @@ type Props = {
 const Plan = async ({ params }: Props) => {
   const session = await getServerSession();
 
-  const plan = await prisma.plan.findFirst({
-    where: { displayId: Number(params.id), user: { id: session?.user.id } },
-    include: {
-      medics: {
-        include: { commentaires: true, principesActifs: true },
+  try {
+    const plan = await prisma.plan.findFirstOrThrow({
+      where: { displayId: Number(params.id), user: { id: session?.user.id } },
+      include: {
+        medics: {
+          include: { commentaires: true, principesActifs: true },
+        },
       },
-    },
-  });
+    });
 
-  if (!plan) {
-    return notFound();
+    return (
+      <>
+        <Navigation
+          title={`Plan de prise n°${plan.displayId}`}
+          returnTo="/plan"
+        />
+        <PlanClient plan={plan} data-superjson />
+      </>
+    );
+  } catch (error) {
+    notFound();
   }
-
-  return (
-    <>
-      <Navigation
-        title={`Plan de prise n°${plan.displayId}`}
-        returnTo="/plan"
-      />
-      <PlanClient plan={plan} data-superjson />
-    </>
-  );
 };
 export default Plan;
 

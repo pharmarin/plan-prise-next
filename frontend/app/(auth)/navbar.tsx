@@ -6,10 +6,11 @@ import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar
 import { useNavigationState } from "@/app/state-navigation";
 import type { NavbarIcons, NavigationItem } from "@/types/navigation";
 import { trpc } from "@/utils/api";
-import { ArrowLeftIcon, HomeIcon, Loader2 } from "lucide-react";
+import { ArrowLeftIcon, HomeIcon, Loader2, PencilIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import Logo from "@plan-prise/ui/components/navigation/Logo";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
 import {
   DropdownMenu,
@@ -23,6 +24,7 @@ import {
 export const navbarIcons: NavbarIcons = {
   arrowLeft: ArrowLeftIcon,
   home: HomeIcon,
+  edit: PencilIcon,
 };
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
@@ -45,6 +47,7 @@ export const Navbar = () => {
   const { data } = useSession();
   const title = useNavigationState((state) => state.title);
   const returnTo = useNavigationState((state) => state.returnTo);
+  const options = useNavigationState((state) => state.options);
   const { data: user } = trpc.users.current.useQuery();
 
   const isHome = pathname === "/";
@@ -70,6 +73,23 @@ export const Navbar = () => {
         className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
         <div data-testid="title">{title}</div>
+        {options?.map((option, index) => {
+          const NavbarIcon = navbarIcons[option.icon];
+
+          return (
+            <button
+              key={index}
+              className={cn("cursor-pointer", option.className)}
+              onClick={() => {
+                if ("path" in option) router.push(option.path);
+                /* if ("event" in option)
+                  window.dispatchEvent(new Event(option.event)); */
+              }}
+            >
+              <NavbarIcon className="h-4 w-4" />
+            </button>
+          );
+        })}
         {pathname.startsWith("/plan/") && <PlanNavbarStack />}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
