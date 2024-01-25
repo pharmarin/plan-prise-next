@@ -386,8 +386,8 @@ importers:
         specifier: 4.14.202
         version: 4.14.202
       i18next:
-        specifier: 23.7.18
-        version: 23.7.18
+        specifier: 23.7.19
+        version: 23.7.19
       jose:
         specifier: 4.15.4
         version: 4.15.4
@@ -414,7 +414,7 @@ importers:
         version: 3.22.4
       zod-i18n-map:
         specifier: 2.25.0
-        version: 2.25.0(i18next@23.7.18)(zod@3.22.4)
+        version: 2.25.0(i18next@23.7.19)(zod@3.22.4)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -1745,7 +1745,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@types/react': 18.2.48
       react: 18.2.0
     dev: false
@@ -2046,7 +2046,7 @@ packages:
       '@types/react-dom':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@radix-ui/react-slot': 1.0.2(@types/react@18.2.48)(react@18.2.0)
       '@types/react': 18.2.48
       react: 18.2.0
@@ -2233,7 +2233,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@types/react': 18.2.48
       react: 18.2.0
     dev: false
@@ -2277,7 +2277,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@types/react': 18.2.48
       react: 18.2.0
     dev: false
@@ -2361,7 +2361,7 @@ packages:
   /@react-pdf/font@2.4.0:
     resolution: {integrity: sha512-gJrxHE1t6/OADVQszByowIdP20mCSHCrbIoEIpYIg0cyhS01aCJ/EfMATvRC1P2im0TQqZNnlakkxa5jCywpVA==}
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@react-pdf/types': 2.3.5
       cross-fetch: 3.1.8
       fontkit: 2.0.2
@@ -2383,7 +2383,7 @@ packages:
   /@react-pdf/layout@3.9.1:
     resolution: {integrity: sha512-niZpr+K6BQClTuEG51Mfomy2mvjk2K5KlTRHgGi4Xunr6DM5ylsHr2EULWtkN67Ll4UuxckRHdJPm2j7VOLq0Q==}
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@react-pdf/fns': 2.1.0
       '@react-pdf/image': 2.3.0
       '@react-pdf/pdfkit': 3.1.0
@@ -2402,7 +2402,7 @@ packages:
   /@react-pdf/pdfkit@3.1.0:
     resolution: {integrity: sha512-/yjvlM4eNWvxb1IL5fhXVJ1/jQE3Kc9CMv6m+fp6nsKj4YcwdUcDxN+OfvUQE7+CorXNb7Zaf5oAgBZIbdFS8w==}
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@react-pdf/png-js': 2.3.0
       browserify-zlib: 0.2.0
       crypto-js: 4.2.0
@@ -2423,7 +2423,7 @@ packages:
   /@react-pdf/render@3.3.1:
     resolution: {integrity: sha512-STHZVDmnzmTmRLGzBymsvBRG8u5jkGJMTmOOOqbJUFlp3w5UZrLoEO8H2A3HFGc9+pjWVPydJHXj9d0S/NE9fQ==}
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
       '@react-pdf/fns': 2.1.0
       '@react-pdf/primitives': 3.1.1
       '@react-pdf/textkit': 4.3.0
@@ -5557,10 +5557,10 @@ packages:
     resolution: {integrity: sha512-XtqmnT+b9n5MX+MsqluFAVTIenbtC25iskW0Z+jLd+awfhA+ZbWKWQMIvLJccGoa2bM1R6juWJ27cZxIFOmkWw==}
     dev: false
 
-  /i18next@23.7.18:
-    resolution: {integrity: sha512-b9N2KjRCYQNlUvE1Kc83g8knyUkL5NiZQOp9BsTR/v/LXk6Fzz+doOzTg2/826XK28mCgBkYLNAtixjE58qpCw==}
+  /i18next@23.7.19:
+    resolution: {integrity: sha512-1aP+YSJl+nLxr42ZJtNhpWpNWYsc6nCbVCf2x4uizIX1BYfcigiRMlb3vOkE1p3+qrI+aD6h5G2Fg+2d2oMIOQ==}
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.23.8
     dev: false
 
   /iconv-lite@0.4.24:
@@ -9048,13 +9048,13 @@ packages:
     resolution: {integrity: sha512-tT/oChyDXelLo2A+UVnlW9GU7CsvFMaEnd9kVFsaiCQonFAXd3xrHhkLYu+suwwosrAEQ746xBU+HvYtm1Zs2Q==}
     dev: false
 
-  /zod-i18n-map@2.25.0(i18next@23.7.18)(zod@3.22.4):
+  /zod-i18n-map@2.25.0(i18next@23.7.19)(zod@3.22.4):
     resolution: {integrity: sha512-N20O0onhseYQF2TM9KeLtPeBhaWw77qAV2FIgtF9NBlA1G7wlou86OBTsYL6EtounY6kRg0Ihy70HI2m6sYZHw==}
     peerDependencies:
       i18next: '>=21.3.0'
       zod: '>=3.17.0'
     dependencies:
-      i18next: 23.7.18
+      i18next: 23.7.19
       zod: 3.22.4
     dev: false
 
