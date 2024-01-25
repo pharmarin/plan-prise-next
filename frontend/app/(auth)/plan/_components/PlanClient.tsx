@@ -135,6 +135,8 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                     principesActifs: [],
                     precaution_old: "",
                     precautionId: null,
+                    createdAt: new Date(),
+                    updatedAt: null,
                   }
             }
             removeMedic={async (medicament: PP.Medicament.Identifier) => {

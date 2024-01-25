@@ -22,12 +22,12 @@ const AdminDashboard = async () => {
   const plansCount = await prisma.plan.count();
   const plansData: { month: number; count: bigint }[] =
     await prisma.$queryRaw`SELECT
-      DATE_FORMAT(TIME, '%Y-%m') AS month,
+      DATE_FORMAT(createdAt, '%Y-%m') AS month,
       COUNT(*) AS count
     FROM
-      plans_old
+      plans
     WHERE
-      TIME >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+      createdAt >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
     GROUP BY
       month
     ORDER BY

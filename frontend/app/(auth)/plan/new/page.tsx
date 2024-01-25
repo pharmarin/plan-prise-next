@@ -14,6 +14,8 @@ const PlanNew = () => {
       userId: "",
       displayId: -1,
       medics: [],
+      createdAt: new Date(),
+      updatedAt: null,
     }),
     [],
   );

@@ -1,10 +1,10 @@
 import { expect } from "@playwright/test";
 import { startCase, toUpper } from "lodash";
 
+import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
-import getUrl from "@plan-prise/packages/api/utils/url";
 import { test } from "@plan-prise/tests/fixtures/auth.fixture";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
 
