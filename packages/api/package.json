@@ -49,7 +49,7 @@
     "react-dom": "18.2.0",
     "superjson": "1.13.3",
     "zod": "3.22.4",
-    "zod-i18n-map": "2.25.0"
+    "zod-i18n-map": "2.26.0"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",
