@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { useNavigationState } from "@/app/state-navigation";
 import { trpc } from "@/utils/api";
+import { useEventListener } from "@/utils/event-listener";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { capitalize } from "lodash";
@@ -33,12 +36,26 @@ import {
 } from "@plan-prise/ui/shadcn/ui/select";
 import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
 
-const EditMedicClient = ({
-  medicament,
-}: {
-  medicament: PP.Medicament.Include;
-}) => {
-  const FORM_DISABLED = true;
+const EDIT_MEDIC_EVENT = "EDIT_MEDIC_EVENT";
+const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";
+
+const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
+  const [readOnly, setReadOnly] = useState(true);
+
+  const setNavigation = useNavigationState((state) => state.setNavigation);
+
+  useEventListener(EDIT_MEDIC_EVENT, () => setReadOnly(false));
+
+  useEventListener(SAVE_MEDIC_EVENT, () => setReadOnly(true));
+
+  setNavigation({
+    title: readOnly
+      ? medicament.denomination
+      : `Modification de ${medicament.denomination}`,
+    options: readOnly
+      ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
+      : [{ icon: "save", event: SAVE_MEDIC_EVENT }],
+  });
 
   const { mutateAsync } = trpc.medics.findManyPrincipesActifs.useMutation();
 
@@ -81,7 +98,7 @@ const EditMedicClient = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <fieldset className="space-y-4" disabled={FORM_DISABLED}>
+        <fieldset className="space-y-4" disabled={readOnly}>
           <FormField
             control={form.control}
             name="denomination"
@@ -104,7 +121,7 @@ const EditMedicClient = ({
                 <FormControl>
                   <MultiSelect
                     defaultValue={field.value}
-                    disabled={FORM_DISABLED}
+                    disabled={readOnly}
                     keys={{ value: "id", label: "denomination" }}
                     onSearchChange={async (value) =>
                       (await mutateAsync(value)) ?? []
@@ -130,7 +147,7 @@ const EditMedicClient = ({
                       label: capitalize(voiesAdministrationDisplay[value]),
                       value,
                     }))}
-                    disabled={FORM_DISABLED}
+                    disabled={readOnly}
                     keys={{ label: "label", value: "value" }}
                     onSelect={(values) =>
                       field.onChange(values.map((value) => value.value))
@@ -251,7 +268,7 @@ const EditMedicClient = ({
               Ajouter une durée de conservation
             </Button>
           </div>
-          <div className="space-y-1 w-full">
+          <div className="w-full space-y-1">
             <Label>Plus d&apos;informations</Label>
             <p>
               Créé le{" "}
@@ -370,4 +387,4 @@ const EditMedicClient = ({
   );
 };
 
-export default EditMedicClient;
+export default MedicClient;

@@ -1,9 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import type { NavigationItem } from "@/types/navigation";
+import { ArrowLeftIcon, HomeIcon, PencilIcon, SaveIcon } from "lucide-react";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+
+export const navbarIcons = {
+  arrowLeft: ArrowLeftIcon,
+  home: HomeIcon,
+  edit: PencilIcon,
+  save: SaveIcon,
+};
+
+export type NavigationItem = {
+  icon: keyof typeof navbarIcons;
+  className?: string;
+} & ({ path: string } | { event: string });
 
 type State = {
   loading?: boolean;
@@ -12,7 +24,10 @@ type State = {
   title: string;
 };
 
-type Actions = { setNavigation: (state: State) => void };
+type Actions = {
+  setNavigation: (state: State) => void;
+  setOptions: (options: State["options"]) => void;
+};
 
 const initialState: State = {
   loading: undefined,
@@ -25,13 +40,12 @@ export const useNavigationState = create(
   immer<State & Actions>((setState) => ({
     ...initialState,
     setNavigation: (navigation) => setState({ ...initialState, ...navigation }),
+    setOptions: (options) =>
+      setState((state) => {
+        state.options = options;
+      }),
   })),
 );
-
-/* export const useNavigation = (state: State) => {
-  const setNavigation = useNavigationState((state) => state.setNavigation);
-  setNavigation(state);
-}; */
 
 export const Navigation = (state: State) => {
   const setNavigation = useNavigationState((state) => state.setNavigation);

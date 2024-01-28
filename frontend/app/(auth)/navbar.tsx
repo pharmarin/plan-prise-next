@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
-import { useNavigationState } from "@/app/state-navigation";
-import type { NavbarIcons, NavigationItem } from "@/types/navigation";
+import type { NavigationItem } from "@/app/state-navigation";
+import { navbarIcons, useNavigationState } from "@/app/state-navigation";
 import { trpc } from "@/utils/api";
-import { ArrowLeftIcon, HomeIcon, Loader2, PencilIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import Logo from "@plan-prise/ui/components/navigation/Logo";
@@ -20,12 +20,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@plan-prise/ui/shadcn/ui/dropdown-menu";
-
-export const navbarIcons: NavbarIcons = {
-  arrowLeft: ArrowLeftIcon,
-  home: HomeIcon,
-  edit: PencilIcon,
-};
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   const NavbarIcon = navbarIcons[icon];
@@ -82,8 +76,8 @@ export const Navbar = () => {
               className={cn("cursor-pointer", option.className)}
               onClick={() => {
                 if ("path" in option) router.push(option.path);
-                /* if ("event" in option)
-                  window.dispatchEvent(new Event(option.event)); */
+                if ("event" in option)
+                  document.dispatchEvent(new Event(option.event));
               }}
             >
               <NavbarIcon className="h-4 w-4" />
