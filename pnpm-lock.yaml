@@ -413,8 +413,8 @@ importers:
         specifier: 3.22.4
         version: 3.22.4
       zod-i18n-map:
-        specifier: 2.26.0
-        version: 2.26.0(i18next@23.8.1)(zod@3.22.4)
+        specifier: 2.27.0
+        version: 2.27.0(i18next@23.8.1)(zod@3.22.4)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -9049,8 +9049,8 @@ packages:
     resolution: {integrity: sha512-tT/oChyDXelLo2A+UVnlW9GU7CsvFMaEnd9kVFsaiCQonFAXd3xrHhkLYu+suwwosrAEQ746xBU+HvYtm1Zs2Q==}
     dev: false
 
-  /zod-i18n-map@2.26.0(i18next@23.8.1)(zod@3.22.4):
-    resolution: {integrity: sha512-/aAMoPM8vUDKPBM5ci5HbIXeZYDUAlMt36f7Zn0J+V5bY7guOMfzJE8CHmZnSon8wXHceZQ8ajEVEQNrcMKVpw==}
+  /zod-i18n-map@2.27.0(i18next@23.8.1)(zod@3.22.4):
+    resolution: {integrity: sha512-ORu9XpiVh3WDiEUs5Cr9siGgnpeODoBsTIgSD8sQCH9B//f9KowlzqHUEdPYb3vFonaSH8yPvPCOFM4niwp3Sg==}
     peerDependencies:
       i18next: '>=21.3.0'
       zod: '>=3.17.0'
