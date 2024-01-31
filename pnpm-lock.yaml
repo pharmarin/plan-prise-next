@@ -386,8 +386,8 @@ importers:
         specifier: 4.14.202
         version: 4.14.202
       i18next:
-        specifier: 23.8.1
-        version: 23.8.1
+        specifier: 23.8.2
+        version: 23.8.2
       jose:
         specifier: 4.15.4
         version: 4.15.4
@@ -414,7 +414,7 @@ importers:
         version: 3.22.4
       zod-i18n-map:
         specifier: 2.27.0
-        version: 2.27.0(i18next@23.8.1)(zod@3.22.4)
+        version: 2.27.0(i18next@23.8.2)(zod@3.22.4)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -5557,8 +5557,8 @@ packages:
     resolution: {integrity: sha512-XtqmnT+b9n5MX+MsqluFAVTIenbtC25iskW0Z+jLd+awfhA+ZbWKWQMIvLJccGoa2bM1R6juWJ27cZxIFOmkWw==}
     dev: false
 
-  /i18next@23.8.1:
-    resolution: {integrity: sha512-Yhe6oiJhigSh64ev7nVVywu7vHjuUG41MRmFKNwphbkadqTL1ozZFBQISflY7/ju+gL6I/SPfI1GgWQh1yYArA==}
+  /i18next@23.8.2:
+    resolution: {integrity: sha512-Z84zyEangrlERm0ZugVy4bIt485e/H8VecGUZkZWrH7BDePG6jT73QdL9EA1tRTTVVMpry/MgWIP1FjEn0DRXA==}
     dependencies:
       '@babel/runtime': 7.23.8
     dev: false
@@ -9049,13 +9049,13 @@ packages:
     resolution: {integrity: sha512-tT/oChyDXelLo2A+UVnlW9GU7CsvFMaEnd9kVFsaiCQonFAXd3xrHhkLYu+suwwosrAEQ746xBU+HvYtm1Zs2Q==}
     dev: false
 
-  /zod-i18n-map@2.27.0(i18next@23.8.1)(zod@3.22.4):
+  /zod-i18n-map@2.27.0(i18next@23.8.2)(zod@3.22.4):
     resolution: {integrity: sha512-ORu9XpiVh3WDiEUs5Cr9siGgnpeODoBsTIgSD8sQCH9B//f9KowlzqHUEdPYb3vFonaSH8yPvPCOFM4niwp3Sg==}
     peerDependencies:
       i18next: '>=21.3.0'
       zod: '>=3.17.0'
     dependencies:
-      i18next: 23.8.1
+      i18next: 23.8.2
       zod: 3.22.4
     dev: false
 
