@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "@plan-prise/tsconfig": "*",
-    "@types/node": "20.11.11",
+    "@types/node": "20.11.13",
     "@types/node-fetch": "2.6.11",
     "@types/unzipper": "0.10.9",
     "csv-parse": "5.5.3",

@@ -49,13 +49,13 @@ importers:
         version: 0.22.1(prettier@3.2.4)
       '@turbo/gen':
         specifier: 1.11.3
-        version: 1.11.3(@types/node@20.11.11)(typescript@5.3.3)
+        version: 1.11.3(@types/node@20.11.13)(typescript@5.3.3)
       '@types/lodash':
         specifier: 4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: 20.11.11
-        version: 20.11.11
+        specifier: 20.11.13
+        version: 20.11.13
       eslint:
         specifier: 8.56.0
         version: 8.56.0
@@ -139,8 +139,8 @@ importers:
         specifier: ^0.1.0
         version: link:../typescript
       '@types/node':
-        specifier: 20.11.11
-        version: 20.11.11
+        specifier: 20.11.13
+        version: 20.11.13
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -314,8 +314,8 @@ importers:
         specifier: 4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: 20.11.11
-        version: 20.11.11
+        specifier: 20.11.13
+        version: 20.11.13
       '@types/react':
         specifier: 18.2.48
         version: 18.2.48
@@ -438,8 +438,8 @@ importers:
         specifier: '*'
         version: link:../../config/typescript
       '@types/node':
-        specifier: 20.11.11
-        version: 20.11.11
+        specifier: 20.11.13
+        version: 20.11.13
       '@types/node-fetch':
         specifier: 2.6.11
         version: 2.6.11
@@ -454,7 +454,7 @@ importers:
         version: 2.7.0
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@20.11.11)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.13)(typescript@5.3.3)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -555,7 +555,7 @@ importers:
         version: 4.17.21
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@20.11.11)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.13)(typescript@5.3.3)
       tsconfig-paths:
         specifier: 4.2.0
         version: 4.2.0
@@ -2879,7 +2879,7 @@ packages:
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  /@turbo/gen@1.11.3(@types/node@20.11.11)(typescript@5.3.3):
+  /@turbo/gen@1.11.3(@types/node@20.11.13)(typescript@5.3.3):
     resolution: {integrity: sha512-cHGRj7Jn7Hw1cA7NuwWYfYdhEliQX4LuSfEB9L1m8ifGkHalU3bbYXcehzLThmckpGpUQGnXYx0UtVudbQ42HA==}
     hasBin: true
     dependencies:
@@ -2891,7 +2891,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.3.1
-      ts-node: 10.9.2(@types/node@20.11.11)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.13)(typescript@5.3.3)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -2927,13 +2927,13 @@ packages:
   /@types/cli-progress@3.11.5:
     resolution: {integrity: sha512-D4PbNRbviKyppS5ivBGyFO29POlySLmA2HyUFE4p5QGazAMM3CwkKWcvTl8gvElSuxRh6FPKL8XmidX873ou4g==}
     dependencies:
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
     dev: true
 
   /@types/cross-spawn@6.0.3:
     resolution: {integrity: sha512-BDAkU7WHHRHnvBf5z89lcvACsvkz/n7Tv+HyD/uW76O29HoH1Tk/W6iQrepaZVbisvlEek4ygwT8IW7ow9XLAA==}
     dependencies:
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
     dev: true
 
   /@types/d3-array@3.2.1:
@@ -3006,7 +3006,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
     dev: false
 
   /@types/http-cache-semantics@4.0.4:
@@ -3041,12 +3041,12 @@ packages:
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
       form-data: 4.0.0
     dev: true
 
-  /@types/node@20.11.11:
-    resolution: {integrity: sha512-PlJCXfb57Jrman0H1BxO2+Q7qwih2Mwk7T6Gvixj+SK4mqs4RWOGMMoP6p/LFa3UrP2CZOO6ai6otd7J/TB6Ug==}
+  /@types/node@20.11.13:
+    resolution: {integrity: sha512-5G4zQwdiQBSWYTDAH1ctw2eidqdhMJaNsiIDKHFr55ihz5Trl2qqR8fdrT732yPBho5gkNxXm67OxWFBqX9aPg==}
     dependencies:
       undici-types: 5.26.5
 
@@ -3090,7 +3090,7 @@ packages:
   /@types/through@0.0.32:
     resolution: {integrity: sha512-7XsfXIsjdfJM2wFDRAtEWp3zb2aVPk5QeyZxGlVK57q4u26DczMHhJmlhr0Jqv0THwxam/L8REXkj8M2I/lcvw==}
     dependencies:
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
     dev: false
 
   /@types/tinycolor2@1.4.5:
@@ -3100,7 +3100,7 @@ packages:
   /@types/unzipper@0.10.9:
     resolution: {integrity: sha512-vHbmFZAw8emNAOVkHVbS3qBnbr0x/qHQZ+ei1HE7Oy6Tyrptl+jpqnOX+BF5owcu/HZLOV0nJK+K9sjs1Ox2JA==}
     dependencies:
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3):
@@ -5956,7 +5956,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -8380,7 +8380,7 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.2(@types/node@20.11.11)(typescript@5.3.3):
+  /ts-node@10.9.2(@types/node@20.11.13)(typescript@5.3.3):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -8399,7 +8399,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.11
+      '@types/node': 20.11.13
       acorn: 8.9.0
       acorn-walk: 8.2.0
       arg: 4.1.3
