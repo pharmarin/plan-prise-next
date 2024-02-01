@@ -51,6 +51,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
       title: readOnly
         ? medicament.denomination
         : `Modification de ${medicament.denomination}`,
+      returnTo: "/admin/medics",
       options: readOnly
         ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
         : isSaving
