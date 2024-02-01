@@ -1,4 +1,4 @@
-import MedicsClient from "@/app/(auth)/admin/medics/client";
+import MedicsClient from "@/app/(auth)/admin/medicaments/client";
 import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";

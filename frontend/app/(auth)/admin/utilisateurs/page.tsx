@@ -1,4 +1,4 @@
-import UsersClient from "@/app/(auth)/admin/users/client";
+import UsersClient from "@/app/(auth)/admin/utilisateurs/client";
 import { Navigation } from "@/app/state-navigation";
 
 import type { User } from "@plan-prise/db-prisma";

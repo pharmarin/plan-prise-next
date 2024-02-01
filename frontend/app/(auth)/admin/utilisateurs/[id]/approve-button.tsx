@@ -35,7 +35,7 @@ const TestButton = ({
         if (response === MUTATION_SUCCESS) {
           setIsApproved(true);
 
-          revalidatePath("/admin/users");
+          revalidatePath("/admin/utilisateurs");
         }
       }}
     >

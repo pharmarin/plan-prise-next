@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { revalidatePath } from "next/cache";
 import { trpc } from "@/app/_trpc/api";
-import CommentaireCard from "@/app/(auth)/admin/medics/[id]/card-commentaire";
+import CommentaireCard from "@/app/(auth)/admin/medicaments/[id]/card-commentaire";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
@@ -51,7 +51,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
       title: readOnly
         ? medicament.denomination
         : `Modification de ${medicament.denomination}`,
-      returnTo: "/admin/medics",
+      returnTo: "/admin/medicaments",
       options: readOnly
         ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
         : isSaving
@@ -117,7 +117,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
       setIsSaving(false);
 
       if (response === MUTATION_SUCCESS) {
-        revalidatePath("/admin/medics");
+        revalidatePath("/admin/medicaments");
       } else {
         form.setError(SERVER_ERROR, {
           message: "La mise à jour du médicament a échoué",

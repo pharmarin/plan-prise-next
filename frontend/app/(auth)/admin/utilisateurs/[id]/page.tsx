@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import TestButton from "@/app/(auth)/admin/users/[id]/approve-button";
-import RPPSField from "@/app/(auth)/admin/users/[id]/rpps-field";
+import TestButton from "@/app/(auth)/admin/utilisateurs/[id]/approve-button";
+import RPPSField from "@/app/(auth)/admin/utilisateurs/[id]/rpps-field";
 import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";
@@ -19,7 +19,10 @@ const User = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <Navigation title="Détail de l'utilisateur" returnTo="/admin/users" />
+      <Navigation
+        title="Détail de l'utilisateur"
+        returnTo="/admin/utilisateurs"
+      />
       <div className="relative">
         <TestButton approved={!!user.approvedAt} userId={params.id} />
         <div className="space-y-4">

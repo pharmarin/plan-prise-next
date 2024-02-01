@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import EditMedicClient from "@/app/(auth)/admin/medics/[id]/client";
+import EditMedicClient from "@/app/(auth)/admin/medicaments/[id]/client";
 
 import prisma from "@plan-prise/db-prisma";
 

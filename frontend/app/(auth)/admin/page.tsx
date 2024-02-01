@@ -38,7 +38,7 @@ const AdminDashboard = async () => {
       <Navigation title="Administration" />
       <div className="space-y-6">
         <div className="grid grid-cols-3 gap-4">
-          <Link href="/admin/users">
+          <Link href="/admin/utilisateurs">
             <Card className="h-full" decoration="top" decorationColor="blue">
               <Text>Utilisateurs</Text>
               <Metric>{usersCount}</Metric>
