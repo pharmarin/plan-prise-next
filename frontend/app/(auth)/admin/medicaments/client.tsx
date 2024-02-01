@@ -51,7 +51,7 @@ const MedicsClient = ({
     <DataTable
       columns={columns}
       data={medicaments}
-      link={(data) => `/admin/medicaments/${data.id}`}
+      link={(data) => `/admin/medics/${data.id}`}
       sortingDefault={[{ id: "denomination", desc: false }]}
     />
   );

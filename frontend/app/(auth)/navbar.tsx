@@ -131,6 +131,11 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
                   >
                     Médicaments
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/admin/principes-actifs")}
+                  >
+                    Principes Actifs
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                 </>
               )}
