@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { revalidatePath } from "next/cache";
 import { trpc } from "@/app/_trpc/api";
+import { revalidatePath } from "@/app/(auth)/admin/actions";
 import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
 

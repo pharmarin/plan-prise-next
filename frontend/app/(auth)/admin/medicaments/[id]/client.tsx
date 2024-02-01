@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
+import { revalidatePath } from "@/app/(auth)/admin/actions";
 import CommentaireCard from "@/app/(auth)/admin/medicaments/[id]/card-commentaire";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
@@ -35,16 +36,34 @@ import { Label } from "@plan-prise/ui/shadcn/ui/label";
 
 const EDIT_MEDIC_EVENT = "EDIT_MEDIC_EVENT";
 const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";
+const DELETE_MEDIC_EVENT = "DELETE_MEDIC_EVENT";
 
 const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
   const [readOnly, setReadOnly] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
+  const router = useRouter();
+
   const setNavigation = useNavigationState((state) => state.setNavigation);
+
+  const { mutateAsync: findPrincipeActifs } =
+    trpc.medics.findManyPrincipesActifs.useMutation();
+  const { mutateAsync: upsertMedic } = trpc.medics.upsert.useMutation();
+  const { mutateAsync: deleteMedic } = trpc.medics.delete.useMutation();
 
   useEventListener(EDIT_MEDIC_EVENT, () => setReadOnly(false));
 
   useEventListener(SAVE_MEDIC_EVENT, () => setReadOnly(true));
+
+  useEventListener(DELETE_MEDIC_EVENT, async () => {
+    if (
+      confirm(`Voulez-vous vraiment supprimer ${medicament.denomination} ?`)
+    ) {
+      await deleteMedic({ id: medicament.id });
+      revalidatePath("/admin/medicaments");
+      router.push("/admin/medicaments");
+    }
+  });
 
   useEffect(() => {
     setNavigation({
@@ -52,22 +71,32 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
         ? medicament.denomination
         : `Modification de ${medicament.denomination}`,
       returnTo: "/admin/medicaments",
-      options: readOnly
-        ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
-        : isSaving
-          ? [{ icon: "loading", className: "animate-spin", event: "" }]
+      options: [
+        ...(readOnly
+          ? [{ icon: "edit" as const, event: EDIT_MEDIC_EVENT }]
+          : []),
+        ...(isSaving
+          ? [
+              {
+                icon: "loading" as const,
+                className: "animate-spin",
+                event: "",
+              },
+            ]
           : [
               {
-                icon: "save",
+                icon: "save" as const,
                 event: SAVE_MEDIC_EVENT,
               },
-            ],
+            ]),
+        {
+          icon: "delete",
+          className: "bg-red-500 p-1 rounded-full text-white",
+          event: DELETE_MEDIC_EVENT,
+        },
+      ],
     });
   }, [isSaving, medicament.denomination, readOnly, setNavigation]);
-
-  const { mutateAsync: findPrincipeActifs } =
-    trpc.medics.findManyPrincipesActifs.useMutation();
-  const { mutateAsync: upsertMedic } = trpc.medics.upsert.useMutation();
 
   const form = useForm<z.infer<typeof upsertMedicSchema>>({
     resolver: zodResolver(upsertMedicSchema),
@@ -117,6 +146,8 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
       setIsSaving(false);
 
       if (response === MUTATION_SUCCESS) {
+        setReadOnly(true);
+
         revalidatePath("/admin/medicaments");
       } else {
         form.setError(SERVER_ERROR, {
@@ -133,7 +164,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <fieldset className="an space-y-4" disabled={readOnly}>
+        <fieldset className="space-y-4" disabled={readOnly}>
           <FormServerError />
           <FormField
             control={form.control}

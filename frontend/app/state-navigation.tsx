@@ -7,12 +7,14 @@ import {
   Loader2Icon,
   PencilIcon,
   SaveIcon,
+  Trash2Icon,
 } from "lucide-react";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 export const navbarIcons = {
   arrowLeft: ArrowLeftIcon,
+  delete: Trash2Icon,
   edit: PencilIcon,
   loading: Loader2Icon,
   home: HomeIcon,

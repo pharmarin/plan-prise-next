@@ -116,6 +116,11 @@ const medicsRouter = createTRPCRouter({
         where: { id: input.id },
       }),
     ),
+  delete: adminProcedure
+    .input(z.object({ id: z.string().cuid2() }))
+    .mutation(({ ctx, input }) =>
+      ctx.prisma.medicament.delete({ where: { id: input.id } }),
+    ),
 });
 
 export default medicsRouter;
