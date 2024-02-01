@@ -72,12 +72,18 @@ const medicsRouter = createTRPCRouter({
               where: { id: commentaire.id },
               update: {
                 population: commentaire.population,
-                voieAdministration: commentaire.voieAdministration,
+                voieAdministration:
+                  commentaire.voieAdministration === ""
+                    ? null
+                    : commentaire.voieAdministration,
                 texte: commentaire.texte,
               },
               create: {
                 population: commentaire.population,
-                voieAdministration: commentaire.voieAdministration,
+                voieAdministration:
+                  commentaire.voieAdministration === ""
+                    ? null
+                    : commentaire.voieAdministration,
                 texte: commentaire.texte,
               },
             })),
@@ -107,10 +113,10 @@ const medicsRouter = createTRPCRouter({
       });
     }),
   deleteCommentaire: adminProcedure
-    .input(z.string().cuid2())
+    .input(z.object({ id: z.string().cuid2() }))
     .mutation(({ ctx, input }) =>
       ctx.prisma.commentaire.delete({
-        where: { id: input },
+        where: { id: input.id },
       }),
     ),
 });

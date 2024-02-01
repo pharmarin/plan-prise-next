@@ -7,8 +7,18 @@ export const ALL_VOIES = "ALL_VOIES";
 
 const updateCommentaireSchema = z.object({
   id: z.string().cuid2().optional(),
-  voieAdministration: z.nativeEnum(VoieAdministration).optional(),
-  population: z.string().optional(),
+  voieAdministration: z
+    .nativeEnum(VoieAdministration)
+    .or(z.literal(""))
+    .transform((value) =>
+      typeof window === "undefined" && value === "" ? undefined : value,
+    ),
+  population: z
+    .string()
+    .or(z.literal(""))
+    .transform((value) =>
+      typeof window === "undefined" && value === "" ? undefined : value,
+    ),
   texte: z.string(),
 });
 
@@ -24,7 +34,12 @@ export const updateMedicSchema = z.object({
   conservationDuree: z.array(
     z.object({
       duree: z.string(),
-      laboratoire: z.string().optional(),
+      laboratoire: z
+        .string()
+        .or(z.literal(""))
+        .transform((value) =>
+          typeof window === "undefined" && value === "" ? undefined : value,
+        ),
     }),
   ),
   commentaires: z.array(updateCommentaireSchema),

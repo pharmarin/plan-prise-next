@@ -23,19 +23,12 @@ import {
 } from "@plan-prise/ui/shadcn/ui/select";
 import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
 
-type Commentaire = {
-  id: string;
-  texte: string;
-  population?: string;
-  voieAdministration?: VoieAdministration;
-};
-
 const CommentaireCard = ({
-  commentaire,
+  id,
   index,
   removeFromArray,
 }: {
-  commentaire: Commentaire;
+  id: string;
   index: number;
   removeFromArray: (index: number) => void;
 }) => {
@@ -52,7 +45,7 @@ const CommentaireCard = ({
           type="button"
           onClick={async () => {
             try {
-              await mutateAsync(commentaire.id);
+              await mutateAsync({ id });
               removeFromArray(index);
             } catch (error) {
               console.error("Error deleting comment: ", error);

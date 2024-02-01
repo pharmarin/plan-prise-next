@@ -63,11 +63,16 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
         medicament.indications.map((indication) => ({ value: indication })) ||
         [],
       conservationFrigo: medicament.conservationFrigo,
-      conservationDuree: medicament.conservationDuree ?? [],
+      conservationDuree: (medicament.conservationDuree ?? []).map(
+        (conservation) => ({
+          duree: conservation.duree,
+          laboratoire: conservation.laboratoire ?? "",
+        }),
+      ),
       commentaires: medicament.commentaires.map((commentaire) => ({
         ...commentaire,
-        population: commentaire.population ?? undefined,
-        voieAdministration: commentaire.voieAdministration ?? undefined,
+        population: commentaire.population ?? "",
+        voieAdministration: commentaire.voieAdministration ?? "",
       })),
     },
   });
@@ -85,6 +90,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
   const commentairesFieldArray = useFieldArray({
     name: "commentaires",
     control: form.control,
+    keyName: "fieldId",
   });
 
   const onSubmit = (values: z.infer<typeof updateMedicSchema>) => {};
@@ -288,8 +294,8 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
               {commentairesFieldArray.fields.map((field, index) => (
                 <CommentaireCard
                   key={field.id}
+                  id={field.id ?? ""}
                   index={index}
-                  commentaire={field}
                   removeFromArray={(index) =>
                     commentairesFieldArray.remove(index)
                   }
