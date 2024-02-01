@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { trpc } from "@/utils/api";
+import { trpc } from "@/app/_trpc/api";
 import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
 

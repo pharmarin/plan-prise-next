@@ -2,8 +2,8 @@
 
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
+import { trpc } from "@/app/_trpc/api";
 import { env } from "@/env.mjs";
-import { trpc } from "@/utils/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
 import { SessionProvider } from "next-auth/react";

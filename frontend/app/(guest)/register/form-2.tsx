@@ -2,7 +2,7 @@
 
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
-import { trpc } from "@/utils/api";
+import { trpc } from "@/app/_trpc/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";

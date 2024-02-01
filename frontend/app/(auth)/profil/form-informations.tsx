@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@/utils/api";
+import { trpc } from "@/app/_trpc/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@prisma/client";
 import { TRPCClientError } from "@trpc/client";

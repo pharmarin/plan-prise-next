@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { trpc } from "@/utils/api";
+import { trpc } from "@/app/_trpc/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";

@@ -128,3 +128,5 @@ export const adminProcedure = authProcedure.use(({ ctx, next }) => {
 
   return next();
 });
+
+export const createCallerFactory = t.createCallerFactory;

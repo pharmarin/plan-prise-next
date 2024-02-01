@@ -1,4 +1,4 @@
-import { trpc } from "@/utils/api";
+import { trpc } from "@/app/_trpc/api";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
 import type { VoieAdministration } from "@prisma/client";
 import { Trash2Icon } from "lucide-react";

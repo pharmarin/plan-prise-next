@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { trpc } from "@/utils/api";
+import { trpc } from "@/app/_trpc/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";

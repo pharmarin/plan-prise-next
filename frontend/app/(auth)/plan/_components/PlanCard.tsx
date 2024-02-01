@@ -1,8 +1,8 @@
+import { trpc } from "@/app/_trpc/api";
 import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
 import PlanCardBody from "@/app/(auth)/plan/_components/PlanCardBody";
 import PlanCardHeader from "@/app/(auth)/plan/_components/PlanCardHeader";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
-import { trpc } from "@/utils/api";
 
 import PP_Error from "@plan-prise/errors";
 

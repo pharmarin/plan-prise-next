@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { trpc } from "@/app/_trpc/api";
 import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
 import type { NavigationItem } from "@/app/state-navigation";
 import { navbarIcons, useNavigationState } from "@/app/state-navigation";
-import { trpc } from "@/utils/api";
+import type { User } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -35,14 +36,16 @@ const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   }
 };
 
-export const Navbar = () => {
+export const Navbar = ({ serverUser }: { serverUser: User }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();
   const title = useNavigationState((state) => state.title);
   const returnTo = useNavigationState((state) => state.returnTo);
   const options = useNavigationState((state) => state.options);
-  const { data: user } = trpc.users.current.useQuery();
+  const { data: user } = trpc.users.current.useQuery(undefined, {
+    initialData: serverUser,
+  });
 
   const isHome = pathname === "/";
 

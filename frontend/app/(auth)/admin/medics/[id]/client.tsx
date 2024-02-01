@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { trpc } from "@/app/_trpc/api";
 import CommentaireCard from "@/app/(auth)/admin/medics/[id]/card-commentaire";
 import { useNavigationState } from "@/app/state-navigation";
-import { trpc } from "@/utils/api";
 import { useEventListener } from "@/utils/event-listener";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { zodResolver } from "@hookform/resolvers/zod";

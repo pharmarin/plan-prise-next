@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { trpc } from "@/app/_trpc/api";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/state";
-import { trpc } from "@/utils/api";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
 import type { SelectInstance } from "react-select";
