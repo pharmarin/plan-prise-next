@@ -68,8 +68,18 @@ const medicsRouter = createTRPCRouter({
         where: { id },
         data: {
           commentaires: {
-            connect: commentaires.map((commentaire) => ({
-              id: commentaire.id,
+            upsert: commentaires.map((commentaire) => ({
+              where: { id: commentaire.id },
+              update: {
+                population: commentaire.population,
+                voieAdministration: commentaire.voieAdministration,
+                texte: commentaire.texte,
+              },
+              create: {
+                population: commentaire.population,
+                voieAdministration: commentaire.voieAdministration,
+                texte: commentaire.texte,
+              },
             })),
           },
           indications: indications.map((indication) => indication.value),
@@ -96,6 +106,13 @@ const medicsRouter = createTRPCRouter({
         take: 10,
       });
     }),
+  deleteCommentaire: adminProcedure
+    .input(z.string().cuid2())
+    .mutation(({ ctx, input }) =>
+      ctx.prisma.commentaire.delete({
+        where: { id: input },
+      }),
+    ),
 });
 
 export default medicsRouter;

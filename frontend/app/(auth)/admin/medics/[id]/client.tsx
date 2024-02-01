@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CommentaireCard from "@/app/(auth)/admin/medics/[id]/card-commentaire";
 import { useNavigationState } from "@/app/state-navigation";
 import { trpc } from "@/utils/api";
 import { useEventListener } from "@/utils/event-listener";
@@ -15,7 +16,6 @@ import { updateMedicSchema } from "@plan-prise/api/validation/medicaments";
 import MultiSelect from "@plan-prise/ui/components/multi-select";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import { Card, CardContent } from "@plan-prise/ui/shadcn/ui/card";
 import { Checkbox } from "@plan-prise/ui/shadcn/ui/checkbox";
 import {
   Form,
@@ -27,14 +27,6 @@ import {
 } from "@plan-prise/ui/shadcn/ui/form";
 import { Input } from "@plan-prise/ui/shadcn/ui/input";
 import { Label } from "@plan-prise/ui/shadcn/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@plan-prise/ui/shadcn/ui/select";
-import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
 
 const EDIT_MEDIC_EVENT = "EDIT_MEDIC_EVENT";
 const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";
@@ -48,14 +40,16 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
 
   useEventListener(SAVE_MEDIC_EVENT, () => setReadOnly(true));
 
-  setNavigation({
-    title: readOnly
-      ? medicament.denomination
-      : `Modification de ${medicament.denomination}`,
-    options: readOnly
-      ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
-      : [{ icon: "save", event: SAVE_MEDIC_EVENT }],
-  });
+  useEffect(() => {
+    setNavigation({
+      title: readOnly
+        ? medicament.denomination
+        : `Modification de ${medicament.denomination}`,
+      options: readOnly
+        ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
+        : [{ icon: "save", event: SAVE_MEDIC_EVENT }],
+    });
+  }, [medicament.denomination, readOnly, setNavigation]);
 
   const { mutateAsync } = trpc.medics.findManyPrincipesActifs.useMutation();
 
@@ -292,92 +286,14 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
             <Label>Commentaires associés</Label>
             <div className="grid grid-cols-3 gap-4">
               {commentairesFieldArray.fields.map((field, index) => (
-                <Card key={field.id}>
-                  <CardContent className="mt-6">
-                    <Button
-                      className="float-right h-6 w-6"
-                      size="icon"
-                      type="button"
-                      onClick={() => commentairesFieldArray.remove(index)}
-                      variant="ghost"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                    <FormField
-                      control={form.control}
-                      name={`commentaires.${index}.texte`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Commentaire</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`commentaires.${index}.population`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Population concernée</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`commentaires.${index}.voieAdministration`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            Voie d&apos;administration concernée
-                          </FormLabel>
-                          <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                            >
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder={
-                                    field.value
-                                      ? `Voie ${voiesAdministrationDisplay[field.value]}`
-                                      : "Toutes voies"
-                                  }
-                                />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem
-                                  onClick={() =>
-                                    form.resetField(
-                                      `commentaires.${index}.voieAdministration`,
-                                    )
-                                  }
-                                  value={"RESET"}
-                                >
-                                  Toutes les voies
-                                </SelectItem>
-                                {Object.entries(voiesAdministrationDisplay).map(
-                                  ([value, label]) => (
-                                    <SelectItem key={value} value={value}>
-                                      Voie {label}
-                                    </SelectItem>
-                                  ),
-                                )}
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
-                </Card>
+                <CommentaireCard
+                  key={field.id}
+                  index={index}
+                  commentaire={field}
+                  removeFromArray={(index) =>
+                    commentairesFieldArray.remove(index)
+                  }
+                />
               ))}
             </div>
           </div>
