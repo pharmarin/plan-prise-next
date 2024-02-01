@@ -3,7 +3,8 @@ import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 
-import { updateMedicSchema } from "../../validation/medicaments";
+import { upsertMedicServerSchema } from "../../validation/medicaments";
+import { MUTATION_SUCCESS } from "../constants";
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
@@ -59,12 +60,12 @@ const medicsRouter = createTRPCRouter({
         },
       });
     }),
-  update: adminProcedure
-    .input(updateMedicSchema)
+  upsert: adminProcedure
+    .input(upsertMedicServerSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, commentaires, indications, principesActifs, ...data } = input;
 
-      return ctx.prisma.medicament.update({
+      await ctx.prisma.medicament.update({
         where: { id },
         data: {
           commentaires: {
@@ -72,18 +73,12 @@ const medicsRouter = createTRPCRouter({
               where: { id: commentaire.id },
               update: {
                 population: commentaire.population,
-                voieAdministration:
-                  commentaire.voieAdministration === ""
-                    ? null
-                    : commentaire.voieAdministration,
+                voieAdministration: commentaire.voieAdministration,
                 texte: commentaire.texte,
               },
               create: {
                 population: commentaire.population,
-                voieAdministration:
-                  commentaire.voieAdministration === ""
-                    ? null
-                    : commentaire.voieAdministration,
+                voieAdministration: commentaire.voieAdministration,
                 texte: commentaire.texte,
               },
             })),
@@ -97,6 +92,8 @@ const medicsRouter = createTRPCRouter({
           ...data,
         },
       });
+
+      return MUTATION_SUCCESS;
     }),
   findManyPrincipesActifs: adminProcedure
     .input(z.string())

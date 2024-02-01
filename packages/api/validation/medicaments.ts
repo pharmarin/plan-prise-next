@@ -5,24 +5,14 @@ import "./locale";
 
 export const ALL_VOIES = "ALL_VOIES";
 
-const updateCommentaireSchema = z.object({
+const upsertCommentaireSchema = z.object({
   id: z.string().cuid2().optional(),
-  voieAdministration: z
-    .nativeEnum(VoieAdministration)
-    .or(z.literal(""))
-    .transform((value) =>
-      typeof window === "undefined" && value === "" ? undefined : value,
-    ),
-  population: z
-    .string()
-    .or(z.literal(""))
-    .transform((value) =>
-      typeof window === "undefined" && value === "" ? undefined : value,
-    ),
+  voieAdministration: z.nativeEnum(VoieAdministration).or(z.literal("")),
+  population: z.string().or(z.literal("")),
   texte: z.string(),
 });
 
-export const updateMedicSchema = z.object({
+export const upsertMedicSchema = z.object({
   id: z.string().cuid2(),
   denomination: z.string(),
   principesActifs: z.array(
@@ -34,13 +24,32 @@ export const updateMedicSchema = z.object({
   conservationDuree: z.array(
     z.object({
       duree: z.string(),
+      laboratoire: z.string().or(z.literal("")),
+    }),
+  ),
+  commentaires: z.array(upsertCommentaireSchema),
+});
+
+export const upsertMedicServerSchema = upsertMedicSchema.extend({
+  conservationDuree: z.array(
+    z.object({
+      duree: z.string(),
       laboratoire: z
         .string()
         .or(z.literal(""))
-        .transform((value) =>
-          typeof window === "undefined" && value === "" ? undefined : value,
-        ),
+        .transform((value) => (value === "" ? undefined : value)),
     }),
   ),
-  commentaires: z.array(updateCommentaireSchema),
+  commentaires: z.array(
+    upsertCommentaireSchema.extend({
+      voieAdministration: z
+        .nativeEnum(VoieAdministration)
+        .or(z.literal(""))
+        .transform((value) => (value === "" ? undefined : value)),
+      population: z
+        .string()
+        .or(z.literal(""))
+        .transform((value) => (value === "" ? undefined : value)),
+    }),
+  ),
 });

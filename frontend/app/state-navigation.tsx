@@ -1,14 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowLeftIcon, HomeIcon, PencilIcon, SaveIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  HomeIcon,
+  Loader2Icon,
+  PencilIcon,
+  SaveIcon,
+} from "lucide-react";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 export const navbarIcons = {
   arrowLeft: ArrowLeftIcon,
-  home: HomeIcon,
   edit: PencilIcon,
+  loading: Loader2Icon,
+  home: HomeIcon,
   save: SaveIcon,
 };
 

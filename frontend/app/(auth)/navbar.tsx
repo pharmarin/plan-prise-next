@@ -76,10 +76,16 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
           return (
             <button
               key={index}
-              className={cn("cursor-pointer", option.className)}
+              className={cn(
+                ("path" in option && option.path.length > 0) ||
+                  ("event" in option && option.event.length > 0)
+                  ? "cursor-pointer"
+                  : "cursor-not-allowed",
+                option.className,
+              )}
               onClick={() => {
                 if ("path" in option) router.push(option.path);
-                if ("event" in option)
+                if ("event" in option && option.event.length > 0)
                   document.dispatchEvent(new Event(option.event));
               }}
             >

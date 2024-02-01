@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { revalidatePath } from "next/cache";
 import { trpc } from "@/app/_trpc/api";
 import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
@@ -33,6 +34,8 @@ const TestButton = ({
 
         if (response === MUTATION_SUCCESS) {
           setIsApproved(true);
+
+          revalidatePath("/admin/users");
         }
       }}
     >

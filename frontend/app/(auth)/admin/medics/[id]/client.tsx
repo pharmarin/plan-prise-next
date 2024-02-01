@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { revalidatePath } from "next/cache";
 import { trpc } from "@/app/_trpc/api";
 import CommentaireCard from "@/app/(auth)/admin/medics/[id]/card-commentaire";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TRPCClientError } from "@trpc/client";
 import { capitalize } from "lodash";
 import { X } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
 
-import { updateMedicSchema } from "@plan-prise/api/validation/medicaments";
+import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { upsertMedicSchema } from "@plan-prise/api/validation/medicaments";
 import MultiSelect from "@plan-prise/ui/components/multi-select";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import { Button } from "@plan-prise/ui/shadcn/ui/button";
@@ -24,6 +27,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormServerError,
+  SERVER_ERROR,
 } from "@plan-prise/ui/shadcn/ui/form";
 import { Input } from "@plan-prise/ui/shadcn/ui/input";
 import { Label } from "@plan-prise/ui/shadcn/ui/label";
@@ -33,6 +38,7 @@ const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";
 
 const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
   const [readOnly, setReadOnly] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   const setNavigation = useNavigationState((state) => state.setNavigation);
 
@@ -47,15 +53,25 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
         : `Modification de ${medicament.denomination}`,
       options: readOnly
         ? [{ icon: "edit", event: EDIT_MEDIC_EVENT }]
-        : [{ icon: "save", event: SAVE_MEDIC_EVENT }],
+        : isSaving
+          ? [{ icon: "loading", className: "animate-spin", event: "" }]
+          : [
+              {
+                icon: "save",
+                event: SAVE_MEDIC_EVENT,
+              },
+            ],
     });
-  }, [medicament.denomination, readOnly, setNavigation]);
+  }, [isSaving, medicament.denomination, readOnly, setNavigation]);
 
-  const { mutateAsync } = trpc.medics.findManyPrincipesActifs.useMutation();
+  const { mutateAsync: findPrincipeActifs } =
+    trpc.medics.findManyPrincipesActifs.useMutation();
+  const { mutateAsync: upsertMedic } = trpc.medics.upsert.useMutation();
 
-  const form = useForm<z.infer<typeof updateMedicSchema>>({
-    resolver: zodResolver(updateMedicSchema),
+  const form = useForm<z.infer<typeof upsertMedicSchema>>({
+    resolver: zodResolver(upsertMedicSchema),
     defaultValues: {
+      id: medicament.id,
       denomination: medicament.denomination,
       principesActifs: medicament.principesActifs,
       voiesAdministration: medicament.voiesAdministration,
@@ -93,17 +109,45 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
     keyName: "fieldId",
   });
 
-  const onSubmit = (values: z.infer<typeof updateMedicSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof upsertMedicSchema>) => {
+    try {
+      setIsSaving(true);
+      const response = await upsertMedic(values);
+      setIsSaving(false);
+
+      if (response === MUTATION_SUCCESS) {
+        revalidatePath("/admin/medics");
+      } else {
+        form.setError(SERVER_ERROR, {
+          message: "La mise à jour du médicament a échoué",
+        });
+      }
+    } catch (error) {
+      if (error instanceof TRPCClientError) {
+        form.setError(SERVER_ERROR, { message: error.message });
+      }
+    }
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <fieldset className="space-y-4" disabled={readOnly}>
+        <fieldset className="an space-y-4" disabled={readOnly}>
+          <FormServerError />
+          <FormField
+            control={form.control}
+            name="id"
+            render={({ field }) => (
+              <FormControl>
+                <Input type="hidden" {...field} />
+              </FormControl>
+            )}
+          />
           <FormField
             control={form.control}
             name="denomination"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="!mt-0">
                 <FormLabel>Dénomination</FormLabel>
                 <FormControl>
                   <Input placeholder="Dénomination" required {...field} />
@@ -124,7 +168,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
                     disabled={readOnly}
                     keys={{ value: "id", label: "denomination" }}
                     onSearchChange={async (value) =>
-                      (await mutateAsync(value)) ?? []
+                      (await findPrincipeActifs(value)) ?? []
                     }
                     onSelect={(values) => field.onChange(values)}
                     placeholder="Principes actifs"
@@ -263,7 +307,12 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
               variant="link"
               size="sm"
               className="mt-1"
-              onClick={() => conservationDureeFieldArray.append({ duree: "" })}
+              onClick={() =>
+                conservationDureeFieldArray.append({
+                  duree: "",
+                  laboratoire: "",
+                })
+              }
             >
               Ajouter une durée de conservation
             </Button>
