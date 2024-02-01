@@ -57,7 +57,8 @@ const User = async ({ params }: { params: { id: string } }) => {
               <div>
                 {(() => {
                   if (
-                    user.certificate?.startsWith("data:image/jpeg") ??
+                    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+                    user.certificate?.startsWith("data:image/jpeg") ||
                     user.certificate?.startsWith("data:image/png")
                   ) {
                     return (
@@ -73,7 +74,12 @@ const User = async ({ params }: { params: { id: string } }) => {
                     return <ShowPDF file={user.certificate} />;
                   }
 
-                  throw new PP_Error("UNEXPECTED_FILE_TYPE");
+                  return (
+                    <p className="text-red-500">
+                      {new PP_Error("UNEXPECTED_FILE_TYPE").message} :{" "}
+                      {user.certificate?.split(";")[0]}
+                    </p>
+                  );
                 })()}
               </div>
             </div>
