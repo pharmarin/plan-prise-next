@@ -33,7 +33,7 @@
     "@prettier/plugin-php": "0.22.1",
     "@turbo/gen": "1.12.2",
     "@types/lodash": "4.14.202",
-    "@types/node": "20.11.14",
+    "@types/node": "20.11.15",
     "eslint": "8.56.0",
     "lodash": "4.17.21",
     "prettier": "3.2.4",
