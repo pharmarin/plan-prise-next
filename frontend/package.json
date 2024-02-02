@@ -33,7 +33,7 @@
     "@sentry/nextjs": "7.99.0",
     "@t3-oss/env-nextjs": "0.8.0",
     "@tanstack/react-query": "4.36.1",
-    "@tanstack/react-table": "8.11.7",
+    "@tanstack/react-table": "8.11.8",
     "@tremor/react": "3.13.4",
     "@trpc/client": "10.45.0",
     "@trpc/react-query": "10.45.0",
