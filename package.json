@@ -30,7 +30,7 @@
     "@plan-prise/prettier-config": "*",
     "@plan-prise/tsconfig": "^0.1.0",
     "@playwright/test": "1.41.2",
-    "@prettier/plugin-php": "0.22.1",
+    "@prettier/plugin-php": "0.22.2",
     "@turbo/gen": "1.12.2",
     "@types/lodash": "4.14.202",
     "@types/node": "20.11.16",
