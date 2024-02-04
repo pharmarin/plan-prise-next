@@ -29,7 +29,7 @@
     "@plan-prise/tsconfig": "0.1.0",
     "@plan-prise/ui": "0.1.0",
     "@prisma/client": "5.9.1",
-    "@react-pdf/renderer": "3.2.1",
+    "@react-pdf/renderer": "3.3.5",
     "@sentry/nextjs": "7.99.0",
     "@t3-oss/env-nextjs": "0.8.0",
     "@tanstack/react-query": "4.36.1",
