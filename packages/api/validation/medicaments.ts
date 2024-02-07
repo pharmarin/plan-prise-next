@@ -53,3 +53,8 @@ export const upsertMedicServerSchema = upsertMedicSchema.extend({
     }),
   ),
 });
+
+export const upsertPrincipeActifSchema = z.object({
+  id: z.string().cuid2().optional(),
+  denomination: z.string(),
+});

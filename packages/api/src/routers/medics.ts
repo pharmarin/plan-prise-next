@@ -3,7 +3,10 @@ import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 
-import { upsertMedicServerSchema } from "../../validation/medicaments";
+import {
+  upsertMedicServerSchema,
+  upsertPrincipeActifSchema,
+} from "../../validation/medicaments";
 import { MUTATION_SUCCESS } from "../constants";
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
@@ -109,6 +112,11 @@ const medicsRouter = createTRPCRouter({
         take: 10,
       });
     }),
+  delete: adminProcedure
+    .input(z.object({ id: z.string().cuid2() }))
+    .mutation(({ ctx, input }) =>
+      ctx.prisma.medicament.delete({ where: { id: input.id } }),
+    ),
   deleteCommentaire: adminProcedure
     .input(z.object({ id: z.string().cuid2() }))
     .mutation(({ ctx, input }) =>
@@ -116,11 +124,21 @@ const medicsRouter = createTRPCRouter({
         where: { id: input.id },
       }),
     ),
-  delete: adminProcedure
+  deletePrincipeActif: adminProcedure
     .input(z.object({ id: z.string().cuid2() }))
     .mutation(({ ctx, input }) =>
-      ctx.prisma.medicament.delete({ where: { id: input.id } }),
+      ctx.prisma.principeActif.delete({
+        where: { id: input.id },
+      }),
     ),
+  upsertPrincipeActif: adminProcedure.input(upsertPrincipeActifSchema).mutation(
+    async ({ ctx, input }) =>
+      await ctx.prisma.principeActif.upsert({
+        where: { id: input.id },
+        create: { denomination: input.denomination },
+        update: { denomination: input.denomination },
+      }),
+  ),
 });
 
 export default medicsRouter;
