@@ -1,13 +1,13 @@
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
+import type { Prisma } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
 import {
   upsertMedicServerSchema,
   upsertPrincipeActifSchema,
 } from "../../validation/medicaments";
-import { MUTATION_SUCCESS } from "../constants";
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
@@ -66,37 +66,52 @@ const medicsRouter = createTRPCRouter({
   upsert: adminProcedure
     .input(upsertMedicServerSchema)
     .mutation(async ({ ctx, input }) => {
-      const { id, commentaires, indications, principesActifs, ...data } = input;
+      const {
+        id,
+        conservationDuree,
+        conservationFrigo,
+        denomination,
+        indications,
+        voiesAdministration,
+        principesActifs,
+        commentaires,
+      } = input;
 
-      await ctx.prisma.medicament.update({
-        where: { id },
-        data: {
-          commentaires: {
-            upsert: commentaires.map((commentaire) => ({
-              where: { id: commentaire.id },
-              update: {
-                population: commentaire.population,
-                voieAdministration: commentaire.voieAdministration,
-                texte: commentaire.texte,
-              },
-              create: {
-                population: commentaire.population,
-                voieAdministration: commentaire.voieAdministration,
-                texte: commentaire.texte,
-              },
-            })),
-          },
-          indications: indications.map((indication) => indication.value),
-          principesActifs: {
-            connect: principesActifs.map((principeActif) => ({
-              id: principeActif.id,
-            })),
-          },
-          ...data,
+      const data:
+        | Prisma.MedicamentUpsertArgs["update"]
+        | Prisma.MedicamentUpsertArgs["create"] = {
+        denomination,
+        indications: indications.map((indication) => indication.value),
+        voiesAdministration,
+        conservationFrigo,
+        conservationDuree,
+        principesActifs: {
+          connect: principesActifs.map((principeActif) => ({
+            id: principeActif.id,
+          })),
         },
-      });
+        commentaires: {
+          upsert: commentaires.map((commentaire) => ({
+            where: { id: commentaire.id },
+            update: {
+              population: commentaire.population,
+              voieAdministration: commentaire.voieAdministration,
+              texte: commentaire.texte,
+            },
+            create: {
+              population: commentaire.population,
+              voieAdministration: commentaire.voieAdministration,
+              texte: commentaire.texte,
+            },
+          })),
+        },
+      };
 
-      return MUTATION_SUCCESS;
+      return await ctx.prisma.medicament.upsert({
+        where: { id },
+        create: data as Prisma.MedicamentUpsertArgs["create"],
+        update: data,
+      });
     }),
   findManyPrincipesActifs: adminProcedure
     .input(z.string())

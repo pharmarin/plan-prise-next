@@ -15,7 +15,6 @@ import { X } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
 
-import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { upsertMedicSchema } from "@plan-prise/api/validation/medicaments";
 import MultiSelect from "@plan-prise/ui/components/multi-select";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
@@ -38,9 +37,12 @@ const EDIT_MEDIC_EVENT = "EDIT_MEDIC_EVENT";
 const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";
 const DELETE_MEDIC_EVENT = "DELETE_MEDIC_EVENT";
 
-const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
-  const [readOnly, setReadOnly] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
+const MedicClient = ({
+  medicament,
+}: {
+  medicament?: PP.Medicament.Include;
+}) => {
+  const [readOnly, setReadOnly] = useState(!!medicament);
 
   const router = useRouter();
 
@@ -48,7 +50,8 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
 
   const { mutateAsync: findPrincipeActifs } =
     trpc.medics.findManyPrincipesActifs.useMutation();
-  const { mutateAsync: upsertMedic } = trpc.medics.upsert.useMutation();
+  const { mutateAsync: upsertMedic, isLoading: isSaving } =
+    trpc.medics.upsert.useMutation();
   const { mutateAsync: deleteMedic } = trpc.medics.delete.useMutation();
 
   useEventListener(EDIT_MEDIC_EVENT, () => setReadOnly(false));
@@ -57,6 +60,7 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
 
   useEventListener(DELETE_MEDIC_EVENT, async () => {
     if (
+      medicament &&
       confirm(`Voulez-vous vraiment supprimer ${medicament.denomination} ?`)
     ) {
       await deleteMedic({ id: medicament.id });
@@ -67,12 +71,14 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
 
   useEffect(() => {
     setNavigation({
-      title: readOnly
-        ? medicament.denomination
-        : `Modification de ${medicament.denomination}`,
+      title: medicament
+        ? readOnly
+          ? medicament.denomination
+          : `Modification de ${medicament.denomination}`
+        : "Ajout d'un médicament",
       returnTo: "/admin/medicaments",
       options: [
-        ...(readOnly
+        ...(medicament && readOnly
           ? [{ icon: "edit" as const, event: EDIT_MEDIC_EVENT }]
           : []),
         ...(isSaving
@@ -89,33 +95,38 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
                 event: SAVE_MEDIC_EVENT,
               },
             ]),
-        {
-          icon: "delete",
-          className: "bg-red-500 p-1 rounded-full text-white",
-          event: DELETE_MEDIC_EVENT,
-        },
+        ...(medicament
+          ? [
+              {
+                icon: "delete" as const,
+                className: "bg-red-500 p-1 rounded-full text-white",
+                event: DELETE_MEDIC_EVENT,
+              },
+            ]
+          : []),
       ],
     });
-  }, [isSaving, medicament.denomination, readOnly, setNavigation]);
+  }, [isSaving, medicament, readOnly, setNavigation]);
 
   const form = useForm<z.infer<typeof upsertMedicSchema>>({
     resolver: zodResolver(upsertMedicSchema),
     defaultValues: {
-      id: medicament.id,
-      denomination: medicament.denomination,
-      principesActifs: medicament.principesActifs,
-      voiesAdministration: medicament.voiesAdministration,
+      id: medicament?.id ?? "",
+      denomination: medicament?.denomination ?? "",
+      principesActifs: medicament?.principesActifs ?? [],
+      voiesAdministration: medicament?.voiesAdministration ?? [],
       indications:
-        medicament.indications.map((indication) => ({ value: indication })) ||
-        [],
-      conservationFrigo: medicament.conservationFrigo,
-      conservationDuree: (medicament.conservationDuree ?? []).map(
+        (medicament?.indications ?? []).map((indication) => ({
+          value: indication,
+        })) || [],
+      conservationFrigo: medicament?.conservationFrigo ?? false,
+      conservationDuree: (medicament?.conservationDuree ?? []).map(
         (conservation) => ({
           duree: conservation.duree,
           laboratoire: conservation.laboratoire ?? "",
         }),
       ),
-      commentaires: medicament.commentaires.map((commentaire) => ({
+      commentaires: (medicament?.commentaires ?? []).map((commentaire) => ({
         ...commentaire,
         population: commentaire.population ?? "",
         voieAdministration: commentaire.voieAdministration ?? "",
@@ -141,18 +152,13 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
 
   const onSubmit = async (values: z.infer<typeof upsertMedicSchema>) => {
     try {
-      setIsSaving(true);
       const response = await upsertMedic(values);
-      setIsSaving(false);
 
-      if (response === MUTATION_SUCCESS) {
-        setReadOnly(true);
+      setReadOnly(true);
+      revalidatePath("/admin/medicaments");
 
-        revalidatePath("/admin/medicaments");
-      } else {
-        form.setError(SERVER_ERROR, {
-          message: "La mise à jour du médicament a échoué",
-        });
+      if (!medicament) {
+        router.push(`/admin/medicaments/${response.id}`);
       }
     } catch (error) {
       if (error instanceof TRPCClientError) {
@@ -349,26 +355,28 @@ const MedicClient = ({ medicament }: { medicament: PP.Medicament.Include }) => {
               Ajouter une durée de conservation
             </Button>
           </div>
-          <div className="w-full space-y-1">
-            <Label>Plus d&apos;informations</Label>
-            <p>
-              Créé le{" "}
-              {medicament.createdAt.toLocaleDateString("fr-FR", {
-                year: "numeric",
-                month: "numeric",
-                day: "numeric",
-              })}
-              {medicament.updatedAt &&
-                ` et mis à jour le ${medicament.updatedAt.toLocaleDateString(
-                  "fr-FR",
-                  {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                  },
-                )}`}
-            </p>
-          </div>
+          {medicament && (
+            <div className="w-full space-y-1">
+              <Label>Plus d&apos;informations</Label>
+              <p>
+                Créé le{" "}
+                {medicament.createdAt.toLocaleDateString("fr-FR", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })}
+                {medicament.updatedAt &&
+                  ` et mis à jour le ${medicament.updatedAt.toLocaleDateString(
+                    "fr-FR",
+                    {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                    },
+                  )}`}
+              </p>
+            </div>
+          )}
           <div className="w-full space-y-1">
             <Label>Commentaires associés</Label>
             <div className="grid grid-cols-3 gap-4">
