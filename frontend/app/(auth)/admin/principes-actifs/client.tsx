@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
 import { revalidatePath } from "@/app/(auth)/admin/actions";
@@ -67,6 +68,15 @@ const PrincipesActifsClient = ({
     resolver: zodResolver(upsertPrincipeActifSchema),
   });
 
+  useEffect(() => {
+    form.reset({
+      id: selectedId ?? "",
+      denomination:
+        principesActifs.find((principeActif) => principeActif.id === selectedId)
+          ?.denomination ?? "",
+    });
+  }, [form, principesActifs, selectedId]);
+
   const onSubmit = async (
     values: z.infer<typeof upsertPrincipeActifSchema>,
   ) => {
@@ -103,9 +113,9 @@ const PrincipesActifsClient = ({
                   render={({ field }) => (
                     <FormControl>
                       <Input
+                        key={`id_${selectedId}`}
                         type="hidden"
                         {...field}
-                        value={selectedId ?? ""}
                       />
                     </FormControl>
                   )}
@@ -116,13 +126,9 @@ const PrincipesActifsClient = ({
                   render={({ field }) => (
                     <FormControl>
                       <Input
+                        key={`denomination_${selectedId}`}
                         placeholder="Dénomination"
                         {...field}
-                        value={
-                          principesActifs.find(
-                            (principeActif) => principeActif.id === selectedId,
-                          )?.denomination ?? ""
-                        }
                       />
                     </FormControl>
                   )}
