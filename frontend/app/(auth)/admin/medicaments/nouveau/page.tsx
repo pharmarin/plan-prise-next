@@ -4,4 +4,8 @@ const MedicNew = () => {
   return <MedicClient />;
 };
 
+export const metadata = {
+  title: "Nouveau médicament",
+};
+
 export default MedicNew;

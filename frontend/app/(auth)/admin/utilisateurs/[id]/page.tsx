@@ -10,6 +10,8 @@ import ShowPDF from "@plan-prise/ui/components/render-pdf";
 import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
 import { Label } from "@plan-prise/ui/shadcn/ui/label";
 
+const PAGE_TITLE = "Détail de l'utilisateur";
+
 const User = async ({ params }: { params: { id: string } }) => {
   const user = await prisma.user.findFirst({ where: { id: params.id } });
 
@@ -19,10 +21,7 @@ const User = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <Navigation
-        title="Détail de l'utilisateur"
-        returnTo="/admin/utilisateurs"
-      />
+      <Navigation title={PAGE_TITLE} returnTo="/admin/utilisateurs" />
       <div className="relative">
         <TestButton approved={!!user.approvedAt} userId={params.id} />
         <div className="space-y-4">
@@ -90,6 +89,10 @@ const User = async ({ params }: { params: { id: string } }) => {
       </div>
     </>
   );
+};
+
+export const metadata = {
+  title: PAGE_TITLE,
 };
 
 export default User;
