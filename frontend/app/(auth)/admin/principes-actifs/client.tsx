@@ -83,6 +83,7 @@ const PrincipesActifsClient = ({
     try {
       await upsertPrincipeActif(values);
       revalidatePath("/admin/principes-actifs");
+      router.push("/admin/principes-actifs");
     } catch (error) {
       if (error instanceof TRPCClientError) {
         form.setError(SERVER_ERROR, { message: error.message });
@@ -101,12 +102,15 @@ const PrincipesActifsClient = ({
             }
           }}
         >
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Modifier le principe actif</DialogTitle>
-                </DialogHeader>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Modifier le principe actif</DialogTitle>
+            </DialogHeader>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={form.control}
                   name="id"
@@ -137,7 +141,11 @@ const PrincipesActifsClient = ({
                 <DialogFooter>
                   <Button
                     type="button"
-                    onClick={() => deletePrincipeActif({ id: selectedId })}
+                    onClick={async () => {
+                      await deletePrincipeActif({ id: selectedId });
+                      revalidatePath("/admin/principes-actifs");
+                      router.push("/admin/principes-actifs");
+                    }}
                     variant="destructive"
                     disabled={isDeleting || isLoading}
                     loading={isDeleting}
@@ -152,9 +160,9 @@ const PrincipesActifsClient = ({
                     Enregistrer
                   </Button>
                 </DialogFooter>
-              </DialogContent>
-            </form>
-          </Form>
+              </form>
+            </Form>
+          </DialogContent>
         </Dialog>
       )}
       <DataTable
