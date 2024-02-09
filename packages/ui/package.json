@@ -3,14 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "exports": {
-    "./*": "./*"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./*"
-      ]
-    }
+    "./*": "./*.tsx",
+    "./shadcn/hooks/*": "./shadcn/hooks/*.ts",
+    "./shadcn/lib/*": "./shadcn/lib/*.ts"
   },
   "license": "MIT",
   "scripts": {
