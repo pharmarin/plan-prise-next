@@ -6,7 +6,13 @@ export const { routes, useSafeParams, useSafeSearchParams } =
     home: defineRoute("/"),
 
     // Guest routes
-    login: defineRoute("/login"),
+    login: defineRoute("/login", {
+      search: z
+        .object({
+          redirect: z.string().optional(),
+        })
+        .default({ redirect: undefined }),
+    }),
     register: defineRoute("/register"),
     passwordAskReset: defineRoute("/forgot-password"),
     passwordReset: defineRoute("/password-reset"),

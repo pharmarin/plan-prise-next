@@ -1,9 +1,13 @@
-import { redirect } from "next/navigation";
+"use client";
 
-import { getServerSession } from "@plan-prise/auth/get-session";
-import prisma from "@plan-prise/db-prisma";
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { routes } from "@/app/routes-schema";
+import { useSession } from "next-auth/react";
 
-const AuthGuard = async ({
+import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
+
+const AuthGuard = ({
   children,
   guest,
   searchParams,
@@ -11,27 +15,39 @@ const AuthGuard = async ({
   children: React.ReactNode;
   guest?: boolean;
   searchParams?: {
-    redirectTo?: string;
+    redirect?: string;
   };
 }) => {
-  const session = await getServerSession();
-  const user = await prisma.user.findUnique({
-    where: { id: session?.user.id ?? "" },
-  });
-  //const pathname = window.location.pathname;
+  const router = useRouter();
+  const pathname = usePathname();
+  const { status: sessionStatus } = useSession();
+  const authorized = sessionStatus === "authenticated";
+  const unAuthorized = sessionStatus === "unauthenticated";
+  const loading = sessionStatus === "loading";
 
-  if (!guest && (!session || !user)) {
-    console.log("User not logged in, redirecting");
+  useEffect(() => {
+    if (loading) return;
 
-    return redirect(
-      `/login${
-        "" // (pathname && pathname !== "/" && `?callbackUrl=${pathname}`) || ""
-      }`,
-    );
-  }
+    if (!guest && unAuthorized) {
+      router.push(routes.login({ search: { redirect: pathname } }));
+    }
 
-  if (guest && session) {
-    return redirect(searchParams?.redirectTo ?? "/");
+    if (guest && authorized) {
+      return router.push(searchParams?.redirect ?? "/");
+    }
+  }, [
+    loading,
+    unAuthorized,
+    sessionStatus,
+    router,
+    guest,
+    authorized,
+    searchParams?.redirect,
+    pathname,
+  ]);
+
+  if (loading || (!guest && unAuthorized) || (guest && authorized)) {
+    return <LoadingScreen fullscreen />;
   }
 
   // INFO: Redirect to profil page if incomplete is handled in Navbar.tsx

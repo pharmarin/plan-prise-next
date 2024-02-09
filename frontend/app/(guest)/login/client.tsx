@@ -1,7 +1,5 @@
 "use client";
 
-import type { Route } from "next";
-import { useRouter, useSearchParams } from "next/navigation";
 import { routes } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -26,8 +24,6 @@ import {
 import { Input } from "@plan-prise/ui/input";
 
 const LoginForm = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -57,9 +53,9 @@ const LoginForm = () => {
       redirect: false,
     });
 
-    if (!signInResponse?.error) {
-      router.push((searchParams?.get("redirectTo") ?? "/") as Route);
-    } else {
+    // If signinResponse has no error, redirection is handled by authGuard to searchParam?redirect ou home
+
+    if (signInResponse?.error) {
       form.setError(SERVER_ERROR, {
         message:
           signInResponse?.error === "CredentialsSignin"
