@@ -3,7 +3,7 @@ import { extractVoieAdministration } from "@/app/(auth)/plan/_lib/functions";
 import { XIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Button } from "@plan-prise/ui/button";
 
 const PlanCardHeader = ({
   medicament,

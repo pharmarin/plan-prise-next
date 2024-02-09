@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { AlertCircle } from "lucide-react";
 
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Button } from "@plan-prise/ui/button";
 
 const LinkExpired = () => {
   const router = useRouter();
