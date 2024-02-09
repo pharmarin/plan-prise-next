@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { routes } from "@/app/routes-schema";
 import { AlertCircle } from "lucide-react";
 
 import { Button } from "@plan-prise/ui/button";
@@ -14,7 +15,7 @@ const LinkExpired = () => {
         <AlertCircle className="h-4 w-4" />
         <p className="text-center">Ce lien a expiré</p>
       </div>
-      <Button onClick={() => router.push("/forgot-password")}>
+      <Button onClick={() => router.push(routes.passwordAskReset())}>
         Demander un nouveau mot de passe
       </Button>
     </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { routes } from "@/app/routes-schema";
 import { trpc } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
@@ -86,7 +87,7 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
               Vous pouvez maintenant vous connecter avec votre nouveau mot de
               passe.
             </p>
-            <Link href="/login">Se connecter</Link>
+            <Link href={routes.login()}>Se connecter</Link>
           </>
         }
         title="Réinitialisation du mot de passe terminée"

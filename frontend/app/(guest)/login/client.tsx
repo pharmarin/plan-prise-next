@@ -2,6 +2,7 @@
 
 import type { Route } from "next";
 import { useRouter, useSearchParams } from "next/navigation";
+import { routes } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -108,7 +109,10 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <Link className="!mt-1 px-0 py-0 text-xs" href="/forgot-password">
+          <Link
+            className="!mt-1 px-0 py-0 text-xs"
+            href={routes.passwordAskReset()}
+          >
             Mot de passe oublié ?
           </Link>
           <FormServerError />
@@ -123,7 +127,7 @@ const LoginForm = () => {
         </form>
       </Form>
 
-      <Link className="mt-4" href="/register">
+      <Link className="mt-4" href={routes.register()}>
         Je n&apos;ai pas de compte : S&apos;inscrire
       </Link>
     </div>

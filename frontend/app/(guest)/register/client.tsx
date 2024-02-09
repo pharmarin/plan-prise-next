@@ -3,6 +3,7 @@
 import { useState } from "react";
 import RegisterFormStep1 from "@/app/(guest)/register/form-1";
 import RegisterFormStep2 from "@/app/(guest)/register/form-2";
+import { routes } from "@/app/routes-schema";
 import type { z } from "zod";
 
 import type { registerSchema } from "@plan-prise/api/validation/users";
@@ -65,7 +66,7 @@ const RegisterForm = () => {
           setPreviousStep={() => setStep(1)}
         />
       )}
-      <Link className="mt-4" href="/login">
+      <Link className="mt-4" href={routes.login()}>
         J&apos;ai déjà un compte : Se connecter
       </Link>
     </div>

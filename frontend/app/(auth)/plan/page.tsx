@@ -1,3 +1,4 @@
+import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/state/navigation";
 import { PlusIcon } from "lucide-react";
 
@@ -24,7 +25,7 @@ const PlansIndex = async () => {
       <div className="flex justify-center">
         <div className="grid grid-cols-8 gap-4">
           <Link
-            href="/plan/new"
+            href={routes.planCreate()}
             className="flex aspect-square w-32 items-center justify-center rounded-lg shadow-lg"
           >
             <span className="text-2xl">
@@ -34,7 +35,7 @@ const PlansIndex = async () => {
           {plans.map((plan) => (
             <Link
               key={plan.displayId}
-              href={`/plan/${plan.displayId}`}
+              href={routes.plan({ planId: plan.displayId })}
               className="flex aspect-square w-32 items-center justify-center rounded-lg shadow-lg"
             >
               <span className="text-2xl font-semibold">{plan.displayId}</span>

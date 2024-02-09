@@ -1,6 +1,7 @@
 "use client";
 
 import type { CleanUser } from "@/app/(auth)/admin/users/page";
+import { routes } from "@/app/routes-schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import startCase from "lodash/startCase";
@@ -86,7 +87,7 @@ const UsersClient = ({ users }: { users: CleanUser[] }) => {
       columns={columns}
       data={users}
       filters={Object.values(filters)}
-      link={(data) => `/admin/users/${data.id}`}
+      link={(data) => routes.user({ userId: data.id })}
     />
   );
 };
