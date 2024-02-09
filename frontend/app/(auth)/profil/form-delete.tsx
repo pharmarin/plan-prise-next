@@ -9,7 +9,7 @@ import { useMediaQuery } from "usehooks-ts";
 import type { z } from "zod";
 
 import { confirmPasswordSchema } from "@plan-prise/api/validation/users";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Button } from "@plan-prise/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@plan-prise/ui/shadcn/ui/dialog";
+} from "@plan-prise/ui/dialog";
 import {
   Drawer,
   DrawerContent,
@@ -25,7 +25,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@plan-prise/ui/shadcn/ui/drawer";
+} from "@plan-prise/ui/drawer";
 import {
   Form,
   FormControl,
@@ -35,8 +35,8 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const DeleteUser = () => {
   const [open, setOpen] = useState(false);

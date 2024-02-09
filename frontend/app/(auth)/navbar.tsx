@@ -9,8 +9,8 @@ import { trpc } from "@/utils/api";
 import { ArrowLeftIcon, HomeIcon, Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
+import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
 import Logo from "@plan-prise/ui/components/navigation/Logo";
-import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@plan-prise/ui/shadcn/ui/dropdown-menu";
+} from "@plan-prise/ui/dropdown-menu";
 
 export const navbarIcons: NavbarIcons = {
   arrowLeft: ArrowLeftIcon,

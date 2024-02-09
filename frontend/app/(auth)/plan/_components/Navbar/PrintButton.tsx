@@ -8,20 +8,20 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Download, Loader2, Printer } from "lucide-react";
 import { useSession } from "next-auth/react";
 
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@plan-prise/ui/shadcn/ui/dialog";
+} from "@plan-prise/ui/dialog";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@plan-prise/ui/shadcn/ui/tooltip";
+} from "@plan-prise/ui/tooltip";
 
 const PrintButton = () => {
   const [open, setOpen] = useState(false);
