@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Button } from "@plan-prise/ui/button";
 
 const RPPSField = ({ rpps }: { rpps: string }) => {
   return (

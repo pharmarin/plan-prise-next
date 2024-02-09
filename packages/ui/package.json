@@ -3,14 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "exports": {
-    "./*": "./*"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./*"
-      ]
-    }
+    "./*": "./shadcn/ui/*.tsx",
+    "./components/*": "./components/*.tsx",
+    "./shadcn/hooks/*": "./shadcn/hooks/*.ts",
+    "./shadcn/lib/*": "./shadcn/lib/*.ts",
+    "./styles/globals.css": "./styles/globals.css"
   },
   "license": "MIT",
   "scripts": {

@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@plan-prise/ui/shadcn/ui/tooltip";
+} from "@plan-prise/ui/tooltip";
 
 const DeleteButton = () => {
   const router = useRouter();

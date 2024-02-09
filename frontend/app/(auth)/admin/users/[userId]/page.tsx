@@ -7,9 +7,9 @@ import { Navigation } from "@/state/navigation";
 
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
+import { Badge } from "@plan-prise/ui/badge";
 import ShowPDF from "@plan-prise/ui/components/render-pdf";
-import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { Label } from "@plan-prise/ui/label";
 
 const User = async ({ params }: { params: unknown }) => {
   try {

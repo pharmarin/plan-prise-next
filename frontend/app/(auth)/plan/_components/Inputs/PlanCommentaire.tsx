@@ -3,9 +3,9 @@ import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import type { Commentaire, Medicament } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
 
-import { Checkbox } from "@plan-prise/ui/shadcn/ui/checkbox";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
-import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
+import { Checkbox } from "@plan-prise/ui/checkbox";
+import { Label } from "@plan-prise/ui/label";
+import { Textarea } from "@plan-prise/ui/textarea";
 
 const PlanCommentaire = ({
   commentaire,
