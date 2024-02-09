@@ -49,13 +49,13 @@ importers:
         version: 0.22.2(prettier@3.2.5)
       '@turbo/gen':
         specifier: 1.12.3
-        version: 1.12.3(@types/node@20.11.16)(typescript@5.3.3)
+        version: 1.12.3(@types/node@20.11.17)(typescript@5.3.3)
       '@types/lodash':
         specifier: 4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: 20.11.16
-        version: 20.11.16
+        specifier: 20.11.17
+        version: 20.11.17
       eslint:
         specifier: 8.56.0
         version: 8.56.0
@@ -139,8 +139,8 @@ importers:
         specifier: ^0.1.0
         version: link:../typescript
       '@types/node':
-        specifier: 20.11.16
-        version: 20.11.16
+        specifier: 20.11.17
+        version: 20.11.17
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -314,8 +314,8 @@ importers:
         specifier: 4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: 20.11.16
-        version: 20.11.16
+        specifier: 20.11.17
+        version: 20.11.17
       '@types/react':
         specifier: 18.2.55
         version: 18.2.55
@@ -438,8 +438,8 @@ importers:
         specifier: '*'
         version: link:../../config/typescript
       '@types/node':
-        specifier: 20.11.16
-        version: 20.11.16
+        specifier: 20.11.17
+        version: 20.11.17
       '@types/node-fetch':
         specifier: 2.6.11
         version: 2.6.11
@@ -454,7 +454,7 @@ importers:
         version: 2.7.0
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@20.11.16)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.17)(typescript@5.3.3)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -555,7 +555,7 @@ importers:
         version: 4.17.21
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@20.11.16)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.17)(typescript@5.3.3)
       tsconfig-paths:
         specifier: 4.2.0
         version: 4.2.0
@@ -1343,6 +1343,7 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -2348,6 +2349,8 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/image@2.3.4:
@@ -2357,6 +2360,8 @@ packages:
       '@react-pdf/png-js': 2.3.1
       cross-fetch: 3.1.8
       jay-peg: 1.0.1
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/layout@3.11.2:
@@ -2374,6 +2379,8 @@ packages:
       emoji-regex: 10.3.0
       queue: 6.0.2
       yoga-layout: 2.0.1
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.1.6:
@@ -2431,6 +2438,8 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.2.4:
@@ -2546,6 +2555,7 @@ packages:
       proxy-from-env: 1.1.0
       which: 2.0.2
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2595,6 +2605,7 @@ packages:
       stacktrace-parser: 0.1.10
       webpack: 5.90.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2661,6 +2672,7 @@ packages:
       '@sentry/cli': 1.77.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2853,7 +2865,7 @@ packages:
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  /@turbo/gen@1.12.3(@types/node@20.11.16)(typescript@5.3.3):
+  /@turbo/gen@1.12.3(@types/node@20.11.17)(typescript@5.3.3):
     resolution: {integrity: sha512-BnGUqJMk42YGMVcl3PNE4+lGlbG6cQHDIdIbHnWdyd/Jym/KxSi1IX3xPN2Y1iU3aYfPrSyJtX4/hIWJnllu3w==}
     hasBin: true
     dependencies:
@@ -2865,7 +2877,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.3.1
-      ts-node: 10.9.2(@types/node@20.11.16)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.17)(typescript@5.3.3)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -2901,13 +2913,13 @@ packages:
   /@types/cli-progress@3.11.5:
     resolution: {integrity: sha512-D4PbNRbviKyppS5ivBGyFO29POlySLmA2HyUFE4p5QGazAMM3CwkKWcvTl8gvElSuxRh6FPKL8XmidX873ou4g==}
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
     dev: true
 
   /@types/cross-spawn@6.0.3:
     resolution: {integrity: sha512-BDAkU7WHHRHnvBf5z89lcvACsvkz/n7Tv+HyD/uW76O29HoH1Tk/W6iQrepaZVbisvlEek4ygwT8IW7ow9XLAA==}
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
     dev: true
 
   /@types/d3-array@3.2.1:
@@ -2980,7 +2992,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
     dev: false
 
   /@types/http-cache-semantics@4.0.4:
@@ -3015,12 +3027,12 @@ packages:
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
       form-data: 4.0.0
     dev: true
 
-  /@types/node@20.11.16:
-    resolution: {integrity: sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==}
+  /@types/node@20.11.17:
+    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
     dependencies:
       undici-types: 5.26.5
 
@@ -3064,7 +3076,7 @@ packages:
   /@types/through@0.0.32:
     resolution: {integrity: sha512-7XsfXIsjdfJM2wFDRAtEWp3zb2aVPk5QeyZxGlVK57q4u26DczMHhJmlhr0Jqv0THwxam/L8REXkj8M2I/lcvw==}
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
     dev: false
 
   /@types/tinycolor2@1.4.5:
@@ -3074,7 +3086,7 @@ packages:
   /@types/unzipper@0.10.9:
     resolution: {integrity: sha512-vHbmFZAw8emNAOVkHVbS3qBnbr0x/qHQZ+ei1HE7Oy6Tyrptl+jpqnOX+BF5owcu/HZLOV0nJK+K9sjs1Ox2JA==}
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3):
@@ -3822,6 +3834,7 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -4098,6 +4111,8 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -5178,6 +5193,7 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -5905,6 +5921,8 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -5936,7 +5954,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -6224,6 +6242,7 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6501,6 +6520,8 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
@@ -6943,6 +6964,7 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -7330,6 +7352,7 @@ packages:
       '@react-pdf/renderer': 3.3.8(react@18.2.0)
       tailwindcss: 3.4.1
     transitivePeerDependencies:
+      - encoding
       - react
       - ts-node
     dev: false
@@ -7357,6 +7380,7 @@ packages:
       tiny-invariant: 1.3.1
       warning: 4.0.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -8338,7 +8362,7 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.2(@types/node@20.11.16)(typescript@5.3.3):
+  /ts-node@10.9.2(@types/node@20.11.17)(typescript@5.3.3):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -8357,7 +8381,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
       acorn: 8.9.0
       acorn-walk: 8.2.0
       arg: 4.1.3
