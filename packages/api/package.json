@@ -35,7 +35,7 @@
     "@plan-prise/db-prisma": "*",
     "@plan-prise/errors": "*",
     "@t3-oss/env-nextjs": "0.9.1",
-    "@tanstack/react-query": "4.36.1",
+    "@tanstack/react-query": "5.18.1",
     "@trpc/client": "10.45.1",
     "@trpc/react-query": "10.45.1",
     "@trpc/server": "10.45.1",
