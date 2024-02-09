@@ -5,20 +5,20 @@
     "incremental": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "moduleResolution": "Node",
     "target": "ES2021",
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
   "include": ["*.ts", "src"],
   "exclude": ["node_modules"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS",
-      "paths": { "@/*": ["./*"] },
+      "paths": { "@/*": ["./*"] }
     },
     "require": ["tsconfig-paths/register"],
-    "transpileOnly": true,
-  },
+    "transpileOnly": true
+  }
 }
