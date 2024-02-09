@@ -30,7 +30,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
     // Admin routes
     adminDashboard: defineRoute("/admin"),
     users: defineRoute("/admin/users"),
-    user: defineRoute("/admins/users/[userId]", {
+    user: defineRoute("/admin/users/[userId]", {
       params: z.object({
         userId: z.string().cuid2(),
       }),
