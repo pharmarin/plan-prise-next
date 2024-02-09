@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
+import { routes } from "@/app/routes-schema";
 import { useNavigationState } from "@/state/navigation";
 import type { NavbarIcons, NavigationItem } from "@/types/navigation";
 import { trpc } from "@/utils/api";
@@ -47,21 +48,25 @@ export const Navbar = () => {
   const returnTo = useNavigationState((state) => state.returnTo);
   const { data: user } = trpc.users.current.useQuery();
 
-  const isHome = pathname === "/";
+  const isHome = pathname === routes.home();
 
   // Redirect user to profil page if incomplete informations after migration
-  if (pathname !== "/profil" && user && (!user?.firstName || !user?.lastName)) {
-    router.push("/profil");
+  if (
+    pathname !== routes.profil() &&
+    user &&
+    (!user?.firstName || !user?.lastName)
+  ) {
+    router.push(routes.profil());
   }
 
   return (
     <div className="container mx-auto mb-4 mt-2 flex items-center justify-between rounded-lg bg-white p-4 py-2 shadow">
       <div id="navbar-left" className="flex-1">
         <div className="flex w-fit flex-row items-center sm:space-x-8">
-          <Link href="/">
+          <Link href={routes.home()}>
             <Logo />
           </Link>
-          {!isHome && <NavbarLink icon="home" path="/" />}
+          {!isHome && <NavbarLink icon="home" path={routes.home()} />}
           {returnTo && <NavbarLink icon="arrowLeft" path={returnTo} />}
         </div>
       </div>
@@ -95,16 +100,18 @@ export const Navbar = () => {
               {data?.user?.admin && (
                 <>
                   <DropdownMenuLabel>Administration</DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => router.push("/admin")}>
+                  <DropdownMenuItem
+                    onClick={() => router.push(routes.adminDashboard())}
+                  >
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push("/admin/users")}>
+                  <DropdownMenuItem onClick={() => router.push(routes.users())}>
                     Utilisateurs
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                 </>
               )}
-              <DropdownMenuItem onClick={() => router.push("/profil")}>
+              <DropdownMenuItem onClick={() => router.push(routes.profil())}>
                 Profil
               </DropdownMenuItem>
               <DropdownMenuSeparator />

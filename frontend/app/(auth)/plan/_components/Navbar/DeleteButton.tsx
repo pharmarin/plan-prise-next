@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { routes } from "@/app/routes-schema";
 import { trpc } from "@/utils/api";
 import { Loader2, Trash2 } from "lucide-react";
 
@@ -27,7 +28,7 @@ const DeleteButton = () => {
           className="cursor-pointer rounded-full bg-red-700 p-1 text-white"
           onClick={async () => {
             await mutateAsync(id);
-            router.push("/plan");
+            router.push(routes.plans());
           }}
         >
           {isLoading ? (
