@@ -238,8 +238,8 @@ importers:
         specifier: 8.11.8
         version: 8.11.8(react-dom@18.2.0)(react@18.2.0)
       '@tremor/react':
-        specifier: 3.13.4
-        version: 3.13.4(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1)
+        specifier: 3.14.0
+        version: 3.14.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1)
       '@trpc/client':
         specifier: 10.45.1
         version: 10.45.1(@trpc/server@10.45.1)
@@ -2807,8 +2807,8 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: false
 
-  /@tremor/react@3.13.4(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1):
-    resolution: {integrity: sha512-T5RZDuNNsZqQui7KEbSlZzUJnP01Vq2L8eW83iXqdi4DGG9X+CJf5JoJcNWcF2IR3NOr+HEzcgUOFzzMSymWmg==}
+  /@tremor/react@3.14.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-bDIaId3js6S0LMhSypLN31l98t13XwPmhF6B1NIZUId/zZwnuE25z95VbKUL8NzHuCETIXSAp+Mm+OyA9EeAFw==}
     peerDependencies:
       react: ^18.0.0
       react-dom: '>=16.6.0'
