@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
 import { revalidatePath } from "@/app/(auth)/admin/actions";
-import CommentaireCard from "@/app/(auth)/admin/medicaments/[id]/card-commentaire";
+import CommentaireCard from "@/app/(auth)/admin/medicaments/[medicamentId]/card-commentaire";
 import { routes } from "@/app/routes-schema";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";

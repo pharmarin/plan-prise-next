@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import EditMedicClient from "@/app/(auth)/admin/medicaments/[id]/client";
+import EditMedicClient from "@/app/(auth)/admin/medicaments/[medicamentId]/client";
+import { routes } from "@/app/routes-schema";
 
 import prisma from "@plan-prise/db-prisma";
 
-type Params = { id: string };
-
-const MedicServer = async ({ params }: { params: Params }) => {
+const MedicServer = async ({ params }: { params: unknown }) => {
   try {
+    const { medicamentId } = routes.medicament.$parseParams(params);
+
     const medicament = await prisma.medicament.findFirstOrThrow({
-      where: { id: params.id },
+      where: { id: medicamentId },
       include: { commentaires: true, precaution: true, principesActifs: true },
     });
 
@@ -22,11 +23,13 @@ const MedicServer = async ({ params }: { params: Params }) => {
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: unknown;
 }): Promise<Metadata> {
+  const { medicamentId } = routes.medicament.$parseParams(params);
+
   const medicament = await prisma.medicament.findFirstOrThrow({
-    where: { id: params.id },
-    include: { commentaires: true, precaution: true, principesActifs: true },
+    where: { id: medicamentId },
+    select: { denomination: true },
   });
 
   return {

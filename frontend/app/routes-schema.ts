@@ -48,7 +48,4 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ edit: undefined }),
     }),
-    principeActif: defineRoute("/admin/principes-actifs/[principeActifId]", {
-      params: z.object({ principeActifId: z.string().cuid2() }),
-    }),
   }));

@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/app/routes-schema";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -48,7 +49,7 @@ const MedicsClient = ({
     <DataTable
       columns={columns}
       data={medicaments}
-      link={(data) => `/admin/medics/${data.id}`}
+      link={(data) => routes.medicament({ medicamentId: data.id })}
       sortingDefault={[{ id: "denomination", desc: false }]}
     />
   );
