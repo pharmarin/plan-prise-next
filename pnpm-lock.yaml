@@ -262,8 +262,8 @@ importers:
         specifier: 14.1.0
         version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: 4.24.5
-        version: 4.24.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.24.6
+        version: 4.24.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
       next-safe-navigation:
         specifier: 0.1.1
         version: 0.1.1(next@14.1.0)(typescript@5.3.3)(zod@3.22.4)
@@ -469,7 +469,7 @@ importers:
     dependencies:
       '@next-auth/prisma-adapter':
         specifier: 1.0.7
-        version: 1.0.7(@prisma/client@5.9.1)(next-auth@4.24.5)
+        version: 1.0.7(@prisma/client@5.9.1)(next-auth@4.24.6)
       '@plan-prise/db-prisma':
         specifier: '*'
         version: link:../db-prisma
@@ -489,8 +489,8 @@ importers:
         specifier: 14.1.0
         version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: 4.24.5
-        version: 4.24.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.24.6
+        version: 4.24.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -1349,18 +1349,19 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
 
-  /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.9.1)(next-auth@4.24.5):
+  /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.9.1)(next-auth@4.24.6):
     resolution: {integrity: sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
       '@prisma/client': 5.9.1(prisma@5.9.1)
-      next-auth: 4.24.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.24.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/bundle-analyzer@14.1.0:
@@ -2354,6 +2355,8 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/image@2.3.4:
@@ -2363,6 +2366,8 @@ packages:
       '@react-pdf/png-js': 2.3.1
       cross-fetch: 3.1.8
       jay-peg: 1.0.1
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/layout@3.11.2:
@@ -2380,6 +2385,8 @@ packages:
       emoji-regex: 10.3.0
       queue: 6.0.2
       yoga-layout: 2.0.1
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.1.6:
@@ -2437,6 +2444,8 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.2.4:
@@ -2552,6 +2561,7 @@ packages:
       proxy-from-env: 1.1.0
       which: 2.0.2
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2601,6 +2611,7 @@ packages:
       stacktrace-parser: 0.1.10
       webpack: 5.90.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -2667,6 +2678,7 @@ packages:
       '@sentry/cli': 1.77.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -3828,6 +3840,7 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
     optional: true
@@ -4104,6 +4117,8 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -5184,6 +5199,7 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -5911,6 +5927,8 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -6230,6 +6248,7 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -6423,8 +6442,8 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /next-auth@4.24.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-3RafV3XbfIKk6rF6GlLE4/KxjTcuMCifqrmD+98ejFq73SRoj2rmzoca8u764977lH/Q7jo6Xu6yM+Re1Mz/Og==}
+  /next-auth@4.24.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-djQt3ZEaWEIxcsuh3HTW2uuzLfXMRjHH+ugAsichlQSbH4iA5MRcgMA2HvTNvsDTDLh44tyU72+/gWsxgTbAKg==}
     peerDependencies:
       next: ^12.2.5 || ^13 || ^14
       nodemailer: ^6.6.5
@@ -6434,7 +6453,7 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.8
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.15.4
@@ -6519,6 +6538,8 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
     peerDependenciesMeta:
       encoding:
         optional: true
@@ -6961,6 +6982,7 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
@@ -7348,6 +7370,7 @@ packages:
       '@react-pdf/renderer': 3.3.8(react@18.2.0)
       tailwindcss: 3.4.1
     transitivePeerDependencies:
+      - encoding
       - react
       - ts-node
     dev: false
@@ -7375,6 +7398,7 @@ packages:
       tiny-invariant: 1.3.1
       warning: 4.0.3
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: false
 
