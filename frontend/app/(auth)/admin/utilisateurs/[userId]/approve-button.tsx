@@ -7,8 +7,8 @@ import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { Button } from "@plan-prise/ui/button";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const TestButton = ({
   approved,

@@ -10,8 +10,8 @@ import type { z } from "zod";
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { forgotPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
+import { Button } from "@plan-prise/ui/button";
 import FormSubmitSuccess from "@plan-prise/ui/components/pages/FormSubmitSuccess";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -21,8 +21,8 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const ForgotPasswordForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();

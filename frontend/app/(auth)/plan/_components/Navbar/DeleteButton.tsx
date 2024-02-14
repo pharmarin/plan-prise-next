@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
 import usePlanStore from "@/app/(auth)/plan/state";
+import { routes } from "@/app/routes-schema";
 import { Loader2, Trash2 } from "lucide-react";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
@@ -9,7 +10,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@plan-prise/ui/shadcn/ui/tooltip";
+} from "@plan-prise/ui/tooltip";
 
 const DeleteButton = () => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const DeleteButton = () => {
           className="cursor-pointer rounded-full bg-red-700 p-1 text-white"
           onClick={async () => {
             await mutateAsync(id);
-            router.push("/plan");
+            router.push(routes.plans());
           }}
         >
           {isLoading ? (

@@ -18,8 +18,9 @@
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "migrate": "ts-node ./index.ts",
-    "typecheck": "tsc --noEmit"
+    "migrate": "pnpm with-env ts-node ./index.ts",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@plan-prise/db-prisma": "*"
@@ -32,6 +33,7 @@
     "@types/cli-progress": "3.11.5",
     "@types/lodash": "4.14.202",
     "cli-progress": "3.12.0",
+    "dotenv-cli": "7.3.0",
     "eslint": "8.56.0",
     "lodash": "4.17.21",
     "ts-node": "10.9.2",

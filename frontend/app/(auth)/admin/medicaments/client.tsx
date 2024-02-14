@@ -5,11 +5,8 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import { toUpper } from "lodash";
 
-import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
-import {
-  DataTable,
-  DataTableColumnHeader,
-} from "@plan-prise/ui/shadcn/ui/data-table";
+import { Badge } from "@plan-prise/ui/badge";
+import { DataTable, DataTableColumnHeader } from "@plan-prise/ui/data-table";
 
 const MedicsClient = ({
   medicaments,

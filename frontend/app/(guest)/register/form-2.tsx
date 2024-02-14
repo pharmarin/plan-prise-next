@@ -13,7 +13,7 @@ import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import type { registerSchema } from "@plan-prise/api/validation/users";
 import { registerSchemaStep2 } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Button } from "@plan-prise/ui/button";
 import {
   Form,
   FormControl,
@@ -24,8 +24,8 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const RegisterFormStep2 = ({
   formData,

@@ -14,26 +14,23 @@ import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { upsertPrincipeActifSchema } from "@plan-prise/api/validation/medicaments";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import {
-  DataTable,
-  DataTableColumnHeader,
-} from "@plan-prise/ui/shadcn/ui/data-table";
+import { Button } from "@plan-prise/ui/button";
+import { DataTable, DataTableColumnHeader } from "@plan-prise/ui/data-table";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@plan-prise/ui/shadcn/ui/dialog";
+} from "@plan-prise/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const EDIT_SEARCH_PARAM = "edit";
 

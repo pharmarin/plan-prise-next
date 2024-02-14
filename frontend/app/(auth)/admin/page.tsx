@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 import { AreaChart, Card, Metric, Text } from "@tremor/react";
 
@@ -38,7 +39,7 @@ const AdminDashboard = async () => {
       <Navigation title="Administration" />
       <div className="space-y-6">
         <div className="grid grid-cols-3 gap-4">
-          <Link href="/admin/utilisateurs">
+          <Link href={routes.users()}>
             <Card className="h-full" decoration="top" decorationColor="blue">
               <Text>Utilisateurs</Text>
               <Metric>{usersCount}</Metric>

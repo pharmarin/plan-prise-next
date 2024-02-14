@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import TestButton from "@/app/(auth)/admin/utilisateurs/[id]/approve-button";
-import RPPSField from "@/app/(auth)/admin/utilisateurs/[id]/rpps-field";
+import TestButton from "@/app/(auth)/admin/utilisateurs/[userId]/approve-button";
+import RPPSField from "@/app/(auth)/admin/utilisateurs/[userId]/rpps-field";
 import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
+import { Badge } from "@plan-prise/ui/badge";
 import ShowPDF from "@plan-prise/ui/components/render-pdf";
-import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { Label } from "@plan-prise/ui/label";
 
 const PAGE_TITLE = "Détail de l'utilisateur";
 

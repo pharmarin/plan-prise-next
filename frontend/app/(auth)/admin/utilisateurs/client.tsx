@@ -1,17 +1,15 @@
 "use client";
 
 import type { CleanUser } from "@/app/(auth)/admin/utilisateurs/page";
+import { routes } from "@/app/routes-schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import startCase from "lodash/startCase";
 import upperCase from "lodash/upperCase";
 
-import { Badge } from "@plan-prise/ui/shadcn/ui/badge";
-import type { DataTableColumnFilter } from "@plan-prise/ui/shadcn/ui/data-table";
-import {
-  DataTable,
-  DataTableColumnHeader,
-} from "@plan-prise/ui/shadcn/ui/data-table";
+import { Badge } from "@plan-prise/ui/badge";
+import type { DataTableColumnFilter } from "@plan-prise/ui/data-table";
+import { DataTable, DataTableColumnHeader } from "@plan-prise/ui/data-table";
 
 type FilterKey = "PENDING" | "ALL";
 
@@ -88,7 +86,7 @@ const UsersClient = ({ users }: { users: CleanUser[] }) => {
       columns={columns}
       data={users}
       filters={Object.values(filters)}
-      link={(data) => `/admin/utilisateurs/${data.id}`}
+      link={(data) => routes.user({ userId: data.id })}
     />
   );
 };

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
+import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
@@ -22,7 +23,7 @@ const PlanNew = () => {
 
   return (
     <>
-      <Navigation title="Nouveau plan de prise" returnTo="/plan" />
+      <Navigation title="Nouveau plan de prise" returnTo={routes.plans()} />
       <PlanClient plan={plan} />
     </>
   );

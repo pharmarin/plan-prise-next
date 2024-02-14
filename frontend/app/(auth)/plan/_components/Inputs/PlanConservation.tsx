@@ -5,17 +5,17 @@ import { useConservation } from "@/app/(auth)/plan/hooks";
 import usePlanStore from "@/app/(auth)/plan/state";
 import type { Medicament } from "@prisma/client";
 
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import { FormItem } from "@plan-prise/ui/shadcn/ui/form";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { Button } from "@plan-prise/ui/button";
+import { FormItem } from "@plan-prise/ui/form";
+import { Label } from "@plan-prise/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@plan-prise/ui/shadcn/ui/select";
+} from "@plan-prise/ui/select";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 
 const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
   const { setData, unsetData, setCanPrint } = usePlanStore((state) => ({

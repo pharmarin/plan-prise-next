@@ -4,24 +4,24 @@ import type { VoieAdministration } from "@prisma/client";
 import { Trash2Icon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import { Card, CardContent } from "@plan-prise/ui/shadcn/ui/card";
+import { Button } from "@plan-prise/ui/button";
+import { Card, CardContent } from "@plan-prise/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@plan-prise/ui/shadcn/ui/select";
-import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
+} from "@plan-prise/ui/select";
+import { Textarea } from "@plan-prise/ui/textarea";
 
 const CommentaireCard = ({
   id,

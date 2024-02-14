@@ -18,7 +18,7 @@
     "typecheck": "turbo typecheck --filter=!@plan-prise/db-migration"
   },
   "dependencies": {
-    "@faker-js/faker": "8.3.1",
+    "@faker-js/faker": "8.4.1",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@manypkg/cli": "0.21.2",
     "@next/env": "14.1.0",
@@ -29,18 +29,18 @@
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "*",
     "@plan-prise/tsconfig": "^0.1.0",
-    "@playwright/test": "1.41.1",
-    "@prettier/plugin-php": "0.22.1",
-    "@turbo/gen": "1.11.3",
+    "@playwright/test": "1.41.2",
+    "@prettier/plugin-php": "0.22.2",
+    "@turbo/gen": "1.12.3",
     "@types/lodash": "4.14.202",
-    "@types/node": "20.11.6",
+    "@types/node": "20.11.17",
     "eslint": "8.56.0",
     "lodash": "4.17.21",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.11",
-    "turbo": "1.11.3",
+    "turbo": "1.12.3",
     "typescript": "5.3.3"
   },
-  "packageManager": "pnpm@8.14.3",
+  "packageManager": "pnpm@8.15.2",
   "prettier": "@plan-prise/prettier-config"
 }

@@ -16,10 +16,9 @@ import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { upsertMedicSchema } from "@plan-prise/api/validation/medicaments";
+import { Button } from "@plan-prise/ui/button";
+import { Checkbox } from "@plan-prise/ui/checkbox";
 import MultiSelect from "@plan-prise/ui/components/multi-select";
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import { Checkbox } from "@plan-prise/ui/shadcn/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -29,9 +28,10 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
+import { Label } from "@plan-prise/ui/label";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 
 const EDIT_MEDIC_EVENT = "EDIT_MEDIC_EVENT";
 const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";

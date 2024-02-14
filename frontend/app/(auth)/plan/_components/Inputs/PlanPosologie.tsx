@@ -3,9 +3,9 @@ import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
 import type { Medicament } from "@prisma/client";
 
-import { FormItem } from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { FormItem } from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
+import { Label } from "@plan-prise/ui/label";
 
 const PlanPosologie = ({
   medicament,

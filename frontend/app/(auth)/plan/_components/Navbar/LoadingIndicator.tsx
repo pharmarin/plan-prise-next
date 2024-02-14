@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@plan-prise/ui/shadcn/ui/tooltip";
+} from "@plan-prise/ui/tooltip";
 
 const LoadingIndicator = () => {
   const isSaving = usePlanStore((state) => state.isSaving);

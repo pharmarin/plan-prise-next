@@ -7,24 +7,24 @@ import { SettingsIcon } from "lucide-react";
 import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@plan-prise/ui/shadcn/ui/dialog";
-import { FormItem } from "@plan-prise/ui/shadcn/ui/form";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
-import { Switch } from "@plan-prise/ui/shadcn/ui/switch";
+} from "@plan-prise/ui/dialog";
+import { FormItem } from "@plan-prise/ui/form";
+import { Label } from "@plan-prise/ui/label";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
+import { Switch } from "@plan-prise/ui/switch";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@plan-prise/ui/shadcn/ui/tooltip";
-import { TypographyH4 } from "@plan-prise/ui/shadcn/ui/typography";
+} from "@plan-prise/ui/tooltip";
+import { TypographyH4 } from "@plan-prise/ui/typography";
 
 const posologies = Object.keys(
   PlanPrisePosologies,

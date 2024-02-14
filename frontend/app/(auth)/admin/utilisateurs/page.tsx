@@ -1,4 +1,5 @@
 import UsersClient from "@/app/(auth)/admin/utilisateurs/client";
+import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
 import type { User } from "@plan-prise/db-prisma";
@@ -34,7 +35,7 @@ const UsersServer = async () => {
 
   return (
     <>
-      <Navigation title={PAGE_TITLE} returnTo="/admin" />
+      <Navigation title={PAGE_TITLE} returnTo={routes.adminDashboard()} />
       <UsersClient users={users} />
     </>
   );

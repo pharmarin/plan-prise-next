@@ -8,7 +8,7 @@ import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { updateUserPasswordSchema } from "@plan-prise/api/validation/users";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Button } from "@plan-prise/ui/button";
 import {
   Form,
   FormControl,
@@ -18,8 +18,8 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const EditPassword = () => {
   const { data, mutateAsync } = trpc.users.updatePassword.useMutation();

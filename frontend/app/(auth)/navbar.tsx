@@ -4,15 +4,15 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
 import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
+import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
 import { navbarIcons, useNavigationState } from "@/app/state-navigation";
 import type { User } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
+import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
 import Logo from "@plan-prise/ui/components/navigation/Logo";
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
-import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +20,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@plan-prise/ui/shadcn/ui/dropdown-menu";
+} from "@plan-prise/ui/dropdown-menu";
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   const NavbarIcon = navbarIcons[icon];
@@ -47,21 +48,25 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
     initialData: serverUser,
   });
 
-  const isHome = pathname === "/";
+  const isHome = pathname === routes.home();
 
   // Redirect user to profil page if incomplete informations after migration
-  if (pathname !== "/profil" && user && (!user?.firstName || !user?.lastName)) {
-    router.push("/profil");
+  if (
+    pathname !== routes.profil() &&
+    user &&
+    (!user?.firstName || !user?.lastName)
+  ) {
+    router.push(routes.profil());
   }
 
   return (
     <div className="container mx-auto mb-4 mt-2 flex items-center justify-between rounded-lg bg-white p-4 py-2 shadow">
       <div id="navbar-left" className="flex-1">
         <div className="flex w-fit flex-row items-center sm:space-x-8">
-          <Link href="/">
+          <Link href={routes.home()}>
             <Logo />
           </Link>
-          {!isHome && <NavbarLink icon="home" path="/" />}
+          {!isHome && <NavbarLink icon="home" path={routes.home()} />}
           {returnTo && <NavbarLink icon="arrowLeft" path={returnTo} />}
         </div>
       </div>
@@ -118,12 +123,12 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
               {data?.user?.admin && (
                 <>
                   <DropdownMenuLabel>Administration</DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => router.push("/admin")}>
+                  <DropdownMenuItem
+                    onClick={() => router.push(routes.adminDashboard())}
+                  >
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => router.push("/admin/utilisateurs")}
-                  >
+                  <DropdownMenuItem onClick={() => router.push(routes.users())}>
                     Utilisateurs
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -139,7 +144,7 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
                   <DropdownMenuSeparator />
                 </>
               )}
-              <DropdownMenuItem onClick={() => router.push("/profil")}>
+              <DropdownMenuItem onClick={() => router.push(routes.profil())}>
                 Profil
               </DropdownMenuItem>
               <DropdownMenuSeparator />

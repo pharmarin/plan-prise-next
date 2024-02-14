@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 
+import { Button } from "@plan-prise/ui/button";
 import ErrorSkeleton from "@plan-prise/ui/components/pages/ErrorSkeleton";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
 
 const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
   useEffect(() => {

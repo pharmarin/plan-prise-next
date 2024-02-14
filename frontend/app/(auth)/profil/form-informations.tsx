@@ -10,14 +10,14 @@ import { twMerge } from "tailwind-merge";
 import type { z } from "zod";
 
 import { updateUserSchema } from "@plan-prise/api/validation/users";
-import { Avatar, AvatarFallback } from "@plan-prise/ui/shadcn/ui/avatar";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
+import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
+import { Button } from "@plan-prise/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-} from "@plan-prise/ui/shadcn/ui/dialog";
+} from "@plan-prise/ui/dialog";
 import {
   Form,
   FormControl,
@@ -28,9 +28,9 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
+import { Label } from "@plan-prise/ui/label";
 
 const EditInformations: React.FC<{
   user: Pick<
