@@ -1,3 +1,5 @@
+import { fixConservationDuree } from "@/6-fix-conservation-duree";
+
 import prisma from "@plan-prise/db-prisma";
 
 import {
@@ -37,6 +39,10 @@ const seeder = async () => {
       break;
     case "5":
       await migrateRenamePrecautions();
+      process.exit();
+      break;
+    case "6":
+      await fixConservationDuree();
       process.exit();
       break;
     default:
