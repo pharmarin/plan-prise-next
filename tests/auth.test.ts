@@ -1,13 +1,12 @@
-import { test } from "@/__tests__/fixtures/auth.fixture";
-import { fakeUserBase } from "@/__tests__/helpers/user";
 import { expect } from "@playwright/test";
 import { startCase, toUpper } from "lodash";
 
+import getUrl from "@plan-prise/api/utils/url";
+import { checkPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
-
-import getUrl from "../../packages/api/utils/url";
-import { checkPassword } from "../../packages/auth/src/lib/password-utils";
+import { test } from "@plan-prise/tests/fixtures/auth.fixture";
+import { fakeUserBase } from "@plan-prise/tests/helpers/user";
 
 test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({

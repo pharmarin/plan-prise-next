@@ -10,8 +10,8 @@ import {
   registerSchemaCertificate,
   registerSchemaStep1,
 } from "@plan-prise/api/validation/users";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import { Checkbox } from "@plan-prise/ui/shadcn/ui/checkbox";
+import { Button } from "@plan-prise/ui/button";
+import { Checkbox } from "@plan-prise/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -19,9 +19,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
+import { Label } from "@plan-prise/ui/label";
 
 const RegisterFormStep1 = ({
   formData,

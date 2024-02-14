@@ -1,3 +1,5 @@
+import { fixConservationDuree } from "@/6-fix-conservation-duree";
+
 import prisma from "@plan-prise/db-prisma";
 
 import {
@@ -11,7 +13,6 @@ import migrateMedicsNew from "./2-migrate-medics-new";
 import { migratePlanNew } from "./3-migrate-plans";
 import { addMaxIdColumn } from "./4-add-maxid-column-users";
 import { migrateRenamePrecautions } from "./5-rename-precautions";
-import { migrateMedicamentPrecautions } from "./6-migrate-precautions";
 
 const seeder = async () => {
   switch (process.argv?.[2]) {
@@ -41,7 +42,7 @@ const seeder = async () => {
       process.exit();
       break;
     case "6":
-      await migrateMedicamentPrecautions();
+      await fixConservationDuree();
       process.exit();
       break;
     default:

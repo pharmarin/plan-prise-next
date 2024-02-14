@@ -1,15 +1,17 @@
-import { baseUrl } from "@/__tests__/helpers/url";
 import type { Page } from "@playwright/test";
+
+import logConsole from "@plan-prise/tests/helpers/console-log";
 
 export class LoginPage {
   readonly page: Page;
 
   constructor(page: Page) {
     this.page = page;
+    logConsole(page);
   }
 
   async goto() {
-    await this.page.goto(`${baseUrl}/login`);
+    await this.page.goto("/login");
     await this.page.waitForLoadState("networkidle");
   }
 

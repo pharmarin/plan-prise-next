@@ -8,7 +8,8 @@
       "@/*": ["./src/*"]
     },
     "moduleResolution": "Node",
-    "target": "ES2021"
+    "target": "ES2021",
+    "strictNullChecks": true
   },
   "include": ["*.ts", "src"],
   "exclude": ["node_modules"],

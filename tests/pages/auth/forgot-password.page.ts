@@ -1,10 +1,13 @@
 import type { Page } from "@playwright/test";
 
+import logConsole from "@plan-prise/tests/helpers/console-log";
+
 export class ForgotPasswordPage {
   readonly page: Page;
 
   constructor(page: Page) {
     this.page = page;
+    logConsole(page);
   }
 
   async goto() {

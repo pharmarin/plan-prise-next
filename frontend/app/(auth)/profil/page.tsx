@@ -11,6 +11,7 @@ const PAGE_TITLE = "Profil";
 
 const Profil = async () => {
   const session = await getServerSession();
+
   const user = await prisma.user.findUnique({
     where: { id: session?.user.id ?? "" },
   });

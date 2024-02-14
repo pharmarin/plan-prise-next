@@ -8,6 +8,15 @@ on:
     branches: ["main"]
   merge_group:
 
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
+  NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+  NEXTAUTH_URL: http://127.0.0.1:3000
+  CROSS_SITE_SECRET: ${{ secrets.CROSS_SITE_SECRET }}
+  BACKEND_URL: https://api.plandeprise.fr
+
 jobs:
   build-lint:
     runs-on: ubuntu-latest
@@ -40,9 +49,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: "**/.turbo"
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
+          key: ${{ runner.os }}-turbo-${{ github.run_id }}-${{ github.run_number }}
 
       - name: Setup nextjs cache
         uses: actions/cache@v3
@@ -58,10 +65,31 @@ jobs:
         run: pnpm install
 
       - name: Build, lint and type-check
-        run: pnpm turbo lint format typecheck --filter=!@plan-prise/db-migration
+        run: pnpm turbo lint typecheck --filter=!@plan-prise/db-migration
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+
+      - name: Format
+        id: prettier
+        run: pnpm turbo format --filter=!@plan-prise/db-migration
+
+      - name: Show diff
+        # https://docs.github.com/en/actions/learn-github-actions/expressions#failure
+        if: ${{ failure() }}
+        run: |
+          pnpm format:fix
+          git diff -- . ':(exclude)package-lock.json' ':(exclude)package.json' > diff.txt
+          pnpm install -g diff2html-cli
+          diff2html -i file -s side -F diff.html -- diff.txt
+
+      - name: Upload html diff
+        if: ${{ failure() && steps.prettier.conclusion == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: HTML Diff
+          path: diff.html
+          retention-days: 3
 
   auth-test:
     runs-on: ubuntu-latest
@@ -97,9 +125,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: "**/.turbo"
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
+          key: ${{ runner.os }}-turbo-${{ github.run_id }}-${{ github.run_number }}
 
       - name: Setup nextjs cache
         uses: actions/cache@v3
@@ -115,20 +141,12 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: pnpm test
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
-          NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
-          NEXTAUTH_URL: http://127.0.0.1:3000
-          CROSS_SITE_SECRET: ${{ secrets.CROSS_SITE_SECRET }}
-          BACKEND_URL: https://api.plandeprise.fr
-#
-#      - name: Upload report
-#        uses: actions/upload-artifact@v3
-#        if: failure()
-#        with:
-#          name: playwright-report
-#          path: frontend/playwright-report/
-#          retention-days: 30
+        run: pnpm test:ci
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 2

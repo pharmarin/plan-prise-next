@@ -2,6 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
+import { env } from "@/env.mjs";
 import { trpc } from "@/utils/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
@@ -10,7 +11,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
 
 import getUrl from "@plan-prise/api/utils/url";
-import { Toaster } from "@plan-prise/ui/shadcn/ui/toaster";
+import { Toaster } from "@plan-prise/ui/toaster";
 
 export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(
@@ -48,7 +49,7 @@ export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
 
 export const GuestProviders: React.FC<PropsWithChildren> = ({ children }) => (
   <GoogleReCaptchaProvider
-    reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
+    reCaptchaKey={env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || ""}
     scriptProps={{
       async: false,
       defer: false,

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { routes } from "@/app/routes-schema";
 import { trpc } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
@@ -12,9 +13,9 @@ import type { z } from "zod";
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { resetPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
+import { Button } from "@plan-prise/ui/button";
 import Link from "@plan-prise/ui/components/navigation/Link";
 import FormSubmitSuccess from "@plan-prise/ui/components/pages/FormSubmitSuccess";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -24,8 +25,8 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
   email,
@@ -86,7 +87,7 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
               Vous pouvez maintenant vous connecter avec votre nouveau mot de
               passe.
             </p>
-            <Link href="/login">Se connecter</Link>
+            <Link href={routes.login()}>Se connecter</Link>
           </>
         }
         title="Réinitialisation du mot de passe terminée"
