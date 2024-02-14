@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import PlanCard from "@/app/(auth)/plan/_components/PlanCard";
 import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { routes } from "@/app/routes-schema";
 import { trpc } from "@/utils/api";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash";
@@ -15,7 +16,7 @@ import { shallow } from "zustand/shallow";
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
-import { useToast } from "@plan-prise/ui/shadcn/ui/use-toast";
+import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
 
 type SelectValueType = {
   denomination: string;
@@ -135,6 +136,8 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                     principesActifs: [],
                     precaution_old: "",
                     precautionId: null,
+                    createdAt: new Date(),
+                    updatedAt: null,
                   }
             }
             removeMedic={async (medicament: PP.Medicament.Identifier) => {
@@ -217,7 +220,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                 if (plan.id === PLAN_NEW) {
                   if (typeof response === "object" && "id" in response) {
                     init(response);
-                    router.replace(`/plan/${response.displayId}`);
+                    router.replace(routes.plan({ planId: response.displayId }));
                   }
                 } else {
                   addMedic(value.id);

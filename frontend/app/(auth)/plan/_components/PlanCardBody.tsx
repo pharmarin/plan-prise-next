@@ -7,7 +7,7 @@ import { extractPosologiesSettings } from "@/app/(auth)/plan/_lib/functions";
 import usePlanStore from "@/app/(auth)/plan/_lib/state";
 import { ThermometerSnowflake } from "lucide-react";
 
-import { Label } from "@plan-prise/ui/shadcn/ui/label";
+import { Label } from "@plan-prise/ui/label";
 
 const PlanCardBody = ({
   medicament,

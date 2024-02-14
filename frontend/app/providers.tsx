@@ -11,7 +11,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import SuperJSON from "superjson";
 
 import getUrl from "@plan-prise/api/utils/url";
-import { Toaster } from "@plan-prise/ui/shadcn/ui/toaster";
+import { Toaster } from "@plan-prise/ui/toaster";
 
 export const GlobalProviders: React.FC<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(

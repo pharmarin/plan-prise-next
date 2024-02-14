@@ -1,7 +1,6 @@
 "use client";
 
-import type { Route } from "next";
-import { useRouter, useSearchParams } from "next/navigation";
+import { routes } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -10,8 +9,8 @@ import type { z } from "zod";
 
 import { loginSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
+import { Button } from "@plan-prise/ui/button";
 import Link from "@plan-prise/ui/components/navigation/Link";
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -21,12 +20,10 @@ import {
   FormMessage,
   FormServerError,
   SERVER_ERROR,
-} from "@plan-prise/ui/shadcn/ui/form";
-import { Input } from "@plan-prise/ui/shadcn/ui/input";
+} from "@plan-prise/ui/form";
+import { Input } from "@plan-prise/ui/input";
 
 const LoginForm = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -56,9 +53,9 @@ const LoginForm = () => {
       redirect: false,
     });
 
-    if (!signInResponse?.error) {
-      router.push((searchParams?.get("redirectTo") ?? "/") as Route);
-    } else {
+    // If signinResponse has no error, redirection is handled by authGuard to searchParam?redirect ou home
+
+    if (signInResponse?.error) {
       form.setError(SERVER_ERROR, {
         message:
           signInResponse?.error === "CredentialsSignin"
@@ -108,7 +105,10 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <Link className="!mt-1 px-0 py-0 text-xs" href="/forgot-password">
+          <Link
+            className="!mt-1 px-0 py-0 text-xs"
+            href={routes.passwordAskReset()}
+          >
             Mot de passe oublié ?
           </Link>
           <FormServerError />
@@ -123,7 +123,7 @@ const LoginForm = () => {
         </form>
       </Form>
 
-      <Link className="mt-4" href="/register">
+      <Link className="mt-4" href={routes.register()}>
         Je n&apos;ai pas de compte : S&apos;inscrire
       </Link>
     </div>

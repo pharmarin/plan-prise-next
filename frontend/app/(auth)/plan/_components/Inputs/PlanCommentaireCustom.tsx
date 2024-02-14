@@ -3,8 +3,8 @@ import { createId } from "@paralleldrive/cuid2";
 import type { Medicament } from "@prisma/client";
 import { PlusIcon, XIcon } from "lucide-react";
 
-import { Button } from "@plan-prise/ui/shadcn/ui/button";
-import { Textarea } from "@plan-prise/ui/shadcn/ui/textarea";
+import { Button } from "@plan-prise/ui/button";
+import { Textarea } from "@plan-prise/ui/textarea";
 
 const PlanCommentaireCustomItem = ({
   commentId,
