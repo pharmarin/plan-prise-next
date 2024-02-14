@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
 import { revalidatePath } from "@/app/(auth)/admin/actions";
+import { routes, useSafeSearchParams } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -32,18 +33,13 @@ import {
 } from "@plan-prise/ui/form";
 import { Input } from "@plan-prise/ui/input";
 
-const EDIT_SEARCH_PARAM = "edit";
-
 const PrincipesActifsClient = ({
   principesActifs,
 }: {
   principesActifs: PrincipeActif[];
 }) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const selectedId = searchParams.has(EDIT_SEARCH_PARAM)
-    ? searchParams.get(EDIT_SEARCH_PARAM)
-    : null;
+  const { edit: selectedId } = useSafeSearchParams("principesActifs");
 
   const { mutateAsync: deletePrincipeActif, isLoading: isDeleting } =
     trpc.medics.deletePrincipeActif.useMutation();
@@ -79,8 +75,8 @@ const PrincipesActifsClient = ({
   ) => {
     try {
       await upsertPrincipeActif(values);
-      revalidatePath("/admin/principes-actifs");
-      router.push("/admin/principes-actifs");
+      revalidatePath(routes.principesActifs());
+      router.push(routes.principesActifs());
     } catch (error) {
       if (error instanceof TRPCClientError) {
         form.setError(SERVER_ERROR, { message: error.message });
@@ -95,7 +91,7 @@ const PrincipesActifsClient = ({
           open={!!selectedId}
           onOpenChange={(open) => {
             if (!open) {
-              router.push("/admin/principes-actifs");
+              router.push(routes.principesActifs());
             }
           }}
         >
@@ -140,8 +136,8 @@ const PrincipesActifsClient = ({
                     type="button"
                     onClick={async () => {
                       await deletePrincipeActif({ id: selectedId });
-                      revalidatePath("/admin/principes-actifs");
-                      router.push("/admin/principes-actifs");
+                      revalidatePath(routes.principesActifs());
+                      router.push(routes.principesActifs());
                     }}
                     variant="destructive"
                     disabled={isDeleting || isLoading}
@@ -165,9 +161,7 @@ const PrincipesActifsClient = ({
       <DataTable
         columns={columns}
         data={principesActifs}
-        link={(data) =>
-          `/admin/principes-actifs/?${EDIT_SEARCH_PARAM}=${data.id}`
-        }
+        link={(data) => routes.principesActifs({ search: { edit: data.id } })}
         sortingDefault={[{ id: "denomination", desc: false }]}
       />
     </>

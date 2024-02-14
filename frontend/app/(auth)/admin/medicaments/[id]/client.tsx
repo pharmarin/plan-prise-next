@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/api";
 import { revalidatePath } from "@/app/(auth)/admin/actions";
 import CommentaireCard from "@/app/(auth)/admin/medicaments/[id]/card-commentaire";
+import { routes } from "@/app/routes-schema";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
@@ -64,8 +65,8 @@ const MedicClient = ({
       confirm(`Voulez-vous vraiment supprimer ${medicament.denomination} ?`)
     ) {
       await deleteMedic({ id: medicament.id });
-      revalidatePath("/admin/medicaments");
-      router.push("/admin/medicaments");
+      revalidatePath(routes.medicaments());
+      router.push(routes.medicaments());
     }
   });
 
@@ -76,7 +77,7 @@ const MedicClient = ({
           ? medicament.denomination
           : `Modification de ${medicament.denomination}`
         : "Ajout d'un médicament",
-      returnTo: "/admin/medicaments",
+      returnTo: routes.medicaments(),
       options: [
         ...(medicament && readOnly
           ? [{ icon: "edit" as const, event: EDIT_MEDIC_EVENT }]
@@ -155,10 +156,10 @@ const MedicClient = ({
       const response = await upsertMedic(values);
 
       setReadOnly(true);
-      revalidatePath("/admin/medicaments");
+      revalidatePath(routes.medicaments());
 
       if (!medicament) {
-        router.push(`/admin/medicaments/${response.id}`);
+        router.push(routes.medicament({ medicamentId: response.id }));
       }
     } catch (error) {
       if (error instanceof TRPCClientError) {

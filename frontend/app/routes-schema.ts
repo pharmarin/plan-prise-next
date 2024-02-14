@@ -35,4 +35,20 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         userId: z.string().cuid2(),
       }),
     }),
+    medicaments: defineRoute("/admin/medicaments"),
+    medicament: defineRoute("/admin/medicaments/[medicamentId]", {
+      params: z.object({
+        medicamentId: z.string().cuid2(),
+      }),
+    }),
+    principesActifs: defineRoute("/admin/principes-actifs", {
+      search: z
+        .object({
+          edit: z.string().cuid2().optional(),
+        })
+        .default({ edit: undefined }),
+    }),
+    principeActif: defineRoute("/admin/principes-actifs/[principeActifId]", {
+      params: z.object({ principeActifId: z.string().cuid2() }),
+    }),
   }));

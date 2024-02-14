@@ -1,4 +1,5 @@
 import MedicsClient from "@/app/(auth)/admin/medicaments/client";
+import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";
@@ -14,7 +15,7 @@ const MedicsServer = async () => {
 
   return (
     <>
-      <Navigation title={PAGE_TITLE} returnTo="/admin" />
+      <Navigation title={PAGE_TITLE} returnTo={routes.adminDashboard()} />
       <MedicsClient medicaments={medicaments} />
     </>
   );
