@@ -4,8 +4,8 @@ import type { CleanUser } from "@/app/(auth)/admin/utilisateurs/page";
 import { routes } from "@/app/routes-schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
-import startCase from "lodash/startCase";
-import upperCase from "lodash/upperCase";
+import startCase from "lodash-es/startCase";
+import upperCase from "lodash-es/upperCase";
 
 import { Badge } from "@plan-prise/ui/badge";
 import type { DataTableColumnFilter } from "@plan-prise/ui/data-table";

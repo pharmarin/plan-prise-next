@@ -10,7 +10,7 @@ import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import { TRPCClientError } from "@trpc/client";
-import { toUpper } from "lodash";
+import { toUpper } from "lodash-es";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 

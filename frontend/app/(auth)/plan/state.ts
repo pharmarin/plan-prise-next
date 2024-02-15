@@ -6,7 +6,7 @@ import {
 } from "@/app/(auth)/plan/constants";
 import type { Plan } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
-import { merge, set, unset } from "lodash";
+import { merge, set, unset } from "lodash-es";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";

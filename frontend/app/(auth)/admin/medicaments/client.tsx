@@ -4,7 +4,7 @@ import { routes } from "@/app/routes-schema";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { toUpper } from "lodash";
+import { toUpper } from "lodash-es";
 
 import { Badge } from "@plan-prise/ui/badge";
 import { DataTable, DataTableColumnHeader } from "@plan-prise/ui/data-table";

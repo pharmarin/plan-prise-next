@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import type { User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
-import { startCase, toUpper } from "lodash";
+import { startCase, toUpper } from "lodash-es";
 
 import { findOne } from "@plan-prise/api-pharmaciens";
 import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";

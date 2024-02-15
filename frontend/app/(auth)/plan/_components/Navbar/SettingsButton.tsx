@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { trpc } from "@/app/_trpc/api";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
-import { debounce } from "lodash";
+import { debounce } from "lodash-es";
 import { SettingsIcon } from "lucide-react";
 import { shallow } from "zustand/shallow";
 

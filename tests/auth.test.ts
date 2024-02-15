@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { startCase, toUpper } from "lodash";
+import { startCase, toUpper } from "lodash-es";
 
 import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";

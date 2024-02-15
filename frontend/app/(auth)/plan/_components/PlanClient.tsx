@@ -8,7 +8,7 @@ import PlanCardLoading from "@/app/(auth)/plan/_components/PlanCardLoading";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
-import { debounce } from "lodash";
+import { debounce } from "lodash-es";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
 import { shallow } from "zustand/shallow";
