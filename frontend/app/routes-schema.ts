@@ -41,6 +41,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         medicamentId: z.string().cuid2(),
       }),
     }),
+    medicamentCreate: defineRoute("/admin/medicaments/nouveau"),
     principesActifs: defineRoute("/admin/principes-actifs", {
       search: z
         .object({

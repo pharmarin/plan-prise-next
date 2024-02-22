@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
@@ -55,6 +55,11 @@ const MedicClient = ({
 }) => {
   const [readOnly, setReadOnly] = useState(!!medicament);
 
+  const commentairesCache = useMemo(
+    () => medicament?.commentaires ?? [],
+    [medicament?.commentaires],
+  );
+
   const router = useRouter();
 
   const [{ isLoading: isDeleting }, deleteMedic] =
@@ -65,7 +70,7 @@ const MedicClient = ({
   const form = useForm<z.infer<typeof upsertMedicSchema>>({
     resolver: zodResolver(upsertMedicSchema),
     defaultValues: {
-      id: medicament?.id ?? "",
+      id: medicament?.id ?? undefined,
       denomination: medicament?.denomination ?? "",
       principesActifs: medicament?.principesActifs ?? [],
       voiesAdministration: medicament?.voiesAdministration ?? [],
@@ -125,6 +130,10 @@ const MedicClient = ({
     }
   });
 
+  const draftComment = !!form
+    .watch("commentaires")
+    .find((commentaire) => commentaire.draft);
+
   useEffect(() => {
     setNavigation({
       title: medicament
@@ -140,13 +149,16 @@ const MedicClient = ({
               className: "animate-spin",
               event: "",
             }
-          : medicament &&
-              (readOnly
-                ? { icon: "edit" as const, event: EDIT_MEDIC_EVENT }
-                : {
-                    icon: "save" as const,
-                    event: SAVE_MEDIC_EVENT,
-                  }),
+          : readOnly
+            ? { icon: "edit" as const, event: EDIT_MEDIC_EVENT }
+            : {
+                icon: "save" as const,
+                disabled: draftComment,
+                tooltip: draftComment
+                  ? "Enregistrez tous les commentaires avant de continuer"
+                  : undefined,
+                event: SAVE_MEDIC_EVENT,
+              },
         medicament &&
           (isDeleting
             ? {
@@ -162,6 +174,7 @@ const MedicClient = ({
       ),
     });
   }, [
+    draftComment,
     form.formState.isSubmitting,
     isDeleting,
     medicament,
@@ -389,17 +402,25 @@ const MedicClient = ({
             <CommentaireCard
               key={field.commentaireId}
               commentaire={{
-                ...medicament?.commentaires.find(
+                ...commentairesCache.find(
                   (commentaire) => commentaire.id === field.commentaireId,
                 ),
                 id: field.commentaireId,
               }}
+              draft={field.draft}
               medicId={medicament?.id}
               removeFromArray={() => commentairesFieldArray.remove(index)}
+              setDraft={(value) =>
+                commentairesFieldArray.update(index, {
+                  commentaireId: field.commentaireId,
+                  draft: value,
+                })
+              }
               updateFromArray={(commentaire: Commentaire) => {
-                medicament?.commentaires.push(commentaire);
+                commentairesCache.push(commentaire);
                 commentairesFieldArray.update(index, {
                   commentaireId: commentaire.id,
+                  draft: false,
                 });
               }}
             />
@@ -409,7 +430,8 @@ const MedicClient = ({
               className="relative flex h-full min-h-40 cursor-pointer items-center justify-center pt-6"
               onClick={() =>
                 commentairesFieldArray.append({
-                  commentaireId: `new_${createId()}`,
+                  commentaireId: createId(),
+                  draft: true,
                 })
               }
             >

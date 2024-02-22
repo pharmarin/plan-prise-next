@@ -6,6 +6,7 @@ import {
   HomeIcon,
   Loader2Icon,
   PencilIcon,
+  PlusIcon,
   SaveIcon,
   Trash2Icon,
 } from "lucide-react";
@@ -18,12 +19,15 @@ export const navbarIcons = {
   edit: PencilIcon,
   loading: Loader2Icon,
   home: HomeIcon,
+  plus: PlusIcon,
   save: SaveIcon,
 };
 
 export type NavigationItem = {
   icon: keyof typeof navbarIcons;
   className?: string;
+  disabled?: boolean;
+  tooltip?: string;
 } & ({ path: string } | { event: string });
 
 type State = {

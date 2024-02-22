@@ -66,7 +66,8 @@ export const upsertMedicAction = adminAction(
     };
 
     const medicament = await prisma.medicament.upsert({
-      where: { id },
+      // id === undefined if new medic
+      where: { id: id ?? "" },
       create: data as Prisma.MedicamentUpsertArgs["create"],
       update: data,
     });

@@ -7,7 +7,7 @@ import { zfd } from "zod-form-data";
  */
 
 export const upsertMedicSchema = z.object({
-  id: z.string().cuid2(),
+  id: z.string().cuid2().optional(),
   denomination: z.string(),
   principesActifs: z
     .array(z.object({ denomination: z.string(), id: z.string() }))
@@ -21,7 +21,12 @@ export const upsertMedicSchema = z.object({
       laboratoire: z.string().or(z.literal("")),
     }),
   ),
-  commentaires: z.array(z.object({ commentaireId: z.string().cuid2() })),
+  commentaires: z.array(
+    z.object({
+      commentaireId: z.string().cuid2(),
+      draft: z.boolean().optional(),
+    }),
+  ),
 });
 
 /**
@@ -31,7 +36,7 @@ export const upsertMedicSchema = z.object({
 export const upsertCommentaireFormSchema = z.object({
   id: z.string().cuid2().optional(),
   voieAdministration: z.nativeEnum(VoieAdministration).or(z.literal("")),
-  population: z.string(),
+  population: z.string().optional(),
   texte: z.string(),
 });
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deleteCommentaireAction,
@@ -34,18 +33,19 @@ import { Textarea } from "@plan-prise/ui/textarea";
 
 const CommentaireCard = ({
   commentaire,
+  draft,
   medicId,
   removeFromArray,
+  setDraft,
   updateFromArray,
 }: {
   commentaire: Partial<Commentaire> & { id: string };
+  draft?: boolean;
   medicId?: string;
   removeFromArray: () => void;
+  setDraft: (value: boolean) => void;
   updateFromArray: (comment: Commentaire) => void;
 }) => {
-  const neverSaved = commentaire.id.startsWith("new_");
-  const [readOnly, setReadOnly] = useState(!neverSaved);
-
   const [deleteCommentaireMutation, deleteCommentaire] = useAsyncCallback(
     deleteCommentaireAction,
   );
@@ -56,7 +56,7 @@ const CommentaireCard = ({
   const form = useForm<z.infer<typeof upsertCommentaireFormSchema>>({
     resolver: zodResolver(upsertCommentaireFormSchema),
     defaultValues: {
-      id: commentaire?.id,
+      id: commentaire.id,
       population: commentaire?.population ?? "",
       voieAdministration: commentaire?.voieAdministration ?? "",
       texte: commentaire?.texte ?? "",
@@ -66,9 +66,18 @@ const CommentaireCard = ({
   const onSubmit = async (
     values: z.infer<typeof upsertCommentaireFormSchema>,
   ) => {
-    setReadOnly(true);
-    const commentaire = await upsertCommentaire({ ...values, medicId });
-    updateFromArray(commentaire);
+    try {
+      setDraft(false);
+      const response = await upsertCommentaire({
+        ...values,
+        id: commentaire.id,
+        medicId,
+      });
+      updateFromArray(response);
+    } catch (e) {
+      setDraft(true);
+      console.log("Error saving comment", e);
+    }
   };
 
   return (
@@ -77,12 +86,12 @@ const CommentaireCard = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="absolute -top-2 right-6 flex space-x-2">
-              {readOnly ? (
+              {!draft ? (
                 <Button
                   className="h-6 w-6 hover:text-orange-500"
                   size="icon"
                   type="button"
-                  onClick={() => setReadOnly(false)}
+                  onClick={() => setDraft(true)}
                   variant="ghost"
                 >
                   <PencilIcon className="h-4 w-4" />
@@ -101,13 +110,19 @@ const CommentaireCard = ({
               <Button
                 loading={deleteCommentaireMutation.isLoading}
                 onClick={async () => {
-                  if (!commentaire) return;
+                  try {
+                    if (!commentaire) return;
 
-                  if (!neverSaved) {
-                    await deleteCommentaire({ commentaireId: commentaire.id });
+                    if (!draft) {
+                      await deleteCommentaire({
+                        commentaireId: commentaire.id,
+                      });
+                    }
+
+                    removeFromArray();
+                  } catch (e) {
+                    console.log("Error deleting comment", e);
                   }
-
-                  removeFromArray();
                 }}
                 className="h-6 w-6 hover:text-red-500"
                 size="icon"
@@ -117,7 +132,7 @@ const CommentaireCard = ({
                 <Trash2Icon className="h-4 w-4" />
               </Button>
             </div>
-            <fieldset className="space-y-2" disabled={readOnly}>
+            <fieldset className="space-y-2" disabled={!draft}>
               <FormField
                 control={form.control}
                 name="texte"

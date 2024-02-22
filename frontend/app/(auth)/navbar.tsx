@@ -22,6 +22,12 @@ import {
   DropdownMenuTrigger,
 } from "@plan-prise/ui/dropdown-menu";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@plan-prise/ui/tooltip";
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   const NavbarIcon = navbarIcons[icon];
@@ -78,7 +84,7 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
         {options?.map((option, index) => {
           const NavbarIcon = navbarIcons[option.icon];
 
-          return (
+          const Button = (
             <button
               key={index}
               className={cn(
@@ -86,9 +92,11 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
                   ("event" in option && option.event.length > 0)
                   ? "cursor-pointer"
                   : "cursor-not-allowed",
+                option.disabled && "cursor-not-allowed",
                 option.className,
               )}
               onClick={() => {
+                if (option.disabled) return;
                 if ("path" in option) router.push(option.path);
                 if ("event" in option && option.event.length > 0)
                   document.dispatchEvent(new Event(option.event));
@@ -97,6 +105,19 @@ export const Navbar = ({ serverUser }: { serverUser: User }) => {
               <NavbarIcon className="h-4 w-4" />
             </button>
           );
+
+          if (option.tooltip) {
+            return (
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <TooltipTrigger asChild>{Button}</TooltipTrigger>
+                  <TooltipContent>{option.tooltip}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            );
+          }
+
+          return Button;
         })}
         {pathname.startsWith("/plan/") && <PlanNavbarStack />}
       </div>

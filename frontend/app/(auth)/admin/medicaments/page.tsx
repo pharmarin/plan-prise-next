@@ -15,7 +15,16 @@ const MedicsServer = async () => {
 
   return (
     <>
-      <Navigation title={PAGE_TITLE} returnTo={routes.adminDashboard()} />
+      <Navigation
+        title={PAGE_TITLE}
+        returnTo={routes.adminDashboard()}
+        options={[
+          {
+            icon: "plus",
+            path: routes.medicamentCreate(),
+          },
+        ]}
+      />
       <MedicsClient medicaments={medicaments} />
     </>
   );
