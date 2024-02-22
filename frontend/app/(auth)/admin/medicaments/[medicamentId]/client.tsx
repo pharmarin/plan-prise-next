@@ -253,8 +253,8 @@ const MedicClient = ({
                       }
                       options={Object.entries(voiesAdministrationDisplay).map(
                         ([value, label]) => ({
-                          label,
-                          value: capitalize(value),
+                          label: capitalize(label),
+                          value,
                         }),
                       )}
                       placeholder="Voie d'administration"
