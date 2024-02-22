@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deleteMedicAction,
   findManyPrincipesActifsAction,
@@ -55,6 +56,9 @@ const MedicClient = ({
   const [readOnly, setReadOnly] = useState(!!medicament);
 
   const router = useRouter();
+
+  const [{ isLoading: isDeleting }, deleteMedic] =
+    useAsyncCallback(deleteMedicAction);
 
   const setNavigation = useNavigationState((state) => state.setNavigation);
 
@@ -117,7 +121,7 @@ const MedicClient = ({
       medicament &&
       confirm(`Voulez-vous vraiment supprimer ${medicament.denomination} ?`)
     ) {
-      await deleteMedicAction({ medicId: medicament.id });
+      await deleteMedic({ medicId: medicament.id });
     }
   });
 
@@ -130,27 +134,40 @@ const MedicClient = ({
         : "Ajout d'un médicament",
       returnTo: routes.medicaments(),
       options: mergeArray<NavigationItem>(
+        form.formState.isSubmitting
+          ? {
+              icon: "loading" as const,
+              className: "animate-spin",
+              event: "",
+            }
+          : medicament &&
+              (readOnly
+                ? { icon: "edit" as const, event: EDIT_MEDIC_EVENT }
+                : {
+                    icon: "save" as const,
+                    event: SAVE_MEDIC_EVENT,
+                  }),
         medicament &&
-          readOnly && { icon: "edit" as const, event: EDIT_MEDIC_EVENT },
-        medicament &&
-          !readOnly &&
-          !form.formState.isSubmitting && {
-            icon: "save" as const,
-            event: SAVE_MEDIC_EVENT,
-          },
-        form.formState.isSubmitting && {
-          icon: "loading" as const,
-          className: "animate-spin",
-          event: "",
-        },
-        medicament && {
-          icon: "delete" as const,
-          className: "bg-red-500 p-1 rounded-full text-white",
-          event: DELETE_MEDIC_EVENT,
-        },
+          (isDeleting
+            ? {
+                icon: "loading" as const,
+                className: "animate-spin",
+                event: "",
+              }
+            : {
+                icon: "delete" as const,
+                className: "bg-red-500 p-1 rounded-full text-white",
+                event: DELETE_MEDIC_EVENT,
+              }),
       ),
     });
-  }, [form.formState.isSubmitting, medicament, readOnly, setNavigation]);
+  }, [
+    form.formState.isSubmitting,
+    isDeleting,
+    medicament,
+    readOnly,
+    setNavigation,
+  ]);
 
   const indicationsFieldArray = useFieldArray({
     name: "indications",
