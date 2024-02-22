@@ -20,32 +20,29 @@ const MultiSelect = <
   Label extends string,
   Option extends Record<Value | Label, string>,
 >({
-  defaultValue,
   disabled,
   keys,
-  onSelect,
+  onChange,
   placeholder,
   searchPlaceholder,
+  values,
   ...props
 }: {
-  defaultValue?: Option[];
   disabled?: boolean;
   keys: {
     value: Value;
     label: Label;
   };
-  onSelect: (values: Option[]) => void;
+  onChange: (values: Option[]) => void;
   placeholder?: string;
   searchPlaceholder?: string;
+  values: Option[];
 } & (
   | { options: Option[] }
   | { onSearchChange: (value: string) => Promise<Option[]> }
 )) => {
   const [selectOptions, setSelectOptions] = useState<Option[]>(
     "options" in props ? props.options : [],
-  );
-  const [selectedValues, setSelectedValues] = useState(
-    () => new Set<Option>(defaultValue),
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,8 +57,8 @@ const MultiSelect = <
             )}
           >
             <div className="relative mr-auto flex flex-grow flex-wrap items-center overflow-hidden px-3 py-1">
-              {selectedValues?.size > 0 ? (
-                [...selectedValues].map((option) => (
+              {(values ?? []).length > 0 ? (
+                [...values].map((option) => (
                   <Badge
                     key={option[keys.value]}
                     variant="outline"
@@ -72,11 +69,11 @@ const MultiSelect = <
                       onClick={(e) => {
                         e.preventDefault();
                         if (disabled) return;
-                        setSelectedValues((prev) => {
-                          const next = new Set(prev);
-                          next.delete(option);
-                          return next;
-                        });
+                        onChange(
+                          values.filter(
+                            (value) => value[keys.value] !== option[keys.value],
+                          ),
+                        );
                       }}
                       className="flex items-center rounded-sm px-[1px] hover:bg-accent hover:text-red-500"
                     >
@@ -89,12 +86,12 @@ const MultiSelect = <
               )}
             </div>
             <div className="flex flex-shrink-0 items-center self-stretch px-1 text-muted-foreground/60">
-              {selectedValues?.size > 0 && (
+              {(values ?? []).length > 0 && (
                 <div
                   onClick={(e) => {
                     e.preventDefault();
                     if (disabled) return;
-                    setSelectedValues(new Set());
+                    onChange([]);
                   }}
                   className="flex items-center self-stretch p-2 hover:text-red-500"
                 >
@@ -132,18 +129,22 @@ const MultiSelect = <
             <CommandEmpty>Aucun résultat...</CommandEmpty>
           )}
           {selectOptions.map((option) => {
-            const isSelected = selectedValues.has(option);
+            const isSelected = !!values.find(
+              (value) => value[keys.value] === option[keys.value],
+            );
             return (
               <CommandItem
                 key={option[keys.value]}
                 onSelect={() => {
                   if (isSelected) {
-                    selectedValues.delete(option);
+                    onChange(
+                      values.filter(
+                        (value) => value[keys.value] !== option[keys.value],
+                      ),
+                    );
                   } else {
-                    selectedValues.add(option);
+                    onChange([...values, option]);
                   }
-                  const filterValues = Array.from(selectedValues);
-                  onSelect(filterValues);
                 }}
               >
                 <div

@@ -1,13 +1,9 @@
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import type { Prisma } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
-import {
-  upsertMedicServerSchema,
-  upsertPrincipeActifSchema,
-} from "../../validation/medicaments";
+import { upsertPrincipeActifSchema } from "../../validation/medicaments";
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
@@ -63,80 +59,11 @@ const medicsRouter = createTRPCRouter({
         },
       });
     }),
-  upsert: adminProcedure
-    .input(upsertMedicServerSchema)
-    .mutation(async ({ ctx, input }) => {
-      const {
-        id,
-        conservationDuree,
-        conservationFrigo,
-        denomination,
-        indications,
-        voiesAdministration,
-        principesActifs,
-        commentaires,
-      } = input;
-
-      const data:
-        | Prisma.MedicamentUpsertArgs["update"]
-        | Prisma.MedicamentUpsertArgs["create"] = {
-        denomination,
-        indications: indications.map((indication) => indication.value),
-        voiesAdministration,
-        conservationFrigo,
-        conservationDuree,
-        principesActifs: {
-          connect: principesActifs.map((principeActif) => ({
-            id: principeActif.id,
-          })),
-        },
-        commentaires: {
-          upsert: commentaires.map((commentaire) => ({
-            where: { id: commentaire.id },
-            update: {
-              population: commentaire.population,
-              voieAdministration: commentaire.voieAdministration,
-              texte: commentaire.texte,
-            },
-            create: {
-              population: commentaire.population,
-              voieAdministration: commentaire.voieAdministration,
-              texte: commentaire.texte,
-            },
-          })),
-        },
-      };
-
-      return await ctx.prisma.medicament.upsert({
-        where: { id },
-        create: data as Prisma.MedicamentUpsertArgs["create"],
-        update: data,
-      });
-    }),
-  findManyPrincipesActifs: adminProcedure
-    .input(z.string())
-    .mutation(({ ctx, input }) => {
-      if (input.length < 4) return undefined;
-
-      return ctx.prisma.principeActif.findMany({
-        where: {
-          denomination: {
-            contains: input,
-          },
-        },
-        take: 10,
-      });
-    }),
-  delete: adminProcedure
-    .input(z.object({ id: z.string().cuid2() }))
-    .mutation(({ ctx, input }) =>
-      ctx.prisma.medicament.delete({ where: { id: input.id } }),
-    ),
-  deleteCommentaire: adminProcedure
-    .input(z.object({ id: z.string().cuid2() }))
-    .mutation(({ ctx, input }) =>
-      ctx.prisma.commentaire.delete({
-        where: { id: input.id },
+  findComment: adminProcedure
+    .input(z.object({ commentaireId: z.string().cuid2() }))
+    .query(({ ctx, input }) =>
+      ctx.prisma.commentaire.findFirstOrThrow({
+        where: { id: input.commentaireId },
       }),
     ),
   deletePrincipeActif: adminProcedure

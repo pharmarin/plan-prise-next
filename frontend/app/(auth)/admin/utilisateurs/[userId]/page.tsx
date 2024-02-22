@@ -13,8 +13,10 @@ import { Label } from "@plan-prise/ui/label";
 
 const PAGE_TITLE = "Détail de l'utilisateur";
 
-const User = async ({ params }: { params: { id: string } }) => {
-  const user = await prisma.user.findFirst({ where: { id: params.id } });
+const User = async ({ params }: { params: unknown }) => {
+  const { userId } = routes.user.$parseParams(params);
+
+  const user = await prisma.user.findFirst({ where: { id: userId } });
 
   if (!user) {
     return notFound();
@@ -24,7 +26,7 @@ const User = async ({ params }: { params: { id: string } }) => {
     <>
       <Navigation title={PAGE_TITLE} returnTo={routes.users()} />
       <div className="relative">
-        <TestButton approved={!!user.approvedAt} userId={params.id} />
+        <TestButton approved={!!user.approvedAt} userId={userId} />
         <div className="space-y-4">
           <div className="space-y-1">
             <Label>Identité</Label>

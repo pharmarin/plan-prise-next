@@ -97,7 +97,7 @@ model Commentaire {
   population         String?
   texte              String              @db.Text
   medicament         Medicament?         @relation(fields: [medicamentId], references: [id], onDelete: Cascade)
-  medicamentId       String
+  medicamentId       String?
 
   @@index([medicamentId])
   @@map("commentaires")
