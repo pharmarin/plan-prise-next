@@ -8,9 +8,9 @@ import {
   deleteMedicAction,
   findManyPrincipesActifsAction,
   upsertMedicAction,
-} from "@/app/(auth)/admin/medicaments/[medicamentId]/actions";
-import CommentaireCard from "@/app/(auth)/admin/medicaments/[medicamentId]/card-commentaire";
-import { upsertMedicSchema } from "@/app/(auth)/admin/medicaments/[medicamentId]/validation";
+} from "@/app/(auth)/admin/medicaments/_common/actions";
+import CommentaireCard from "@/app/(auth)/admin/medicaments/_common/card-commentaire";
+import { upsertMedicSchema } from "@/app/(auth)/admin/medicaments/_common/validation";
 import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
 import { useNavigationState } from "@/app/state-navigation";

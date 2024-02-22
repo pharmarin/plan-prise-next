@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import EditMedicClient from "@/app/(auth)/admin/medicaments/[medicamentId]/client";
+import EditMedicClient from "@/app/(auth)/admin/medicaments/_common/client";
 import { routes } from "@/app/routes-schema";
 
 import prisma from "@plan-prise/db-prisma";

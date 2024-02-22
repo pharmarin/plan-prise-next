@@ -1,4 +1,4 @@
-import MedicClient from "@/app/(auth)/admin/medicaments/[medicamentId]/client";
+import MedicClient from "@/app/(auth)/admin/medicaments/_common/client";
 
 const MedicNew = () => {
   return <MedicClient />;

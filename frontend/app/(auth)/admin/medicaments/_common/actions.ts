@@ -6,7 +6,7 @@ import { adminAction } from "@/app/_safe-actions/safe-actions";
 import {
   upsertCommentaireSchema,
   upsertMedicSchema,
-} from "@/app/(auth)/admin/medicaments/[medicamentId]/validation";
+} from "@/app/(auth)/admin/medicaments/_common/validation";
 import { routes } from "@/app/routes-schema";
 import { z } from "zod";
 
