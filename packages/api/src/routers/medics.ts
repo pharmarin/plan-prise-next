@@ -3,7 +3,6 @@ import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 
-import { upsertPrincipeActifSchema } from "../../validation/medicaments";
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
@@ -66,21 +65,6 @@ const medicsRouter = createTRPCRouter({
         where: { id: input.commentaireId },
       }),
     ),
-  deletePrincipeActif: adminProcedure
-    .input(z.object({ id: z.string().cuid2() }))
-    .mutation(({ ctx, input }) =>
-      ctx.prisma.principeActif.delete({
-        where: { id: input.id },
-      }),
-    ),
-  upsertPrincipeActif: adminProcedure.input(upsertPrincipeActifSchema).mutation(
-    async ({ ctx, input }) =>
-      await ctx.prisma.principeActif.upsert({
-        where: { id: input.id },
-        create: { denomination: input.denomination },
-        update: { denomination: input.denomination },
-      }),
-  ),
 });
 
 export default medicsRouter;
