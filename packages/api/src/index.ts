@@ -5,6 +5,15 @@ import type { AppRouter } from "./root";
 export { appRouter, type AppRouter } from "./root";
 export { createCallerFactory, createTRPCContext } from "./trpc";
 
+export {
+  formatDisplayName,
+  formatFirstName,
+  formatLastName,
+  sendMailApproved,
+  sendMailRegistered,
+  sendMailReinitPassword,
+} from "./routers/users";
+
 /**
  * Inference helpers for input types
  * @example type HelloInput = RouterInputs['example']['hello']

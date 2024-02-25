@@ -1,9 +1,8 @@
-import { z } from "zod";
-
 import {
   registerSchemaIsPharmacist,
   registerSchemaIsStudent,
-} from "@plan-prise/api/validation/users";
+} from "@/app/(guest)/register/validation";
+import { z } from "zod";
 
 const password = z.string().min(8).max(20);
 

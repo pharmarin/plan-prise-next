@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import "./locale";
+import { passwordSchema } from "@plan-prise/auth";
 
 export const ALLOWED_UPLOADED_FILE_TYPES = [
   "image/png",
@@ -10,28 +10,6 @@ export const ALLOWED_UPLOADED_FILE_TYPES = [
 ];
 
 export const MAX_UPLOADED_FILE_SIZE = 2000000;
-
-const password = z.string().min(8).max(20);
-
-export const approveUserSchema = z.object({
-  id: z.string().cuid2(),
-});
-
-export const deleteUserSchema = z.object({
-  id: z.string().cuid2(),
-});
-
-export const forgotPasswordSchema = z.object({
-  email: z.string().email(),
-  recaptcha: z.string(),
-});
-
-export const getUniqueUserSchema = z.string();
-
-export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
 
 export const registerSchemaCertificate = z
   .instanceof(File)
@@ -83,8 +61,8 @@ export const registerSchemaStep2 = z
       .max(50)
       .optional()
       .transform((value?: string) => (value === "" ? undefined : value)),
-    password,
-    password_confirmation: password,
+    password: passwordSchema,
+    password_confirmation: passwordSchema,
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Les deux mots de passe ne correspondent pas",
@@ -101,16 +79,3 @@ export const registerSchema = registerSchemaStep1.and(registerSchemaStep2).and(
           z.string(),
   }),
 );
-
-export const resetPasswordSchema = z
-  .object({
-    token: z.string(),
-    email: z.string().email(),
-    password: password,
-    password_confirmation: password,
-    recaptcha: z.string(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Les deux mots de passe ne correspondent pas",
-    path: ["password_confirmation"],
-  });

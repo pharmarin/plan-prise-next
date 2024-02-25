@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { trpc } from "@/app/_trpc/api";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { revalidatePath } from "@/app/(auth)/admin/actions";
+import { approveUserAction } from "@/app/(auth)/admin/utilisateurs/actions";
 import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
 
@@ -19,7 +20,7 @@ const TestButton = ({
 }) => {
   const [isApproved, setIsApproved] = useState(approved);
 
-  const { mutateAsync, isLoading } = trpc.users.approve.useMutation();
+  const [{ isLoading }, approveUser] = useAsyncCallback(approveUserAction);
 
   return (
     <Button
@@ -30,7 +31,7 @@ const TestButton = ({
       })}
       disabled={isLoading || approved}
       onClick={async () => {
-        const response = await mutateAsync({ id: userId });
+        const response = await approveUser({ userId });
 
         if (response === MUTATION_SUCCESS) {
           setIsApproved(true);

@@ -1,5 +1,6 @@
 "use client";
 
+import { loginSchema } from "@/app/(guest)/login/validation";
 import { routes } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -7,7 +8,6 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
-import { loginSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import Link from "@plan-prise/ui/components/navigation/Link";

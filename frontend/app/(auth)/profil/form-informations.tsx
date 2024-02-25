@@ -4,12 +4,12 @@ import { updateCurrentUserAction } from "@/app/(auth)/profil/actions";
 import { updateUserSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@prisma/client";
-import { TRPCClientError } from "@trpc/client";
 import { AlertTriangle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import type { z } from "zod";
 
+import PP_Error from "@plan-prise/errors";
 import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
 import { Button } from "@plan-prise/ui/button";
 import {
@@ -65,7 +65,7 @@ const EditInformations: React.FC<{
     try {
       await updateCurrentUserAction({ id: user.id, ...values });
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }

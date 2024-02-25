@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { trpc } from "@/app/_trpc/api";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
+import { resetPasswordAction } from "@/app/(guest)/password-reset/actions";
+import { resetPasswordSchema } from "@/app/(guest)/password-reset/validation";
 import { routes } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCClientError } from "@trpc/client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
-import { resetPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import Link from "@plan-prise/ui/components/navigation/Link";
@@ -34,12 +34,13 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
 }) => {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const { data, mutateAsync } = trpc.users.resetPassword.useMutation();
+  const [{ data }, resetPassword] = useAsyncCallback(resetPasswordAction);
 
   const [credentials] = useState({ email, token });
 
   useEffect(() => {
-    router.push("/password-reset");
+    // On mount, hide token from url
+    router.replace(routes.passwordReset());
   }, [router]);
 
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
@@ -65,14 +66,14 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
 
       const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
-      await mutateAsync({
+      await resetPassword({
         ...credentials,
         password: values.password,
         password_confirmation: values.password_confirmation,
         recaptcha,
       });
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }

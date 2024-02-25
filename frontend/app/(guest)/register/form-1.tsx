@@ -1,3 +1,8 @@
+import {
+  ALLOWED_UPLOADED_FILE_TYPES,
+  registerSchemaCertificate,
+  registerSchemaStep1,
+} from "@/app/(guest)/register/validation";
 import convertToBase64 from "@/utils/file-to-base64";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { XIcon } from "lucide-react";
@@ -5,11 +10,6 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import {
-  ALLOWED_UPLOADED_FILE_TYPES,
-  registerSchemaCertificate,
-  registerSchemaStep1,
-} from "@plan-prise/api/validation/users";
 import { Button } from "@plan-prise/ui/button";
 import { Checkbox } from "@plan-prise/ui/checkbox";
 import {

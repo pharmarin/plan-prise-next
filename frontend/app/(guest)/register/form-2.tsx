@@ -2,16 +2,16 @@
 
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
-import { trpc } from "@/app/_trpc/api";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
+import { registerAction } from "@/app/(guest)/register/actions";
+import type { registerSchema } from "@/app/(guest)/register/validation";
+import { registerSchemaStep2 } from "@/app/(guest)/register/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCClientError } from "@trpc/client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
-import type { registerSchema } from "@plan-prise/api/validation/users";
-import { registerSchemaStep2 } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import {
@@ -41,7 +41,6 @@ const RegisterFormStep2 = ({
   setPreviousStep: () => void;
 }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const { mutateAsync } = trpc.users.register.useMutation();
 
   const form = useForm<z.infer<typeof registerSchemaStep2>>({
     mode: "all",
@@ -72,17 +71,17 @@ const RegisterFormStep2 = ({
 
       const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
-      const response = await mutateAsync({
+      const response = await registerAction({
         ...formData,
         ...values,
         recaptcha,
-      });
+      }).then(transformResponse);
 
       if (response === MUTATION_SUCCESS) {
         setNextStep();
       }
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }

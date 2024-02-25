@@ -7,8 +7,12 @@ import {
   updateUserPasswordSchema,
   updateUserSchema,
 } from "@/app/(auth)/profil/validation";
-import { startCase, toUpper } from "lodash-es";
 
+import {
+  formatDisplayName,
+  formatFirstName,
+  formatLastName,
+} from "@plan-prise/api";
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import {
   checkPassword,
@@ -16,12 +20,6 @@ import {
 } from "@plan-prise/auth/lib/password-utils";
 import prisma, { exclude } from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
-
-const formatFirstName = (firstName: string) =>
-  startCase(firstName.toLowerCase());
-const formatLastName = (lastName: string) => toUpper(lastName);
-const formatDisplayName = (displayName?: string | null) =>
-  displayName ? startCase(displayName.toLowerCase()) : null;
 
 export const updateCurrentUserAction = authAction(
   updateUserSchema,

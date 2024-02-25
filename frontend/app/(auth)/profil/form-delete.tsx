@@ -4,11 +4,11 @@ import { useState } from "react";
 import { deleteCurrentUserAction } from "@/app/(auth)/profil/actions";
 import { deleteCurrentUserSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "usehooks-ts";
 import type { z } from "zod";
 
+import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import {
   Dialog,
@@ -56,7 +56,7 @@ const DeleteUser = () => {
     try {
       await deleteCurrentUserAction(values);
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }

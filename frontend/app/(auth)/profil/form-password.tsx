@@ -4,11 +4,11 @@ import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { updateCurrentUserPasswordAction } from "@/app/(auth)/profil/actions";
 import { updateUserPasswordSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import {
   Form,
@@ -44,7 +44,7 @@ const EditPassword = () => {
     try {
       await updateCurrentUserPassword(values);
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }
