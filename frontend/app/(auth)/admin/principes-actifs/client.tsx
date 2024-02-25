@@ -13,11 +13,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { TRPCClientError } from "@trpc/client";
 import { toUpper } from "lodash-es";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
+import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import { DataTable, DataTableColumnHeader } from "@plan-prise/ui/data-table";
 import {
@@ -63,6 +63,10 @@ const PrincipesActifsClient = ({
     resolver: zodResolver(upsertPrincipeActifSchema),
   });
 
+  const {
+    formState: { isSubmitting },
+  } = form;
+
   useEffect(() => {
     form.reset({
       id: selectedId ?? "",
@@ -79,7 +83,7 @@ const PrincipesActifsClient = ({
       await upsertPrincipeActifAction(values);
       router.push(routes.principesActifs());
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }
@@ -142,15 +146,15 @@ const PrincipesActifsClient = ({
                       router.push(routes.principesActifs());
                     }}
                     variant="destructive"
-                    disabled={isDeleting || form.formState.isLoading}
+                    disabled={isDeleting || isSubmitting}
                     loading={isDeleting}
                   >
                     Supprimer
                   </Button>
                   <Button
                     type="submit"
-                    disabled={isDeleting || form.formState.isLoading}
-                    loading={form.formState.isLoading}
+                    disabled={isDeleting || isSubmitting}
+                    loading={isSubmitting}
                   >
                     Enregistrer
                   </Button>

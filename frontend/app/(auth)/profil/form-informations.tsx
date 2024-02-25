@@ -1,6 +1,7 @@
 "use client";
 
-import { trpc } from "@/app/_trpc/api";
+import { updateCurrentUserAction } from "@/app/(auth)/profil/actions";
+import { updateUserSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@prisma/client";
 import { TRPCClientError } from "@trpc/client";
@@ -9,7 +10,6 @@ import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import type { z } from "zod";
 
-import { updateUserSchema } from "@plan-prise/api/validation/users";
 import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
 import { Button } from "@plan-prise/ui/button";
 import {
@@ -44,9 +44,6 @@ const EditInformations: React.FC<{
     | "student"
   >;
 }> = ({ user }) => {
-  const trpcContext = trpc.useUtils();
-  const { mutateAsync } = trpc.users.update.useMutation();
-
   const form = useForm<z.infer<typeof updateUserSchema>>({
     mode: "all",
     resolver: zodResolver(updateUserSchema),
@@ -66,14 +63,12 @@ const EditInformations: React.FC<{
 
   const onSubmit = async (values: z.infer<typeof updateUserSchema>) => {
     try {
-      await mutateAsync({ id: user.id, ...values });
+      await updateCurrentUserAction({ id: user.id, ...values });
     } catch (error) {
       if (error instanceof TRPCClientError) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }
-
-    await trpcContext.users.current.invalidate();
   };
 
   if (!user) {

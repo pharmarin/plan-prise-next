@@ -33,10 +33,6 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
-export const confirmPasswordSchema = z.object({
-  password,
-});
-
 export const registerSchemaCertificate = z
   .instanceof(File)
   .refine(
@@ -48,7 +44,7 @@ export const registerSchemaCertificate = z
     "Le fichier doit être au format .png, .jpg, .jpeg ou .pdf",
   );
 
-const registerSchemaIsStudent = z.object({
+export const registerSchemaIsStudent = z.object({
   student: z.literal(true),
   certificate: z.object({
     fileName: z.string(),
@@ -57,7 +53,7 @@ const registerSchemaIsStudent = z.object({
   rpps: z.string().optional(),
 });
 
-const registerSchemaIsPharmacist = z.object({
+export const registerSchemaIsPharmacist = z.object({
   student: z.literal(false),
   certificate: z.object({}).optional(),
   rpps: z
@@ -113,37 +109,6 @@ export const resetPasswordSchema = z
     password: password,
     password_confirmation: password,
     recaptcha: z.string(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Les deux mots de passe ne correspondent pas",
-    path: ["password_confirmation"],
-  });
-
-export const updateUserSchema = z
-  .discriminatedUnion("student", [
-    registerSchemaIsStudent.omit({ certificate: true }),
-    registerSchemaIsPharmacist.omit({ certificate: true }),
-  ])
-  .and(
-    z.object({
-      id: typeof window === "undefined" ? z.string() : z.undefined(),
-      email: z.string().email(),
-      firstName: z.string().min(3).max(50),
-      lastName: z.string().min(3).max(50),
-      displayName: z
-        .string()
-        .min(3)
-        .max(50)
-        .optional()
-        .transform((value?: string) => (value === "" ? undefined : value)),
-    }),
-  );
-
-export const updateUserPasswordSchema = z
-  .object({
-    current_password: password,
-    password: password,
-    password_confirmation: password,
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Les deux mots de passe ne correspondent pas",

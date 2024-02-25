@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { trpc } from "@/app/_trpc/api";
 import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
 import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
@@ -43,16 +42,17 @@ const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   }
 };
 
-export const Navbar = ({ serverUser }: { serverUser: User }) => {
+export const Navbar = ({
+  user,
+}: {
+  user: Pick<User, "lastName" | "firstName">;
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();
   const title = useNavigationState((state) => state.title);
   const returnTo = useNavigationState((state) => state.returnTo);
   const options = useNavigationState((state) => state.options);
-  const { data: user } = trpc.users.current.useQuery(undefined, {
-    initialData: serverUser,
-  });
 
   const isHome = pathname === routes.home();
 

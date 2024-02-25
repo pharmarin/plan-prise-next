@@ -1,14 +1,10 @@
-import { revalidatePath } from "next/cache";
 import type { User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 import { startCase, toUpper } from "lodash-es";
 
 import { findOne } from "@plan-prise/api-pharmaciens";
 import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
-import {
-  checkPassword,
-  hashPassword,
-} from "@plan-prise/auth/lib/password-utils";
+import { hashPassword } from "@plan-prise/auth/lib/password-utils";
 import PP_Error from "@plan-prise/errors";
 
 import { env } from "../../env.mjs";
@@ -17,14 +13,11 @@ import sendMail from "../../utils/mail";
 import getUrl from "../../utils/url";
 import {
   approveUserSchema,
-  confirmPasswordSchema,
   deleteUserSchema,
   forgotPasswordSchema,
   getUniqueUserSchema,
   registerSchema,
   resetPasswordSchema,
-  updateUserPasswordSchema,
-  updateUserSchema,
 } from "../../validation/users";
 import { MUTATION_SUCCESS } from "../constants";
 import {
@@ -183,29 +176,7 @@ const usersRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.user.delete({ where: { id: input.id } });
     }),
-  /**
-   * Delete current logged in user
-   */
-  deleteCurrent: authProcedure
-    .input(confirmPasswordSchema)
-    .mutation(async ({ ctx, input }) => {
-      const user = await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: ctx.session.user.id },
-        select: { password: true },
-      });
 
-      if (await checkPassword(input.password, user.password)) {
-        await ctx.prisma.user.delete({
-          where: {
-            id: ctx.session.user.id,
-          },
-        });
-
-        return MUTATION_SUCCESS;
-      }
-
-      throw new PP_Error("PASSWORD_MISMATCH");
-    }),
   /**
    * Registers the user
    *
@@ -394,59 +365,6 @@ const usersRouter = createTRPCRouter({
         }),
       ),
     ),
-  /**
-   * Updates user
-   *
-   * @argument {Partial<User>} input EditInformations values
-   */
-  update: authProcedure
-    .input(updateUserSchema)
-    .mutation(async ({ ctx, input: { id, ...input } }) => {
-      const user = excludePassword(
-        await ctx.prisma.user.update({
-          where: { id },
-          data: {
-            ...input,
-            firstName: formatFirstName(input.firstName),
-            lastName: formatLastName(input.lastName),
-            displayName: formatDisplayName(input.displayName),
-            rpps: input.rpps ? BigInt(input.rpps) : undefined,
-          },
-        }),
-      );
-
-      revalidatePath("/profil");
-
-      return user;
-    }),
-  /**
-   * Updates user password
-   *
-   * @argument {string} password New password
-   *
-   * @returns {string} MUTATION_SUCCESS
-   * @throws {PP_Error} PASSWORD_MISMATCH
-   * @throws {PrismaError} If unknown User.id
-   */
-  updatePassword: authProcedure
-    .input(updateUserPasswordSchema)
-    .mutation(async ({ ctx, input }) => {
-      const user = await ctx.prisma.user.findUniqueOrThrow({
-        where: { id: ctx.session.user.id },
-        select: { password: true },
-      });
-
-      if (await checkPassword(input.current_password, user.password)) {
-        await ctx.prisma.user.update({
-          where: { id: ctx.session.user.id },
-          data: { password: await hashPassword(input.password) },
-        });
-
-        return MUTATION_SUCCESS;
-      }
-
-      throw new PP_Error("PASSWORD_MISMATCH");
-    }),
 });
 
 export default usersRouter;

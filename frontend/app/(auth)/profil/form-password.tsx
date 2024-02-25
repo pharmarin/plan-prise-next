@@ -1,13 +1,14 @@
 "use client";
 
-import { trpc } from "@/app/_trpc/api";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
+import { updateCurrentUserPasswordAction } from "@/app/(auth)/profil/actions";
+import { updateUserPasswordSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
-import { updateUserPasswordSchema } from "@plan-prise/api/validation/users";
 import { Button } from "@plan-prise/ui/button";
 import {
   Form,
@@ -22,7 +23,9 @@ import {
 import { Input } from "@plan-prise/ui/input";
 
 const EditPassword = () => {
-  const { data, mutateAsync } = trpc.users.updatePassword.useMutation();
+  const [{ data }, updateCurrentUserPassword] = useAsyncCallback(
+    updateCurrentUserPasswordAction,
+  );
 
   const form = useForm<z.infer<typeof updateUserPasswordSchema>>({
     resolver: zodResolver(updateUserPasswordSchema),
@@ -39,11 +42,7 @@ const EditPassword = () => {
 
   const onSubmit = async (values: z.infer<typeof updateUserPasswordSchema>) => {
     try {
-      const response = await mutateAsync(values);
-
-      if (response === MUTATION_SUCCESS) {
-        form.reset();
-      }
+      await updateCurrentUserPassword(values);
     } catch (error) {
       if (error instanceof TRPCClientError) {
         form.setError(SERVER_ERROR, { message: error.message });

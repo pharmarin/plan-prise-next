@@ -20,12 +20,12 @@ import { mergeArray } from "@/utils/merge-array";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createId } from "@paralleldrive/cuid2";
 import type { Commentaire } from "@prisma/client";
-import { TRPCClientError } from "@trpc/client";
 import { capitalize } from "lodash-es";
 import { PlusIcon, X } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
 
+import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import { Card, CardContent } from "@plan-prise/ui/card";
 import { Checkbox } from "@plan-prise/ui/checkbox";
@@ -91,6 +91,10 @@ const MedicClient = ({
     },
   });
 
+  const {
+    formState: { errors: formErrors, isSubmitting },
+  } = form;
+
   const onSubmit = async (values: z.infer<typeof upsertMedicSchema>) => {
     try {
       const response = await upsertMedicAction(values).then(transformResponse);
@@ -105,7 +109,7 @@ const MedicClient = ({
         );
       }
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }
@@ -114,8 +118,8 @@ const MedicClient = ({
   useEventListener(EDIT_MEDIC_EVENT, () => setReadOnly(false));
 
   useEventListener(SAVE_MEDIC_EVENT, async () => {
-    if (Object.values(form.formState.errors).length > 0) {
-      console.error("Errors in form: ", form.formState.errors);
+    if (Object.values(formErrors).length > 0) {
+      console.error("Errors in form: ", formErrors);
     }
 
     await form.handleSubmit(onSubmit)();
@@ -143,7 +147,7 @@ const MedicClient = ({
         : "Ajout d'un médicament",
       returnTo: routes.medicaments(),
       options: mergeArray<NavigationItem>(
-        form.formState.isSubmitting
+        isSubmitting
           ? {
               icon: "loading" as const,
               className: "animate-spin",
@@ -175,8 +179,8 @@ const MedicClient = ({
     });
   }, [
     draftComment,
-    form.formState.isSubmitting,
     isDeleting,
+    isSubmitting,
     medicament,
     readOnly,
     setNavigation,

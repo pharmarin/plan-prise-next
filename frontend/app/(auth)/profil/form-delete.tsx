@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { trpc } from "@/app/_trpc/api";
+import { deleteCurrentUserAction } from "@/app/(auth)/profil/actions";
+import { deleteCurrentUserSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "usehooks-ts";
 import type { z } from "zod";
 
-import { confirmPasswordSchema } from "@plan-prise/api/validation/users";
 import { Button } from "@plan-prise/ui/button";
 import {
   Dialog,
@@ -41,10 +41,8 @@ import { Input } from "@plan-prise/ui/input";
 const DeleteUser = () => {
   const [open, setOpen] = useState(false);
 
-  const { mutateAsync: deleteUser } = trpc.users.deleteCurrent.useMutation();
-
-  const form = useForm<z.infer<typeof confirmPasswordSchema>>({
-    resolver: zodResolver(confirmPasswordSchema),
+  const form = useForm<z.infer<typeof deleteCurrentUserSchema>>({
+    resolver: zodResolver(deleteCurrentUserSchema),
     defaultValues: {
       password: "",
     },
@@ -54,9 +52,9 @@ const DeleteUser = () => {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = async (values: z.infer<typeof confirmPasswordSchema>) => {
+  const onSubmit = async (values: z.infer<typeof deleteCurrentUserSchema>) => {
     try {
-      await deleteUser(values);
+      await deleteCurrentUserAction(values);
     } catch (error) {
       if (error instanceof TRPCClientError) {
         form.setError(SERVER_ERROR, { message: error.message });
