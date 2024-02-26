@@ -40,7 +40,7 @@
     "@trpc/react-query": "10.45.1",
     "@trpc/server": "10.45.1",
     "@types/lodash-es": "4.17.12",
-    "i18next": "23.8.2",
+    "i18next": "23.10.0",
     "jose": "4.15.4",
     "lodash-es": "4.17.21",
     "mailersend": "2.2.0",
@@ -55,7 +55,7 @@
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "^0.1.0",
     "@plan-prise/tsconfig": "^0.1.0",
-    "eslint": "8.56.0",
+    "eslint": "8.57.0",
     "typescript": "5.3.3"
   },
   "eslintConfig": {

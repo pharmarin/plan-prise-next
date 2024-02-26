@@ -21,8 +21,8 @@
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "0.1.0",
     "@plan-prise/tsconfig": "0.1.0",
-    "@types/react": "18.2.55",
-    "eslint": "8.56.0",
+    "@types/react": "18.2.58",
+    "eslint": "8.57.0",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3"
   },
@@ -53,17 +53,17 @@
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
     "cmdk": "^0.2.0",
-    "lucide-react": "0.330.0",
+    "lucide-react": "0.340.0",
     "next": "14.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.50.1",
-    "react-pdf": "7.7.0",
-    "react-pdf-tailwind": "2.2.1",
+    "react-pdf": "7.7.1",
+    "react-pdf-tailwind": "2.3.0",
     "react-textarea-autosize": "8.5.3",
     "tailwind-merge": "2.2.1",
     "tailwindcss-animate": "1.0.7",
-    "usehooks-ts": "2.14.0",
+    "usehooks-ts": "2.15.1",
     "vaul": "0.9.0"
   }
 }

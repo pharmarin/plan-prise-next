@@ -1,6 +1,10 @@
 "use client";
 
+<<<<<<< HEAD:frontend/app/(auth)/admin/utilisateurs/client.tsx
 import type { CleanUser } from "@/app/(auth)/admin/utilisateurs/page";
+=======
+import type { CleanUser } from "@/app/(auth)/admin/users/page";
+>>>>>>> origin/master:frontend/app/(auth)/admin/users/client.tsx
 import { routes } from "@/app/routes-schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
