@@ -1,12 +1,6 @@
-<<<<<<< HEAD:frontend/app/(auth)/admin/utilisateurs/page.tsx
 import UsersClient from "@/app/(auth)/admin/utilisateurs/client";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
-=======
-import UsersClient from "@/app/(auth)/admin/users/client";
-import { routes } from "@/app/routes-schema";
-import { Navigation } from "@/state/navigation";
->>>>>>> origin/master:frontend/app/(auth)/admin/users/page.tsx
 
 import type { User } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
