@@ -450,8 +450,8 @@ importers:
         specifier: 0.10.9
         version: 0.10.9
       csv-parse:
-        specifier: 5.5.3
-        version: 5.5.3
+        specifier: 5.5.4
+        version: 5.5.4
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -4142,8 +4142,8 @@ packages:
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
-  /csv-parse@5.5.3:
-    resolution: {integrity: sha512-v0KW6C0qlZzoGjk6u5tLmVfyZxNgPGXZsWTXshpAgKVGmGXzaVWGdlCFxNx5iuzcXT/oJN1HHM9DZKwtAtYa+A==}
+  /csv-parse@5.5.4:
+    resolution: {integrity: sha512-sPkvzL64UHoHZMj10z3r0RxwpjaY/vhM4vcAv+t+SDS6p9Joq8IFHe2TVUj4NDXy8l1Q7q8g/2ehtRTHmsU8ig==}
     dev: true
 
   /d3-array@3.2.4:
