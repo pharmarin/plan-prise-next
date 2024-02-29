@@ -2,9 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
-import { trpc } from "@/app/_trpc/api";
-import { findManyMedicsAction } from "@/app/(auth)/plan/[planId]/actions";
+import {
+  addMedicAction,
+  findManyMedicsAction,
+  findPrecautionsAction,
+  removeMedicAction,
+  saveDataAction,
+} from "@/app/(auth)/plan/[planId]/actions";
 import PlanCard from "@/app/(auth)/plan/[planId]/card";
 import PlanCardLoading from "@/app/(auth)/plan/[planId]/card-loading";
 import usePlanStore from "@/app/(auth)/plan/state";
@@ -60,27 +66,22 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const [addingMedics, setAddingMedics] = useState<
     { id: string; denomination: string }[]
   >([]);
-  const { mutateAsync: addMedicServer } = trpc.plan.addMedic.useMutation();
 
   const [removingMedics, setRemovingMedics] = useState<
     { id: string; denomination: string }[]
   >([]);
   const removingMedicsId = removingMedics.map((medic) => medic.id);
-  const { mutateAsync: removeMedicServer } =
-    trpc.plan.removeMedic.useMutation();
 
-  const { mutateAsync: saveData } = trpc.plan.saveData.useMutation();
   const saveDataDebounced = debounce(
-    async (data: Parameters<typeof saveData>["0"]) => {
+    async (data: Parameters<typeof saveDataAction>["0"]) => {
       setIsSaving(true);
-      await saveData(data);
+      await saveDataAction(data);
       setIsSaving(false);
     },
     2000,
   );
 
-  const { data: precautions } =
-    trpc.medics.findPrecautionsByMedicId.useQuery(medics);
+  const [{ data: precautions }] = useAsyncCallback(findPrecautionsAction);
 
   useEffect(() => {
     init(plan);
@@ -152,10 +153,11 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                   denomination: medicament.denomination,
                 },
               ]);
-              await removeMedicServer({
+              await removeMedicAction({
                 planId: plan.id,
                 medicId: medicament.id,
               })
+                .then(transformResponse)
                 .then(() => removeMedic(medicament.id))
                 .catch(() => {
                   toast({
@@ -215,10 +217,11 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                 denomination: value.custom ? value.id : value.denomination,
               },
             ]);
-            await addMedicServer({
+            await addMedicAction({
               planId: plan.id,
               medicId: value.id,
             })
+              .then(transformResponse)
               .then((response) => {
                 if (plan.id === PLAN_NEW) {
                   if (typeof response === "object" && "id" in response) {
