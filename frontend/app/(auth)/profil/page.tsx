@@ -6,7 +6,6 @@ import { Navigation } from "@/app/state-navigation";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma, { exclude } from "@plan-prise/db-prisma";
-import PP_Error from "@plan-prise/errors";
 
 const PAGE_TITLE = "Profil";
 
@@ -20,8 +19,6 @@ const Profil = async () => {
       }),
       ["password"],
     );
-
-    throw new PP_Error("USER_LOADING_ERROR");
 
     return (
       <>
