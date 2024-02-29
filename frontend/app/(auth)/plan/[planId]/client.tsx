@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { trpc } from "@/app/_trpc/api";
+import { findManyMedicsAction } from "@/app/(auth)/plan/[planId]/actions";
 import PlanCard from "@/app/(auth)/plan/[planId]/card";
 import PlanCardLoading from "@/app/(auth)/plan/[planId]/card-loading";
 import usePlanStore from "@/app/(auth)/plan/state";
@@ -44,14 +46,16 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const setSearchValueDebounced = debounce(setSearchValue, 500);
-  const { data: searchResults, isLoading: isLoadingResults } =
-    trpc.medics.findAll.useQuery(
-      {
-        fields: ["denomination"],
-        value: searchValue,
-      },
-      { enabled: searchValue.length > 2 },
-    );
+  const [
+    { data: searchResults, isLoading: isLoadingResults, reset },
+    findManyMedics,
+  ] = useAsyncCallback(findManyMedicsAction);
+
+  useEffect(() => {
+    if (searchValue.length > 2) {
+      void findManyMedics({ query: searchValue });
+    }
+  }, [findManyMedics, searchValue]);
 
   const [addingMedics, setAddingMedics] = useState<
     { id: string; denomination: string }[]
@@ -197,7 +201,6 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
         }
         onChange={async (value) => {
           if (value) {
-            setSearchValue("");
             if (medics && medics.includes(value.id)) {
               toast({
                 title: errors.PLAN_MEDICAMENT_ALREADY_ADDED_ERROR,
@@ -241,7 +244,21 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
               });
           }
         }}
-        onInputChange={(value) => setSearchValueDebounced(value)}
+        onInputChange={(value, action) => {
+          switch (action.action) {
+            case "input-change":
+              if (value.length > 2) setSearchValueDebounced(value);
+              break;
+            case "menu-close":
+              setSearchValue("");
+              reset();
+              break;
+            case "set-value":
+              setSearchValue("");
+              reset();
+              break;
+          }
+        }}
         openMenuOnFocus={true}
         options={
           searchResults

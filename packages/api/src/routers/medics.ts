@@ -1,40 +1,9 @@
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import prisma from "@plan-prise/db-prisma";
-
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
-  findAll: authProcedure
-    .input(
-      z.object({
-        fields: z.array(
-          z
-            .string()
-            .refine((field) =>
-              Object.keys(prisma.medicament.fields).includes(field),
-            ),
-        ),
-        value: z.string(),
-      }),
-    )
-    .query(({ input }) =>
-      input.value && input.value.length > 0
-        ? prisma.medicament.findMany({
-            where: {
-              OR: input.fields.map((field) => ({
-                [field]: { contains: input.value },
-              })),
-            },
-            select: {
-              id: true,
-              denomination: true,
-              principesActifs: true,
-            },
-          })
-        : [],
-    ),
   findPrecautionsByMedicId: authProcedure
     .input(z.array(z.string()).optional())
     .query(({ ctx, input }) => {

@@ -6,9 +6,10 @@ import type { Schema, z } from "zod";
 
 export type UseAsyncState<T> = {
   data: T | undefined;
-  error: boolean;
+  isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
+  reset: () => void;
 };
 
 /**
@@ -26,8 +27,15 @@ export function useAsyncCallback<
 ): [UseAsyncState<Data>, (args: Args) => Promise<Data>] {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [data, setData] = useState<Data>();
+
+  const reset = () => {
+    setIsLoading(false);
+    setIsSuccess(false);
+    setIsError(false);
+    setData(undefined);
+  };
 
   const _callback = useCallback(
     async (args: Args) => {
@@ -36,14 +44,14 @@ export function useAsyncCallback<
 
         const results = await callback(args).then((response) => {
           if (response.serverError) {
-            setError(true);
+            setIsError(true);
             throw new Error(
               response.serverError ?? "Server action failed without error",
             );
           }
 
           if (response.validationErrors) {
-            setError(true);
+            setIsError(true);
             throw new Error("Error validating action");
           }
 
@@ -55,7 +63,7 @@ export function useAsyncCallback<
 
         return results;
       } catch (e) {
-        setError(true);
+        setIsError(true);
         throw e;
       } finally {
         setIsLoading(false);
@@ -64,5 +72,5 @@ export function useAsyncCallback<
     [callback],
   );
 
-  return [{ data, error, isLoading, isSuccess }, _callback];
+  return [{ data, isError, isLoading, isSuccess, reset }, _callback];
 }
