@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { SingleBar } from "cli-progress";
-import { trim } from "lodash";
+import { trim } from "lodash-es";
 
 import type { medics_simple } from "@plan-prise/db-prisma";
 import prisma, { Prisma, VoieAdministration } from "@plan-prise/db-prisma";

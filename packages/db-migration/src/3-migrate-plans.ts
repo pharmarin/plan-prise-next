@@ -3,7 +3,7 @@
 
 import { createId } from "@paralleldrive/cuid2";
 import { SingleBar } from "cli-progress";
-import { difference, trim } from "lodash";
+import { difference, trim } from "lodash-es";
 
 import type { medics_simple, Prisma } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";

@@ -24,15 +24,34 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         planId: z.coerce.number(),
       }),
     }),
-    planCreate: defineRoute("/plan/new"),
+    planPrint: defineRoute("/plan/[planId]/imprimer", {
+      params: z.object({
+        planId: z.coerce.number(),
+      }),
+    }),
+    planCreate: defineRoute("/plan/nouveau"),
     profil: defineRoute("/profil"),
 
     // Admin routes
     adminDashboard: defineRoute("/admin"),
-    users: defineRoute("/admin/users"),
-    user: defineRoute("/admin/users/[userId]", {
+    users: defineRoute("/admin/utilisateurs"),
+    user: defineRoute("/admin/utilisateurs/[userId]", {
       params: z.object({
         userId: z.string().cuid2(),
       }),
+    }),
+    medicaments: defineRoute("/admin/medicaments"),
+    medicament: defineRoute("/admin/medicaments/[medicamentId]", {
+      params: z.object({
+        medicamentId: z.string().cuid2(),
+      }),
+    }),
+    medicamentCreate: defineRoute("/admin/medicaments/nouveau"),
+    principesActifs: defineRoute("/admin/principes-actifs", {
+      search: z
+        .object({
+          edit: z.string().cuid2().optional(),
+        })
+        .default({ edit: undefined }),
     }),
   }));

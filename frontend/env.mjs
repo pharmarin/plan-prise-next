@@ -18,6 +18,9 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     BACKEND_URL: z.string().url(),
     MAINTENANCE_MODE: envBoolean.optional(),
+    NTFY_ADMIN_URL: process.env.CI
+      ? z.string().url().optional()
+      : z.string().url(),
     PLAYWRIGHT_TEST_BASE_URL: z.string().url().optional(),
   },
   client: { NEXT_PUBLIC_CAPTCHA_SITE_KEY: z.string() },
@@ -26,6 +29,7 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     BACKEND_URL: process.env.BACKEND_URL,
     MAINTENANCE_MODE: process.env.MAINTENANCE_MODE,
+    NTFY_ADMIN_URL: process.env.NTFY_ADMIN_URL,
     PLAYWRIGHT_TEST_BASE_URL: process.env.PLAYWRIGHT_TEST_BASE_URL,
     NEXT_PUBLIC_CAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY,
   },

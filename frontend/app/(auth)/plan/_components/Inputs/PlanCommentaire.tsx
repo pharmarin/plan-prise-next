@@ -1,5 +1,5 @@
-import { extractCommentaire } from "@/app/(auth)/plan/_lib/functions";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { extractCommentaire } from "@/app/(auth)/plan/functions";
+import usePlanStore from "@/app/(auth)/plan/state";
 import type { Commentaire, Medicament } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
 

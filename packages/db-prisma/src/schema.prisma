@@ -97,7 +97,7 @@ model Commentaire {
   population         String?
   texte              String              @db.Text
   medicament         Medicament?         @relation(fields: [medicamentId], references: [id], onDelete: Cascade)
-  medicamentId       String
+  medicamentId       String?
 
   @@index([medicamentId])
   @@map("commentaires")
@@ -105,7 +105,7 @@ model Commentaire {
 
 model Medicament {
   id                  String          @id @default(cuid())
-  medicamentOld       medics_simple   @relation(fields: [medics_simpleId], references: [id])
+  medicamentOld       medics_simple?  @relation(fields: [medics_simpleId], references: [id])
   denomination        String          @unique
   principesActifs     PrincipeActif[]
   /// [Medicament.Indications]
@@ -119,7 +119,7 @@ model Medicament {
   // TODO: Delete precaution_old
   precaution_old      String?
   precaution          Precaution?     @relation(fields: [precautionId], references: [id])
-  medics_simpleId     Int
+  medics_simpleId     Int?
   plans               Plan[]
   precautionId        Int?
   createdAt           DateTime        @default(now())

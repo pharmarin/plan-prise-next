@@ -1,5 +1,5 @@
 import { routes } from "@/app/routes-schema";
-import { Navigation } from "@/state/navigation";
+import { Navigation } from "@/app/state-navigation";
 import { PlusIcon } from "lucide-react";
 
 import { getServerSession } from "@plan-prise/auth/get-session";

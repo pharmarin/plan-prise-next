@@ -1,3 +1,5 @@
+import prisma from "./src";
+
 export * from "./src";
 
-export { default as default } from "./src";
+export default prisma;
