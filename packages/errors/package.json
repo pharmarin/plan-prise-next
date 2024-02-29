@@ -20,10 +20,7 @@
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@trpc/client": "10.45.1",
-    "@trpc/server": "10.45.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "^0.1.0",

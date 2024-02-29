@@ -4,7 +4,6 @@ import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { sendPasswordResetLinkAction } from "@/app/(guest)/forgot-password/actions";
 import { forgotPasswordSchema } from "@/app/(guest)/forgot-password/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCClientError } from "@trpc/client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -54,7 +53,7 @@ const ForgotPasswordForm = () => {
 
       await sendPasswordResetLink({ email: values.email, recaptcha });
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }

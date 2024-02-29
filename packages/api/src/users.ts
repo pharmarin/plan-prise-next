@@ -1,8 +1,9 @@
-import type { User } from "@prisma/client";
 import { startCase, toUpper } from "lodash-es";
 
-import sendMail from "../../utils/mail";
-import getUrl from "../../utils/url";
+import type { User } from "@plan-prise/db-prisma";
+
+import sendMail from "../utils/mail";
+import getUrl from "../utils/url";
 
 export const exclude = <User, Key extends keyof User>(
   user: User,
