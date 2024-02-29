@@ -17,6 +17,7 @@ type State = {
   medics?: string[];
   settings?: Plan["settings"];
   isSaving: boolean;
+  touched: boolean;
   canPrint: boolean | string;
 };
 
@@ -40,6 +41,7 @@ const usePlanStore = create(
       settings: undefined,
       isSaving: false,
       canPrint: true,
+      touched: false,
       init: (plan) =>
         setState((state) => {
           state.id = plan.id;
@@ -53,6 +55,7 @@ const usePlanStore = create(
         }),
       setData: (path, value) => {
         setState((state) => {
+          state.touched = true;
           state.data = set(
             (state.data ?? {}) as object,
             path,
@@ -62,6 +65,7 @@ const usePlanStore = create(
       },
       unsetData: (path) =>
         setState((state) => {
+          state.touched = true;
           unset((state.data ?? {}) as object, path);
         }),
       addMedic: (medicId) =>
@@ -80,11 +84,14 @@ const usePlanStore = create(
         }),
       setSetting: (path, value) =>
         setState((state) => {
+          state.touched = true;
           set((state.settings ?? {}) as object, path, value) as JsonValue;
         }),
       setIsSaving: (isSaving) =>
         setState((state) => {
           state.isSaving = isSaving;
+
+          if (isSaving === false) state.touched = false;
         }),
       setCanPrint: (canPrint) =>
         setState((state) => {

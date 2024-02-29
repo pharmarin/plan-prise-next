@@ -44,9 +44,11 @@ import { Input } from "@plan-prise/ui/input";
 import { Label } from "@plan-prise/ui/label";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 
-const EDIT_MEDIC_EVENT = "EDIT_MEDIC_EVENT";
-const SAVE_MEDIC_EVENT = "SAVE_MEDIC_EVENT";
-const DELETE_MEDIC_EVENT = "DELETE_MEDIC_EVENT";
+enum EVENTS {
+  EDIT_MEDIC = "EDIT_MEDIC",
+  SAVE_MEDIC = "SAVE_MEDIC",
+  DELETE_MEDIC = "DELETE_MEDIC",
+}
 
 const MedicClient = ({
   medicament,
@@ -115,9 +117,9 @@ const MedicClient = ({
     }
   };
 
-  useEventListener(EDIT_MEDIC_EVENT, () => setReadOnly(false));
+  useEventListener(EVENTS.EDIT_MEDIC, () => setReadOnly(false));
 
-  useEventListener(SAVE_MEDIC_EVENT, async () => {
+  useEventListener(EVENTS.SAVE_MEDIC, async () => {
     if (Object.values(formErrors).length > 0) {
       console.error("Errors in form: ", formErrors);
     }
@@ -125,7 +127,7 @@ const MedicClient = ({
     await form.handleSubmit(onSubmit)();
   });
 
-  useEventListener(DELETE_MEDIC_EVENT, async () => {
+  useEventListener(EVENTS.DELETE_MEDIC, async () => {
     if (
       medicament &&
       confirm(`Voulez-vous vraiment supprimer ${medicament.denomination} ?`)
@@ -154,14 +156,14 @@ const MedicClient = ({
               event: "",
             }
           : readOnly
-            ? { icon: "edit" as const, event: EDIT_MEDIC_EVENT }
+            ? { icon: "edit" as const, event: EVENTS.EDIT_MEDIC }
             : {
                 icon: "save" as const,
                 disabled: draftComment,
                 tooltip: draftComment
                   ? "Enregistrez tous les commentaires avant de continuer"
                   : undefined,
-                event: SAVE_MEDIC_EVENT,
+                event: EVENTS.SAVE_MEDIC,
               },
         medicament &&
           (isDeleting
@@ -173,7 +175,7 @@ const MedicClient = ({
             : {
                 icon: "delete" as const,
                 className: "bg-red-500 p-1 rounded-full text-white",
-                event: DELETE_MEDIC_EVENT,
+                event: EVENTS.DELETE_MEDIC,
               }),
       ),
     });

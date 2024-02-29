@@ -1,5 +1,3 @@
-"use client";
-
 import { PLAN_POSOLOGIE_COLOR } from "@/app/(auth)/plan/constants";
 import {
   extractCommentaire,
@@ -12,6 +10,7 @@ import { extractVoieAdministration } from "@/utils/medicament";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Precaution } from "@prisma/client";
 import { Document, Page, Text, View } from "@react-pdf/renderer";
+import { uniqBy } from "lodash-es";
 import Html from "react-pdf-html";
 import { createTw } from "react-pdf-tailwind";
 
@@ -21,21 +20,23 @@ import { Cell, Header, Row, Table } from "@plan-prise/ui/components/PDF";
 
 const PrintPDF = ({
   plan,
-  planData,
-  planSettings,
-  precautions,
   user,
 }: {
   plan: PP.Plan.Include;
-  planData: PP.Plan.Data;
-  planSettings: PP.Plan.Settings;
-  precautions: Precaution[];
   user: UserSession;
 }) => {
   const tw = createTw({});
 
-  const data = planData ?? plan.data ?? {};
-  const posologies = extractPosologiesSettings(planSettings?.posos);
+  const posologies = extractPosologiesSettings(plan.settings?.posos);
+  const precautions = uniqBy(
+    plan.medics
+      .flatMap((medic) => medic.precaution)
+      .filter(
+        (precaution): precaution is Precaution =>
+          !!precaution && "id" in precaution,
+      ),
+    "id",
+  );
 
   const INFORMATIONS_WIDTH = "w-56";
   const INDICATION_WIDTH = "w-36";
@@ -129,7 +130,7 @@ const PrintPDF = ({
             return undefined;
           }
 
-          const rowData = data?.[medicamentId] ?? {};
+          const rowData = plan.data?.[medicamentId] ?? {};
 
           const rowIndication = extractIndication(
             medicament,

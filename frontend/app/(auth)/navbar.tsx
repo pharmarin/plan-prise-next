@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
 import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
 import { navbarIcons, useNavigationState } from "@/app/state-navigation";
@@ -119,7 +118,6 @@ export const Navbar = ({
 
           return Button;
         })}
-        {pathname.startsWith("/plan/") && <PlanNavbarStack />}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">

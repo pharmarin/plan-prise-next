@@ -1,7 +1,6 @@
 import type { RouterLike } from "@trpc/react-query/shared";
 import { z } from "zod";
 
-import { planSettingsSchema } from "../../validation/plan";
 import { MUTATION_SUCCESS } from "../constants";
 import { authProcedure, createTRPCRouter } from "../trpc";
 
@@ -14,18 +13,6 @@ const planRouter = createTRPCRouter({
           id: input,
           user: { id: ctx.session.user.id },
         },
-      });
-
-      return MUTATION_SUCCESS;
-    }),
-  saveSettings: authProcedure
-    .input(
-      z.object({ planId: z.string().cuid2(), settings: planSettingsSchema }),
-    )
-    .mutation(async ({ input, ctx }) => {
-      await ctx.prisma.plan.update({
-        where: { id: input.planId, user: { id: ctx.session.user.id } },
-        data: { settings: input.settings },
       });
 
       return MUTATION_SUCCESS;

@@ -1,6 +1,9 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { authAction } from "@/app/_safe-actions/safe-actions";
+import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
@@ -223,6 +226,46 @@ export const saveDataAction = authAction(
       data: {
         data: data,
       },
+    });
+
+    return MUTATION_SUCCESS;
+  },
+);
+
+export const deleteAction = authAction(
+  z.object({ planId: z.string().cuid2() }),
+  async ({ planId }, { userId }) => {
+    await prisma.plan.delete({
+      where: {
+        id: planId,
+        user: { id: userId },
+      },
+    });
+
+    revalidatePath(routes.plans());
+    redirect(routes.plans());
+  },
+);
+
+const planSettingsSchema = z.object({
+  posos: z.object({
+    poso_lever: z.boolean().optional().default(false),
+    poso_matin: z.boolean().optional().default(true),
+    poso_10h: z.boolean().optional().default(false),
+    poso_midi: z.boolean().optional().default(true),
+    poso_16h: z.boolean().optional().default(false),
+    poso_18h: z.boolean().optional().default(false),
+    poso_soir: z.boolean().optional().default(true),
+    poso_coucher: z.boolean().optional().default(true),
+  }),
+});
+
+export const saveSettingsAction = authAction(
+  z.object({ planId: z.string().cuid2(), settings: planSettingsSchema }),
+  async ({ planId, settings }, { userId }) => {
+    await prisma.plan.update({
+      where: { id: planId, user: { id: userId } },
+      data: { settings },
     });
 
     return MUTATION_SUCCESS;

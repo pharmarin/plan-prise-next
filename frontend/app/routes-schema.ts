@@ -24,6 +24,11 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         planId: z.coerce.number(),
       }),
     }),
+    planPrint: defineRoute("/plan/[planId]/imprimer", {
+      params: z.object({
+        planId: z.coerce.number(),
+      }),
+    }),
     planCreate: defineRoute("/plan/nouveau"),
     profil: defineRoute("/profil"),
 

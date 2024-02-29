@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { trpc } from "@/app/_trpc/api";
+import { saveSettingsAction } from "@/app/(auth)/plan/[planId]/actions";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash-es";
-import { SettingsIcon } from "lucide-react";
 import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
@@ -12,35 +11,31 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@plan-prise/ui/dialog";
 import { FormItem } from "@plan-prise/ui/form";
 import { Label } from "@plan-prise/ui/label";
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 import { Switch } from "@plan-prise/ui/switch";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@plan-prise/ui/tooltip";
 import { TypographyH4 } from "@plan-prise/ui/typography";
 
 const posologies = Object.keys(
   PlanPrisePosologies,
 ) as (keyof typeof PlanPrisePosologies)[];
 
-const SettingsButton = () => {
-  const planId = usePlanStore((state) => state.id);
+const PlanSettings = ({
+  show,
+  setShow,
+}: {
+  show: boolean;
+  setShow: () => void;
+}) => {
   const { settings, setSetting } = usePlanStore((state) => ({
     setSetting: state.setSetting,
     settings: state.settings,
   }));
 
-  const { mutateAsync: saveSettings } = trpc.plan.saveSettings.useMutation();
   const saveSettingsDebounced = debounce(async (settings) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    await saveSettings(settings);
+    await saveSettingsAction(settings);
   }, 2000);
 
   useEffect(() => {
@@ -70,24 +65,7 @@ const SettingsButton = () => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger
-        className={cn("rounded-full bg-orange-400 p-1", {
-          "cursor-not-allowed bg-gray-600": planId === PLAN_NEW,
-        })}
-        disabled={planId === PLAN_NEW}
-      >
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <SettingsIcon className="h-4 w-4 text-white" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Réglages</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </DialogTrigger>
+    <Dialog open={show} onOpenChange={() => setShow()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Réglages</DialogTitle>
@@ -118,4 +96,4 @@ const SettingsButton = () => {
   );
 };
 
-export default SettingsButton;
+export default PlanSettings;

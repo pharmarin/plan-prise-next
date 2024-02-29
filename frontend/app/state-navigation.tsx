@@ -3,11 +3,14 @@
 import { useEffect } from "react";
 import {
   ArrowLeftIcon,
+  CheckCircle2Icon,
   HomeIcon,
   Loader2Icon,
   PencilIcon,
   PlusIcon,
+  PrinterIcon,
   SaveIcon,
+  SettingsIcon,
   Trash2Icon,
 } from "lucide-react";
 import { create } from "zustand";
@@ -15,12 +18,16 @@ import { immer } from "zustand/middleware/immer";
 
 export const navbarIcons = {
   arrowLeft: ArrowLeftIcon,
+  checkCircle: CheckCircle2Icon,
   delete: Trash2Icon,
   edit: PencilIcon,
   loading: Loader2Icon,
   home: HomeIcon,
   plus: PlusIcon,
+  printer: PrinterIcon,
   save: SaveIcon,
+  trash: Trash2Icon,
+  settings: SettingsIcon,
 };
 
 export type NavigationItem = {

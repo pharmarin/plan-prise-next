@@ -59,10 +59,6 @@ export const extractConservation = (
 export const extractPosologiesSettings = (
   posos?: PP.Plan.Settings["posos"],
 ) => {
-  if (!posos) {
-    return [];
-  }
-
   return Object.keys(PLAN_SETTINGS_DEFAULT.posos)
     .map((poso) =>
       posos?.[poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]] ??
