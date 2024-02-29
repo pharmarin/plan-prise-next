@@ -1,3 +1,5 @@
+"use server";
+
 import { guestAction } from "@/app/_safe-actions/safe-actions";
 import { registerSchema } from "@/app/(guest)/register/validation";
 import { routes } from "@/app/routes-schema";

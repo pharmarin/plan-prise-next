@@ -1,3 +1,5 @@
+"use server";
+
 import { guestAction } from "@/app/_safe-actions/safe-actions";
 import { resetPasswordSchema } from "@/app/(guest)/password-reset/validation";
 

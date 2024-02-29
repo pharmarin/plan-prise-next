@@ -1,3 +1,5 @@
+"use server";
+
 import { revalidatePath } from "next/cache";
 import { adminAction } from "@/app/_safe-actions/safe-actions";
 import { upsertPrincipeActifSchema } from "@/app/(auth)/admin/principes-actifs/validation";
