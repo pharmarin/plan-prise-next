@@ -5,8 +5,6 @@ import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
 
 import Logo from "@plan-prise/ui/components/navigation/Logo";
 
-// TODO: Move to UI package
-
 const PlanCardLoading = (
   props:
     | {

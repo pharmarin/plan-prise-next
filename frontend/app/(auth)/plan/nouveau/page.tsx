@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import PlanClient from "@/app/(auth)/plan/_components/PlanClient";
+import PlanClient from "@/app/(auth)/plan/[planId]/client";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 

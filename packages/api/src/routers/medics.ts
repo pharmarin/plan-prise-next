@@ -6,12 +6,6 @@ import prisma from "@plan-prise/db-prisma";
 import { adminProcedure, authProcedure, createTRPCRouter } from "../trpc";
 
 const medicsRouter = createTRPCRouter({
-  unique: authProcedure.input(z.string().cuid2()).query(({ input }) =>
-    prisma.medicament.findUniqueOrThrow({
-      where: { id: input },
-      include: { commentaires: true, principesActifs: true },
-    }),
-  ),
   findAll: authProcedure
     .input(
       z.object({

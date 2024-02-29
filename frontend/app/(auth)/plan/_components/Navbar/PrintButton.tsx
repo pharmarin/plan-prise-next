@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { trpc } from "@/app/_trpc/api";
-import PrintPDF from "@/app/(auth)/plan/[planId]/PrintPDF";
+import PrintPDF from "@/app/(auth)/plan/[planId]/pdf-document";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Download, Loader2, Printer } from "lucide-react";
