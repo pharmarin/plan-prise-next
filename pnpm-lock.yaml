@@ -277,8 +277,8 @@ importers:
         specifier: 7.51.0
         version: 7.51.0(react@18.2.0)
       react-pdf-html:
-        specifier: 1.2.0
-        version: 1.2.0(@react-pdf/renderer@3.3.8)(react@18.2.0)
+        specifier: 1.2.1
+        version: 1.2.1(@react-pdf/renderer@3.3.8)(react@18.2.0)
       react-pdf-tailwind:
         specifier: 2.3.0
         version: 2.3.0(react@18.2.0)
@@ -7581,8 +7581,8 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-pdf-html@1.2.0(@react-pdf/renderer@3.3.8)(react@18.2.0):
-    resolution: {integrity: sha512-0CoQRTwvd2Z5+65shoXN14paxh1HaLq88AeP5k6pTp43AsKHBtgRZh8T+xF/zqxEFi18W1bgZGmsw3q7YflIfQ==}
+  /react-pdf-html@1.2.1(@react-pdf/renderer@3.3.8)(react@18.2.0):
+    resolution: {integrity: sha512-fLNZTk3BdqvKoq1Ip5BvhCWIsDtMaWWB/bONpInCk8yqUq/bCgnmOi/YA74e0xJNxX2Kbz0BiHlYH2OdeHRKdw==}
     peerDependencies:
       '@react-pdf/renderer': '>=2'
       react: '>=16'
