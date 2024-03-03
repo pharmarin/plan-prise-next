@@ -74,6 +74,10 @@ importers:
       typescript:
         specifier: 5.3.3
         version: 5.3.3
+    devDependencies:
+      '@types/lodash-es':
+        specifier: 4.17.12
+        version: 4.17.12
 
   backend: {}
 
@@ -1376,7 +1380,6 @@ packages:
       semver: 7.5.4
       tar: 6.1.14
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
     optional: true
@@ -2594,8 +2597,6 @@ packages:
       cross-fetch: 3.1.8
       fontkit: 2.0.2
       is-url: 1.2.4
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/image@2.3.4:
@@ -2605,8 +2606,6 @@ packages:
       '@react-pdf/png-js': 2.3.1
       cross-fetch: 3.1.8
       jay-peg: 1.0.1
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/layout@3.11.2:
@@ -2624,8 +2623,6 @@ packages:
       emoji-regex: 10.3.0
       queue: 6.0.2
       yoga-layout: 2.0.1
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/pdfkit@3.1.6:
@@ -2683,8 +2680,6 @@ packages:
       queue: 6.0.2
       react: 18.2.0
       scheduler: 0.17.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@react-pdf/stylesheet@4.2.4:
@@ -2800,7 +2795,6 @@ packages:
       proxy-from-env: 1.1.0
       which: 2.0.2
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2850,7 +2844,6 @@ packages:
       stacktrace-parser: 0.1.10
       webpack: 5.90.3
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -2917,7 +2910,6 @@ packages:
       '@sentry/cli': 1.77.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -4032,7 +4024,6 @@ packages:
       nan: 2.18.0
       simple-get: 3.1.1
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
     optional: true
@@ -4321,8 +4312,6 @@ packages:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
       node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /cross-spawn@5.1.0:
@@ -5404,7 +5393,6 @@ packages:
       is-stream: 2.0.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -6126,8 +6114,6 @@ packages:
     dependencies:
       node-fetch: 2.7.0
       unfetch: 4.2.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -6450,7 +6436,6 @@ packages:
       isomorphic-unfetch: 3.1.0
       qs: 6.11.2
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -6770,11 +6755,6 @@ packages:
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
     dependencies:
       encoding: 0.1.13
       whatwg-url: 5.0.0
@@ -7214,7 +7194,6 @@ packages:
       canvas: 2.11.2
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -7594,8 +7573,6 @@ packages:
       node-html-parser: 3.3.6
       react: 18.2.0
       sync-fetch: 0.5.2
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /react-pdf-tailwind@2.3.0(react@18.2.0):
@@ -7604,7 +7581,6 @@ packages:
       '@react-pdf/renderer': 3.3.8(react@18.2.0)
       tailwindcss: 3.4.1
     transitivePeerDependencies:
-      - encoding
       - react
       - ts-node
     dev: false
@@ -7632,7 +7608,6 @@ packages:
       tiny-invariant: 1.3.1
       warning: 4.0.3
     transitivePeerDependencies:
-      - encoding
       - supports-color
     dev: false
 
@@ -8449,8 +8424,6 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /tabbable@6.2.0:

@@ -21,7 +21,7 @@ const PlansIndex = async () => {
 
   return (
     <>
-      <Navigation title="Vos plan de prise" />
+      <Navigation title="Vos plans de prise" />
       <div className="flex justify-center">
         <div className="grid grid-cols-8 gap-4">
           <Link

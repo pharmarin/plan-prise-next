@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
 import { navbarIcons, useNavigationState } from "@/app/state-navigation";
 import type { User } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
 import Logo from "@plan-prise/ui/components/navigation/Logo";
@@ -79,7 +79,7 @@ export const Navbar = ({
         id="navbar-center"
         className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
-        <div data-testid="title">{title}</div>
+        <div data-testid="navbar-title">{title}</div>
         {options?.map((option, index) => {
           const NavbarIcon = navbarIcons[option.icon];
 

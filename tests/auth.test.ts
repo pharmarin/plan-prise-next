@@ -5,7 +5,7 @@ import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
 import errors from "@plan-prise/errors/errors.json";
-import { test } from "@plan-prise/tests/fixtures/auth.fixture";
+import { authTest as test } from "@plan-prise/tests/fixtures/auth.fixture";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
 
 test.describe("auth", () => {
@@ -56,7 +56,7 @@ test.describe("auth", () => {
 
     await expect(page).toHaveURL(getUrl("/"));
 
-    await expect(page.getByTestId("title")).toHaveText("Bienvenue");
+    await expect(page.getByTestId("navbar-title")).toHaveText("Bienvenue");
   });
 
   test("should register user", async ({ registerPage, page }) => {
