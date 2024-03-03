@@ -31,8 +31,6 @@ declare module "next-auth/jwt" {
   }
 }
 
-export const passwordSchema = z.string().min(8).max(20);
-
 export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient),
   callbacks: {

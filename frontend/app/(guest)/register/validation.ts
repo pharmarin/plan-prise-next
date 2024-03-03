@@ -1,6 +1,5 @@
+import { passwordSchema } from "@/app/validation";
 import { z } from "zod";
-
-import { passwordSchema } from "@plan-prise/auth";
 
 export const ALLOWED_UPLOADED_FILE_TYPES = [
   "image/png",
