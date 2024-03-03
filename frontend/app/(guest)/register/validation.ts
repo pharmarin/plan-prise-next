@@ -1,15 +1,10 @@
+import { passwordSchema } from "@/app/validation";
 import { z } from "zod";
 
-import { passwordSchema } from "@plan-prise/auth";
-
-export const ALLOWED_UPLOADED_FILE_TYPES = [
-  "image/png",
-  "image/jpg",
-  "image/jpeg",
-  "application/pdf",
-];
-
-export const MAX_UPLOADED_FILE_SIZE = 2000000;
+import {
+  ALLOWED_UPLOADED_FILE_TYPES,
+  MAX_UPLOADED_FILE_SIZE,
+} from "./constants";
 
 export const registerSchemaCertificate = z
   .instanceof(File)

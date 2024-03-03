@@ -4,7 +4,6 @@ import type { PrismaClient } from "@prisma/client";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
@@ -30,8 +29,6 @@ declare module "next-auth/jwt" {
     user: UserSession;
   }
 }
-
-export const passwordSchema = z.string().min(8).max(20);
 
 export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient),
