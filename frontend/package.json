@@ -12,7 +12,6 @@
     "lint": "pnpm with-env next lint",
     "lint:fix": "pnpm lint --fix",
     "start": "pnpm with-env next start",
-    "pretest": "playwright install --with-deps",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../.env --"
   },

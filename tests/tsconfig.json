@@ -3,9 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@plan-prise/tests/*": ["./tests/*"],
-      "@plan-prise/api/*": ["./packages/api/*"],
-      "@plan-prise/auth/*": ["./packages/auth/src/*"]
+      "@plan-prise/tests/*": ["./*"],
+      "@plan-prise/api/*": ["../packages/api/*"],
+      "@plan-prise/auth/*": ["../packages/auth/src/*"]
     },
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   }

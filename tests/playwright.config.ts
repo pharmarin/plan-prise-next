@@ -1,7 +1,8 @@
+import path from "path";
 import nextEnv from "@next/env";
 import { defineConfig, devices } from "@playwright/test";
 
-const projectDir = process.cwd();
+const projectDir = path.resolve(process.cwd(), "..");
 nextEnv.loadEnvConfig(projectDir);
 
 /**
@@ -14,7 +15,7 @@ nextEnv.loadEnvConfig(projectDir);
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "./tests",
+  testDir: "./",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -73,7 +74,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "pnpm start",
+    command: "cd .. && pnpm start",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
     env: {

@@ -141,7 +141,7 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: pnpm test:ci
+        run: pnpm test
 
       - name: Upload report
         uses: actions/upload-artifact@v3
