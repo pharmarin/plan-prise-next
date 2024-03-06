@@ -1,5 +1,4 @@
 import { expect } from "@playwright/test";
-import { startCase, toUpper } from "lodash-es";
 
 import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";
@@ -8,7 +7,9 @@ import errors from "@plan-prise/errors/errors.json";
 import { authTest as test } from "@plan-prise/tests/fixtures/auth.fixture";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
 
-test.describe("auth", () => {
+test.describe("auth", async () => {
+  const { startCase, toUpper } = await import("lodash-es");
+
   test("should redirect unauthorized user to the login page", async ({
     page,
   }) => {

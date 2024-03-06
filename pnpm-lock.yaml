@@ -50,9 +50,9 @@ importers:
       '@turbo/gen':
         specifier: 1.12.4
         version: 1.12.4(@types/node@20.11.24)(typescript@5.3.3)
-      '@types/lodash':
-        specifier: 4.14.202
-        version: 4.14.202
+      '@types/lodash-es':
+        specifier: 4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 20.11.24
         version: 20.11.24
@@ -74,10 +74,6 @@ importers:
       typescript:
         specifier: 5.3.3
         version: 5.3.3
-    devDependencies:
-      '@types/lodash-es':
-        specifier: 4.17.12
-        version: 4.17.12
 
   backend: {}
 

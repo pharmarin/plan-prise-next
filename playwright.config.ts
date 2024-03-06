@@ -1,8 +1,8 @@
-import { loadEnvConfig } from "@next/env";
+import nextEnv from "@next/env";
 import { defineConfig, devices } from "@playwright/test";
 
 const projectDir = process.cwd();
-loadEnvConfig(projectDir);
+nextEnv.loadEnvConfig(projectDir);
 
 /**
  * Read environment variables from file.

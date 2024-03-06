@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { test as base } from "@playwright/test";
 
 import { hashPassword } from "@plan-prise/auth/lib/password-utils";
-import { User } from "@plan-prise/db-prisma";
+import type { User } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/tests/helpers/prisma";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
 import { ForgotPasswordPage } from "@plan-prise/tests/pages/auth/forgot-password.page";
@@ -52,10 +52,12 @@ export const authTest = base.extend<AuthFixtures>({
         password: await hashPassword(fakeData.password),
       },
     });
+    console.log("Debug: Fake user created");
 
-    await use(fakeUserApproved);
+    await use({ ...fakeUserApproved, password: fakeData.password });
 
     await prisma.user.deleteMany({ where: { email: fakeData.email } });
+    console.log("Debug: Fake user deleted");
   },
   fakeUserNotApproved: async ({ page: _ }, use) => {
     const userBase = fakeUserBase();
@@ -70,10 +72,12 @@ export const authTest = base.extend<AuthFixtures>({
         password: await hashPassword(fakeData.password),
       },
     });
+    console.log("Debug: Fake user created");
 
-    await use(fakeUserNotApproved);
+    await use({ ...fakeUserNotApproved, password: fakeData.password });
 
     await prisma.user.deleteMany({ where: { email: fakeData.email } });
+    console.log("Debug: Fake user deleted");
   },
   fakeUserAdmin: async ({ page: _ }, use) => {
     const userBase = fakeUserBase();
@@ -94,16 +98,13 @@ export const authTest = base.extend<AuthFixtures>({
       },
     });
 
-    await use(fakeAdmin);
+    await use({ ...fakeAdmin, password: fakeData.password });
 
     await prisma.user.deleteMany({
       where: { email: fakeData.email },
     });
   },
-  fakeUserLoggedIn: async (
-    { page: _, fakeUserApproved, loginPage, context },
-    use,
-  ) => {
+  fakeUserLoggedIn: async ({ page: _, fakeUserApproved, loginPage }, use) => {
     await loginPage.goto();
     await loginPage.populateForm(
       fakeUserApproved.email,
@@ -111,6 +112,6 @@ export const authTest = base.extend<AuthFixtures>({
     );
     await loginPage.submitForm();
 
-    use(fakeUserApproved);
+    await use(fakeUserApproved);
   },
 });

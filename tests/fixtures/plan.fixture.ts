@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { isNil, omitBy } from "lodash";
 
-import prisma, { Medicament, Plan } from "@plan-prise/db-prisma";
+import type { Medicament, Plan } from "@plan-prise/db-prisma";
+import prisma from "@plan-prise/db-prisma";
 
 import { authTest } from "./auth.fixture";
 
@@ -11,6 +11,8 @@ type PlanFixture = {
 
 export const planTest = authTest.extend<PlanFixture>({
   fakePlans: async ({ fakeUserLoggedIn }, use) => {
+    const { isNil, omitBy } = await import("lodash-es");
+
     const randomMedics = await prisma.$queryRawUnsafe<Medicament[]>(
       `SELECT * FROM medicaments ORDER BY RAND() LIMIT ${faker.number.int({ max: 30, min: 1 })};`,
     );
@@ -34,7 +36,7 @@ export const planTest = authTest.extend<PlanFixture>({
       fakeGeneratedPlans.map((plan) => prisma.plan.create({ data: plan })),
     );
 
-    use(fakePlans);
+    await use(fakePlans);
 
     await prisma.plan.deleteMany({
       where: {
