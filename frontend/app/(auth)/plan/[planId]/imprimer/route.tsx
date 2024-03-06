@@ -38,10 +38,6 @@ export const GET = async (request: Request, context: { params: unknown }) => {
       "Content-Disposition": `inline; filename="Plan de prise #${plan.displayId}.pdf"`,
     },
   });
-  /* 
-    .status(200)
-    .setHeader("Content-Type", "application/pdf")
-    .setHeader("Content-Disposition", `attachment; filename="pages.pdf"`);
-
-  res.send(buffer); */
 };
+
+export const dynamic = "force-dynamic";

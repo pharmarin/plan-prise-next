@@ -111,3 +111,5 @@ const Profil = async () => {
 export default Profil;
 
 export const metadata = { title: PAGE_TITLE };
+
+export const dynamic = "force-dynamic";
