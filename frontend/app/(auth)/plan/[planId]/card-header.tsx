@@ -39,6 +39,7 @@ const PlanCardHeader = ({
             "text-truncate text-lg font-bold",
             !medicament && "mb-2 h-6 w-1/3 animate-pulse rounded bg-gray-300",
           )}
+          data-testid="plan-card-header-denomination"
         >
           {medicament?.denomination}
         </span>
