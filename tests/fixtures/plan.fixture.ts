@@ -1,36 +1,55 @@
 import { faker } from "@faker-js/faker";
 
-import type { Medicament, Plan } from "@plan-prise/db-prisma";
+import type { Medicament, Plan, Prisma } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
 import { authTest } from "./auth.fixture";
 
 type PlanFixture = {
+  fakePlan: Plan;
   fakePlans: Plan[];
 };
 
+const getRandomMedics = async () =>
+  await prisma.$queryRawUnsafe<Medicament[]>(
+    `SELECT * FROM medicaments ORDER BY RAND() LIMIT ${faker.number.int({ max: 30, min: 1 })};`,
+  );
+
+const getFakePlan = (
+  randomMedics: Medicament[],
+  userId: string,
+): Prisma.PlanCreateInput => ({
+  displayId: faker.number.int({ max: 99999 }),
+  medicsOrder: randomMedics.map((medicament) => medicament.id),
+  user: { connect: { id: userId } },
+  data: {},
+  settings: {},
+});
+
 export const planTest = authTest.extend<PlanFixture>({
+  fakePlan: async ({ fakeUserLoggedIn }, use) => {
+    const randomMedics = await getRandomMedics();
+
+    const fakeGeneratedPlan = getFakePlan(randomMedics, fakeUserLoggedIn.id);
+
+    const fakePlan = await prisma.plan.create({
+      data: fakeGeneratedPlan,
+    });
+
+    await use(fakePlan);
+
+    await prisma.plan.delete({
+      where: {
+        id: fakePlan.id,
+      },
+    });
+  },
   fakePlans: async ({ fakeUserLoggedIn }, use) => {
-    const { isNil, omitBy } = await import("lodash-es");
+    const randomMedics = await getRandomMedics();
 
-    const randomMedics = await prisma.$queryRawUnsafe<Medicament[]>(
-      `SELECT * FROM medicaments ORDER BY RAND() LIMIT ${faker.number.int({ max: 30, min: 1 })};`,
+    const fakeGeneratedPlans = faker.helpers.multiple(() =>
+      getFakePlan(randomMedics, fakeUserLoggedIn.id),
     );
-
-    const fakeGeneratedPlans = faker.helpers.multiple(() => ({
-      displayId: faker.number.int({ max: 99999 }),
-      medicsOrder: randomMedics.map((medicament) => medicament.id),
-      userId: fakeUserLoggedIn.id,
-      data: Object.fromEntries(
-        faker.helpers
-          .arrayElements(randomMedics)
-          .map((medicament) => [
-            medicament.id,
-            omitBy({} as PP.Plan.DataItem, isNil),
-          ]),
-      ),
-      settings: {},
-    }));
 
     const fakePlans = await prisma.$transaction(
       fakeGeneratedPlans.map((plan) => prisma.plan.create({ data: plan })),
