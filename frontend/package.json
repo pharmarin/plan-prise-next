@@ -37,7 +37,7 @@
     "@tremor/react": "3.14.1",
     "immer": "10.0.3",
     "lodash-es": "4.17.21",
-    "lucide-react": "0.350.0",
+    "lucide-react": "0.352.0",
     "next": "14.1.1",
     "next-auth": "4.24.7",
     "next-safe-action": "6.1.0",
