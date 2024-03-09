@@ -256,8 +256,8 @@ importers:
         specifier: 4.24.7
         version: 4.24.7(next@14.1.1)(react-dom@18.2.0)(react@18.2.0)
       next-safe-action:
-        specifier: 6.1.0
-        version: 6.1.0(next@14.1.1)(react@18.2.0)
+        specifier: 6.2.0
+        version: 6.2.0(next@14.1.1)(react@18.2.0)
       next-safe-navigation:
         specifier: 0.1.1
         version: 0.1.1(next@14.1.1)(typescript@5.4.2)(zod@3.22.4)
@@ -6887,8 +6887,8 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-safe-action@6.1.0(next@14.1.1)(react@18.2.0):
-    resolution: {integrity: sha512-AoSTn6bCwadZg0CXoI4MHkeIQxw6PPegFvmn0Qw/h5+hPfaX4cdeXOCJjXLOy/EkMi5rf59A95RRvfyaiu212w==}
+  /next-safe-action@6.2.0(next@14.1.1)(react@18.2.0):
+    resolution: {integrity: sha512-gssUs3OLoNjLXZalrQaly38s/mUtXsIcKWGIK3jFkW8GHl0/Xhq+3G8yEEyObET2YlYqUj79K+mH3iTNBLDcMw==}
     engines: {node: '>=18.17'}
     peerDependencies:
       next: '>= 14.0.0'
