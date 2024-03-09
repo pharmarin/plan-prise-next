@@ -34,7 +34,7 @@ const PlanCardBody = ({
           </Label>
         )}
       </div>
-      <div className="flex space-x-2">
+      <div className="plan-card-posologies flex space-x-2">
         {posologies.map((posologie) => (
           <PlanPosologie
             key={`${medicament.id}.${posologie}`}

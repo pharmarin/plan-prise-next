@@ -36,7 +36,7 @@ const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   return (
     <FormItem
       className={cn({ "action-required": extracted.length > 1 })}
-      data-testid="plan-card-indication-input"
+      data-testid="plan-input-indication"
     >
       <Label>Indication</Label>
       {extracted.length <= 1 ? (

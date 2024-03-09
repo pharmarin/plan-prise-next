@@ -3,7 +3,12 @@ import { expect } from "@playwright/test";
 
 import getUrl from "@plan-prise/api/utils/url";
 import prisma from "@plan-prise/db-prisma";
-import { planTest as test } from "@plan-prise/tests/fixtures/plan.fixture";
+import {
+  getFakePlan,
+  planTest as test,
+} from "@plan-prise/tests/fixtures/plan.fixture";
+
+import { extractPosologiesSettings } from "../frontend/app/(auth)/plan/functions";
 
 test.describe("plan tests", () => {
   test("should display access plan index page", async ({
@@ -30,63 +35,251 @@ test.describe("plan tests", () => {
     expect(tileCount).toBe(planCount);
   });
 
-  test("should display plan", async ({ page, fakePlans }) => {
-    const randomPlan = faker.helpers.arrayElement(fakePlans);
-    const firstRowMedic = await prisma.medicament.findFirstOrThrow({
-      where: { id: randomPlan.medicsOrder[0] },
+  test("should display plan", async ({ page, fakePlan }) => {
+    const medicaments = await prisma.medicament.findMany({
+      where: { OR: fakePlan.medicsOrder.map((medicId) => ({ id: medicId })) },
       include: { commentaires: true },
     });
 
-    await page.goto(`/plan/${randomPlan.displayId}`);
+    await page.goto(`/plan/${fakePlan.displayId}`);
 
     await expect(page.getByTestId("navbar-title")).toHaveText(
-      `Plan de prise n°${randomPlan.displayId}`,
+      `Plan de prise n°${fakePlan.displayId}`,
     );
 
-    await expect(
-      page.getByTestId("plan-card-header-denomination").first(),
-    ).toHaveText(firstRowMedic.denomination);
-    if (firstRowMedic.indications.length === 1) {
-      expect(
-        await page
-          .getByTestId("plan-card-indication-input")
-          .first()
-          .locator("input")
-          .inputValue(),
-      ).toBe(firstRowMedic.indications[0] ?? "");
-    } else {
-      await expect(
-        page
-          .getByTestId("plan-card-indication-input")
-          .first()
-          .locator("button"),
-      ).toHaveText("Choisissez une indication" ?? "");
-    }
+    for (let index = 0; index < medicaments.length; index++) {
+      const medicament = medicaments[index];
 
-    const commentairesGroup = page
-      .getByTestId("plan-card")
-      .first()
-      .getByTestId("plan-card-commentaire-group");
+      if (!medicament) {
+        throw new Error("Medicament was not found");
+      }
 
-    expect(await commentairesGroup.count()).toBe(
-      firstRowMedic.commentaires.length,
-    );
+      const row = page.getByTestId("plan-card").nth(index);
+      const commentairesGroup = row.getByTestId("plan-card-commentaire-group");
 
-    for (let index = 0; index < (await commentairesGroup.count()); index++) {
-      const element = commentairesGroup.nth(index);
-
-      expect(await element.locator("textarea").inputValue()).toBe(
-        firstRowMedic.commentaires[index]?.texte,
+      await expect(row.getByTestId("plan-card-header-denomination")).toHaveText(
+        medicament.denomination,
       );
-      expect(
-        await element
-          .locator("button[role=checkbox]")
-          .getAttribute("data-state"),
-      ).toBe(
-        firstRowMedic.commentaires[index]?.population ? "unchecked" : "checked",
+      if (medicament.indications.length === 1) {
+        expect(
+          await row
+            .getByTestId("plan-input-indication")
+            .locator("input")
+            .inputValue(),
+        ).toBe(medicament.indications[0] ?? "");
+      } else {
+        await expect(
+          row.getByTestId("plan-input-indication").locator("button"),
+        ).toHaveText("Choisissez une indication" ?? "");
+      }
+
+      expect(await commentairesGroup.count()).toBe(
+        medicament.commentaires.length,
       );
+
+      for (let index = 0; index < (await commentairesGroup.count()); index++) {
+        const element = commentairesGroup.nth(index);
+
+        expect(await element.locator("textarea").inputValue()).toBe(
+          medicament.commentaires[index]?.texte,
+        );
+        expect(
+          await element
+            .locator("button[role=checkbox]")
+            .getAttribute("data-state"),
+        ).toBe(
+          medicament.commentaires[index]?.population ? "unchecked" : "checked",
+        );
+      }
     }
   });
 
-  test("should edit test", async ({ page }) => {});
+  test("should edit test", async ({ page, fakeUserLoggedIn }) => {
+    const medicaments = await Promise.all([
+      prisma.medicament.findFirstOrThrow({
+        where: { denomination: { startsWith: "ELIQUIS" } },
+        include: { commentaires: true },
+      }),
+      prisma.medicament.findFirstOrThrow({
+        where: { denomination: { startsWith: "AMOXICILLINE 250 mg" } },
+        include: { commentaires: true },
+      }),
+      prisma.medicament.findFirstOrThrow({
+        where: { denomination: { startsWith: "MOVENTIG" } },
+        include: { commentaires: true },
+      }),
+    ]);
+
+    const fakeGeneratedPlan = getFakePlan(medicaments, fakeUserLoggedIn.id);
+
+    const fakePlan = await prisma.plan.create({
+      data: fakeGeneratedPlan,
+    });
+
+    await page.goto(`/plan/${fakePlan.displayId}`);
+
+    const result = {} as PP.Plan.Data;
+
+    for (let index = 0; index < medicaments.length; index++) {
+      const medicament = medicaments[index];
+
+      if (!medicament) {
+        throw new Error("Medicament not found");
+      }
+
+      result[medicament.id] = {};
+
+      const row = page.getByTestId("plan-card").nth(index);
+      const commentairesGroup = row.getByTestId("plan-card-commentaire-group");
+
+      /** INDICATION */
+
+      if (medicament.indications.length > 1) {
+        const randomIndex = faker.number.int({
+          min: 0,
+          max: medicament.indications.length - 1,
+        });
+        await row
+          .getByTestId("plan-input-indication")
+          .locator("button")
+          .click();
+        for (let index = 0; index < randomIndex; index++) {
+          await page.keyboard.press("ArrowDown");
+        }
+        await page.keyboard.press("Enter");
+
+        expect(
+          await row
+            .getByTestId("plan-input-indication")
+            .locator("input")
+            .inputValue(),
+        ).toBe(medicament.indications[randomIndex] ?? "");
+      }
+
+      await row
+        .getByTestId("plan-input-indication")
+        .locator("input")
+        .fill("test");
+
+      await page.waitForTimeout(2100);
+      await page.waitForSelector(".plan-loading-state.plan-saved");
+
+      const planData = await prisma.plan.findFirstOrThrow({
+        where: { id: fakePlan.id },
+      });
+
+      result[medicament.id]!.indication = "test";
+
+      expect(planData.data).toEqual(result);
+
+      /** POSOLOGIES */
+
+      const displayedPosologies = extractPosologiesSettings(
+        fakePlan.settings?.posos,
+      ).filter(
+        (posologie): posologie is keyof typeof PP.Plan.PlanPrisePosologies =>
+          Boolean(posologie),
+      );
+
+      for (const posologie of displayedPosologies) {
+        await row
+          .getByTestId(`plan-input-posologies-${posologie}`)
+          .fill("test");
+        await page.waitForTimeout(200);
+
+        if (typeof result[medicament.id]?.posologies === "undefined") {
+          result[medicament.id]!.posologies = {
+            [posologie]: "test",
+          } as Record<keyof typeof PP.Plan.PlanPrisePosologies, string>;
+        } else {
+          result[medicament.id]!.posologies![posologie] = "test";
+        }
+      }
+
+      /** COMMENTAIRES */
+
+      result[medicament.id]!.commentaires = {};
+
+      for (let index = 0; index < medicament.commentaires.length; index++) {
+        const element = commentairesGroup.nth(index);
+
+        await element.locator("textarea").fill("Test commentaire");
+        await page.waitForTimeout(200);
+
+        result[medicament.id]!.commentaires![
+          medicament.commentaires[index]?.id ?? ""
+        ] = {
+          texte: "Test commentaire",
+        };
+
+        await element.locator("button[role=checkbox]").click();
+        await page.waitForTimeout(200);
+
+        result[medicament.id]!.commentaires![
+          medicament.commentaires[index]?.id ?? ""
+        ]!.checked = !!medicament.commentaires[index]?.population;
+      }
+    }
+
+    const planData = await prisma.plan.findFirstOrThrow({
+      where: { id: fakePlan.id },
+    });
+
+    await page.waitForTimeout(2100);
+    await page.waitForSelector(".plan-loading-state.plan-saved");
+
+    console.log("results: ", planData.data, result);
+
+    expect(planData.data).toEqual(result);
+
+    /** SETTINGS */
+
+    await page.locator(".plan-settings-button").click();
+
+    const settingsResult = { posos: {} } as PP.Plan.Settings;
+    const randomPosos = faker.helpers.arrayElements(
+      Object.keys(PP.Plan.PlanPrisePosologies),
+    );
+    const pososSwitches = page
+      .getByTestId("plan-settings-dialog")
+      .locator("button[role=switch]");
+
+    for (let index = 0; index < (await pososSwitches.count()); index++) {
+      const posoSwitch = pososSwitches.nth(index);
+      const posoKey = Object.keys(PP.Plan.PlanPrisePosologies)[index];
+      const currentState = await posoSwitch.getAttribute("data-state");
+      const shouldBeChecked = randomPosos.includes(posoKey ?? "");
+
+      if (
+        (currentState === "checked" && !shouldBeChecked) ||
+        (currentState === "unchecked" && shouldBeChecked)
+      ) {
+        await posoSwitch.click();
+        settingsResult.posos![
+          posoKey as keyof typeof PP.Plan.PlanPrisePosologies
+        ] = shouldBeChecked;
+      }
+
+      await page.keyboard.press("Escape");
+
+      await page.waitForTimeout(2100);
+      await page.waitForSelector(".plan-loading-state.plan-saved");
+
+      const planSettings = await prisma.plan.findFirstOrThrow({
+        where: { id: fakePlan.id },
+      });
+
+      expect(planSettings.settings).toEqual(settingsResult);
+
+      expect(
+        await page.getByTestId("plan-card-posologies").locator("input").count(),
+      ).toBe(randomPosos.length);
+    }
+
+    /* await prisma.plan.delete({
+      where: {
+        id: fakePlan.id,
+      },
+    }); */
+  });
 });

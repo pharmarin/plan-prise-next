@@ -89,6 +89,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
       setIsSaving(true);
       await saveDataAction(data);
       setIsSaving(false);
+      console.log("Saved: ", data.data);
     },
     2000,
   );
@@ -108,6 +109,9 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
       (state) => ({ id: state.id, data: state.data }),
       async (newState, previousState) => {
         if (previousState.id !== PLAN_NEW && newState.data !== null) {
+          console.log("Will save");
+          saveDataDebounced.cancel();
+
           await saveDataDebounced({
             planId: newState.id ?? "",
             data: newState.data ?? {},
@@ -156,9 +160,12 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
           ? [
               {
                 icon: isSaving ? "loading" : "checkCircle",
-                className: isSaving
-                  ? "animate-spin text-teal-900"
-                  : "text-teal-600",
+                className: cn(
+                  "plan-loading-state",
+                  isSaving
+                    ? "animate-spin text-teal-900 plan-is-saving"
+                    : "text-teal-600 plan-saved",
+                ),
                 path: "",
                 tooltip: isSaving
                   ? "⏳ Sauvegarde en cours"
@@ -172,9 +179,12 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
               },
               {
                 icon: "settings",
-                className: cn("rounded-full bg-orange-400 p-1 text-white", {
-                  "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
-                }),
+                className: cn(
+                  "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
+                  {
+                    "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
+                  },
+                ),
                 disabled: plan.id === PLAN_NEW,
                 event: EVENTS.TOGGLE_SETTINGS,
               },

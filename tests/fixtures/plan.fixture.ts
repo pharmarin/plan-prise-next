@@ -15,7 +15,7 @@ const getRandomMedics = async () =>
     `SELECT * FROM medicaments ORDER BY RAND() LIMIT ${faker.number.int({ max: 30, min: 1 })};`,
   );
 
-const getFakePlan = (
+export const getFakePlan = (
   randomMedics: Medicament[],
   userId: string,
 ): Prisma.PlanCreateInput => ({

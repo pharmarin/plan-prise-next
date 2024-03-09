@@ -66,7 +66,7 @@ const PlanSettings = ({
 
   return (
     <Dialog open={show} onOpenChange={() => setShow()}>
-      <DialogContent>
+      <DialogContent data-testid="plan-settings-dialog">
         <DialogHeader>
           <DialogTitle>Réglages</DialogTitle>
           <TypographyH4>Colonnes à afficher</TypographyH4>
