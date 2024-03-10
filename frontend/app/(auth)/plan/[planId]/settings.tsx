@@ -55,7 +55,6 @@ const PlanSettings = ({
           <form
             className="grid grid-cols-2 gap-x-24 gap-y-4"
             onChange={async () => {
-              console.log("settings: ", usePlanStore.getState().settings);
               setIsSaving(true);
               saveSettingsDebounced.cancel();
               await saveSettingsDebounced({
