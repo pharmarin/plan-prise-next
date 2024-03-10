@@ -1,5 +1,4 @@
 import {
-  ALLOWED_UPLOADED_FILE_TYPES,
   registerSchemaCertificate,
   registerSchemaStep1,
 } from "@/app/(guest)/register/validation";
@@ -22,6 +21,8 @@ import {
 } from "@plan-prise/ui/form";
 import { Input } from "@plan-prise/ui/input";
 import { Label } from "@plan-prise/ui/label";
+
+import { ALLOWED_UPLOADED_FILE_TYPES } from "./constants";
 
 const RegisterFormStep1 = ({
   formData,
