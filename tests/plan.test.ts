@@ -10,6 +10,17 @@ import {
 
 import { extractPosologiesSettings } from "../frontend/app/(auth)/plan/functions";
 
+enum PlanPrisePosologies {
+  "poso_lever" = "Lever",
+  "poso_matin" = "Matin",
+  "poso_10h" = "10h",
+  "poso_midi" = "Midi",
+  "poso_16h" = "16h",
+  "poso_18h" = "18h",
+  "poso_soir" = "Soir",
+  "poso_coucher" = "Coucher",
+}
+
 test.describe("plan tests", () => {
   test("should display access plan index page", async ({
     page,
@@ -161,7 +172,6 @@ test.describe("plan tests", () => {
         .locator("input")
         .fill("test");
 
-      await page.waitForTimeout(2100);
       await page.waitForSelector(".plan-loading-state.plan-saved");
 
       const planData = await prisma.plan.findFirstOrThrow({
@@ -185,7 +195,6 @@ test.describe("plan tests", () => {
         await row
           .getByTestId(`plan-input-posologies-${posologie}`)
           .fill("test");
-        await page.waitForTimeout(200);
 
         if (typeof result[medicament.id]?.posologies === "undefined") {
           result[medicament.id]!.posologies = {
@@ -204,7 +213,6 @@ test.describe("plan tests", () => {
         const element = commentairesGroup.nth(index);
 
         await element.locator("textarea").fill("Test commentaire");
-        await page.waitForTimeout(200);
 
         result[medicament.id]!.commentaires![
           medicament.commentaires[index]?.id ?? ""
@@ -213,7 +221,6 @@ test.describe("plan tests", () => {
         };
 
         await element.locator("button[role=checkbox]").click();
-        await page.waitForTimeout(200);
 
         result[medicament.id]!.commentaires![
           medicament.commentaires[index]?.id ?? ""
@@ -221,14 +228,11 @@ test.describe("plan tests", () => {
       }
     }
 
+    await page.waitForSelector(".plan-loading-state.plan-saved");
+
     const planData = await prisma.plan.findFirstOrThrow({
       where: { id: fakePlan.id },
     });
-
-    await page.waitForTimeout(2100);
-    await page.waitForSelector(".plan-loading-state.plan-saved");
-
-    console.log("results: ", planData.data, result);
 
     expect(planData.data).toEqual(result);
 
@@ -236,9 +240,9 @@ test.describe("plan tests", () => {
 
     await page.locator(".plan-settings-button").click();
 
-    const settingsResult = { posos: {} } as PP.Plan.Settings;
+    const settingsResult = {} as PP.Plan.Settings;
     const randomPosos = faker.helpers.arrayElements(
-      Object.keys(PP.Plan.PlanPrisePosologies),
+      Object.keys(PlanPrisePosologies),
     );
     const pososSwitches = page
       .getByTestId("plan-settings-dialog")
@@ -246,7 +250,7 @@ test.describe("plan tests", () => {
 
     for (let index = 0; index < (await pososSwitches.count()); index++) {
       const posoSwitch = pososSwitches.nth(index);
-      const posoKey = Object.keys(PP.Plan.PlanPrisePosologies)[index];
+      const posoKey = Object.keys(PlanPrisePosologies)[index];
       const currentState = await posoSwitch.getAttribute("data-state");
       const shouldBeChecked = randomPosos.includes(posoKey ?? "");
 
@@ -255,31 +259,36 @@ test.describe("plan tests", () => {
         (currentState === "unchecked" && shouldBeChecked)
       ) {
         await posoSwitch.click();
-        settingsResult.posos![
-          posoKey as keyof typeof PP.Plan.PlanPrisePosologies
-        ] = shouldBeChecked;
       }
 
-      await page.keyboard.press("Escape");
+      if (!settingsResult?.posos) {
+        // @ts-expect-error Type
+        settingsResult.posos = {};
+      }
 
-      await page.waitForTimeout(2100);
-      await page.waitForSelector(".plan-loading-state.plan-saved");
-
-      const planSettings = await prisma.plan.findFirstOrThrow({
-        where: { id: fakePlan.id },
-      });
-
-      expect(planSettings.settings).toEqual(settingsResult);
-
-      expect(
-        await page.getByTestId("plan-card-posologies").locator("input").count(),
-      ).toBe(randomPosos.length);
+      settingsResult.posos![
+        posoKey as keyof typeof PP.Plan.PlanPrisePosologies
+      ] = shouldBeChecked;
     }
 
-    /* await prisma.plan.delete({
+    await page.keyboard.press("Escape");
+
+    await page.waitForSelector(".plan-loading-state.plan-saved");
+
+    const planSettings = await prisma.plan.findFirstOrThrow({
+      where: { id: fakePlan.id },
+    });
+
+    expect(planSettings.settings).toEqual(settingsResult);
+
+    await expect(
+      page.locator(".plan-card-posologies").locator("input"),
+    ).toHaveCount(randomPosos.length * medicaments.length);
+
+    await prisma.plan.delete({
       where: {
         id: fakePlan.id,
       },
-    }); */
+    });
   });
 });

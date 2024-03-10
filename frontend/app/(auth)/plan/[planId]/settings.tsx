@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { saveSettingsAction } from "@/app/(auth)/plan/[planId]/actions";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash-es";
-import { shallow } from "zustand/shallow";
 
-import { PLAN_NEW } from "@plan-prise/api/constants";
 import {
   Dialog,
   DialogContent,
@@ -28,37 +26,21 @@ const PlanSettings = ({
   show: boolean;
   setShow: () => void;
 }) => {
-  const { settings, setSetting } = usePlanStore((state) => ({
+  const { settings, setSetting, setIsSaving } = usePlanStore((state) => ({
     setSetting: state.setSetting,
+    setIsSaving: state.setIsSaving,
     settings: state.settings,
   }));
 
-  const saveSettingsDebounced = debounce(async (settings) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    await saveSettingsAction(settings);
-  }, 2000);
-
-  useEffect(() => {
-    const unsubscribe = usePlanStore.subscribe(
-      (state) => ({ id: state.id, settings: state.settings }),
-      async (newState, previousState) => {
-        if (
-          previousState.id !== PLAN_NEW &&
-          newState.id !== PLAN_NEW &&
-          newState.settings !== null
-        ) {
-          await saveSettingsDebounced({
-            planId: newState.id,
-            settings: newState.settings,
-          });
-        }
-      },
-      { equalityFn: shallow },
-    );
-
-    return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const saveSettingsDebounced = useCallback(
+    debounce(async (settings) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      await saveSettingsAction(settings);
+      setIsSaving(false);
+    }, 2000),
+    [],
+  );
 
   if (!settings) {
     return undefined;
@@ -70,7 +52,18 @@ const PlanSettings = ({
         <DialogHeader>
           <DialogTitle>Réglages</DialogTitle>
           <TypographyH4>Colonnes à afficher</TypographyH4>
-          <div className="grid grid-cols-2 gap-x-24 gap-y-4">
+          <form
+            className="grid grid-cols-2 gap-x-24 gap-y-4"
+            onChange={async () => {
+              console.log("settings: ", usePlanStore.getState().settings);
+              setIsSaving(true);
+              saveSettingsDebounced.cancel();
+              await saveSettingsDebounced({
+                planId: usePlanStore.getState().id,
+                settings: usePlanStore.getState().settings,
+              });
+            }}
+          >
             {posologies.map((posologie) => (
               <FormItem
                 key={posologie}
@@ -89,7 +82,7 @@ const PlanSettings = ({
                 />
               </FormItem>
             ))}
-          </div>
+          </form>
         </DialogHeader>
       </DialogContent>
     </Dialog>
