@@ -16,7 +16,6 @@
       "outputMode": "new-only"
     },
     "lint": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "pretest": { "cache": false },
@@ -27,7 +26,9 @@
       "dependsOn": ["test:build", "pretest"],
       "outputs": ["playwright-report/**"]
     },
-    "test:build": {},
+    "test:build": {
+      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
+    },
     "typecheck": {
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
