@@ -1,13 +1,13 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
 import { navbarIcons, useNavigationState } from "@/app/state-navigation";
 import type { User } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
 import Logo from "@plan-prise/ui/components/navigation/Logo";
