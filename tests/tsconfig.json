@@ -3,6 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/app/*": ["../frontend/app/*"],
+      "@/types/*": ["../frontend/types/*"],
       "@plan-prise/tests/*": ["./*"],
       "@plan-prise/api/*": ["../packages/api/*"],
       "@plan-prise/auth/*": ["../packages/auth/src/*"]
