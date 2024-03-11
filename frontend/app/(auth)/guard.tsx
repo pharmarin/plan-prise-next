@@ -29,7 +29,15 @@ const AuthGuard = ({
     if (loading) return;
 
     if (!guest && unAuthorized) {
-      router.push(routes.login({ search: { redirect: pathname } }));
+      router.push(
+        routes.login(
+          pathname === "/"
+            ? undefined
+            : {
+                search: { redirect: pathname },
+              },
+        ),
+      );
     }
 
     if (guest && authorized) {
