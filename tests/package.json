@@ -10,6 +10,7 @@
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "pretest": "playwright install --with-deps",
     "test": "playwright test",
+    "test:build": "pnpm --filter @plan-prise/app run build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

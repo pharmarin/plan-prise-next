@@ -3,9 +3,6 @@
   "globalDependencies": ["**/.env"],
   "globalDotEnv": [".env"],
   "pipeline": {
-    "topo": {
-      "dependsOn": ["^topo"]
-    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
@@ -27,11 +24,11 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["build", "pretest"],
+      "dependsOn": ["test:build", "pretest"],
       "outputs": ["playwright-report/**"]
     },
+    "test:build": {},
     "typecheck": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "clean": {
