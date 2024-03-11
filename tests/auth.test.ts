@@ -3,13 +3,12 @@ import { expect } from "@playwright/test";
 import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
-import errors from "@plan-prise/errors/errors.json";
+import errors from "@plan-prise/errors/errors.json" assert { type: "json" };
 import { authTest as test } from "@plan-prise/tests/fixtures/auth.fixture";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
+import { startCase, toUpper } from "lodash-es";
 
-test.describe("auth", async () => {
-  const { startCase, toUpper } = await import("lodash-es");
-
+test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({
     page,
   }) => {
