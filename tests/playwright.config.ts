@@ -74,7 +74,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "cd .. && pnpm start",
+    command: `pnpm --filter @plan-prise/app run ${process.env.CI ? "start" : "dev"}`,
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
     env: {
