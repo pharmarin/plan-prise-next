@@ -127,9 +127,10 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
 
   useEffect(() => {
     setNavigation({
-      title: plan.displayId
-        ? `Plan de prise n°${plan.displayId}`
-        : "Nouveau plan de prise",
+      title:
+        plan.displayId > 0
+          ? `Plan de prise n°${plan.displayId}`
+          : "Nouveau plan de prise",
       returnTo: routes.plans(),
       options:
         ready && (medics ?? []).length > 0
