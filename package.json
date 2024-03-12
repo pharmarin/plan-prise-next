@@ -32,7 +32,7 @@
     "@playwright/test": "1.42.1",
     "@prettier/plugin-php": "0.22.2",
     "@turbo/gen": "1.12.5",
-    "@types/lodash": "4.14.202",
+    "@types/lodash": "4.17.0",
     "@types/node": "20.11.26",
     "eslint": "8.57.0",
     "lodash-es": "4.17.21",

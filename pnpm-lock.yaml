@@ -51,8 +51,8 @@ importers:
         specifier: 1.12.5
         version: 1.12.5(@types/node@20.11.26)(typescript@5.4.2)
       '@types/lodash':
-        specifier: 4.14.202
-        version: 4.14.202
+        specifier: 4.17.0
+        version: 4.17.0
       '@types/node':
         specifier: 20.11.26
         version: 20.11.26
@@ -3200,6 +3200,10 @@ packages:
 
   /@types/lodash@4.14.202:
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+
+  /@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
+    dev: false
 
   /@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
