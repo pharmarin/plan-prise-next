@@ -52,12 +52,12 @@ export const authTest = base.extend<AuthFixtures>({
         password: await hashPassword(fakeData.password),
       },
     });
-    console.log("Debug: Fake user created");
+    if (process.env.TEST_LOG) console.log("Debug: Fake user created");
 
     await use({ ...fakeUserApproved, password: fakeData.password });
 
     await prisma.user.deleteMany({ where: { email: fakeData.email } });
-    console.log("Debug: Fake user deleted");
+    if (process.env.TEST_LOG) console.log("Debug: Fake user deleted");
   },
   fakeUserNotApproved: async ({ page: _ }, use) => {
     const userBase = fakeUserBase();
@@ -72,12 +72,12 @@ export const authTest = base.extend<AuthFixtures>({
         password: await hashPassword(fakeData.password),
       },
     });
-    console.log("Debug: Fake user created");
+    if (process.env.TEST_LOG) console.log("Debug: Fake user created");
 
     await use({ ...fakeUserNotApproved, password: fakeData.password });
 
     await prisma.user.deleteMany({ where: { email: fakeData.email } });
-    console.log("Debug: Fake user deleted");
+    if (process.env.TEST_LOG) console.log("Debug: Fake user deleted");
   },
   fakeUserAdmin: async ({ page: _ }, use) => {
     const userBase = fakeUserBase();
