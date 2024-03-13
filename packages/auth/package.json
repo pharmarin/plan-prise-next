@@ -24,7 +24,7 @@
     "@next-auth/prisma-adapter": "1.0.7",
     "@plan-prise/db-prisma": "*",
     "@plan-prise/errors": "0.1.0",
-    "@prisma/client": "5.10.2",
+    "@prisma/client": "5.11.0",
     "@t3-oss/env-nextjs": "0.9.2",
     "bcryptjs": "2.4.3",
     "next": "14.1.1",
@@ -39,7 +39,7 @@
     "@plan-prise/prettier-config": "0.1.0",
     "@plan-prise/tsconfig": "0.1.0",
     "@types/bcryptjs": "2.4.6",
-    "@types/react": "18.2.64",
+    "@types/react": "18.2.65",
     "eslint": "8.57.0",
     "typescript": "5.4.2"
   },
