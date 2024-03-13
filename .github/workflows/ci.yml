@@ -153,10 +153,10 @@ jobs:
         run: pnpm install
 
       - name: Install playwright dependencies if not cached
-        run: pnpx playwright install --with-deps
+        run: pnpm --filter @plan-prise/tests exec playwright install --with-deps
         if: steps.playwright-cache.outputs.cache-hit != 'true'
       - name: Do not install playwright dependencies if not cached
-        run: pnpx playwright install-deps
+        run: pnpm --filter @plan-prise/tests exec playwright install-deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - name: Run tests
