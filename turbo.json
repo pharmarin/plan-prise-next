@@ -23,11 +23,8 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["test:build", "pretest"],
+      "dependsOn": ["pretest"],
       "outputs": ["playwright-report/**"]
-    },
-    "test:build": {
-      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
     },
     "typecheck": {
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]

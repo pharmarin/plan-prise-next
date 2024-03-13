@@ -137,8 +137,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
+      - name: Get playwright version from package.json
+        id: playwright-version
+        run: echo version=$(cat tests/package.json | jq -r '.dependencies."@playwright/test"') >> "$GITHUB_OUTPUT"
+
+      - name: Get cache for playwright
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+
       - name: Install deps (with cache)
         run: pnpm install
+
+      - name: Install playwright dependencies if not cached
+        run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Do not install playwright dependencies if not cached
+        run: npx playwright install-deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - name: Run tests
         run: pnpm test

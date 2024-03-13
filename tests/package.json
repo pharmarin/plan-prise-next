@@ -8,9 +8,8 @@
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "pretest": "playwright install --with-deps",
+    "pretest": "pnpm --filter @plan-prise/app run build",
     "test": "playwright test",
-    "test:build": "pnpm --filter @plan-prise/app run build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
