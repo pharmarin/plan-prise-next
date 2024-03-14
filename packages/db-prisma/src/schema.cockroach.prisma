@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator json {
+  provider  = "prisma-json-types-generator"
+  namespace = "PP"
+}
+
+datasource db {
+  provider     = "cockroachdb"
+  url          = env("DATABASE_URL_POSTGRE")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model User {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  admin       Boolean   @default(false)
+  firstName   String?
+  lastName    String?
+  displayName String?
+  student     Boolean
+  certificate String?
+  rpps        BigInt?
+  password    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  approvedAt  DateTime?
+  accounts    Account[]
+  sessions    Session[]
+  plans       Plan[]
+  maxId       Int       @default(1)
+
+  @@map("users")
+}
+
+enum VoieAdministration {
+  ORALE
+  CUTANEE
+  AURICULAIRE
+  NASALE
+  INHALEE
+  VAGINALE
+  OCULAIRE
+  RECTALE
+  SOUS_CUTANEE
+  INTRA_MUSCULAIRE
+  INTRA_VEINEUX
+  INTRA_URETRALE
+  AUTRE
+}
+
+model PrincipeActif {
+  id           String       @id @default(cuid())
+  denomination String       @unique
+  medicaments  Medicament[]
+
+  @@map("principes_actifs")
+}
+
+model Commentaire {
+  id                 String              @id @default(cuid())
+  // Si le commentaire est spécifique à une voie d'administration
+  voieAdministration VoieAdministration?
+  population         String?
+  texte              String
+  medicament         Medicament?         @relation(fields: [medicamentId], references: [id], onDelete: Cascade)
+  medicamentId       String?
+
+  @@index([medicamentId])
+  @@map("commentaires")
+}
+
+model Medicament {
+  id                  String          @id @default(cuid())
+  medicamentOld       medics_simple?  @relation(fields: [medics_simpleId], references: [id])
+  denomination        String          @unique
+  principesActifs     PrincipeActif[]
+  /// [Medicament.Indications]
+  indications         Json
+  conservationFrigo   Boolean
+  /// [Medicament.ConservationDuree]
+  conservationDuree   Json?
+  /// [Medicament.VoiesAdministration]
+  voiesAdministration Json
+  commentaires        Commentaire[]
+  // TODO: Delete precaution_old
+  precaution_old      String?
+  precaution          Precaution?     @relation(fields: [precautionId], references: [id])
+  medics_simpleId     Int?
+  plans               Plan[]
+  precautionId        Int?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime?       @updatedAt
+
+  @@index([medics_simpleId])
+  @@index([precautionId])
+  @@map("medicaments")
+}
+
+model Precaution {
+  id          Int          @id @default(sequence())
+  mot_cle     String       @unique
+  titre       String
+  contenu     String
+  couleur     String
+  medicaments Medicament[]
+
+  @@map("precautions")
+}
+
+model Plan {
+  id          String       @id @default(cuid())
+  medics      Medicament[]
+  /// [Plan.MedicsOrder]
+  medicsOrder Json         @default("[]")
+  /// [Plan.Data]
+  data        Json?
+  /// [Plan.Settings]
+  settings    Json?
+  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
+  displayId   Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+
+  @@index([userId])
+  @@map("plans")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model calendriers_old {
+  id   Int      @id @default(sequence())
+  user String
+  data String
+  TIME DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model medics_simple {
+  id                 Int          @id @default(sequence())
+  nomMedicament      String?
+  nomGenerique       String?
+  indication         String?
+  frigo              Boolean      @default(false)
+  dureeConservation  String?
+  voieAdministration String?
+  matin              String?
+  midi               String?
+  soir               String?
+  coucher            String?
+  commentaire        String?
+  modifie            String?      @default("NOW()")
+  precaution         String?
+  qui                String?
+  relecture          Int?
+  stat               Int
+  Medicament         Medicament[]
+}
+
+model plans_old {
+  id      Int      @id @default(sequence())
+  user    String
+  data    String
+  options String?
+  TIME    DateTime @default(now()) @db.Timestamp(0)
+}
