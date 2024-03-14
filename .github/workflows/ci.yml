@@ -17,6 +17,7 @@ env:
   NEXTAUTH_URL: http://127.0.0.1:3000
   CROSS_SITE_SECRET: ${{ secrets.CROSS_SITE_SECRET }}
   BACKEND_URL: https://api.plandeprise.fr
+  PRISMA_GENERATE: "prisma generate --schema=./src/schema.cockroach.prisma"
 
 jobs:
   build-lint:
@@ -71,6 +72,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          PRISMA_GENERATE: "prisma generate --schema=./src/schema.cockroach.prisma"
 
       - name: Format
         id: prettier
