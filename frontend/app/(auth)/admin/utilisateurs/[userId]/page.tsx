@@ -56,7 +56,7 @@ const User = async ({ params }: { params: unknown }) => {
               <Link href={`mailto:${user.email}`}>{user.email || ""}</Link>
             </div>
           </div>
-          {user.student ? (
+          {user.student && user.certificate ? (
             <div className="space-y-1">
               <Label>Justificatif d&apos;inscription</Label>
               <div>
@@ -78,7 +78,7 @@ const User = async ({ params }: { params: unknown }) => {
                     return <ShowPDF file={user.certificate} />;
                   }
 
-                  throw new PP_Error("UNEXPECTED_FILE_TYPE");
+                  new PP_Error("UNEXPECTED_FILE_TYPE").message;
                 })()}
               </div>
             </div>
