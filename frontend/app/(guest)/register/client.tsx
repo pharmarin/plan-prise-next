@@ -3,10 +3,10 @@
 import { useState } from "react";
 import RegisterFormStep1 from "@/app/(guest)/register/form-1";
 import RegisterFormStep2 from "@/app/(guest)/register/form-2";
+import type { registerSchema } from "@/app/(guest)/register/validation";
 import { routes } from "@/app/routes-schema";
 import type { z } from "zod";
 
-import type { registerSchema } from "@plan-prise/api/validation/users";
 import Link from "@plan-prise/ui/components/navigation/Link";
 import FormSubmitSuccess from "@plan-prise/ui/components/pages/FormSubmitSuccess";
 

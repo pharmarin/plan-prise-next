@@ -39,6 +39,7 @@ class JwtMiddleware
 
       throw new Error();
     } catch (\Exception $e) {
+      // return response($e->getMessage());
       // Retourne une erreur si le token est invalide ou expiré
       return response("Unauthorized", 401);
     }

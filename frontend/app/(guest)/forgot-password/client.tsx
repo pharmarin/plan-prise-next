@@ -1,14 +1,14 @@
 "use client";
 
-import { trpc } from "@/utils/api";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
+import { sendPasswordResetLinkAction } from "@/app/(guest)/forgot-password/actions";
+import { forgotPasswordSchema } from "@/app/(guest)/forgot-password/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCClientError } from "@trpc/client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
-import { forgotPasswordSchema } from "@plan-prise/api/validation/users";
 import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
 import FormSubmitSuccess from "@plan-prise/ui/components/pages/FormSubmitSuccess";
@@ -26,7 +26,9 @@ import { Input } from "@plan-prise/ui/input";
 
 const ForgotPasswordForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const { data, mutateAsync } = trpc.users.sendPasswordResetLink.useMutation();
+  const [{ data }, sendPasswordResetLink] = useAsyncCallback(
+    sendPasswordResetLinkAction,
+  );
 
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     mode: "all",
@@ -49,9 +51,9 @@ const ForgotPasswordForm = () => {
 
       const recaptcha = await executeRecaptcha("enquiryFormSubmit");
 
-      await mutateAsync({ email: values.email, recaptcha });
+      await sendPasswordResetLink({ email: values.email, recaptcha });
     } catch (error) {
-      if (error instanceof TRPCClientError) {
+      if (error instanceof PP_Error) {
         form.setError(SERVER_ERROR, { message: error.message });
       }
     }

@@ -60,6 +60,7 @@ export type DataTableColumnFilter<TData> = {
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  sortingDefault?: SortingState;
   filters?: DataTableColumnFilter<TData>[];
   link?: (data: TData) => string;
 };
@@ -69,6 +70,7 @@ export function DataTable<TData, TValue>({
   data,
   filters,
   link,
+  sortingDefault,
 }: DataTableProps<TData, TValue>) {
   const defaultColumnFilter = (filters ?? [])
     .filter((filter) => filter.default === true)
@@ -81,7 +83,7 @@ export function DataTable<TData, TValue>({
       value: filter.value,
     })),
   );
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>(sortingDefault ?? []);
 
   const router = useRouter();
 

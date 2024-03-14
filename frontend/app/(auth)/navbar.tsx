@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { default as PlanNavbarStack } from "@/app/(auth)/plan/_components/Navbar/NavbarStack";
 import { routes } from "@/app/routes-schema";
-import { useNavigationState } from "@/state/navigation";
-import type { NavbarIcons, NavigationItem } from "@/types/navigation";
-import { trpc } from "@/utils/api";
-import { ArrowLeftIcon, HomeIcon, Loader2 } from "lucide-react";
+import type { NavigationItem } from "@/app/state-navigation";
+import { navbarIcons, useNavigationState } from "@/app/state-navigation";
+import type { User } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import { Avatar, AvatarFallback } from "@plan-prise/ui/avatar";
@@ -20,11 +19,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@plan-prise/ui/dropdown-menu";
-
-export const navbarIcons: NavbarIcons = {
-  arrowLeft: ArrowLeftIcon,
-  home: HomeIcon,
-};
+import { cn } from "@plan-prise/ui/shadcn/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@plan-prise/ui/tooltip";
 
 const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   const NavbarIcon = navbarIcons[icon];
@@ -40,13 +41,17 @@ const NavbarLink: React.FC<NavigationItem> = ({ icon, ...props }) => {
   }
 };
 
-export const Navbar = () => {
+export const Navbar = ({
+  user,
+}: {
+  user: Pick<User, "lastName" | "firstName">;
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useSession();
   const title = useNavigationState((state) => state.title);
   const returnTo = useNavigationState((state) => state.returnTo);
-  const { data: user } = trpc.users.current.useQuery();
+  const options = useNavigationState((state) => state.options);
 
   const isHome = pathname === routes.home();
 
@@ -74,8 +79,45 @@ export const Navbar = () => {
         id="navbar-center"
         className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
-        <div data-testid="title">{title}</div>
-        {pathname.startsWith("/plan/") && <PlanNavbarStack />}
+        <div data-testid="navbar-title">{title}</div>
+        {options?.map((option, index) => {
+          const NavbarIcon = navbarIcons[option.icon];
+
+          const Button = (
+            <button
+              key={index}
+              className={cn(
+                ("path" in option && option.path.length > 0) ||
+                  ("event" in option && option.event.length > 0)
+                  ? "cursor-pointer"
+                  : "cursor-not-allowed",
+                option.disabled && "cursor-not-allowed",
+                option.className,
+              )}
+              onClick={() => {
+                if (option.disabled) return;
+                if ("path" in option) router.push(option.path);
+                if ("event" in option && option.event.length > 0)
+                  document.dispatchEvent(new Event(option.event));
+              }}
+            >
+              <NavbarIcon className="h-4 w-4" />
+            </button>
+          );
+
+          if (option.tooltip) {
+            return (
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <TooltipTrigger asChild>{Button}</TooltipTrigger>
+                  <TooltipContent>{option.tooltip}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            );
+          }
+
+          return Button;
+        })}
       </div>
       <div id="navbar-right" className="flex-1 justify-end">
         <div className="ml-auto w-fit">
@@ -107,6 +149,16 @@ export const Navbar = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => router.push(routes.users())}>
                     Utilisateurs
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push(routes.medicaments())}
+                  >
+                    Médicaments
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push(routes.principesActifs())}
+                  >
+                    Principes Actifs
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                 </>

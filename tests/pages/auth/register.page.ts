@@ -26,7 +26,7 @@ export class RegisterPage {
       await this.page.getByLabel("Étudiant").check();
       await this.page
         .getByLabel("Justificatif d'études de pharmacie")
-        .setInputFiles(path.join(__dirname, "test_pdf.pdf"));
+        .setInputFiles(path.resolve("./pages/auth/test_pdf.pdf"));
     } else {
       await this.page.fill(
         'input[name="rpps"]',
@@ -50,8 +50,7 @@ export class RegisterPage {
 
   async submitForm() {
     const response = this.page.waitForResponse(
-      (response) =>
-        new URL(response.url()).pathname === `/api/v1/users.register`,
+      (response) => new URL(response.url()).pathname === `/register`,
     );
 
     await this.page.click('button[type="submit"]');

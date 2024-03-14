@@ -2,7 +2,3 @@
 node_modules
 tsconfig.tsbuildinfo
 .turbo
-
-/test-results/
-/playwright-report/
-/playwright/.cache/

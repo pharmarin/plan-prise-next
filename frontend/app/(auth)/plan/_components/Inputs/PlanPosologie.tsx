@@ -1,5 +1,5 @@
-import { extractPosologie } from "@/app/(auth)/plan/_lib/functions";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { extractPosologie } from "@/app/(auth)/plan/functions";
+import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
 import type { Medicament } from "@prisma/client";
 
@@ -23,6 +23,7 @@ const PlanPosologie = ({
     <FormItem className="w-full">
       <Label>{PlanPrisePosologies[name]}</Label>
       <Input
+        data-testid={`plan-input-posologies-${name}`}
         onChange={(event) =>
           setData(
             `${medicament.id}.posologies.${name}`,

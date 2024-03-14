@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useIndication } from "@/app/(auth)/plan/_lib/hooks";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { useIndication } from "@/app/(auth)/plan/hooks";
+import usePlanStore from "@/app/(auth)/plan/state";
 import type { Medicament } from "@prisma/client";
 
 import { FormItem } from "@plan-prise/ui/form";
@@ -34,7 +34,10 @@ const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
   }, [extracted.length, medicament.denomination, setCanPrint]);
 
   return (
-    <FormItem className={cn({ "action-required": extracted.length > 1 })}>
+    <FormItem
+      className={cn({ "action-required": extracted.length > 1 })}
+      data-testid="plan-input-indication"
+    >
       <Label>Indication</Label>
       {extracted.length <= 1 ? (
         <Input

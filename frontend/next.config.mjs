@@ -12,6 +12,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
+    serverComponentsExternalPackages: ["@react-pdf/renderer"],
     swcPlugins: [["next-superjson-plugin", {}]],
   },
   reactStrictMode: true,

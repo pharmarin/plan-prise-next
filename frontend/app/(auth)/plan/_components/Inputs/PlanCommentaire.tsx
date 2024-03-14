@@ -1,5 +1,5 @@
-import { extractCommentaire } from "@/app/(auth)/plan/_lib/functions";
-import usePlanStore from "@/app/(auth)/plan/_lib/state";
+import { extractCommentaire } from "@/app/(auth)/plan/functions";
+import usePlanStore from "@/app/(auth)/plan/state";
 import type { Commentaire, Medicament } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
 
@@ -22,7 +22,10 @@ const PlanCommentaire = ({
   const comment = extractCommentaire(commentaire, data);
 
   return (
-    <div className="flex items-center space-x-2">
+    <div
+      className="flex items-center space-x-2"
+      data-testid="plan-card-commentaire-group"
+    >
       <Checkbox
         checked={comment.checked}
         onCheckedChange={(checked) =>

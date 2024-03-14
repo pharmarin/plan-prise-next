@@ -1,5 +1,5 @@
 import AuthLayout from "@/app/(auth)/layout";
-import { Navigation } from "@/state/navigation";
+import { Navigation } from "@/app/state-navigation";
 
 import Home from "@plan-prise/ui/components/pages/Home";
 

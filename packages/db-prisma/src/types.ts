@@ -2,6 +2,7 @@ import type {
   Commentaire,
   Medicament as MedicamentType,
   Plan as PlanType,
+  Precaution,
   PrincipeActif,
   VoieAdministration,
 } from "@prisma/client";
@@ -53,6 +54,7 @@ declare global {
       type Include = MedicamentType & {
         commentaires: Commentaire[];
         principesActifs: PrincipeActif[];
+        precaution?: Precaution | null;
       };
       /* type Include<
         K extends "commentaires" | "principesActifs" | undefined = undefined,
