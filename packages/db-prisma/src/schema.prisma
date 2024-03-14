@@ -8,7 +8,7 @@ generator json {
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -52,7 +52,7 @@ model User {
   lastName    String?
   displayName String?
   student     Boolean
-  certificate String?   @db.LongText
+  certificate String?   @db.Text
   rpps        BigInt?
   password    String
   createdAt   DateTime  @default(now())
@@ -193,7 +193,7 @@ model medics_simple {
 model plans_old {
   id      Int      @id @default(autoincrement())
   user    String   @db.VarChar(50)
-  data    String   @db.MediumText
+  data    String   @db.Text
   options String?  @db.Text
   TIME    DateTime @default(now()) @db.Timestamp(0)
 }
