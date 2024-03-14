@@ -167,5 +167,5 @@ jobs:
         if: failure()
         with:
           name: playwright-report
-          path: frontend/playwright-report/
+          path: tests/test-results
           retention-days: 2
