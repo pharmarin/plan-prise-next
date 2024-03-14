@@ -1,5 +1,3 @@
-"use server";
-
 import { cache } from "react";
 import { getServerSession as $getServerSession } from "next-auth";
 
