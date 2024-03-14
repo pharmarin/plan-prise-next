@@ -3,9 +3,6 @@
   "globalDependencies": ["**/.env"],
   "globalDotEnv": [".env"],
   "pipeline": {
-    "topo": {
-      "dependsOn": ["^topo"]
-    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
@@ -19,7 +16,6 @@
       "outputMode": "new-only"
     },
     "lint": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "pretest": { "cache": false },
@@ -27,11 +23,10 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["build", "pretest"],
+      "dependsOn": ["pretest"],
       "outputs": ["playwright-report/**"]
     },
     "typecheck": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "clean": {

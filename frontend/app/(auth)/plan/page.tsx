@@ -21,7 +21,7 @@ const PlansIndex = async () => {
 
   return (
     <>
-      <Navigation title="Vos plan de prise" />
+      <Navigation title="Vos plans de prise" />
       <div className="flex justify-center">
         <div className="grid grid-cols-8 gap-4">
           <Link
@@ -36,6 +36,7 @@ const PlansIndex = async () => {
             <Link
               key={plan.displayId}
               href={routes.plan({ planId: plan.displayId })}
+              data-testid="plan-index-tile"
               className="flex aspect-square w-32 items-center justify-center rounded-lg shadow-lg"
             >
               <span className="text-2xl font-semibold">{plan.displayId}</span>

@@ -1,15 +1,14 @@
-import type { PropsWithChildren } from "react";
+import type { ReactNode } from "react";
 import { unstable_cache } from "next/cache";
-import AuthGuard from "@/app/(auth)/guard";
 import { Navbar } from "@/app/(auth)/navbar";
+import type { Session } from "next-auth";
 
 import { getServerSession } from "@plan-prise/auth/get-session";
 import prisma from "@plan-prise/db-prisma";
+import PP_Error from "@plan-prise/errors";
 
 const fetchUser = unstable_cache(
-  async () => {
-    const session = await getServerSession();
-
+  async (session: Session) => {
     return await prisma.user.findUniqueOrThrow({
       where: { id: session?.user.id },
       select: { lastName: true, firstName: true },
@@ -19,17 +18,25 @@ const fetchUser = unstable_cache(
   { tags: ["user-navbar-infos"] },
 );
 
-const AuthLayout: React.FC<PropsWithChildren> = async ({ children }) => {
-  const user = await fetchUser();
+const AuthLayout = async ({ children }: { children: ReactNode }) => {
+  const session = await getServerSession();
+
+  if (!session) {
+    throw new PP_Error("UNAUTHORIZED_AUTH");
+  }
+
+  const user = await fetchUser(session);
 
   return (
-    <AuthGuard>
+    <>
       <Navbar user={user} />
       <div className="container mx-auto mb-4 flex flex-1 flex-col rounded-lg bg-white p-4 shadow-inner">
         {children}
       </div>
-    </AuthGuard>
+    </>
   );
 };
 
 export default AuthLayout;
+
+export const dynamic = "force-dynamic";

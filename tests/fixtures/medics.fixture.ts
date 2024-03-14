@@ -1,14 +1,13 @@
 import { faker } from "@faker-js/faker";
 
-import prisma, {
+import type {
   Commentaire,
   Medicament,
   PrincipeActif,
-  VoieAdministration,
 } from "@plan-prise/db-prisma";
-import { MedicsPage } from "@plan-prise/tests/pages/auth/medics.page";
+import prisma, { VoieAdministration } from "@plan-prise/db-prisma";
 
-import { test as base } from "./auth.fixture";
+import { authTest } from "./auth.fixture";
 
 type FakeMedic = Omit<
   Medicament,
@@ -62,12 +61,7 @@ const fakeMedicBase = (): FakeMedic => ({
   },
 });
 
-export const test = base.extend<MedicsFixture>({
-  forgotPasswordPage: async ({ page }, use) => {
-    const forgotPasswordPage = new MedicsPage(page);
-    /* await forgotPasswordPage.goto();
-    await use(forgotPasswordPage); */
-  },
+export const test = authTest.extend<MedicsFixture>({
   fakeMedic: async ({ page: _ }, use) => {
     const medicBase = fakeMedicBase();
 

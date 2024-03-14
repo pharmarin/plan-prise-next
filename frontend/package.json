@@ -12,7 +12,6 @@
     "lint": "pnpm with-env next lint",
     "lint:fix": "pnpm lint --fix",
     "start": "pnpm with-env next start",
-    "pretest": "playwright install --with-deps",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../.env --"
   },
@@ -37,7 +36,7 @@
     "@tremor/react": "3.14.1",
     "immer": "10.0.4",
     "lodash-es": "4.17.21",
-    "lucide-react": "0.357.0",
+    "lucide-react": "0.358.0",
     "next": "14.1.1",
     "next-auth": "4.24.7",
     "next-safe-action": "6.2.0",

@@ -23,6 +23,7 @@ const PlanPosologie = ({
     <FormItem className="w-full">
       <Label>{PlanPrisePosologies[name]}</Label>
       <Input
+        data-testid={`plan-input-posologies-${name}`}
         onChange={(event) =>
           setData(
             `${medicament.id}.posologies.${name}`,

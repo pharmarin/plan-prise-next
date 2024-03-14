@@ -22,7 +22,10 @@ const PlanCommentaire = ({
   const comment = extractCommentaire(commentaire, data);
 
   return (
-    <div className="flex items-center space-x-2">
+    <div
+      className="flex items-center space-x-2"
+      data-testid="plan-card-commentaire-group"
+    >
       <Checkbox
         checked={comment.checked}
         onCheckedChange={(checked) =>

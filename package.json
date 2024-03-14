@@ -13,15 +13,12 @@
     "lint": "turbo lint --continue --filter=!@plan-prise/db-migration -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
     "start": "turbo start --parallel",
-    "test": "playwright test",
-    "test:ci": "turbo test",
+    "test": "turbo test",
     "typecheck": "turbo typecheck --filter=!@plan-prise/db-migration"
   },
   "dependencies": {
-    "@faker-js/faker": "8.4.1",
     "@ianvs/prettier-plugin-sort-imports": "4.2.0",
     "@manypkg/cli": "0.21.2",
-    "@next/env": "14.1.0",
     "@plan-prise/api": "0.1.0",
     "@plan-prise/auth": "^0.1.0",
     "@plan-prise/db-prisma": "^0.1.0",
@@ -29,18 +26,20 @@
     "@plan-prise/eslint-config": "0.2.0",
     "@plan-prise/prettier-config": "*",
     "@plan-prise/tsconfig": "^0.1.0",
-    "@playwright/test": "1.42.1",
     "@prettier/plugin-php": "0.22.2",
     "@turbo/gen": "1.12.5",
-    "@types/lodash": "4.17.0",
     "@types/node": "20.11.27",
     "eslint": "8.57.0",
-    "lodash-es": "4.17.21",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.12",
     "turbo": "1.12.5",
     "typescript": "5.4.2"
   },
   "packageManager": "pnpm@8.15.4",
+  "eslintConfig": {
+    "extends": [
+      "@plan-prise/eslint-config/base"
+    ]
+  },
   "prettier": "@plan-prise/prettier-config"
 }
