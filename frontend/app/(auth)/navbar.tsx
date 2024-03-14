@@ -79,7 +79,7 @@ export const Navbar = ({
         id="navbar-center"
         className="flex w-fit items-center justify-center space-x-2 text-xl font-semibold text-teal-900"
       >
-        <div data-testid="title">{title}</div>
+        <div data-testid="navbar-title">{title}</div>
         {options?.map((option, index) => {
           const NavbarIcon = navbarIcons[option.icon];
 

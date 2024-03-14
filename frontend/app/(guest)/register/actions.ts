@@ -75,20 +75,24 @@ export const registerAction = guestAction(registerSchema, async (input) => {
         data: { approvedAt: new Date() },
       });
 
-      await sendMailApproved({ email: input.email, firstName, lastName });
+      if (process.env.CI !== "true") {
+        await sendMailApproved({ email: input.email, firstName, lastName });
 
-      await fetch(env.NTFY_ADMIN_URL ?? "", {
-        method: "POST",
-        body: `${(
-          await prisma.user.count({ where: { approvedAt: null } })
-        ).toString()} en attente`,
-        headers: {
-          Tags: "+1",
-          Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
-        },
-      });
+        await fetch(env.NTFY_ADMIN_URL ?? "", {
+          method: "POST",
+          body: `${(
+            await prisma.user.count({ where: { approvedAt: null } })
+          ).toString()} en attente`,
+          headers: {
+            Tags: "+1",
+            Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
+          },
+        });
+      }
     } else {
-      await sendMailRegistered({ email: input.email, firstName, lastName });
+      if (process.env.CI !== "true") {
+        await sendMailRegistered({ email: input.email, firstName, lastName });
+      }
     }
   } catch (error) {
     console.error("Error sending registration mail: ", error);
@@ -97,18 +101,20 @@ export const registerAction = guestAction(registerSchema, async (input) => {
   }
 
   try {
-    await fetch(env.NTFY_ADMIN_URL ?? "", {
-      method: "POST",
-      body: `${(
-        await prisma.user.count({ where: { approvedAt: null } })
-      ).toString()} en attente`,
-      headers: {
-        Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
-        Click: getUrl("/admin/users"),
-        Tags: "+1",
-        Title: `Nouvelle inscription sur plandeprise.fr`,
-      },
-    });
+    if (process.env.CI !== "true") {
+      await fetch(env.NTFY_ADMIN_URL ?? "", {
+        method: "POST",
+        body: `${(
+          await prisma.user.count({ where: { approvedAt: null } })
+        ).toString()} en attente`,
+        headers: {
+          Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
+          Click: getUrl("/admin/users"),
+          Tags: "+1",
+          Title: `Nouvelle inscription sur plandeprise.fr`,
+        },
+      });
+    }
   } catch (error) {
     console.error("Error sending registration admin notification: ", error);
   }

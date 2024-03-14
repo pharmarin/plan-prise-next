@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
@@ -23,7 +23,6 @@ import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash-es";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
-import { shallow } from "zustand/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
@@ -84,13 +83,13 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   >([]);
   const removingMedicsId = removingMedics.map((medic) => medic.id);
 
-  const saveDataDebounced = debounce(
-    async (data: Parameters<typeof saveDataAction>["0"]) => {
-      setIsSaving(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const saveDataDebounced = useCallback(
+    debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
       await saveDataAction(data);
       setIsSaving(false);
-    },
-    2000,
+    }, 2000),
+    [],
   );
 
   const [{ isLoading: isDeleting }, deletePlan] =
@@ -103,24 +102,6 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
     setReady(true);
   }, [init, plan]);
 
-  useEffect(() => {
-    const unsubscribe = usePlanStore.subscribe(
-      (state) => ({ id: state.id, data: state.data }),
-      async (newState, previousState) => {
-        if (previousState.id !== PLAN_NEW && newState.data !== null) {
-          await saveDataDebounced({
-            planId: newState.id ?? "",
-            data: newState.data ?? {},
-          });
-        }
-      },
-      { equalityFn: shallow },
-    );
-
-    return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   /**
    * NAVBAR
    */
@@ -128,7 +109,6 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const setNavigation = useNavigationState((state) => state.setNavigation);
   const isSaving = usePlanStore((state) => state.isSaving);
   const canPrint = usePlanStore((state) => state.canPrint);
-  const touched = usePlanStore((state) => state.touched);
 
   useEventListener(EVENTS.DELETE_PLAN, async () =>
     deletePlan({ planId: plan.id }),
@@ -137,7 +117,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   useEventListener(EVENTS.TOGGLE_SETTINGS, () => setShowSettings(true));
 
   useEventListener(EVENTS.PRINT_PLAN, () => {
-    if (touched) return;
+    if (isSaving) return;
     if (canPrint === true) {
       window.open(routes.planPrint({ planId: plan.displayId }));
     } else {
@@ -147,18 +127,22 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
 
   useEffect(() => {
     setNavigation({
-      title: plan.displayId
-        ? `Plan de prise n°${plan.displayId}`
-        : "Nouveau plan de prise",
+      title:
+        plan.displayId > 0
+          ? `Plan de prise n°${plan.displayId}`
+          : "Nouveau plan de prise",
       returnTo: routes.plans(),
       options:
         ready && (medics ?? []).length > 0
           ? [
               {
                 icon: isSaving ? "loading" : "checkCircle",
-                className: isSaving
-                  ? "animate-spin text-teal-900"
-                  : "text-teal-600",
+                className: cn(
+                  "plan-loading-state",
+                  isSaving
+                    ? "animate-spin text-teal-900 plan-is-saving"
+                    : "text-teal-600 plan-saved",
+                ),
                 path: "",
                 tooltip: isSaving
                   ? "⏳ Sauvegarde en cours"
@@ -172,9 +156,12 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
               },
               {
                 icon: "settings",
-                className: cn("rounded-full bg-orange-400 p-1 text-white", {
-                  "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
-                }),
+                className: cn(
+                  "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
+                  {
+                    "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
+                  },
+                ),
                 disabled: plan.id === PLAN_NEW,
                 event: EVENTS.TOGGLE_SETTINGS,
               },
@@ -182,13 +169,13 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                 icon: "printer",
                 className: cn("rounded-full bg-green-700 p-1 text-white", {
                   "cursor-not-allowed bg-gray-600":
-                    canPrint !== true || touched,
+                    canPrint !== true || isSaving,
                 }),
                 event: EVENTS.PRINT_PLAN,
                 tooltip:
-                  !touched && canPrint === true
+                  !isSaving && canPrint === true
                     ? "Imprimer le plan de prise"
-                    : !touched && typeof canPrint === "string"
+                    : !isSaving && typeof canPrint === "string"
                       ? canPrint
                       : "Vous ne pouvez pas imprimer actuellement",
               },
@@ -204,7 +191,6 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
     plan.id,
     ready,
     setNavigation,
-    touched,
   ]);
 
   if (!ready) {
@@ -218,69 +204,81 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
         setShow={() => setShowSettings(false)}
       />
       <div className="space-y-4">
-        {medics?.map((id) =>
-          removingMedicsId.includes(id) ? (
-            <PlanCardLoading
-              key={`plan_${plan.id}_${id}_removing`}
-              denomination={
-                removingMedics.find((medic) => medic.id === id)?.denomination ??
-                ""
-              }
-              type="deleting"
-            />
-          ) : (
-            <PlanCard
-              key={`plan_${plan.id}_${id}`}
-              medicamentId={id}
-              medicamentData={
-                isCuid(id)
-                  ? plan.medics.find((medicament) => medicament.id === id)
-                  : {
-                      id,
-                      denomination: id,
-                      indications: [],
-                      conservationFrigo: false,
-                      conservationDuree: [],
-                      voiesAdministration: [],
-                      commentaires: [],
-                      medics_simpleId: 0,
-                      principesActifs: [],
-                      precaution_old: "",
-                      precautionId: null,
-                      createdAt: new Date(),
-                      updatedAt: null,
-                    }
-              }
-              removeMedic={async (medicament: PP.Medicament.Identifier) => {
-                setRemovingMedics((state) => [
-                  ...state,
-                  {
-                    id: medicament.id,
-                    denomination: medicament.denomination,
-                  },
-                ]);
-                await removeMedicAction({
-                  planId: plan.id,
-                  medicId: medicament.id,
-                })
-                  .then(transformResponse)
-                  .then(() => removeMedic(medicament.id))
-                  .catch(() => {
-                    toast({
-                      title: `Impossible de supprimer ${medicament.denomination} pour le moment`,
-                      description: "Veuillez réessayer",
-                      variant: "destructive",
-                    });
+        <form
+          className="space-y-4"
+          onChange={async () => {
+            setIsSaving(true);
+            saveDataDebounced.cancel();
+            await saveDataDebounced({
+              planId: usePlanStore.getState().id ?? "",
+              data: usePlanStore.getState().data ?? {},
+            });
+          }}
+        >
+          {medics?.map((id) =>
+            removingMedicsId.includes(id) ? (
+              <PlanCardLoading
+                key={`plan_${plan.id}_${id}_removing`}
+                denomination={
+                  removingMedics.find((medic) => medic.id === id)
+                    ?.denomination ?? ""
+                }
+                type="deleting"
+              />
+            ) : (
+              <PlanCard
+                key={`plan_${plan.id}_${id}`}
+                medicamentId={id}
+                medicamentData={
+                  isCuid(id)
+                    ? plan.medics.find((medicament) => medicament.id === id)
+                    : {
+                        id,
+                        denomination: id,
+                        indications: [],
+                        conservationFrigo: false,
+                        conservationDuree: [],
+                        voiesAdministration: [],
+                        commentaires: [],
+                        medics_simpleId: 0,
+                        principesActifs: [],
+                        precaution_old: "",
+                        precautionId: null,
+                        createdAt: new Date(),
+                        updatedAt: null,
+                      }
+                }
+                removeMedic={async (medicament: PP.Medicament.Identifier) => {
+                  setRemovingMedics((state) => [
+                    ...state,
+                    {
+                      id: medicament.id,
+                      denomination: medicament.denomination,
+                    },
+                  ]);
+                  await removeMedicAction({
+                    planId: plan.id,
+                    medicId: medicament.id,
                   })
-                  .finally(() => {
-                    setRemovingMedics((state) => [
-                      ...state.filter((medic) => medic.id !== medicament.id),
-                    ]);
-                  });
-              }}
-            />
-          ),
-        )}
+                    .then(transformResponse)
+                    .then(() => removeMedic(medicament.id))
+                    .catch(() => {
+                      toast({
+                        title: `Impossible de supprimer ${medicament.denomination} pour le moment`,
+                        description: "Veuillez réessayer",
+                        variant: "destructive",
+                      });
+                    })
+                    .finally(() => {
+                      setRemovingMedics((state) => [
+                        ...state.filter((medic) => medic.id !== medicament.id),
+                      ]);
+                    });
+                }}
+              />
+            ),
+          )}
+        </form>
         {addingMedics.map((row) => (
           <PlanCardLoading
             key={`plan_${plan.id}_${row.id}_adding`}

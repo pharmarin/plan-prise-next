@@ -1,7 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/(guest)/login/validation";
-import { routes } from "@/app/routes-schema";
+import { routes, useSafeSearchParams } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -25,6 +26,8 @@ import { Input } from "@plan-prise/ui/input";
 
 const LoginForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const router = useRouter();
+  const { redirect } = useSafeSearchParams("login");
 
   const form = useForm<z.infer<typeof loginSchema>>({
     mode: "all",
@@ -62,6 +65,8 @@ const LoginForm = () => {
             ? new PP_Error("USER_LOGIN_ERROR").message
             : signInResponse?.error,
       });
+    } else {
+      router.push(redirect ?? routes.home());
     }
   };
 

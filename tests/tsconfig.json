@@ -3,10 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/app/*": ["../frontend/app/*"],
+      "@/types/*": ["../frontend/types/*"],
       "@plan-prise/tests/*": ["./*"],
       "@plan-prise/api/*": ["../packages/api/*"],
-      "@plan-prise/auth/*": ["../packages/auth/src/*"],
+      "@plan-prise/auth/*": ["../packages/auth/src/*"]
     },
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-  },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  }
 }

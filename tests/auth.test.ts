@@ -1,12 +1,18 @@
+import { createRequire } from "module";
 import { expect } from "@playwright/test";
 import { startCase, toUpper } from "lodash-es";
 
 import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
-import errors from "@plan-prise/errors/errors.json";
-import { test } from "@plan-prise/tests/fixtures/auth.fixture";
+import { authTest as test } from "@plan-prise/tests/fixtures/auth.fixture";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
+
+const require = createRequire(import.meta.url);
+const errors = require("@plan-prise/errors/errors.json") as {
+  USER_LOGIN_ERROR: string;
+  USER_NOT_APPROVED: { message: string };
+};
 
 test.describe("auth", () => {
   test("should redirect unauthorized user to the login page", async ({
@@ -56,7 +62,7 @@ test.describe("auth", () => {
 
     await expect(page).toHaveURL(getUrl("/"));
 
-    await expect(page.getByTestId("title")).toHaveText("Bienvenue");
+    await expect(page.getByTestId("navbar-title")).toHaveText("Bienvenue");
   });
 
   test("should register user", async ({ registerPage, page }) => {
