@@ -9,12 +9,15 @@ import { signJWT } from "@plan-prise/api/utils/json-web-token";
 const toLegacy = (path: string, destination?: string) =>
   env.BACKEND_URL + (destination ?? path);
 
-const redirectTo = (request: NextRequest, pathAndSearch: string) => {
+const redirectTo = async (request: NextRequest, pathAndSearch: string) => {
   const url = request.nextUrl.clone();
   const [path, search] = pathAndSearch.split("?");
   url.pathname = path ?? "";
   url.search = search ?? "";
-  return NextResponse.redirect(url);
+
+  const token = await getToken({ req: request });
+
+  return JSON.stringify(token);
 };
 
 export const middleware = async (request: NextRequest) => {

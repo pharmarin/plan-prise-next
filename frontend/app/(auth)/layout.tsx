@@ -9,9 +9,6 @@ const fetchUser = unstable_cache(
   async () => {
     const session = await getServerSession();
 
-    // TODO: À supprimer
-    console.log("Found session: ", session);
-
     return await prisma.user.findUniqueOrThrow({
       where: { id: session?.user.id },
       select: { lastName: true, firstName: true },
