@@ -1,10 +1,16 @@
+import { faker } from "@faker-js/faker";
 import { expect } from "@playwright/test";
 
 import getUrl from "@plan-prise/api/utils/url";
 import prisma from "@plan-prise/db-prisma";
-import { planTest as test } from "@plan-prise/tests/fixtures/plan.fixture";
+import {
+  getFakePlan,
+  planTest as test,
+} from "@plan-prise/tests/fixtures/plan.fixture";
 
-/* enum PlanPrisePosologies {
+import { extractPosologiesSettings } from "../frontend/app/(auth)/plan/functions";
+
+enum PlanPrisePosologies {
   "poso_lever" = "Lever",
   "poso_matin" = "Matin",
   "poso_10h" = "10h",
@@ -13,7 +19,7 @@ import { planTest as test } from "@plan-prise/tests/fixtures/plan.fixture";
   "poso_18h" = "18h",
   "poso_soir" = "Soir",
   "poso_coucher" = "Coucher",
-} */
+}
 
 test.describe("plan tests", () => {
   test("should display access plan index page", async ({
@@ -101,7 +107,9 @@ test.describe("plan tests", () => {
     }
   });
 
-  /* test("should edit test", async ({ page, fakeUserLoggedIn }) => {
+  test("should edit test", async ({ page, fakeUserLoggedIn }) => {
+    test.slow();
+
     const medicaments = await Promise.all([
       prisma.medicament.findFirstOrThrow({
         where: { denomination: { startsWith: "ELIQUIS" } },
@@ -286,5 +294,5 @@ test.describe("plan tests", () => {
         id: fakePlan.id,
       },
     });
-  }); */
+  });
 });
