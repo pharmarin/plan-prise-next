@@ -59,7 +59,9 @@ test.describe("plan tests", () => {
     );
 
     for (let index = 0; index < medicaments.length; index++) {
-      const medicament = medicaments[index];
+      const medicament = medicaments.find(
+        (medicament) => medicament.id === fakePlan.medicsOrder[index],
+      );
 
       if (!medicament) {
         throw new Error("Medicament was not found");
