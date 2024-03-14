@@ -17,6 +17,7 @@
     "clean": "rm -rf .turbo node_modules",
     "dev": "pnpm with-env prisma studio --port 5556",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "generate:test": "pnpm with-env node -e 'require(\"child_process\").execSync(process.env.PRISMA_GENERATE, { stdio: \"inherit\" })'",
     "generate": "pnpm with-env prisma generate",
     "lint": "eslint .",
     "postinstall": "pnpm generate",
