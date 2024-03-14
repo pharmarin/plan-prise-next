@@ -16,7 +16,7 @@ const ErrorSkeleton = ({
 }) => {
   return (
     <div className="flex flex-1 flex-col p-8">
-      <div className="flex flex-1 items-center justify-center rounded-lg bg-white">
+      <div className="flex flex-1 items-center justify-center rounded-lg bg-white p-12">
         <div className="flex divide-x">
           <div className="flex items-center pr-4">{logo ?? <Logo />}</div>
           <div className="space-y-2 pl-4">
