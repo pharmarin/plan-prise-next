@@ -163,12 +163,12 @@ test.describe("plan tests", () => {
         }
         await page.keyboard.press("Enter");
 
-        /* expect(
+        expect(
           await row
             .getByTestId("plan-input-indication")
             .locator("input")
             .inputValue(),
-        ).toBe(medicament.indications[randomIndex] ?? ""); */
+        ).toBe(medicament.indications[randomIndex] ?? "");
       }
 
       await row
