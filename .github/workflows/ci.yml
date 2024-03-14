@@ -10,6 +10,7 @@ on:
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
   RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
   NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
@@ -68,6 +69,7 @@ jobs:
         run: pnpm turbo lint typecheck --filter=!@plan-prise/db-migration
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
       - name: Format

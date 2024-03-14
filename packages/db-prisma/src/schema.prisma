@@ -8,8 +8,8 @@ generator json {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
+  provider     = "cockroachdb"
+  url          = env("DATABASE_URL_POSTGRE")
   relationMode = "prisma"
 }
 
@@ -19,12 +19,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -52,7 +52,7 @@ model User {
   lastName    String?
   displayName String?
   student     Boolean
-  certificate String?   @db.Text
+  certificate String?
   rpps        BigInt?
   password    String
   createdAt   DateTime  @default(now())
@@ -95,7 +95,7 @@ model Commentaire {
   // Si le commentaire est spécifique à une voie d'administration
   voieAdministration VoieAdministration?
   population         String?
-  texte              String              @db.Text
+  texte              String
   medicament         Medicament?         @relation(fields: [medicamentId], references: [id], onDelete: Cascade)
   medicamentId       String?
 
@@ -131,11 +131,11 @@ model Medicament {
 }
 
 model Precaution {
-  id          Int          @id @default(autoincrement())
-  mot_cle     String       @unique @db.VarChar(50)
-  titre       String       @db.VarChar(200)
-  contenu     String       @db.Text
-  couleur     String       @db.VarChar(10)
+  id          Int          @id @default(sequence())
+  mot_cle     String       @unique
+  titre       String
+  contenu     String
+  couleur     String
   medicaments Medicament[]
 
   @@map("precautions")
@@ -162,38 +162,38 @@ model Plan {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model calendriers_old {
-  id   Int      @id @default(autoincrement())
-  user String   @db.Text
-  data String   @db.Text
+  id   Int      @id @default(sequence())
+  user String
+  data String
   TIME DateTime @default(now()) @db.Timestamp(0)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model medics_simple {
-  id                 Int          @id @default(autoincrement())
-  nomMedicament      String?      @db.VarChar(200)
-  nomGenerique       String?      @db.VarChar(100)
-  indication         String?      @db.Text
+  id                 Int          @id @default(sequence())
+  nomMedicament      String?
+  nomGenerique       String?
+  indication         String?
   frigo              Boolean      @default(false)
-  dureeConservation  String?      @db.Text
-  voieAdministration String?      @db.VarChar(50)
-  matin              String?      @db.VarChar(20)
-  midi               String?      @db.VarChar(20)
-  soir               String?      @db.VarChar(20)
-  coucher            String?      @db.VarChar(20)
-  commentaire        String?      @db.Text
-  modifie            String?      @default("NOW()") @db.VarChar(20)
-  precaution         String?      @db.VarChar(50)
-  qui                String?      @db.VarChar(10)
-  relecture          Int?         @default(0)
-  stat               Int          @default(0)
+  dureeConservation  String?
+  voieAdministration String?
+  matin              String?
+  midi               String?
+  soir               String?
+  coucher            String?
+  commentaire        String?
+  modifie            String?      @default("NOW()")
+  precaution         String?
+  qui                String?
+  relecture          Int?
+  stat               Int
   Medicament         Medicament[]
 }
 
 model plans_old {
-  id      Int      @id @default(autoincrement())
-  user    String   @db.VarChar(50)
-  data    String   @db.Text
-  options String?  @db.Text
+  id      Int      @id @default(sequence())
+  user    String
+  data    String
+  options String?
   TIME    DateTime @default(now()) @db.Timestamp(0)
 }
