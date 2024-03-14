@@ -17,7 +17,7 @@ const redirectTo = async (request: NextRequest, pathAndSearch: string) => {
 
   const token = await getToken({ req: request });
 
-  return JSON.stringify(token);
+  return new Response(JSON.stringify(token));
 };
 
 export const middleware = async (request: NextRequest) => {
