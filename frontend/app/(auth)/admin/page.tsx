@@ -9,30 +9,30 @@ const AdminDashboard = async () => {
   const usersCount = await prisma.user.count();
   const usersData: { month: number; count: bigint }[] =
     await prisma.$queryRaw`SELECT
-      DATE_FORMAT(createdAt, '%Y-%m') AS month,
-      COUNT(*) AS count
-    FROM
-      users
-    WHERE
-      createdAt >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-    GROUP BY
-      month
-    ORDER BY
-      month ASC;`;
+      TO_CHAR(DATE_TRUNC('month', "createdAt"), 'YYYY-MM') AS month,
+        COUNT(*) AS count
+      FROM
+        users
+      WHERE
+        "createdAt" >= CURRENT_DATE - INTERVAL '6 months'
+      GROUP BY
+        month
+      ORDER BY
+        month ASC;`;
 
   const plansCount = await prisma.plan.count();
   const plansData: { month: number; count: bigint }[] =
     await prisma.$queryRaw`SELECT
-      DATE_FORMAT(createdAt, '%Y-%m') AS month,
-      COUNT(*) AS count
-    FROM
-      plans
-    WHERE
-      createdAt >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-    GROUP BY
-      month
-    ORDER BY
-      month ASC;`;
+      TO_CHAR(DATE_TRUNC('month', "createdAt"), 'YYYY-MM') AS month,
+        COUNT(*) AS count
+      FROM
+        plans
+      WHERE
+        "createdAt" >= CURRENT_DATE - INTERVAL '6 months'
+      GROUP BY
+        month
+      ORDER BY
+        month ASC;`;
 
   return (
     <>
