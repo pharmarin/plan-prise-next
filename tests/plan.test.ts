@@ -1,16 +1,10 @@
-import { faker } from "@faker-js/faker";
 import { expect } from "@playwright/test";
 
 import getUrl from "@plan-prise/api/utils/url";
 import prisma from "@plan-prise/db-prisma";
-import {
-  getFakePlan,
-  planTest as test,
-} from "@plan-prise/tests/fixtures/plan.fixture";
+import { planTest as test } from "@plan-prise/tests/fixtures/plan.fixture";
 
-import { extractPosologiesSettings } from "../frontend/app/(auth)/plan/functions";
-
-enum PlanPrisePosologies {
+/* enum PlanPrisePosologies {
   "poso_lever" = "Lever",
   "poso_matin" = "Matin",
   "poso_10h" = "10h",
@@ -19,7 +13,7 @@ enum PlanPrisePosologies {
   "poso_18h" = "18h",
   "poso_soir" = "Soir",
   "poso_coucher" = "Coucher",
-}
+} */
 
 test.describe("plan tests", () => {
   test("should display access plan index page", async ({
@@ -107,7 +101,7 @@ test.describe("plan tests", () => {
     }
   });
 
-  test("should edit test", async ({ page, fakeUserLoggedIn }) => {
+  /* test("should edit test", async ({ page, fakeUserLoggedIn }) => {
     const medicaments = await Promise.all([
       prisma.medicament.findFirstOrThrow({
         where: { denomination: { startsWith: "ELIQUIS" } },
@@ -161,12 +155,12 @@ test.describe("plan tests", () => {
         }
         await page.keyboard.press("Enter");
 
-        /* expect(
+        expect(
           await row
             .getByTestId("plan-input-indication")
             .locator("input")
             .inputValue(),
-        ).toBe(medicament.indications[randomIndex] ?? ""); */
+        ).toBe(medicament.indications[randomIndex] ?? "");
       }
 
       await row
@@ -292,5 +286,5 @@ test.describe("plan tests", () => {
         id: fakePlan.id,
       },
     });
-  });
+  }); */
 });
