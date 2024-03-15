@@ -84,7 +84,7 @@ export const registerAction = guestAction(registerSchema, async (input) => {
             await prisma.user.count({ where: { approvedAt: null } })
           ).toString()} en attente`,
           headers: {
-            Tags: "+1",
+            Tags: "+1,robot",
             Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
           },
         });
@@ -109,7 +109,7 @@ export const registerAction = guestAction(registerSchema, async (input) => {
         ).toString()} en attente`,
         headers: {
           Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
-          Click: getUrl("/admin/users"),
+          Click: getUrl(routes.users() as `/${string}`),
           Tags: "+1",
           Title: `Nouvelle inscription sur plandeprise.fr`,
         },
