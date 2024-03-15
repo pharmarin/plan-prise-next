@@ -62,7 +62,11 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const medics = usePlanStore((state) => state.medics);
 
   const [searchValue, setSearchValue] = useState("");
-  const setSearchValueDebounced = debounce(setSearchValue, 500);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const setSearchValueDebounced = useCallback(
+    debounce(setSearchValue, 500),
+    [],
+  );
   const [
     { data: searchResults, isLoading: isLoadingResults, reset },
     findManyMedics,
