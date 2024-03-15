@@ -15,7 +15,7 @@ export const approveUserAction = adminAction(
     const user = exclude(
       await prisma.user.update({
         where: { id: userId },
-        data: { approvedAt: new Date() },
+        data: { approvedAt: new Date(), certificate: null },
       }),
       ["password"],
     );
