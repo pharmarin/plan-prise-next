@@ -8,7 +8,14 @@ export * from "@prisma/client";
 
 const extendedClient = () => {
   const prisma = new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+    log:
+      process.env.NODE_ENV === "development"
+        ? [
+            "error",
+            "warn",
+            ...(process.env.PRISMA_LOG === "true" ? (["query"] as const) : []),
+          ]
+        : ["error"],
   });
 
   return prisma.$extends({

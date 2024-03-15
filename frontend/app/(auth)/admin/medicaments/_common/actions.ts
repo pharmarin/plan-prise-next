@@ -24,6 +24,7 @@ export const findManyPrincipesActifsAction = adminAction(
       where: {
         denomination: {
           contains: query,
+          mode: "insensitive",
         },
       },
       take: 10,
