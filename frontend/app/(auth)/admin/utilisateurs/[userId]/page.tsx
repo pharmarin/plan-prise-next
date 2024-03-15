@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import TestButton from "@/app/(auth)/admin/utilisateurs/[userId]/approve-button";
+import DeleteButton from "@/app/(auth)/admin/utilisateurs/[userId]/delete-button";
 import RPPSField from "@/app/(auth)/admin/utilisateurs/[userId]/rpps-field";
-import { deleteUserAction } from "@/app/(auth)/admin/utilisateurs/actions";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 import { Badge } from "@plan-prise/ui/badge";
-import { Button } from "@plan-prise/ui/button";
 import ShowPDF from "@plan-prise/ui/components/render-pdf";
 import { Label } from "@plan-prise/ui/label";
 
@@ -91,13 +90,7 @@ const User = async ({ params }: { params: unknown }) => {
             </div>
           )}
         </div>
-        <Button
-          className="text-red-500"
-          onClick={() => deleteUserAction({ userId: user.id })}
-          variant="link"
-        >
-          Supprimer
-        </Button>
+        <DeleteButton userId={user.id} />
       </div>
     </>
   );
