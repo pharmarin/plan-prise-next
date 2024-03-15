@@ -67,7 +67,7 @@ const MedicClient = ({
   const [{ isLoading: isDeleting }, deleteMedic] =
     useAsyncCallback(deleteMedicAction);
 
-  const setNavigation = useNavigationState((state) => state.setNavigation);
+  const setOptions = useNavigationState((state) => state.setOptions);
 
   const form = useForm<z.infer<typeof upsertMedicSchema>>({
     resolver: zodResolver(upsertMedicSchema),
@@ -141,14 +141,8 @@ const MedicClient = ({
     .find((commentaire) => commentaire.draft);
 
   useEffect(() => {
-    setNavigation({
-      title: medicament
-        ? readOnly
-          ? medicament.denomination
-          : `Modification de ${medicament.denomination}`
-        : "Ajout d'un médicament",
-      returnTo: routes.medicaments(),
-      options: mergeArray<NavigationItem>(
+    setOptions(
+      mergeArray<NavigationItem>(
         isSubmitting
           ? {
               icon: "loading" as const,
@@ -178,14 +172,14 @@ const MedicClient = ({
                 event: EVENTS.DELETE_MEDIC,
               }),
       ),
-    });
+    );
   }, [
     draftComment,
     isDeleting,
     isSubmitting,
     medicament,
     readOnly,
-    setNavigation,
+    setOptions,
   ]);
 
   const indicationsFieldArray = useFieldArray({
