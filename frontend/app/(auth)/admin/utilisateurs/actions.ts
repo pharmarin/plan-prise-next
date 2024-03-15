@@ -32,3 +32,12 @@ export const approveUserAction = adminAction(
     return MUTATION_SUCCESS;
   },
 );
+
+export const deleteUserAction = adminAction(
+  z.object({ userId: z.string().cuid2() }),
+  async ({ userId }) => {
+    await prisma.user.delete({ where: { id: userId } });
+
+    return MUTATION_SUCCESS;
+  },
+);
