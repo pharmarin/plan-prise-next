@@ -106,7 +106,10 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
    * NAVBAR
    */
 
-  const setNavigation = useNavigationState((state) => state.setNavigation);
+  const { setOptions, setTitle } = useNavigationState((state) => ({
+    setOptions: state.setOptions,
+    setTitle: state.setTitle,
+  }));
   const isSaving = usePlanStore((state) => state.isSaving);
   const canPrint = usePlanStore((state) => state.canPrint);
 
@@ -126,72 +129,60 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   });
 
   useEffect(() => {
-    setNavigation({
-      title:
-        plan.displayId > 0
-          ? `Plan de prise n°${plan.displayId}`
-          : "Nouveau plan de prise",
-      returnTo: routes.plans(),
-      options:
-        ready && (medics ?? []).length > 0
-          ? [
-              {
-                icon: isSaving ? "loading" : "checkCircle",
-                className: cn(
-                  "plan-loading-state",
-                  isSaving
-                    ? "animate-spin text-teal-900 plan-is-saving"
-                    : "text-teal-600 plan-saved",
-                ),
-                path: "",
-                tooltip: isSaving
-                  ? "⏳ Sauvegarde en cours"
-                  : "✅ Plan de prise sauvegardé",
-              },
-              {
-                icon: isDeleting ? "loading" : "trash",
-                className: "rounded-full bg-red-700 p-1 text-white",
-                event: EVENTS.DELETE_PLAN,
-                tooltip: "Supprimer le plan de prise",
-              },
-              {
-                icon: "settings",
-                className: cn(
-                  "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
-                  {
-                    "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
-                  },
-                ),
-                disabled: plan.id === PLAN_NEW,
-                event: EVENTS.TOGGLE_SETTINGS,
-              },
-              {
-                icon: "printer",
-                className: cn("rounded-full bg-green-700 p-1 text-white", {
-                  "cursor-not-allowed bg-gray-600":
-                    canPrint !== true || isSaving,
-                }),
-                event: EVENTS.PRINT_PLAN,
-                tooltip:
-                  !isSaving && canPrint === true
-                    ? "Imprimer le plan de prise"
-                    : !isSaving && typeof canPrint === "string"
-                      ? canPrint
-                      : "Vous ne pouvez pas imprimer actuellement",
-              },
-            ]
-          : [],
-    });
-  }, [
-    canPrint,
-    isDeleting,
-    isSaving,
-    medics,
-    plan.displayId,
-    plan.id,
-    ready,
-    setNavigation,
-  ]);
+    plan.displayId > 0 && setTitle(`Plan de prise n°${plan.displayId}`);
+  }, [plan.displayId, setTitle]);
+
+  useEffect(() => {
+    setOptions(
+      ready && (medics ?? []).length > 0
+        ? [
+            {
+              icon: isSaving ? "loading" : "checkCircle",
+              className: cn(
+                "plan-loading-state",
+                isSaving
+                  ? "animate-spin text-teal-900 plan-is-saving"
+                  : "text-teal-600 plan-saved",
+              ),
+              path: "",
+              tooltip: isSaving
+                ? "⏳ Sauvegarde en cours"
+                : "✅ Plan de prise sauvegardé",
+            },
+            {
+              icon: isDeleting ? "loading" : "trash",
+              className: "rounded-full bg-red-700 p-1 text-white",
+              event: EVENTS.DELETE_PLAN,
+              tooltip: "Supprimer le plan de prise",
+            },
+            {
+              icon: "settings",
+              className: cn(
+                "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
+                {
+                  "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
+                },
+              ),
+              disabled: plan.id === PLAN_NEW,
+              event: EVENTS.TOGGLE_SETTINGS,
+            },
+            {
+              icon: "printer",
+              className: cn("rounded-full bg-green-700 p-1 text-white", {
+                "cursor-not-allowed bg-gray-600": canPrint !== true || isSaving,
+              }),
+              event: EVENTS.PRINT_PLAN,
+              tooltip:
+                !isSaving && canPrint === true
+                  ? "Imprimer le plan de prise"
+                  : !isSaving && typeof canPrint === "string"
+                    ? canPrint
+                    : "Vous ne pouvez pas imprimer actuellement",
+            },
+          ]
+        : [],
+    );
+  }, [canPrint, isDeleting, isSaving, medics, plan.id, ready, setOptions]);
 
   if (!ready) {
     return <LoadingScreen />;

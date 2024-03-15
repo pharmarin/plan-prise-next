@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import EditMedicClient from "@/app/(auth)/admin/medicaments/_common/client";
 import { routes } from "@/app/routes-schema";
+import { Navigation } from "@/app/state-navigation";
 
 import prisma from "@plan-prise/db-prisma";
 
@@ -14,7 +15,15 @@ const MedicServer = async ({ params }: { params: unknown }) => {
       include: { commentaires: true, precaution: true, principesActifs: true },
     });
 
-    return <EditMedicClient medicament={medicament} />;
+    return (
+      <>
+        <Navigation
+          title={`Modification de ${medicament.denomination}`}
+          returnTo={routes.medicaments()}
+        />
+        <EditMedicClient medicament={medicament} />
+      </>
+    );
   } catch (error) {
     notFound();
   }
