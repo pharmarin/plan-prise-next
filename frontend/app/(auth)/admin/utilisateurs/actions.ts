@@ -15,7 +15,7 @@ export const approveUserAction = adminAction(
     const user = exclude(
       await prisma.user.update({
         where: { id: userId },
-        data: { approvedAt: new Date() },
+        data: { approvedAt: new Date(), certificate: null },
       }),
       ["password"],
     );
@@ -28,6 +28,15 @@ export const approveUserAction = adminAction(
         error,
       );
     }
+
+    return MUTATION_SUCCESS;
+  },
+);
+
+export const deleteUserAction = adminAction(
+  z.object({ userId: z.string().cuid2() }),
+  async ({ userId }) => {
+    await prisma.user.delete({ where: { id: userId } });
 
     return MUTATION_SUCCESS;
   },

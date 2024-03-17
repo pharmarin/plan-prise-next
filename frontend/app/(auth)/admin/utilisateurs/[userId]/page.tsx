@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import TestButton from "@/app/(auth)/admin/utilisateurs/[userId]/approve-button";
+import DeleteButton from "@/app/(auth)/admin/utilisateurs/[userId]/delete-button";
 import RPPSField from "@/app/(auth)/admin/utilisateurs/[userId]/rpps-field";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
@@ -56,7 +57,7 @@ const User = async ({ params }: { params: unknown }) => {
               <Link href={`mailto:${user.email}`}>{user.email || ""}</Link>
             </div>
           </div>
-          {user.student ? (
+          {user.student && user.certificate ? (
             <div className="space-y-1">
               <Label>Justificatif d&apos;inscription</Label>
               <div>
@@ -78,7 +79,7 @@ const User = async ({ params }: { params: unknown }) => {
                     return <ShowPDF file={user.certificate} />;
                   }
 
-                  throw new PP_Error("UNEXPECTED_FILE_TYPE");
+                  new PP_Error("UNEXPECTED_FILE_TYPE").message;
                 })()}
               </div>
             </div>
@@ -89,6 +90,7 @@ const User = async ({ params }: { params: unknown }) => {
             </div>
           )}
         </div>
+        <DeleteButton userId={user.id} />
       </div>
     </>
   );

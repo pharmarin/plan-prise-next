@@ -31,21 +31,28 @@ export const findManyMedicsAction = authAction(
   z.object({
     query: z.string(),
   }),
-  async ({ query }) =>
-    query && query.length > 0
-      ? prisma.medicament.findMany({
-          where: {
-            denomination: {
-              contains: query,
+  async ({ query }) => {
+    const results =
+      query && query.length > 0
+        ? await prisma.medicament.findMany({
+            where: {
+              denomination: {
+                contains: query,
+                mode: "insensitive",
+              },
             },
-          },
-          select: {
-            id: true,
-            denomination: true,
-            principesActifs: true,
-          },
-        })
-      : [],
+            select: {
+              id: true,
+              denomination: true,
+              principesActifs: true,
+            },
+          })
+        : [];
+
+    console.log("results: ", results);
+
+    return results;
+  },
 );
 
 export const findPrecautionsAction = authAction(

@@ -12,7 +12,7 @@ type PlanFixture = {
 
 const getRandomMedics = async () =>
   await prisma.$queryRawUnsafe<Medicament[]>(
-    `SELECT * FROM medicaments ORDER BY RAND() LIMIT ${faker.number.int({ max: 30, min: 1 })};`,
+    `SELECT * FROM medicaments ORDER BY RANDOM() LIMIT ${faker.number.int({ max: 30, min: 1 })};`,
   );
 
 export const getFakePlan = (

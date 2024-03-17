@@ -47,6 +47,7 @@ type State = {
 type Actions = {
   setNavigation: (state: State) => void;
   setOptions: (options: State["options"]) => void;
+  setTitle: (title: State["title"]) => void;
 };
 
 const initialState: State = {
@@ -63,6 +64,10 @@ export const useNavigationState = create(
     setOptions: (options) =>
       setState((state) => {
         state.options = options;
+      }),
+    setTitle: (title) =>
+      setState((state) => {
+        state.title = title;
       }),
   })),
 );
