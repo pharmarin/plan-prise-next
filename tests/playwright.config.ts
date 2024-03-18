@@ -79,6 +79,8 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     env: {
       CI: "true",
+      RECAPTCHA_SECRET: "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
+      NEXT_PUBLIC_CAPTCHA_SITE_KEY: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     },
   },
 });
