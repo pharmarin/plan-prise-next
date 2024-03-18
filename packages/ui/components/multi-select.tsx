@@ -11,6 +11,7 @@ import {
   CommandEmpty,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "../shadcn/ui/command";
 import { FormControl } from "../shadcn/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "../shadcn/ui/popover";
@@ -122,45 +123,47 @@ const MultiSelect = <
             placeholder={searchPlaceholder}
             className="h-9"
           />
-          {isLoading && (
-            <CommandLoading>Chargement en cours... </CommandLoading>
-          )}
-          {selectOptions.length === 0 && (
-            <CommandEmpty>Aucun résultat...</CommandEmpty>
-          )}
-          {selectOptions.map((option) => {
-            const isSelected = !!values.find(
-              (value) => value[keys.value] === option[keys.value],
-            );
-            return (
-              <CommandItem
-                key={option[keys.value]}
-                onSelect={() => {
-                  if (isSelected) {
-                    onChange(
-                      values.filter(
-                        (value) => value[keys.value] !== option[keys.value],
-                      ),
-                    );
-                  } else {
-                    onChange([...values, option]);
-                  }
-                }}
-              >
-                <div
-                  className={cn(
-                    "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                    isSelected
-                      ? "bg-primary text-primary-foreground"
-                      : "opacity-50 [&_svg]:invisible",
-                  )}
+          <CommandList>
+            {isLoading && (
+              <CommandLoading>Chargement en cours... </CommandLoading>
+            )}
+            {selectOptions.length === 0 && (
+              <CommandEmpty>Aucun résultat...</CommandEmpty>
+            )}
+            {selectOptions.map((option) => {
+              const isSelected = !!values.find(
+                (value) => value[keys.value] === option[keys.value],
+              );
+              return (
+                <CommandItem
+                  key={option[keys.value]}
+                  onSelect={() => {
+                    if (isSelected) {
+                      onChange(
+                        values.filter(
+                          (value) => value[keys.value] !== option[keys.value],
+                        ),
+                      );
+                    } else {
+                      onChange([...values, option]);
+                    }
+                  }}
                 >
-                  <CheckIcon className={cn("h-4 w-4")} />
-                </div>
-                <span>{option[keys.label]}</span>
-              </CommandItem>
-            );
-          })}
+                  <div
+                    className={cn(
+                      "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                      isSelected
+                        ? "bg-primary text-primary-foreground"
+                        : "opacity-50 [&_svg]:invisible",
+                    )}
+                  >
+                    <CheckIcon className={cn("h-4 w-4")} />
+                  </div>
+                  <span>{option[keys.label]}</span>
+                </CommandItem>
+              );
+            })}
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
