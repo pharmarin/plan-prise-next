@@ -107,11 +107,7 @@ const PrintPDF = ({
                     : ""
                 }`}
               >
-                {
-                  PlanPrisePosologies[
-                    posologie as keyof typeof PlanPrisePosologies
-                  ]
-                }
+                {PlanPrisePosologies[posologie]}
               </Header>
             ))}
             <Header>Commentaires</Header>
@@ -231,9 +227,7 @@ const PrintPDF = ({
                       PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.body
                     } p-0`}
                   >
-                    {rowData?.posologies?.[
-                      posologie as keyof typeof PlanPrisePosologies
-                    ] ?? ""}
+                    {rowData?.posologies?.[posologie] ?? ""}
                   </Cell>
                 ))}
                 <Cell alignLeft>
