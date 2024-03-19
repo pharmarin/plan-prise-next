@@ -2,9 +2,9 @@ import { env } from "../../env.mjs";
 
 const checkRecaptcha = async (
   gRecaptchaToken: string,
-): Promise<number | undefined> => {
-  return process.env.NODE_ENV === "test"
-    ? await new Promise((resolve) => resolve(0.9))
+): Promise<number | undefined> =>
+  process.env.CI === "true"
+    ? 0.9
     : await fetch("https://www.google.com/recaptcha/api/siteverify", {
         method: "POST",
         headers: {
@@ -15,6 +15,5 @@ const checkRecaptcha = async (
         .then((reCaptchaRes) => reCaptchaRes.json())
         .then((reCaptchaRes) => reCaptchaRes?.score as number | undefined)
         .catch(() => undefined);
-};
 
 export default checkRecaptcha;

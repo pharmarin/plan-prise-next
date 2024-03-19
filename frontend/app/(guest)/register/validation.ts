@@ -66,11 +66,6 @@ export const registerSchemaStep2 = z
 
 export const registerSchema = registerSchemaStep1.and(registerSchemaStep2).and(
   z.object({
-    recaptcha:
-      typeof window !== "undefined"
-        ? // client-only
-          z.string().optional()
-        : // server-only
-          z.string(),
+    recaptcha: z.string().or(z.null()).optional(),
   }),
 );

@@ -5,12 +5,10 @@ import { hashPassword } from "@plan-prise/auth/lib/password-utils";
 import type { User } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/tests/helpers/prisma";
 import { fakeUserBase } from "@plan-prise/tests/helpers/user";
-import { ForgotPasswordPage } from "@plan-prise/tests/pages/auth/forgot-password.page";
 import { LoginPage } from "@plan-prise/tests/pages/auth/login.page";
 import { RegisterPage } from "@plan-prise/tests/pages/auth/register.page";
 
 type AuthFixtures = {
-  forgotPasswordPage: ForgotPasswordPage;
   loginPage: LoginPage;
   registerPage: RegisterPage;
   fakeUserApproved: User;
@@ -20,11 +18,6 @@ type AuthFixtures = {
 };
 
 export const authTest = base.extend<AuthFixtures>({
-  forgotPasswordPage: async ({ page }, use) => {
-    const forgotPasswordPage = new ForgotPasswordPage(page);
-    await forgotPasswordPage.goto();
-    await use(forgotPasswordPage);
-  },
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
