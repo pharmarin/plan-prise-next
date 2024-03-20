@@ -49,9 +49,13 @@ export class RegisterPage {
   }
 
   async submitForm() {
-    const response = this.page.waitForResponse(
-      (response) => new URL(response.url()).pathname === `/register`,
-    );
+    const response = this.page.waitForResponse((response) => {
+      //console.log("response: ", response, await response.text());
+      return (
+        new URL(response.url()).pathname === `/register` &&
+        response.request().method() === "POST"
+      );
+    });
 
     await this.page.click('button[type="submit"]');
     await response;

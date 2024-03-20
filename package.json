@@ -17,7 +17,7 @@
     "typecheck": "turbo typecheck --filter=!@plan-prise/db-migration"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.2.0",
+    "@ianvs/prettier-plugin-sort-imports": "4.2.1",
     "@manypkg/cli": "0.21.3",
     "@plan-prise/api": "0.1.0",
     "@plan-prise/auth": "^0.1.0",
@@ -28,14 +28,14 @@
     "@plan-prise/tsconfig": "^0.1.0",
     "@prettier/plugin-php": "0.22.2",
     "@turbo/gen": "1.12.5",
-    "@types/node": "20.11.28",
+    "@types/node": "20.11.30",
     "eslint": "8.57.0",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.12",
     "turbo": "1.12.5",
     "typescript": "5.4.2"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@8.15.5",
   "eslintConfig": {
     "extends": [
       "@plan-prise/eslint-config/base"

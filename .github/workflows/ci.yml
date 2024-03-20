@@ -12,8 +12,8 @@ env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-  RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
-  NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+  RECAPTCHA_SECRET: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+  NEXT_PUBLIC_CAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
   NEXTAUTH_URL: http://127.0.0.1:3000
   CROSS_SITE_SECRET: ${{ secrets.CROSS_SITE_SECRET }}
   BACKEND_URL: https://api.plandeprise.fr
@@ -68,11 +68,6 @@ jobs:
 
       - name: Build, lint and type-check
         run: pnpm turbo lint typecheck --filter=!@plan-prise/db-migration
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          PRISMA_GENERATE: "prisma generate --schema=./src/schema.cockroach.prisma"
 
       - name: Format
         id: prettier
