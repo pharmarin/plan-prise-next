@@ -202,7 +202,7 @@ const MedicClient = ({
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <fieldset className="space-y-4" disabled={readOnly}>
+          <fieldset className="space-y-4" disabled={readOnly || undefined}>
             <FormServerError />
             <FormField
               control={form.control}
