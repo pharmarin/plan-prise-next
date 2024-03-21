@@ -43,8 +43,5 @@
       "@plan-prise/eslint-config/base"
     ]
   },
-  "prettier": "@plan-prise/prettier-config",
-  "prisma": {
-    "schema": "./src/schema.prisma"
-  }
+  "prettier": "@plan-prise/prettier-config"
 }
