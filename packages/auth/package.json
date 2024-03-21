@@ -41,7 +41,7 @@
     "@types/bcryptjs": "2.4.6",
     "@types/react": "18.2.67",
     "eslint": "8.57.0",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   },
   "eslintConfig": {
     "extends": [
