@@ -47,16 +47,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Setup nextjs cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/frontend/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
       - name: Install deps (with cache)
         run: pnpm install
 
@@ -117,7 +107,7 @@ jobs:
         with:
           path: |
             ~/.npm
-            ${{ github.workspace }}/frontend/.next/cache
+            ${{ github.workspace }}/frontend/.next
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
@@ -128,7 +118,7 @@ jobs:
       - name: Build project
         run: pnpm build
 
-  auth-test:
+  tests:
     runs-on: ubuntu-latest
     needs: build
     strategy:
@@ -166,7 +156,7 @@ jobs:
         with:
           path: |
             ~/.npm
-            ${{ github.workspace }}/frontend/.next/cache
+            ${{ github.workspace }}/frontend/.next
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
