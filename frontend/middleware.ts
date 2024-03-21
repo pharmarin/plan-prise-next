@@ -4,11 +4,6 @@ import { GUEST_ROUTES, routes } from "@/app/routes-schema";
 import { env } from "@/env.mjs";
 import { getToken } from "next-auth/jwt";
 
-import { signJWT } from "@plan-prise/api/utils/json-web-token";
-
-const toLegacy = (path: string, destination?: string) =>
-  env.BACKEND_URL + (destination ?? path);
-
 const redirectTo = (request: NextRequest, pathAndSearch: string) => {
   const url = request.nextUrl.clone();
   const [path, search] = pathAndSearch.split("?");
@@ -23,36 +18,6 @@ export const middleware = async (request: NextRequest) => {
 
   if (env.MAINTENANCE_MODE) {
     return NextResponse.rewrite(new URL("/maintenance", request.url));
-  }
-
-  // LEGACY ROUTES
-
-  if (pathname.startsWith("/ajax") || pathname.startsWith("/calendrier")) {
-    const legacyUrl = toLegacy(pathname) + request.nextUrl.search;
-    const requestHeaders = new Headers(request.headers);
-
-    if (token) {
-      requestHeaders.append(
-        "Authorization",
-        await signJWT({ user_id: token.user.id }),
-      );
-    }
-
-    return NextResponse.rewrite(legacyUrl, {
-      request: { headers: requestHeaders },
-    });
-  }
-
-  if (
-    pathname.startsWith("/css") ||
-    pathname.startsWith("/fonts") ||
-    pathname.startsWith("/js") ||
-    pathname.startsWith("/img") ||
-    pathname.startsWith("/files")
-  ) {
-    const legacyUrl = toLegacy(pathname) + request.nextUrl.search;
-
-    return NextResponse.rewrite(legacyUrl);
   }
 
   // GUEST ROUTES
