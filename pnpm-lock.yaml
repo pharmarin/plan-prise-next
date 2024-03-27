@@ -134,7 +134,7 @@ importers:
     dependencies:
       '@tailwindcss/typography':
         specifier: 0.5.10
-        version: 0.5.10(tailwindcss@3.4.1)
+        version: 0.5.10(tailwindcss@3.4.3)
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -142,11 +142,11 @@ importers:
         specifier: 8.4.38
         version: 8.4.38
       tailwindcss:
-        specifier: 3.4.1
-        version: 3.4.1
+        specifier: 3.4.3
+        version: 3.4.3
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.1)
+        version: 1.0.7(tailwindcss@3.4.3)
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: ^0.2.0
@@ -224,7 +224,7 @@ importers:
         version: 8.15.0(react-dom@18.2.0)(react@18.2.0)
       '@tremor/react':
         specifier: 3.14.1
-        version: 3.14.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1)
+        version: 3.14.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.3)
       '@vercel/analytics':
         specifier: 1.2.2
         version: 1.2.2(next@14.1.1)(react@18.2.0)
@@ -335,8 +335,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2(webpack@5.91.0)
       tailwindcss:
-        specifier: 3.4.1
-        version: 3.4.1
+        specifier: 3.4.3
+        version: 3.4.3
       webpack:
         specifier: 5.91.0
         version: 5.91.0
@@ -616,7 +616,7 @@ importers:
         version: 3.4.1(react@18.2.0)
       '@tailwindcss/typography':
         specifier: 0.5.10
-        version: 0.5.10(tailwindcss@3.4.1)
+        version: 0.5.10(tailwindcss@3.4.3)
       '@tanstack/react-table':
         specifier: 8.15.0
         version: 8.15.0(react-dom@18.2.0)(react@18.2.0)
@@ -658,7 +658,7 @@ importers:
         version: 2.2.2
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.1)
+        version: 1.0.7(tailwindcss@3.4.3)
       usehooks-ts:
         specifier: 3.0.2
         version: 3.0.2(react@18.2.0)
@@ -682,8 +682,8 @@ importers:
         specifier: 8.57.0
         version: 8.57.0
       tailwindcss:
-        specifier: 3.4.1
-        version: 3.4.1
+        specifier: 3.4.3
+        version: 3.4.3
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -1213,13 +1213,13 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@headlessui/tailwindcss@0.2.0(tailwindcss@3.4.1):
+  /@headlessui/tailwindcss@0.2.0(tailwindcss@3.4.3):
     resolution: {integrity: sha512-fpL830Fln1SykOCboExsWr3JIVeQKieLJ3XytLe/tt1A0XzqUthOftDmjcCYLW62w7mQI7wXcoPXr3tZ9QfGxw==}
     engines: {node: '>=10'}
     peerDependencies:
       tailwindcss: ^3.0
     dependencies:
-      tailwindcss: 3.4.1
+      tailwindcss: 3.4.3
     dev: false
 
   /@hookform/resolvers@3.3.4(react-hook-form@7.51.1):
@@ -2796,7 +2796,7 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@tailwindcss/typography@0.5.10(tailwindcss@3.4.1):
+  /@tailwindcss/typography@0.5.10(tailwindcss@3.4.3):
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
@@ -2805,7 +2805,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.1
+      tailwindcss: 3.4.3
     dev: false
 
   /@tanstack/react-table@8.15.0(react-dom@18.2.0)(react@18.2.0):
@@ -2844,7 +2844,7 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: false
 
-  /@tremor/react@3.14.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1):
+  /@tremor/react@3.14.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.3):
     resolution: {integrity: sha512-0LMxFIeBXsAaPnR6mXRK4fbZaTNLFfVngFpoOt+6Tf797k/c6yUkB48/QPB5vO02qzkV74D91hng9r6HwfDW5g==}
     peerDependencies:
       react: ^18.0.0
@@ -2852,7 +2852,7 @@ packages:
     dependencies:
       '@floating-ui/react': 0.19.2(react-dom@18.2.0)(react@18.2.0)
       '@headlessui/react': 1.7.18(react-dom@18.2.0)(react@18.2.0)
-      '@headlessui/tailwindcss': 0.2.0(tailwindcss@3.4.1)
+      '@headlessui/tailwindcss': 0.2.0(tailwindcss@3.4.3)
       date-fns: 2.30.0
       react: 18.2.0
       react-day-picker: 8.9.1(date-fns@2.30.0)(react@18.2.0)
@@ -6036,8 +6036,8 @@ packages:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  /jiti@1.20.0:
-    resolution: {integrity: sha512-3TV69ZbrvV6U5DfQimop50jE9Dl6J8O1ja1dvBbMba/sZ3YBEQqJ2VZRoQPVnhlzjNtU1vaXRZVrVjU4qtm8yA==}
+  /jiti@1.21.0:
+    resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
   /jju@1.4.0:
@@ -7448,7 +7448,7 @@ packages:
     resolution: {integrity: sha512-RREimnynuF0WAsATdYWhJATY5oNAUp9Ib07JE3Pl5oQW07R5T002xjfXk06e9BPh50DvMm9qZkDglZ7u4xzySQ==}
     dependencies:
       '@react-pdf/renderer': 3.4.1(react@18.2.0)
-      tailwindcss: 3.4.1
+      tailwindcss: 3.4.3
     transitivePeerDependencies:
       - encoding
       - react
@@ -8309,16 +8309,16 @@ packages:
       '@babel/runtime': 7.24.1
     dev: false
 
-  /tailwindcss-animate@1.0.7(tailwindcss@3.4.1):
+  /tailwindcss-animate@1.0.7(tailwindcss@3.4.3):
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
-      tailwindcss: 3.4.1
+      tailwindcss: 3.4.3
     dev: false
 
-  /tailwindcss@3.4.1:
-    resolution: {integrity: sha512-qAYmXRfk3ENzuPBakNK0SRrUDipP8NQnEY6772uDhflcQz5EhRdD7JNZxyrFHVQNCwULPBn6FNPp9brpO7ctcA==}
+  /tailwindcss@3.4.3:
+    resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -8330,7 +8330,7 @@ packages:
       fast-glob: 3.3.1
       glob-parent: 6.0.2
       is-glob: 4.0.3
-      jiti: 1.20.0
+      jiti: 1.21.0
       lilconfig: 2.1.0
       micromatch: 4.0.5
       normalize-path: 3.0.0
