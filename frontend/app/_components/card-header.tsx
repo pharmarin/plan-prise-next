@@ -1,11 +1,11 @@
-import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
 import { extractVoieAdministration } from "@/utils/medicament";
 import { XIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "@plan-prise/ui/button";
+import CardHeaderUI from "@plan-prise/ui/components/card-header";
 
-const PlanCardHeader = ({
+const CardHeader = ({
   medicament,
   removeMedic,
 }: {
@@ -13,7 +13,7 @@ const PlanCardHeader = ({
   removeMedic: (medicament: PP.Medicament.Identifier) => void;
 }) => {
   return (
-    <PlanCardHeaderUI
+    <CardHeaderUI
       buttons={
         <Button
           className="space-x-1 rounded-full bg-white py-0 text-red-500"
@@ -64,8 +64,8 @@ const PlanCardHeader = ({
           ${extractVoieAdministration(medicament).join(" ou ")}`}
         </small>
       </div>
-    </PlanCardHeaderUI>
+    </CardHeaderUI>
   );
 };
 
-export default PlanCardHeader;
+export default CardHeader;

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-const PlanCardHeaderUI = ({
+const CardHeader = ({
   children,
   buttons,
 }: {
@@ -17,4 +17,4 @@ const PlanCardHeaderUI = ({
   );
 };
 
-export default PlanCardHeaderUI;
+export default CardHeader;

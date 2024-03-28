@@ -1,11 +1,8 @@
-"use client";
+import Card from "./card";
+import CardHeader from "./card-header";
+import Logo from "./navigation/Logo";
 
-import PlanCardHeaderUI from "@/app/(auth)/plan/_components/_ui/PlanCardHeaderUI";
-import PlanCardUI from "@/app/(auth)/plan/_components/_ui/PlanCardUI";
-
-import Logo from "@plan-prise/ui/components/navigation/Logo";
-
-const PlanCardLoading = (
+const CardLoading = (
   props:
     | {
         denomination: string;
@@ -14,8 +11,8 @@ const PlanCardLoading = (
     | { type: "fetching" },
 ) => {
   return (
-    <PlanCardUI>
-      <PlanCardHeaderUI>
+    <Card>
+      <CardHeader>
         <div className="absolute inset-0 z-10 flex flex-row items-center justify-center space-x-4 font-bold">
           <Logo className="animate-pulse text-base" />
           <span className="text-gray-700">
@@ -31,9 +28,9 @@ const PlanCardLoading = (
           <small className="mb-2 h-4 w-1/2 rounded bg-gray-300"></small>
           <small className="h-4 w-1/4 rounded bg-gray-300"></small>
         </div>
-      </PlanCardHeaderUI>
-    </PlanCardUI>
+      </CardHeader>
+    </Card>
   );
 };
 
-export default PlanCardLoading;
+export default CardLoading;
