@@ -1,12 +1,10 @@
 name: CI
 
 on:
-  create:
   pull_request:
     branches: ["*"]
   push:
-    branches: ["main"]
-  merge_group:
+    branches: ["renovate/**"]
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
