@@ -22,7 +22,6 @@ const Calendar = async ({ params }: { params: unknown }) => {
           returnTo={routes.calendars()}
         />
         <CalendarClient calendar={calendar} />
-        <p className="font-mono">{JSON.stringify(calendar)}</p>
       </div>
     );
   } catch (e) {
