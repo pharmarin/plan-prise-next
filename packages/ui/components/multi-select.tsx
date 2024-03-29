@@ -89,7 +89,9 @@ const MultiSelect = <
                 </Badge>
               ))
             ) : (
-              <span className="mr-auto text-sm">{placeholder}</span>
+              <span className="mr-auto text-sm text-gray-500">
+                {placeholder}
+              </span>
             )}
           </div>
           <div className="flex flex-shrink-0 items-center self-stretch px-1 text-muted-foreground/60">

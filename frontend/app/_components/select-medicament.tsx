@@ -24,6 +24,7 @@ const MedicamentSelect = ({
           ? (await debouncedFindManyMedicsAction({ query: value }))?.data ?? []
           : []
       }
+      placeholder="Ajouter un médicament"
     />
   );
 };
