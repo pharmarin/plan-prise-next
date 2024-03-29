@@ -8,10 +8,15 @@ import useCalendarStore from "@/app/(auth)/calendrier/state";
 import type { Calendar } from "@prisma/client";
 import { useShallow } from "zustand/react/shallow";
 
+import errors from "@plan-prise/errors/errors.json";
+import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
+
 const CalendarClient = ({ calendar }: { calendar: Calendar }) => {
-  const medicaments = useCalendarStore((state) =>
-    Object.keys(state.data ?? {}),
-  );
+  const { toast } = useToast();
+
+  const data = useCalendarStore((state) => state.data);
+  const medicaments = Object.keys(data ?? {});
+
   const { addMedic, removeMedic } = useCalendarStore(
     useShallow((state) => ({
       addMedic: state.addMedic,
@@ -38,7 +43,18 @@ const CalendarClient = ({ calendar }: { calendar: Calendar }) => {
           )}
         />
       ))}
-      <MedicamentSelect onChange={(value) => addMedic(value.id)} />
+      <MedicamentSelect
+        onChange={(value) => {
+          if (medicaments.includes(value.id)) {
+            toast({
+              title: errors.CALENDAR_MEDICAMENT_ALREADY_ADDED_ERROR,
+              variant: "destructive",
+            });
+            return;
+          }
+          addMedic(value.id);
+        }}
+      />
     </div>
   );
 };

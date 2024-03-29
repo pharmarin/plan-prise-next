@@ -112,10 +112,12 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
    * NAVBAR
    */
 
-  const { setOptions, setTitle } = useNavigationState((state) => ({
-    setOptions: state.setOptions,
-    setTitle: state.setTitle,
-  }));
+  const { setOptions, setTitle } = useNavigationState(
+    useShallow((state) => ({
+      setOptions: state.setOptions,
+      setTitle: state.setTitle,
+    })),
+  );
   const isSaving = usePlanStore((state) => state.isSaving);
   const canPrint = usePlanStore((state) => state.canPrint);
 
