@@ -6,12 +6,18 @@ import MedicamentSelect from "@/app/_components/select-medicament";
 import CalendarCardBody from "@/app/(auth)/calendrier/[calendarId]/card-body";
 import useCalendarStore from "@/app/(auth)/calendrier/state";
 import type { Calendar } from "@prisma/client";
+import { useShallow } from "zustand/react/shallow";
 
 const CalendarClient = ({ calendar }: { calendar: Calendar }) => {
   const medicaments = useCalendarStore((state) =>
     Object.keys(state.data ?? {}),
   );
-  const addMedic = useCalendarStore((state) => state.addMedic);
+  const { addMedic, removeMedic } = useCalendarStore(
+    useShallow((state) => ({
+      addMedic: state.addMedic,
+      removeMedic: state.removeMedic,
+    })),
+  );
 
   useEffect(() => {
     useCalendarStore.setState({
@@ -26,7 +32,7 @@ const CalendarClient = ({ calendar }: { calendar: Calendar }) => {
         <Card
           key={`calendar_${calendar.id}_${medicId}`}
           medicamentId={medicId}
-          removeMedic={() => void console.log()}
+          removeMedic={() => removeMedic(medicId)}
           renderBody={(medicament) => (
             <CalendarCardBody medicament={medicament} />
           )}

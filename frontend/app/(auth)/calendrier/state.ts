@@ -18,6 +18,7 @@ type State = {
 
 type Actions = {
   addMedic: (id: string) => void;
+  removeMedic: (id: string) => void;
   setData: (path: string, value: string | boolean | Date) => void;
   pushEmptyIteration: (medicId: string) => void;
   removeIteration: (medicId: string, index: number) => void;
@@ -43,6 +44,12 @@ const useCalendarStore = create(
 
           if (!Object.keys(state.data).includes(medicId)) {
             state.data[medicId] = [];
+          }
+        }),
+      removeMedic: (medicId) =>
+        setState((state) => {
+          if (state.data?.[medicId]) {
+            delete state.data[medicId];
           }
         }),
       setData: (path, value) => {
