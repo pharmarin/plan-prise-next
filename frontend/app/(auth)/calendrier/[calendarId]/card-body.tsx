@@ -2,9 +2,10 @@ import useCalendarStore, {
   emptyIteration,
 } from "@/app/(auth)/calendrier/state";
 import { addDays, differenceInDays } from "date-fns";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, XIcon } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 
+import { Button } from "@plan-prise/ui/button";
 import DatePicker from "@plan-prise/ui/components/date-picker";
 import { Input } from "@plan-prise/ui/input";
 import { Label } from "@plan-prise/ui/label";
@@ -17,10 +18,11 @@ const CalendarCardBody = ({
   const data = useCalendarStore(
     useShallow((state) => state.data?.[medicament.id]),
   );
-  const { setData, pushEmptyIteration } = useCalendarStore(
+  const { setData, pushEmptyIteration, removeIteration } = useCalendarStore(
     useShallow((state) => ({
       setData: state.setData,
       pushEmptyIteration: state.pushEmptyIteration,
+      removeIteration: state.removeIteration,
     })),
   );
 
@@ -33,12 +35,24 @@ const CalendarCardBody = ({
               ? addDays(data?.[index - 1]?.endDate ?? new Date(), 1)
               : new Date();
 
+          if (iteration === undefined) {
+            return null;
+          }
+
           return (
             <div
               key={index}
-              className="space-y-4 rounded-lg border border-gray-200 p-4"
+              className="relative space-y-4 rounded-lg border border-gray-200 p-4"
             >
               <div className="flex items-center space-x-4">
+                <Button
+                  className="absolute right-4 top-4 h-6 w-6 rounded-full p-0"
+                  onClick={() => removeIteration(medicament.id, index)}
+                  size="sm"
+                  variant="destructive"
+                >
+                  <XIcon />
+                </Button>
                 <div className="flex flex-col space-y-4">
                   <div className="flex flex-col space-y-2">
                     <Label>Date de début</Label>
