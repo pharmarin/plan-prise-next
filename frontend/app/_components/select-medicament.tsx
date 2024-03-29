@@ -19,11 +19,26 @@ const MedicamentSelect = ({
         value: "id",
       }}
       onChange={onChange}
-      onSearchChange={async (value) =>
-        value.length > 2
-          ? (await debouncedFindManyMedicsAction({ query: value }))?.data ?? []
-          : []
-      }
+      onSearchChange={async (value) => {
+        if (value.length > 2) {
+          const results = (
+            await debouncedFindManyMedicsAction({ query: value })
+          )?.data;
+
+          if (results && results.length > 0) {
+            return results;
+          } else {
+            return [
+              {
+                denomination: `Ajouter "${value.toLocaleUpperCase()}"`,
+                id: value.toLocaleUpperCase(),
+              },
+            ];
+          }
+        } else {
+          return [] as { denomination: string; id: string }[];
+        }
+      }}
       placeholder="Ajouter un médicament"
     />
   );
