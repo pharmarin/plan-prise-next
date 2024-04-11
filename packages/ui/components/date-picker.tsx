@@ -29,62 +29,68 @@ const DatePicker = ({
   const [open, setOpen] = useState(false);
   const [hoveredDays, setHoveredDays] = useState<number>();
 
+  if (!value) {
+    value = new Date();
+  }
+
   return (
-    <Popover
-      open={open}
-      onOpenChange={(state) => {
-        setOpen(state);
-        setHoveredDays(undefined);
-      }}
-    >
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[280px] justify-start text-left font-normal",
-            !value && "text-muted-foreground",
-            inputClassName,
+    <div>
+      <Popover
+        open={open}
+        onOpenChange={(state) => {
+          setOpen(state);
+          setHoveredDays(undefined);
+        }}
+      >
+        <PopoverTrigger asChild>
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-[280px] justify-start text-left font-normal",
+              !value && "text-muted-foreground",
+              inputClassName,
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {value ? (
+              format(value, "PPP", { locale: fr })
+            ) : (
+              <span>{placeholder ?? "Choisissez une date"}</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          {placeholder && (
+            <p className="mt-2 text-center text-sm font-semibold">
+              {placeholder}
+            </p>
           )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? (
-            format(value, "PPP", { locale: fr })
-          ) : (
-            <span>{placeholder ?? "Choisissez une date"}</span>
+          <Calendar
+            defaultMonth={value}
+            disabled={disabled}
+            mode="single"
+            numberOfMonths={2}
+            onDayPointerEnter={(day) => {
+              if (daysFromDate && day >= daysFromDate) {
+                setHoveredDays(differenceInDays(day, daysFromDate) + 1);
+              } else {
+                setHoveredDays(undefined);
+              }
+            }}
+            onSelect={(date) => {
+              onChange(date);
+              setOpen(false);
+            }}
+            selected={value}
+          />
+          {daysFromDate && (
+            <p className="my-2 text-center text-sm font-semibold">
+              Sélection : {hoveredDays && `${hoveredDays} jours`}
+            </p>
           )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        {placeholder && (
-          <p className="mt-2 text-center text-sm font-semibold">
-            {placeholder}
-          </p>
-        )}
-        <Calendar
-          defaultMonth={value}
-          disabled={disabled}
-          mode="single"
-          numberOfMonths={2}
-          onDayPointerEnter={(day) => {
-            if (daysFromDate && day >= daysFromDate) {
-              setHoveredDays(differenceInDays(day, daysFromDate) + 1);
-            } else {
-              setHoveredDays(undefined);
-            }
-          }}
-          onSelect={(date) => {
-            onChange(date);
-            setOpen(false);
-          }}
-          selected={value ?? new Date()}
-        />
-        {daysFromDate && (
-          <p className="my-2 text-center text-sm font-semibold">
-            Sélection : {hoveredDays && `${hoveredDays} jours`}
-          </p>
-        )}
-      </PopoverContent>
-    </Popover>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 };
 

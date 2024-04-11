@@ -1,5 +1,6 @@
 "use client";
 
+import { toYYYYMMDD } from "@/app/(auth)/calendrier/utils";
 import { set } from "lodash-es";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
@@ -9,11 +10,10 @@ type State = {
   id?: string;
   data?: Record<
     string,
-    (Omit<PP.Calendar.DataItem, "startDate" | "endDate"> & {
-      startDate?: Date;
-      endDate?: Date;
-    })[]
+    (Partial<PP.Calendar.DataItem> & { startDate: string; endDate: string })[]
   >;
+  isSaving: boolean;
+  touched: boolean;
 };
 
 type Actions = {
@@ -22,11 +22,12 @@ type Actions = {
   setData: (path: string, value: string | boolean | Date) => void;
   pushEmptyIteration: (medicId: string) => void;
   removeIteration: (medicId: string, index: number) => void;
+  setIsSaving: (isSaving: boolean) => void;
 };
 
-export const emptyIteration = () => ({
-  startDate: undefined,
-  endDate: undefined,
+export const emptyIteration = (startDate?: Date) => ({
+  startDate: toYYYYMMDD(startDate ?? new Date()),
+  endDate: toYYYYMMDD(startDate ?? new Date()),
   frequency: 1,
   quantity: 1,
 });
@@ -36,6 +37,8 @@ const useCalendarStore = create(
     immer<State & Actions>((setState) => ({
       id: undefined,
       data: undefined,
+      isSaving: false,
+      touched: false,
       addMedic: (medicId) =>
         setState((state) => {
           if (!state.data) {
@@ -67,13 +70,33 @@ const useCalendarStore = create(
             state.data = {};
           }
 
-          state.data[medicId]?.push(emptyIteration());
+          const previousEndDate =
+            state.data[medicId]?.[(state.data[medicId] ?? [])?.length - 1]
+              ?.endDate;
+
+          state.data[medicId]?.push(
+            emptyIteration(
+              previousEndDate ? new Date(previousEndDate) : undefined,
+            ),
+          );
         }),
       removeIteration: (medicId, index) =>
         setState((state) => {
           if (state.data?.[medicId]) {
-            delete state.data[medicId]![index];
+            set(
+              state,
+              `data.${medicId}`,
+              (state.data[medicId] ?? []).filter(
+                (_id, iteration) => iteration !== index,
+              ),
+            );
           }
+        }),
+      setIsSaving: (isSaving) =>
+        setState((state) => {
+          state.isSaving = isSaving;
+
+          if (isSaving === false) state.touched = false;
         }),
     })),
   ),

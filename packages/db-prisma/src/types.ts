@@ -80,8 +80,8 @@ declare global {
   namespace PP {
     namespace Calendar {
       type DataItem = {
-        startDate: Date;
-        endDate: Date;
+        startDate: string;
+        endDate: string;
         quantity: number;
         frequency: number;
       };
