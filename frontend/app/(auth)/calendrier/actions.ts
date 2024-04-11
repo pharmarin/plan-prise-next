@@ -1,6 +1,9 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { authAction } from "@/app/_safe-actions/safe-actions";
+import { routes } from "@/app/routes-schema";
 import { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
@@ -33,5 +36,20 @@ export const saveDataAction = authAction(
     });
 
     return MUTATION_SUCCESS;
+  },
+);
+
+export const deleteAction = authAction(
+  z.object({ calendarId: z.string().cuid2() }),
+  async ({ calendarId }, { userId }) => {
+    await prisma.calendar.delete({
+      where: {
+        id: calendarId,
+        user: { id: userId },
+      },
+    });
+
+    revalidatePath(routes.calendars());
+    redirect(routes.plans());
   },
 );

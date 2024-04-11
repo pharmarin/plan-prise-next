@@ -3,10 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import Card from "@/app/_components/card";
 import MedicamentSelect from "@/app/_components/select-medicament";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import CalendarCardBody from "@/app/(auth)/calendrier/[calendarId]/card-body";
-import { saveDataAction } from "@/app/(auth)/calendrier/actions";
+import { deleteAction, saveDataAction } from "@/app/(auth)/calendrier/actions";
 import useCalendarStore from "@/app/(auth)/calendrier/state";
 import { useNavigationState } from "@/app/state-navigation";
+import { useEventListener } from "@/utils/event-listener";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Calendar, Medicament, PrincipeActif } from "@prisma/client";
 import { debounce } from "lodash-es";
@@ -16,6 +18,11 @@ import errors from "@plan-prise/errors/errors.json";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
+
+enum EVENTS {
+  DELETE_CALENDAR = "DELETE_CALENDAR",
+  PRINT_CALENDAR = "PRINT_CALENDAR",
+}
 
 const CalendarClient = ({
   calendar,
@@ -76,6 +83,13 @@ const CalendarClient = ({
   );
   const isSaving = useCalendarStore((state) => state.isSaving);
 
+  const [{ isLoading: isDeleting }, deletePlan] =
+    useAsyncCallback(deleteAction);
+
+  useEventListener(EVENTS.DELETE_CALENDAR, async () =>
+    deletePlan({ calendarId: calendar.id }),
+  );
+
   useEffect(() => {
     setOptions(
       ready && (medicamentIdArray ?? []).length > 0
@@ -93,24 +107,13 @@ const CalendarClient = ({
                 ? "⏳ Sauvegarde en cours"
                 : "✅ Plan de prise sauvegardé",
             },
-            /* {
+            {
               icon: isDeleting ? "loading" : "trash",
               className: "rounded-full bg-red-700 p-1 text-white",
-              event: EVENTS.DELETE_PLAN,
+              event: EVENTS.DELETE_CALENDAR,
               tooltip: "Supprimer le plan de prise",
             },
-            {
-              icon: "settings",
-              className: cn(
-                "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
-                {
-                  "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
-                },
-              ),
-              disabled: plan.id === PLAN_NEW,
-              event: EVENTS.TOGGLE_SETTINGS,
-            },
-            {
+            /* {
               icon: "printer",
               className: cn("rounded-full bg-green-700 p-1 text-white", {
                 "cursor-not-allowed bg-gray-600": canPrint !== true || isSaving,
@@ -126,7 +129,7 @@ const CalendarClient = ({
           ]
         : [],
     );
-  }, [isSaving, medicamentIdArray, ready, setOptions]);
+  }, [isDeleting, isSaving, medicamentIdArray, ready, setOptions]);
 
   if (!ready) {
     return <LoadingScreen />;
