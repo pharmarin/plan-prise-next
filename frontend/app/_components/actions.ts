@@ -26,7 +26,7 @@ export const findManyMedicsAction = authAction(
         ? await prisma.medicament.findMany({
             where: {
               denomination: {
-                contains: query,
+                startsWith: query,
                 mode: "insensitive",
               },
             },
@@ -34,6 +34,9 @@ export const findManyMedicsAction = authAction(
               id: true,
               denomination: true,
               principesActifs: true,
+            },
+            orderBy: {
+              denomination: "asc",
             },
           })
         : [];
