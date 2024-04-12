@@ -309,7 +309,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
           }
           onChange={async (value) => {
             if (value) {
-              if (medics && medics.includes(value.id)) {
+              if (medics?.includes(value.id)) {
                 toast({
                   title: errors.PLAN_MEDICAMENT_ALREADY_ADDED_ERROR,
                   variant: "destructive",

@@ -1,9 +1,9 @@
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deleteCommentaireAction,
   upsertCommentaireAction,
 } from "@/app/(auth)/admin/medicaments/_common/actions";
 import { upsertCommentaireFormSchema } from "@/app/(auth)/admin/medicaments/_common/validation";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Commentaire, VoieAdministration } from "@prisma/client";
@@ -44,7 +44,7 @@ const CommentaireCard = ({
   medicId?: string;
   removeFromArray: () => void;
   setDraft: (value: boolean) => void;
-  updateFromArray: (comment: Commentaire) => void;
+  updateFromArray: (comment: Commentaire | undefined) => void;
 }) => {
   const [deleteCommentaireMutation, deleteCommentaire] = useAsyncCallback(
     deleteCommentaireAction,

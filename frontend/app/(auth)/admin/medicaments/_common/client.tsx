@@ -1,9 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { transformResponse } from "@/app/_safe-actions/safe-actions";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deleteMedicAction,
   findManyPrincipesActifsAction,
@@ -11,6 +7,8 @@ import {
 } from "@/app/(auth)/admin/medicaments/_common/actions";
 import CommentaireCard from "@/app/(auth)/admin/medicaments/_common/card-commentaire";
 import { upsertMedicSchema } from "@/app/(auth)/admin/medicaments/_common/validation";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { routes } from "@/app/routes-schema";
 import type { NavigationItem } from "@/app/state-navigation";
 import { useNavigationState } from "@/app/state-navigation";
@@ -19,9 +17,10 @@ import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { mergeArray } from "@/utils/merge-array";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createId } from "@paralleldrive/cuid2";
-import type { Commentaire } from "@prisma/client";
 import { capitalize } from "lodash-es";
 import { PlusIcon, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -103,7 +102,7 @@ const MedicClient = ({
 
       setReadOnly(true);
 
-      if (!medicament) {
+      if (!medicament && response?.id) {
         router.push(
           routes.medicament({
             medicamentId: response.id,
@@ -236,6 +235,7 @@ const MedicClient = ({
                     <MultiSelect
                       disabled={readOnly}
                       keys={{ value: "id", label: "denomination" }}
+                      multiple={true}
                       onSearchChange={async (value) =>
                         (await findManyPrincipesActifsAction({
                           query: value,
@@ -261,6 +261,7 @@ const MedicClient = ({
                     <MultiSelect
                       disabled={readOnly}
                       keys={{ label: "label", value: "value" }}
+                      multiple={true}
                       onChange={(values) =>
                         field.onChange(values.map((value) => value.value))
                       }
@@ -416,7 +417,8 @@ const MedicClient = ({
                   draft: value,
                 })
               }
-              updateFromArray={(commentaire: Commentaire) => {
+              updateFromArray={(commentaire) => {
+                if (!commentaire) return;
                 commentairesCache.push(commentaire);
                 commentairesFieldArray.update(index, {
                   commentaireId: commentaire.id,
