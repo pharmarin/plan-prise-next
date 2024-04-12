@@ -134,12 +134,13 @@ const CalendarCardBody = ({
             <div className="flex flex-col space-y-2">
               <Label>Quantité à administrer</Label>
               <Input
-                onChange={(event) =>
+                onChange={(event) => {
                   setData(
                     `${medicament.id}.${index}.quantity`,
                     event.currentTarget.value,
-                  )
-                }
+                  );
+                  onInputChange();
+                }}
                 value={iteration.quantity ?? 1}
               />
             </div>
@@ -147,12 +148,13 @@ const CalendarCardBody = ({
               <Label>Fréquence d&apos;administration</Label>
               <div className="flex items-center">
                 <Input
-                  onChange={(event) =>
+                  onChange={(event) => {
                     setData(
                       `${medicament.id}.${index}.frequency`,
                       event.currentTarget.value,
-                    )
-                  }
+                    );
+                    onInputChange();
+                  }}
                   type="number"
                   value={iteration.frequency ?? 1}
                 />

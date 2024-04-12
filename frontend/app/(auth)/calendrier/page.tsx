@@ -8,9 +8,9 @@ import ModuleIndex from "@plan-prise/ui/components/module-index";
 const CalendarsIndex = async () => {
   const session = await getServerSession();
 
-  const calendars = await prisma.calendriers_old.findMany({
+  const calendars = await prisma.calendar.findMany({
     where: {
-      user: session?.user.id,
+      user: { id: session?.user.id },
     },
     /* select: { displayId: true },
     orderBy: { displayId: "asc" }, */
@@ -21,7 +21,7 @@ const CalendarsIndex = async () => {
       <Navigation title="Vos calendriers de prise" />
       <ModuleIndex
         itemRoute={(item) => routes.calendar({ calendarId: item })}
-        items={calendars.map((calendar) => calendar.id)}
+        items={calendars.map((calendar) => calendar.displayId)}
         newRoute={routes.calendarCreate()}
         testId={{ tile: "calendar-index-tile" }}
       />

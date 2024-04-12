@@ -6,36 +6,62 @@ import { authAction } from "@/app/_safe-actions/safe-actions";
 import { routes } from "@/app/routes-schema";
 import { z } from "zod";
 
-import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { CALENDAR_NEW, MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import prisma from "@plan-prise/db-prisma";
+
+const getNewDisplayId = async (userId: string) => {
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      maxId: { increment: 1 },
+    },
+    select: { maxId: true },
+  });
+
+  return user.maxId;
+};
 
 export const saveDataAction = authAction(
   z.object({
-    calendarId: z.string().cuid2(),
+    calendarId: z.union([z.literal(CALENDAR_NEW), z.string().cuid2()]),
     data: z.record(
       z.string(),
       z.array(
         z.object({
           startDate: z.string(),
           endDate: z.string(),
-          quantity: z.number().optional(),
-          frequency: z.number().optional(),
+          quantity: z.string().optional(),
+          frequency: z.coerce.number().optional(),
         }),
       ),
     ),
   }),
   async ({ calendarId, data }, { userId }) => {
-    await prisma.calendar.update({
-      where: {
-        id: calendarId,
-        user: { id: userId },
-      },
-      data: {
-        data: data,
-      },
-    });
+    if (calendarId === CALENDAR_NEW) {
+      const displayId = await getNewDisplayId(userId);
 
-    return MUTATION_SUCCESS;
+      const calendar = await prisma.calendar.create({
+        data: {
+          displayId,
+          data,
+          userId,
+        },
+      });
+
+      return calendar;
+    } else {
+      await prisma.calendar.update({
+        where: {
+          id: calendarId,
+          user: { id: userId },
+        },
+        data: {
+          data: data,
+        },
+      });
+
+      return MUTATION_SUCCESS;
+    }
   },
 );
 
@@ -50,6 +76,6 @@ export const deleteAction = authAction(
     });
 
     revalidatePath(routes.calendars());
-    redirect(routes.plans());
+    redirect(routes.calendars());
   },
 );

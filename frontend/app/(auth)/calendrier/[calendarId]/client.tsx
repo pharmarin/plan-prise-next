@@ -1,12 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Card from "@/app/_components/card";
 import MedicamentSelect from "@/app/_components/select-medicament";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import CalendarCardBody from "@/app/(auth)/calendrier/[calendarId]/card-body";
 import { deleteAction, saveDataAction } from "@/app/(auth)/calendrier/actions";
 import useCalendarStore from "@/app/(auth)/calendrier/state";
+import { routes } from "@/app/routes-schema";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
 import { isCuid } from "@paralleldrive/cuid2";
@@ -14,6 +17,7 @@ import type { Calendar, Medicament, PrincipeActif } from "@prisma/client";
 import { debounce } from "lodash-es";
 import { useShallow } from "zustand/react/shallow";
 
+import { CALENDAR_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
@@ -32,8 +36,10 @@ const CalendarClient = ({
   medicaments?: (Medicament & { principesActifs: PrincipeActif[] })[];
 }) => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const [ready, setReady] = useState(false);
+  const [firstSavePending, setFirstSavePending] = useState(false);
 
   const data = useCalendarStore((state) => state.data);
   const medicamentIdArray = Object.keys(data ?? {});
@@ -58,8 +64,45 @@ const CalendarClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
-      await saveDataAction(data);
+      const currentId = useCalendarStore.getState().id;
+
+      if (currentId === CALENDAR_NEW && firstSavePending) {
+        return undefined;
+      }
+      if (currentId === CALENDAR_NEW) {
+        setFirstSavePending(true);
+      }
+
+      const response = await saveDataAction(data)
+        .then(transformResponse)
+        .then(async (response) => {
+          if (currentId === CALENDAR_NEW) {
+            if (typeof response === "object" && "id" in response) {
+              useCalendarStore.setState({
+                id: response.id,
+                data: response.data ?? {},
+              });
+              router.replace(
+                routes.calendar({ calendarId: response.displayId }),
+              );
+              await saveFormData();
+            }
+
+            if (firstSavePending) {
+              setFirstSavePending(false);
+            }
+          }
+        })
+        .catch(() => {
+          toast({
+            title: `Impossible de mettre à jour le calendrier`,
+            description: "Veuillez réessayer",
+            variant: "destructive",
+          });
+        });
+
       setIsSaving(false);
+      return response;
     }, 2000),
     [],
   );
@@ -83,12 +126,16 @@ const CalendarClient = ({
   );
   const isSaving = useCalendarStore((state) => state.isSaving);
 
-  const [{ isLoading: isDeleting }, deletePlan] =
+  const [{ isLoading: isDeleting }, deleteCalendar] =
     useAsyncCallback(deleteAction);
 
   useEventListener(EVENTS.DELETE_CALENDAR, async () =>
-    deletePlan({ calendarId: calendar.id }),
+    deleteCalendar({ calendarId: calendar.id }),
   );
+
+  useEffect(() => {
+    calendar.displayId > 0 && setTitle(`Calendrier n°${calendar.displayId}`);
+  }, [calendar.displayId, setTitle]);
 
   useEffect(() => {
     setOptions(
@@ -137,7 +184,7 @@ const CalendarClient = ({
 
   return (
     <div className="space-y-4">
-      <form className="space-y-4" onChange={saveFormData}>
+      <form className="space-y-4">
         {medicamentIdArray.map((medicId) => (
           <Card
             key={`calendar_${calendar.id}_${medicId}`}

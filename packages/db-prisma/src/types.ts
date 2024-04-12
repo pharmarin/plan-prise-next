@@ -82,7 +82,7 @@ declare global {
       type DataItem = {
         startDate: string;
         endDate: string;
-        quantity: number;
+        quantity: string;
         frequency: number;
       };
       type Data = Record<string, DataItem[]>;

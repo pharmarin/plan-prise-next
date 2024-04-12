@@ -29,7 +29,7 @@ export const emptyIteration = (startDate?: Date) => ({
   startDate: toYYYYMMDD(startDate ?? new Date()),
   endDate: toYYYYMMDD(startDate ?? new Date()),
   frequency: 1,
-  quantity: 1,
+  quantity: "1",
 });
 
 const useCalendarStore = create(
