@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.2.1",
-    "@manypkg/cli": "0.21.3",
+    "@manypkg/cli": "0.21.4",
     "@plan-prise/api": "0.1.0",
     "@plan-prise/auth": "^0.1.0",
     "@plan-prise/db-prisma": "^0.1.0",
