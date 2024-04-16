@@ -405,8 +405,8 @@ importers:
         specifier: 5.4.3
         version: 5.4.3
       unzipper:
-        specifier: 0.11.2
-        version: 0.11.2
+        specifier: 0.11.3
+        version: 0.11.3
 
   packages/auth:
     dependencies:
@@ -8719,8 +8719,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /unzipper@0.11.2:
-    resolution: {integrity: sha512-SJZV4XldfDk3CQnTU3H/EUKOic3pwYvlavh7C0qvPOxzGC4XQxNFDl+RuIqhXyNbvRe4ocLIpFnlKY+2NpJ2bg==}
+  /unzipper@0.11.3:
+    resolution: {integrity: sha512-Xs72T2f5DkRU1ULU/5kywmMXHI3ZJIL6a1Eb/7eTwmqbOS35ed10PYGDeKMXOuJ5zZrp/HYNeRj80HZsBtOyrA==}
     dependencies:
       big-integer: 1.6.51
       bluebird: 3.4.7
