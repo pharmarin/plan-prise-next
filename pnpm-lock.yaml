@@ -250,8 +250,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(next@14.2.1)(react@18.2.0)
       next-safe-navigation:
-        specifier: 0.2.0
-        version: 0.2.0(next@14.2.1)(typescript@5.4.3)(zod@3.22.4)
+        specifier: 0.3.1
+        version: 0.3.1(next@14.2.1)(typescript@5.4.3)(zod@3.22.4)
       next-superjson-plugin:
         specifier: 0.6.3
         version: 0.6.3(next@14.2.1)(superjson@2.2.1)
@@ -6564,8 +6564,8 @@ packages:
       - yup
     dev: false
 
-  /next-safe-navigation@0.2.0(next@14.2.1)(typescript@5.4.3)(zod@3.22.4):
-    resolution: {integrity: sha512-IR6U6k/7JYfK6WBvW1k5OTNhBBe+jbhH6Z4ACGX05EjrbIaDDl2UnD/pJnaqx8aF+ctpw6DlUk+ntXZOrZHMkA==}
+  /next-safe-navigation@0.3.1(next@14.2.1)(typescript@5.4.3)(zod@3.22.4):
+    resolution: {integrity: sha512-X32TqDC3oN8BD2ZLSztaRUZhsQOy4Ge5j48nBs6MMDuwfucnfx8jd3kIQFl0WT5du77MNp6OjHhUekupu9mR6Q==}
     peerDependencies:
       next: '>=13.0.0'
       typescript: '>=4.8.2'
