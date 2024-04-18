@@ -20,7 +20,7 @@ const DatePicker = ({
   value,
 }: {
   daysFromDate?: Date;
-  disabled?: Matcher | Matcher[];
+  disabled?: Matcher | Matcher[] | undefined;
   inputClassName?: string;
   onChange: (value: Date | undefined) => void;
   placeholder?: string;

@@ -39,7 +39,7 @@ const CalendarCardBody = ({
                   : new Date(),
                 1,
               )
-            : new Date();
+            : undefined;
 
         if (iteration === undefined) {
           return null;
@@ -67,7 +67,7 @@ const CalendarCardBody = ({
                 <div className="flex flex-col space-y-2">
                   <Label>Date de début</Label>
                   <DatePicker
-                    disabled={{ before: disabledBefore }}
+                    disabled={disabledBefore && { before: disabledBefore }}
                     onChange={(value) => {
                       value &&
                         setData(
