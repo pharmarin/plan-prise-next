@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
+import NavbarModule from "@/app/(auth)/navbar-module";
 import {
   addMedicAction,
-  deleteAction,
+  deletePlanAction,
   findManyMedicsAction,
   findPrecautionsAction,
   removeMedicAction,
@@ -17,8 +18,6 @@ import PlanCardLoading from "@/app/(auth)/plan/[planId]/card-loading";
 import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { routes } from "@/app/routes-schema";
-import { useNavigationState } from "@/app/state-navigation";
-import { useEventListener } from "@/utils/event-listener";
 import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash-es";
 import type { SelectInstance } from "react-select";
@@ -28,7 +27,6 @@ import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
-import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 
 type SelectValueType = {
   denomination: string;
@@ -36,12 +34,6 @@ type SelectValueType = {
   id: string;
   custom?: boolean;
 };
-
-enum EVENTS {
-  DELETE_PLAN = "DELETE_PLAN",
-  TOGGLE_SETTINGS = "TOGGLE_SETTINGS",
-  PRINT_PLAN = "PRINT_PLAN",
-}
 
 const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
@@ -60,6 +52,10 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
     }),
   );
   const medics = usePlanStore((state) => state.medics);
+  const canPrint = usePlanStore((state) => state.canPrint);
+  const isSaving = usePlanStore((state) => state.isSaving);
+  const [planId, setPlanId] = useState<string>(plan.id);
+  const [displayId, setDisplayId] = useState<number>(plan.displayId);
 
   const [searchValue, setSearchValue] = useState("");
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,9 +92,6 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
     [],
   );
 
-  const [{ isLoading: isDeleting }, deletePlan] =
-    useAsyncCallback(deleteAction);
-
   const [{ data: precautions }] = useAsyncCallback(findPrecautionsAction);
 
   useEffect(() => {
@@ -106,94 +99,22 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
     setReady(true);
   }, [init, plan]);
 
-  /**
-   * NAVBAR
-   */
-
-  const { setOptions, setTitle } = useNavigationState((state) => ({
-    setOptions: state.setOptions,
-    setTitle: state.setTitle,
-  }));
-  const isSaving = usePlanStore((state) => state.isSaving);
-  const canPrint = usePlanStore((state) => state.canPrint);
-
-  useEventListener(EVENTS.DELETE_PLAN, async () =>
-    deletePlan({ planId: plan.id }),
-  );
-
-  useEventListener(EVENTS.TOGGLE_SETTINGS, () => setShowSettings(true));
-
-  useEventListener(EVENTS.PRINT_PLAN, () => {
-    if (isSaving) return;
-    if (canPrint === true) {
-      window.open(routes.planPrint({ planId: plan.displayId }));
-    } else {
-      document.getElementsByClassName("action-required")[0]?.scrollIntoView();
-    }
-  });
-
-  useEffect(() => {
-    plan.displayId > 0 && setTitle(`Plan de prise n°${plan.displayId}`);
-  }, [plan.displayId, setTitle]);
-
-  useEffect(() => {
-    setOptions(
-      ready && (medics ?? []).length > 0
-        ? [
-            {
-              icon: isSaving ? "loading" : "checkCircle",
-              className: cn(
-                "plan-loading-state",
-                isSaving
-                  ? "animate-spin text-teal-900 plan-is-saving"
-                  : "text-teal-600 plan-saved",
-              ),
-              path: "",
-              tooltip: isSaving
-                ? "⏳ Sauvegarde en cours"
-                : "✅ Plan de prise sauvegardé",
-            },
-            {
-              icon: isDeleting ? "loading" : "trash",
-              className: "rounded-full bg-red-700 p-1 text-white",
-              event: EVENTS.DELETE_PLAN,
-              tooltip: "Supprimer le plan de prise",
-            },
-            {
-              icon: "settings",
-              className: cn(
-                "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
-                {
-                  "cursor-not-allowed bg-gray-600": plan.id === PLAN_NEW,
-                },
-              ),
-              disabled: plan.id === PLAN_NEW,
-              event: EVENTS.TOGGLE_SETTINGS,
-            },
-            {
-              icon: "printer",
-              className: cn("rounded-full bg-green-700 p-1 text-white", {
-                "cursor-not-allowed bg-gray-600": canPrint !== true || isSaving,
-              }),
-              event: EVENTS.PRINT_PLAN,
-              tooltip:
-                !isSaving && canPrint === true
-                  ? "Imprimer le plan de prise"
-                  : !isSaving && typeof canPrint === "string"
-                    ? canPrint
-                    : "Vous ne pouvez pas imprimer actuellement",
-            },
-          ]
-        : [],
-    );
-  }, [canPrint, isDeleting, isSaving, medics, plan.id, ready, setOptions]);
-
   if (!ready) {
     return <LoadingScreen />;
   }
 
   return (
     <>
+      <NavbarModule
+        canPrint={canPrint}
+        displayId={displayId}
+        id={planId}
+        isSaving={isSaving}
+        medicsLength={(medics ?? []).length}
+        onDeleteAction={deletePlanAction}
+        setShowSettings={setShowSettings}
+        type="plan"
+      />
       <PlanSettings
         show={showSettings}
         setShow={() => setShowSettings(false)}
@@ -205,7 +126,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
             setIsSaving(true);
             saveDataDebounced.cancel();
             await saveDataDebounced({
-              planId: usePlanStore.getState().id ?? "",
+              planId,
               data: usePlanStore.getState().data ?? {},
             });
           }}
@@ -213,7 +134,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
           {medics?.map((id) =>
             removingMedicsId.includes(id) ? (
               <PlanCardLoading
-                key={`plan_${plan.id}_${id}_removing`}
+                key={`plan_${planId}_${id}_removing`}
                 denomination={
                   removingMedics.find((medic) => medic.id === id)
                     ?.denomination ?? ""
@@ -222,7 +143,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
               />
             ) : (
               <PlanCard
-                key={`plan_${plan.id}_${id}`}
+                key={`plan_${planId}_${id}`}
                 medicamentId={id}
                 medicamentData={
                   isCuid(id)
@@ -252,7 +173,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                     },
                   ]);
                   await removeMedicAction({
-                    planId: plan.id,
+                    planId: planId,
                     medicId: medicament.id,
                   })
                     .then(transformResponse)
@@ -276,7 +197,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
         </form>
         {addingMedics.map((row) => (
           <PlanCardLoading
-            key={`plan_${plan.id}_${row.id}_adding`}
+            key={`plan_${planId}_${row.id}_adding`}
             denomination={row.denomination}
             type="adding"
           />
@@ -302,7 +223,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
           }
           onChange={async (value) => {
             if (value) {
-              if (medics && medics.includes(value.id)) {
+              if (medics?.includes(value.id)) {
                 toast({
                   title: errors.PLAN_MEDICAMENT_ALREADY_ADDED_ERROR,
                   variant: "destructive",
@@ -317,13 +238,15 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                 },
               ]);
               await addMedicAction({
-                planId: plan.id,
+                planId: planId,
                 medicId: value.id,
               })
                 .then(transformResponse)
                 .then((response) => {
-                  if (plan.id === PLAN_NEW) {
+                  if (planId === PLAN_NEW) {
                     if (typeof response === "object" && "id" in response) {
+                      setPlanId(response.id);
+                      setDisplayId(response.displayId);
                       init(response);
                       router.replace(
                         routes.plan({ planId: response.displayId }),

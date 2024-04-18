@@ -239,7 +239,7 @@ export const saveDataAction = authAction(
   },
 );
 
-export const deleteAction = authAction(
+export const deletePlanAction = authAction(
   z.object({ planId: z.string().cuid2() }),
   async ({ planId }, { userId }) => {
     await prisma.plan.delete({
