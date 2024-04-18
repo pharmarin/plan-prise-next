@@ -35,7 +35,7 @@
     "turbo": "1.13.2",
     "typescript": "5.4.3"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.0.1",
   "eslintConfig": {
     "extends": [
       "@plan-prise/eslint-config/base"

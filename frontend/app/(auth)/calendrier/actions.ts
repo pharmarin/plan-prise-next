@@ -30,7 +30,7 @@ export const saveDataAction = authAction(
         z.object({
           startDate: z.string(),
           endDate: z.string(),
-          quantity: z.string().optional(),
+          quantity: z.coerce.string().optional(),
           frequency: z.coerce.number().optional(),
         }),
       ),

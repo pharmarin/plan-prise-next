@@ -125,6 +125,7 @@ const CalendarClient = ({
     })),
   );
   const isSaving = useCalendarStore((state) => state.isSaving);
+  const canPrint = useCalendarStore((state) => !state.touched);
 
   const [{ isLoading: isDeleting }, deleteCalendar] =
     useAsyncCallback(deleteAction);
@@ -132,6 +133,13 @@ const CalendarClient = ({
   useEventListener(EVENTS.DELETE_CALENDAR, async () =>
     deleteCalendar({ calendarId: calendar.id }),
   );
+
+  useEventListener(EVENTS.PRINT_CALENDAR, () => {
+    if (isSaving) return;
+    if (canPrint === true) {
+      window.open(routes.calendarPrint({ calendarId: calendar.displayId }));
+    }
+  });
 
   useEffect(() => {
     calendar.displayId > 0 && setTitle(`Calendrier n°${calendar.displayId}`);
@@ -160,23 +168,23 @@ const CalendarClient = ({
               event: EVENTS.DELETE_CALENDAR,
               tooltip: "Supprimer le plan de prise",
             },
-            /* {
+            {
               icon: "printer",
               className: cn("rounded-full bg-green-700 p-1 text-white", {
                 "cursor-not-allowed bg-gray-600": canPrint !== true || isSaving,
               }),
-              event: EVENTS.PRINT_PLAN,
+              event: EVENTS.PRINT_CALENDAR,
               tooltip:
                 !isSaving && canPrint === true
                   ? "Imprimer le plan de prise"
                   : !isSaving && typeof canPrint === "string"
                     ? canPrint
                     : "Vous ne pouvez pas imprimer actuellement",
-            }, */
+            },
           ]
         : [],
     );
-  }, [isDeleting, isSaving, medicamentIdArray, ready, setOptions]);
+  }, [canPrint, isDeleting, isSaving, medicamentIdArray, ready, setOptions]);
 
   if (!ready) {
     return <LoadingScreen />;
