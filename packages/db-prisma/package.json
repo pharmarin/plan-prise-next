@@ -20,7 +20,7 @@
     "generate": "pnpm with-env node -e 'require(\"child_process\").execSync(process.env.PRISMA_GENERATE, { stdio: \"inherit\" })'",
     "lint": "eslint .",
     "postinstall": "pnpm generate",
-    "push": "pnpm with-env prisma db push --skip-generate",
+    "push": "pnpm with-env prisma db push --skip-generate --schema=src/schema.cockroach.prisma",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
