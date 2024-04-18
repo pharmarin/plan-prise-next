@@ -57,7 +57,7 @@ export const Navbar = ({
 
   // Redirect user to profil page if incomplete informations after migration
   if (
-    pathname !== routes.profil() &&
+    (pathname as unknown) !== routes.profil() &&
     user &&
     (!user?.firstName || !user?.lastName)
   ) {
