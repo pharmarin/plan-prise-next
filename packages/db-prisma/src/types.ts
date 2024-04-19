@@ -75,3 +75,17 @@ declare global {
     }
   }
 }
+
+declare global {
+  namespace PP {
+    namespace Calendar {
+      type DataItem = {
+        startDate: string;
+        endDate: string;
+        quantity: string;
+        frequency: number;
+      };
+      type Data = Record<string, DataItem[]>;
+    }
+  }
+}

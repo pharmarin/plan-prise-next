@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import type { SafeAction } from "next-safe-action";
 import type { Schema, z } from "zod";
 
@@ -24,7 +25,7 @@ export function useAsyncCallback<
   Data,
 >(
   callback: SafeAction<S, Data>,
-): [UseAsyncState<Data>, (args: Args) => Promise<Data>] {
+): [UseAsyncState<Data>, (args: Args) => Promise<Data | undefined>] {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -42,21 +43,7 @@ export function useAsyncCallback<
       try {
         setIsLoading(true);
 
-        const results = await callback(args).then((response) => {
-          if (response.serverError) {
-            setIsError(true);
-            throw new Error(
-              response.serverError ?? "Server action failed without error",
-            );
-          }
-
-          if (response.validationErrors) {
-            setIsError(true);
-            throw new Error("Error validating action");
-          }
-
-          return response.data as Data;
-        });
+        const results = await callback(args).then(transformResponse);
 
         setData(results);
         setIsSuccess(true);

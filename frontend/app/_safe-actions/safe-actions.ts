@@ -32,17 +32,21 @@ export const adminAction = createSafeActionClient({
 });
 
 export const transformResponse = <S extends Schema, Data>(
-  response: Awaited<ReturnType<SafeAction<S, Data>>>,
+  response?: Awaited<ReturnType<SafeAction<S, Data>>>,
 ) => {
-  if (response.serverError) {
+  if (!response) {
+    return;
+  }
+
+  if (response?.serverError) {
     throw new Error(
       response.serverError ?? "Server action failed without error",
     );
   }
 
-  if (response.validationErrors) {
+  if (response?.validationErrors) {
     throw new Error("Error validating action");
   }
 
-  return response.data as Data;
+  return response?.data as Data;
 };

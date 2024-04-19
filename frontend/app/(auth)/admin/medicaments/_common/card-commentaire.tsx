@@ -44,7 +44,7 @@ const CommentaireCard = ({
   medicId?: string;
   removeFromArray: () => void;
   setDraft: (value: boolean) => void;
-  updateFromArray: (comment: Commentaire) => void;
+  updateFromArray: (comment: Commentaire | undefined) => void;
 }) => {
   const [deleteCommentaireMutation, deleteCommentaire] = useAsyncCallback(
     deleteCommentaireAction,

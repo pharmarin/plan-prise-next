@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Card from "@/app/_components/card";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
@@ -12,8 +13,7 @@ import {
   removeMedicAction,
   saveDataAction,
 } from "@/app/(auth)/plan/[planId]/actions";
-import PlanCard from "@/app/(auth)/plan/[planId]/card";
-import PlanCardLoading from "@/app/(auth)/plan/[planId]/card-loading";
+import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
 import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { routes } from "@/app/routes-schema";
@@ -23,9 +23,11 @@ import { isCuid } from "@paralleldrive/cuid2";
 import { debounce } from "lodash-es";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
+import { useShallow } from "zustand/react/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
+import CardLoading from "@plan-prise/ui/components/card-loading";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
@@ -52,12 +54,12 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
   const [showSettings, setShowSettings] = useState(false);
 
   const { init, addMedic, removeMedic, setIsSaving } = usePlanStore(
-    (state) => ({
+    useShallow((state) => ({
       init: state.init,
       addMedic: state.addMedic,
       removeMedic: state.removeMedic,
       setIsSaving: state.setIsSaving,
-    }),
+    })),
   );
   const medics = usePlanStore((state) => state.medics);
 
@@ -110,10 +112,12 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
    * NAVBAR
    */
 
-  const { setOptions, setTitle } = useNavigationState((state) => ({
-    setOptions: state.setOptions,
-    setTitle: state.setTitle,
-  }));
+  const { setOptions, setTitle } = useNavigationState(
+    useShallow((state) => ({
+      setOptions: state.setOptions,
+      setTitle: state.setTitle,
+    })),
+  );
   const isSaving = usePlanStore((state) => state.isSaving);
   const canPrint = usePlanStore((state) => state.canPrint);
 
@@ -212,7 +216,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
         >
           {medics?.map((id) =>
             removingMedicsId.includes(id) ? (
-              <PlanCardLoading
+              <CardLoading
                 key={`plan_${plan.id}_${id}_removing`}
                 denomination={
                   removingMedics.find((medic) => medic.id === id)
@@ -221,7 +225,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                 type="deleting"
               />
             ) : (
-              <PlanCard
+              <Card
                 key={`plan_${plan.id}_${id}`}
                 medicamentId={id}
                 medicamentData={
@@ -270,12 +274,15 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                       ]);
                     });
                 }}
+                renderBody={(medicament) => (
+                  <PlanCardBody medicament={medicament} />
+                )}
               />
             ),
           )}
         </form>
         {addingMedics.map((row) => (
-          <PlanCardLoading
+          <CardLoading
             key={`plan_${plan.id}_${row.id}_adding`}
             denomination={row.denomination}
             type="adding"

@@ -49,8 +49,6 @@ export const findManyMedicsAction = authAction(
           })
         : [];
 
-    console.log("results: ", results);
-
     return results;
   },
 );
