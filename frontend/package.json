@@ -54,7 +54,7 @@
     "react-pdf-tailwind": "2.3.0",
     "react-select": "5.8.0",
     "superjson": "2.2.1",
-    "tailwind-merge": "2.2.2",
+    "tailwind-merge": "2.3.0",
     "typescript": "5.4.5",
     "usehooks-ts": "3.1.0",
     "zod": "3.22.5",
