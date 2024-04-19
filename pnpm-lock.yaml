@@ -218,7 +218,7 @@ importers:
         version: 7.111.0(next@14.2.2)(react@18.2.0)(webpack@5.91.0)
       '@t3-oss/env-nextjs':
         specifier: 0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4)
+        version: 0.9.2(typescript@5.4.5)(zod@3.22.5)
       '@tanstack/react-table':
         specifier: 8.16.0
         version: 8.16.0(react-dom@18.2.0)(react@18.2.0)
@@ -251,7 +251,7 @@ importers:
         version: 6.2.0(next@14.2.2)(react@18.2.0)
       next-safe-navigation:
         specifier: 0.3.1
-        version: 0.3.1(next@14.2.2)(typescript@5.4.5)(zod@3.22.4)
+        version: 0.3.1(next@14.2.2)(typescript@5.4.5)(zod@3.22.5)
       next-superjson-plugin:
         specifier: 0.6.3
         version: 0.6.3(next@14.2.2)(superjson@2.2.1)
@@ -289,11 +289,11 @@ importers:
         specifier: 3.1.0
         version: 3.1.0(react@18.2.0)
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.22.5
+        version: 3.22.5
       zod-form-data:
         specifier: 2.0.2
-        version: 2.0.2(zod@3.22.4)
+        version: 2.0.2(zod@3.22.5)
       zustand:
         specifier: 4.5.2
         version: 4.5.2(@types/react@18.2.79)(immer@10.0.4)(react@18.2.0)
@@ -348,7 +348,7 @@ importers:
         version: link:../db-prisma
       '@t3-oss/env-nextjs':
         specifier: 0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4)
+        version: 0.9.2(typescript@5.4.5)(zod@3.22.5)
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -359,8 +359,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.22.5
+        version: 3.22.5
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -424,7 +424,7 @@ importers:
         version: 5.12.1(prisma@5.12.1)
       '@t3-oss/env-nextjs':
         specifier: 0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4)
+        version: 0.9.2(typescript@5.4.5)(zod@3.22.5)
       bcryptjs:
         specifier: 2.4.3
         version: 2.4.3
@@ -444,8 +444,8 @@ importers:
         specifier: 0.0.1
         version: 0.0.1
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.22.5
+        version: 3.22.5
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: 0.2.0
@@ -959,7 +959,7 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  /@decs/typeschema@0.12.2(zod@3.22.4):
+  /@decs/typeschema@0.12.2(zod@3.22.5):
     resolution: {integrity: sha512-PA8uAH/Xfsa5X2UNNSnb5i6vB8qWZywp4+d2U8kNMCO7qwirYRPbFCHwIfWBJyURh4rULn3Ey+VBADLcK2xxaQ==}
     deprecated: TypeSchema has been restructured. Install @typeschema/main or @typeschema/all instead.
     peerDependencies:
@@ -1013,7 +1013,7 @@ packages:
       zod:
         optional: true
     dependencies:
-      zod: 3.22.4
+      zod: 3.22.5
     dev: false
 
   /@discoveryjs/json-ext@0.5.7:
@@ -2792,7 +2792,7 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@t3-oss/env-core@0.9.2(typescript@5.4.5)(zod@3.22.4):
+  /@t3-oss/env-core@0.9.2(typescript@5.4.5)(zod@3.22.5):
     resolution: {integrity: sha512-KgWXljUTHgO3o7GMZQPAD5+P+HqpauMNNHowlm7V2b9IeMitSUpNKwG6xQrup/xARWHTdxRVIl0mSI4wCevQhQ==}
     peerDependencies:
       typescript: '>=5.0.0'
@@ -2802,10 +2802,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.4.5
-      zod: 3.22.4
+      zod: 3.22.5
     dev: false
 
-  /@t3-oss/env-nextjs@0.9.2(typescript@5.4.5)(zod@3.22.4):
+  /@t3-oss/env-nextjs@0.9.2(typescript@5.4.5)(zod@3.22.5):
     resolution: {integrity: sha512-dklHrgKLESStNVB67Jdbu6osxDYA+xNKaPBRerlnkEvzbCccSKMvZENx6EZebJuR4snqB3/yRykNMn/bdIAyiQ==}
     peerDependencies:
       typescript: '>=5.0.0'
@@ -2814,9 +2814,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.9.2(typescript@5.4.5)(zod@3.22.4)
+      '@t3-oss/env-core': 0.9.2(typescript@5.4.5)(zod@3.22.5)
       typescript: 5.4.5
-      zod: 3.22.4
+      zod: 3.22.5
     dev: false
 
   /@tailwindcss/typography@0.5.12(tailwindcss@3.4.3):
@@ -6541,11 +6541,11 @@ packages:
       next: '>= 14.0.0'
       react: '>= 18.2.0'
     dependencies:
-      '@decs/typeschema': 0.12.2(zod@3.22.4)
+      '@decs/typeschema': 0.12.2(zod@3.22.5)
       next: 14.2.2(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     optionalDependencies:
-      zod: 3.22.4
+      zod: 3.22.5
     transitivePeerDependencies:
       - '@deepkit/type'
       - '@effect/schema'
@@ -6564,7 +6564,7 @@ packages:
       - yup
     dev: false
 
-  /next-safe-navigation@0.3.1(next@14.2.2)(typescript@5.4.5)(zod@3.22.4):
+  /next-safe-navigation@0.3.1(next@14.2.2)(typescript@5.4.5)(zod@3.22.5):
     resolution: {integrity: sha512-X32TqDC3oN8BD2ZLSztaRUZhsQOy4Ge5j48nBs6MMDuwfucnfx8jd3kIQFl0WT5du77MNp6OjHhUekupu9mR6Q==}
     peerDependencies:
       next: '>=13.0.0'
@@ -6573,7 +6573,7 @@ packages:
     dependencies:
       next: 14.2.2(react-dom@18.2.0)(react@18.2.0)
       typescript: 5.4.5
-      zod: 3.22.4
+      zod: 3.22.5
     dev: false
 
   /next-superjson-plugin@0.6.3(next@14.2.2)(superjson@2.2.1):
@@ -9156,16 +9156,16 @@ packages:
     resolution: {integrity: sha512-tT/oChyDXelLo2A+UVnlW9GU7CsvFMaEnd9kVFsaiCQonFAXd3xrHhkLYu+suwwosrAEQ746xBU+HvYtm1Zs2Q==}
     dev: false
 
-  /zod-form-data@2.0.2(zod@3.22.4):
+  /zod-form-data@2.0.2(zod@3.22.5):
     resolution: {integrity: sha512-sKTi+k0fvkxdakD0V5rq+9WVJA3cuTQUfEmNqvHrTzPLvjfLmkkBLfR0ed3qOi9MScJXTHIDH/jUNnEJ3CBX4g==}
     peerDependencies:
       zod: '>= 3.11.0'
     dependencies:
-      zod: 3.22.4
+      zod: 3.22.5
     dev: false
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod@3.22.5:
+    resolution: {integrity: sha512-HqnGsCdVZ2xc0qWPLdO25WnseXThh0kEYKIdV5F/hTHO75hNZFp8thxSeHhiPrHZKrFTo1SOgkAj9po5bexZlw==}
     dev: false
 
   /zustand@4.5.2(@types/react@18.2.79)(immer@10.0.4)(react@18.2.0):
