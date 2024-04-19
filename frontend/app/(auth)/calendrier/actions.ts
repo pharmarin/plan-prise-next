@@ -65,7 +65,7 @@ export const saveDataAction = authAction(
   },
 );
 
-export const deleteAction = authAction(
+export const deleteCalendarAction = authAction(
   z.object({ calendarId: z.string().cuid2() }),
   async ({ calendarId }, { userId }) => {
     await prisma.calendar.delete({
