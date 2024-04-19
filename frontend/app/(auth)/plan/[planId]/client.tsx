@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Card from "@/app/_components/card";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
-import NavbarModule from "@/app/(auth)/navbar-module";
+import NavbarModule from "@/app/(auth)/modules-navbar";
 import {
   addMedicAction,
   deletePlanAction,
