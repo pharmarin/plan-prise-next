@@ -18,7 +18,7 @@ enum EVENTS {
   SETTINGS = "SETTINGS",
 }
 
-const NavbarModule = ({
+const ModulesNavbar = ({
   canPrint,
   displayId,
   id,
@@ -132,4 +132,4 @@ const NavbarModule = ({
   return null;
 };
 
-export default NavbarModule;
+export default ModulesNavbar;
