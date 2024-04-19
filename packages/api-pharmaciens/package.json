@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "devDependencies": {
     "@plan-prise/tsconfig": "*",
-    "@types/node": "20.11.30",
+    "@types/node": "20.12.7",
     "@types/node-fetch": "2.6.11",
     "@types/unzipper": "0.10.9",
     "csv-parse": "5.5.5",
     "node-fetch": "2.7.0",
     "ts-node": "10.9.2",
-    "typescript": "5.4.2",
-    "unzipper": "0.10.14"
+    "typescript": "5.4.5",
+    "unzipper": "0.11.3"
   },
   "scripts": {
     "clean": "rm -rf .turbo node_modules",

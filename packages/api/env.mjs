@@ -5,7 +5,6 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    CROSS_SITE_SECRET: z.string(),
     MAIL_FROM_ADDRESS: process.env.CI
       ? z.string().email().optional()
       : z.string().email(),
@@ -16,7 +15,6 @@ export const env = createEnv({
   },
   client: {},
   runtimeEnv: {
-    CROSS_SITE_SECRET: process.env.CROSS_SITE_SECRET,
     MAIL_FROM_ADDRESS: process.env.MAIL_FROM_ADDRESS,
     MAILERSEND_API_KEY: process.env.MAILERSEND_API_KEY,
     NTFY_ADMIN_URL: process.env.NTFY_ADMIN_URL,
