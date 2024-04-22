@@ -1,12 +1,15 @@
 "use client";
 
 import { toYYYYMMDD } from "@/app/(auth)/calendrier/utils";
+import type { Calendar } from "@prisma/client";
 import { set } from "lodash-es";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type State = {
+  id?: Calendar["id"];
+  displayId?: Calendar["displayId"];
   data?: Record<
     string,
     (Partial<PP.Calendar.DataItem> & { startDate: string; endDate: string })[]

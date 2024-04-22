@@ -33,15 +33,15 @@ const CalendarClient = ({
   const { toast } = useToast();
   const router = useRouter();
 
-  const [ready, setReady] = useState(false);
   const [firstSavePending, setFirstSavePending] = useState(false);
 
-  const data = useCalendarStore((state) => state.data);
-  const medicamentIdArray = Object.keys(data ?? {});
+  const medicIds = useCalendarStore(
+    useShallow((state) => Object.keys(state.data ?? {})),
+  );
   const isSaving = useCalendarStore((state) => state.isSaving);
   const canPrint = useCalendarStore((state) => !state.touched);
-  const [calendarId, setCalendarId] = useState<string>(calendar.id);
-  const [displayId, setDisplayId] = useState<number>(calendar.displayId);
+  const calendarId = useCalendarStore((state) => state.id ?? "");
+  const displayId = useCalendarStore((state) => state.displayId ?? -1);
 
   const { addMedic, removeMedic, setIsSaving } = useCalendarStore(
     useShallow((state) => ({
@@ -54,10 +54,11 @@ const CalendarClient = ({
   useEffect(() => {
     // Init state with server component data when mounted
     useCalendarStore.setState({
+      id: calendar.id,
+      displayId: calendar.displayId,
       data: calendar.data ?? {},
     });
-    setReady(true);
-  }, [calendar.data, calendar.id]);
+  }, [calendar]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
@@ -74,8 +75,10 @@ const CalendarClient = ({
         .then(async (response) => {
           if (calendarId === CALENDAR_NEW) {
             if (typeof response === "object" && "id" in response) {
-              setCalendarId(response.id);
-              setDisplayId(response.displayId);
+              useCalendarStore.setState({
+                id: response.id,
+                displayId: response.displayId,
+              });
 
               router.replace(
                 routes.calendar({ calendarId: response.displayId }),
@@ -111,7 +114,7 @@ const CalendarClient = ({
     });
   };
 
-  if (!ready) {
+  if (!calendarId) {
     return <LoadingScreen />;
   }
 
@@ -122,12 +125,12 @@ const CalendarClient = ({
         displayId={displayId}
         id={calendarId}
         isSaving={isSaving}
-        medicsLength={medicamentIdArray.length}
+        medicsLength={medicIds.length}
         onDeleteAction={deleteCalendarAction}
         type="calendar"
       />
       <form className="space-y-4">
-        {medicamentIdArray.map((medicId) => (
+        {medicIds.map((medicId) => (
           <Card
             key={`calendar_${calendar.id}_${medicId}`}
             medicamentId={medicId}
@@ -168,7 +171,7 @@ const CalendarClient = ({
       </form>
       <MedicamentSelect
         onChange={async (value) => {
-          if (medicamentIdArray.includes(value.id)) {
+          if (medicIds.includes(value.id)) {
             toast({
               title: errors.CALENDAR_MEDICAMENT_ALREADY_ADDED_ERROR,
               variant: "destructive",
