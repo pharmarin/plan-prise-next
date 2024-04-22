@@ -21,13 +21,29 @@ const Plan = async ({ params }: { params: unknown }) => {
       },
     });
 
+    let data = {};
+    if (plan.medicsOrder) {
+      data = Object.fromEntries(
+        plan.medicsOrder.map((medicId) => [
+          medicId,
+          plan?.data?.[medicId] ?? {},
+        ]),
+      );
+      await prisma.plan.update({
+        where: { id: plan.id },
+        data: { medicsOrder: null },
+      });
+    } else {
+      data = plan.data ?? {};
+    }
+
     return (
       <>
         <Navigation
           title={`Plan de prise n°${plan.displayId}`}
           returnTo={routes.plans()}
         />
-        <PlanClient plan={plan} data-superjson />
+        <PlanClient plan={{ ...plan, data: data }} data-superjson />
       </>
     );
   } catch (error) {
