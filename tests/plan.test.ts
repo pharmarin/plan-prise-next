@@ -47,8 +47,9 @@ test.describe("plan tests", () => {
   });
 
   test("should display plan", async ({ page, fakePlan }) => {
+    const medicIds = Object.keys(fakePlan.data ?? {});
     const medicaments = await prisma.medicament.findMany({
-      where: { OR: fakePlan.medicsOrder.map((medicId) => ({ id: medicId })) },
+      where: { OR: medicIds.map((medicId) => ({ id: medicId })) },
       include: { commentaires: true },
     });
 
@@ -60,7 +61,7 @@ test.describe("plan tests", () => {
 
     for (let index = 0; index < medicaments.length; index++) {
       const medicament = medicaments.find(
-        (medicament) => medicament.id === fakePlan.medicsOrder[index],
+        (medicament) => medicament.id === medicIds[index],
       );
 
       if (!medicament) {
