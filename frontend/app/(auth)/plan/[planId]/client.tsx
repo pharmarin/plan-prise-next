@@ -6,6 +6,8 @@ import Card from "@/app/_components/card";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import NavbarModule from "@/app/(auth)/modules-navbar";
+import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
+import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
 import {
   addMedicAction,
   deletePlanAction,
@@ -13,9 +15,7 @@ import {
   findPrecautionsAction,
   removeMedicAction,
   saveDataAction,
-} from "@/app/(auth)/plan/[planId]/actions";
-import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
-import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
+} from "@/app/(auth)/plan/actions";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";

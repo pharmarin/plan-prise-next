@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
-import type { deletePlanAction } from "@/app/(auth)/plan/[planId]/actions";
+import type { deletePlanAction } from "@/app/(auth)/plan/actions";
 import { routes } from "@/app/routes-schema";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
