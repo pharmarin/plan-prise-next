@@ -76,9 +76,7 @@ const CalendarClient = ({
             if (typeof response === "object" && "id" in response) {
               setCalendarId(response.id);
               setDisplayId(response.displayId);
-              useCalendarStore.setState({
-                data: response.data ?? {},
-              });
+
               router.replace(
                 routes.calendar({ calendarId: response.displayId }),
               );

@@ -11,14 +11,18 @@ import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
 import {
   deletePlanAction,
   findPrecautionsAction,
-  saveDataAction,
+  savePlanDataAction,
 } from "@/app/(auth)/plan/actions";
+import {
+  PLAN_NO_MEDIC_WARNING,
+  PLAN_SETTINGS_DEFAULT,
+} from "@/app/(auth)/plan/constants";
 import usePlanStore from "@/app/(auth)/plan/state";
 import MedicamentSelect from "@/app/modules-select-medicament";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Plan } from "@prisma/client";
-import { debounce } from "lodash-es";
+import { debounce, merge } from "lodash-es";
 import { useShallow } from "zustand/react/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
@@ -36,23 +40,17 @@ const PlanClient = ({
   const router = useRouter();
   const { toast } = useToast();
 
-  const [ready, setReady] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [firstSavePending, setFirstSavePending] = useState(false);
 
-  const { init, setIsSaving } = usePlanStore(
-    useShallow((state) => ({
-      init: state.init,
-      addMedic: state.addMedic,
-      removeMedic: state.removeMedic,
-      setIsSaving: state.setIsSaving,
-    })),
+  const setIsSaving = usePlanStore((state) => state.setIsSaving);
+  const medicIds = usePlanStore(
+    useShallow((state) => Object.keys(state.data ?? {})),
   );
-  const medicIds = usePlanStore((state) => state.medics);
   const canPrint = usePlanStore((state) => state.canPrint);
   const isSaving = usePlanStore((state) => state.isSaving);
-  const [planId, setPlanId] = useState<string>(plan.id);
-  const [displayId, setDisplayId] = useState<number>(plan.displayId);
+  const planId = usePlanStore((state) => state.id ?? "");
+  const displayId = usePlanStore((state) => state.displayId ?? -1);
 
   const saveFormData = async () => {
     setIsSaving(true);
@@ -65,7 +63,7 @@ const PlanClient = ({
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
-    debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
+    debounce(async (data: Parameters<typeof savePlanDataAction>["0"]) => {
       if (planId === PLAN_NEW && firstSavePending) {
         if (firstSavePending) {
           return undefined;
@@ -74,15 +72,14 @@ const PlanClient = ({
         }
       }
 
-      await saveDataAction(data)
+      await savePlanDataAction(data)
         .then(transformResponse)
         .then(async (response) => {
           if (planId === PLAN_NEW) {
             if (typeof response === "object" && "id" in response) {
-              setPlanId(response.id);
-              setDisplayId(response.displayId);
               usePlanStore.setState({
-                data: response.data ?? {},
+                id: response.id,
+                displayId: response.displayId,
               });
               router.replace(routes.plan({ planId: response.displayId }));
               await saveFormData();
@@ -109,11 +106,17 @@ const PlanClient = ({
   const [{ data: precautions }] = useAsyncCallback(findPrecautionsAction);
 
   useEffect(() => {
-    init(plan);
-    setReady(true);
-  }, [init, plan]);
+    usePlanStore.setState({
+      id: plan.id,
+      displayId: plan.displayId,
+      data: plan.data ?? {},
+      settings: merge(PLAN_SETTINGS_DEFAULT, plan.settings),
+      canPrint:
+        Object.keys(plan.data ?? {}).length > 0 ? true : PLAN_NO_MEDIC_WARNING,
+    });
+  }, [plan]);
 
-  if (!ready) {
+  if (!planId) {
     return <LoadingScreen />;
   }
 
