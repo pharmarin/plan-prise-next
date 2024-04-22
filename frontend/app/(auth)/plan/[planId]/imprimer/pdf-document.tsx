@@ -1,4 +1,3 @@
-import CommonPdf from "@/app/_components/pdf";
 import { PLAN_POSOLOGIE_COLOR } from "@/app/(auth)/plan/constants";
 import {
   extractCommentaire,
@@ -6,6 +5,7 @@ import {
   extractIndication,
   extractPosologiesSettings,
 } from "@/app/(auth)/plan/functions";
+import CommonPdf from "@/app/modules-pdf-base";
 import { PlanPrisePosologies } from "@/types/plan";
 import { extractVoieAdministration } from "@/utils/medicament";
 import { isCuid } from "@paralleldrive/cuid2";
@@ -80,127 +80,128 @@ const PrintPDF = ({
           <Header>Commentaires</Header>
         </Row>
       </Table>
-      {[
-        ...(Array.isArray(plan.medicsOrder)
-          ? (plan.medicsOrder as string[])
-          : []),
-      ].map((medicamentId) => {
-        const medicament = isCuid(medicamentId)
-          ? plan.medics.find((medic) => medic.id === medicamentId)
-          : { denomination: medicamentId };
+      {[...(Array.isArray(plan.medicsOrder) ? plan.medicsOrder : [])].map(
+        (medicamentId) => {
+          const medicament = isCuid(medicamentId)
+            ? plan.medics.find((medic) => medic.id === medicamentId)
+            : { denomination: medicamentId };
 
-        if (!medicament) {
-          return undefined;
-        }
-
-        const rowData = plan.data?.[medicamentId] ?? {};
-
-        const rowIndication = extractIndication(medicament, rowData.indication);
-
-        const rowFrigo =
-          "conservationFrigo" in medicament && medicament.conservationFrigo
-            ? "Se conserve au frigo avant ouverture"
-            : "";
-
-        const rowConservation = extractConservation(
-          medicament,
-          rowData.conservation,
-        ).values.map((conservation, key) => {
-          if (key > 1) {
-            throw new PP_Error("PLAN_CONSERVATION_LENGTH_ERROR");
+          if (!medicament) {
+            return undefined;
           }
-          return `Se conserve ${conservation.duree}`;
-        })[0];
 
-        if (rowIndication.length > 1) {
-          throw new PP_Error("PLAN_INDICATION_LENGTH_ERROR");
-        }
-        const rowPrincipesActifs =
-          "principesActifs" in medicament
-            ? medicament.principesActifs
-                .map((principeActif) => principeActif.denomination)
-                .join(", ")
-            : "";
+          const rowData = plan.data?.[medicamentId] ?? {};
 
-        const rowVoiesAdministration =
-          "id" in medicament
-            ? `Voie ${extractVoieAdministration(medicament).join(" ou ")}`
-            : "";
+          const rowIndication = extractIndication(
+            medicament,
+            rowData.indication,
+          );
 
-        const rowCommentaires =
-          "commentaires" in medicament
-            ? medicament.commentaires
-                .flatMap(
-                  (commentaire) =>
-                    extractCommentaire(
-                      commentaire,
-                      rowData.commentaires?.[commentaire.id],
-                    ).checked && {
-                      text: commentaire.texte,
-                    },
-                )
-                .filter((item): item is { text: string } => item !== false)
-            : [];
+          const rowFrigo =
+            "conservationFrigo" in medicament && medicament.conservationFrigo
+              ? "Se conserve au frigo avant ouverture"
+              : "";
 
-        const rowCustomCommentaires = Object.values(
-          rowData.custom_commentaires ?? {},
-        ).map((commentaire) => ({
-          text: commentaire.texte,
-        }));
+          const rowConservation = extractConservation(
+            medicament,
+            rowData.conservation,
+          ).values.map((conservation, key) => {
+            if (key > 1) {
+              throw new PP_Error("PLAN_CONSERVATION_LENGTH_ERROR");
+            }
+            return `Se conserve ${conservation.duree}`;
+          })[0];
 
-        return (
-          <Table key={medicamentId} className="border-t-0">
-            <Row>
-              <Cell
-                alignLeft
-                className={`flex-initial ${INFORMATIONS_WIDTH}`}
-                wrap={false}
-              >
-                {[
-                  { text: medicament?.denomination || "", bold: true },
+          if (rowIndication.length > 1) {
+            throw new PP_Error("PLAN_INDICATION_LENGTH_ERROR");
+          }
+          const rowPrincipesActifs =
+            "principesActifs" in medicament
+              ? medicament.principesActifs
+                  .map((principeActif) => principeActif.denomination)
+                  .join(", ")
+              : "";
 
-                  {
-                    text: rowPrincipesActifs || "",
-                    className: "text-gray-700 text-sm mt-2",
-                    italic: true,
-                  },
+          const rowVoiesAdministration =
+            "id" in medicament
+              ? `Voie ${extractVoieAdministration(medicament).join(" ou ")}`
+              : "";
 
-                  {
-                    text: rowVoiesAdministration || "",
-                    className: "text-sm text-gray-600 mt-2",
-                  },
-                  {
-                    text: rowFrigo || "",
-                    className: "text-sm text-gray-600 mt-2",
-                    italic: true,
-                  },
-                  {
-                    text: rowConservation ?? "",
-                    className: "text-sm text-gray-600 mt-2 mb-auto",
-                    italic: true,
-                  },
-                ].filter((line) => line.text !== "")}
-              </Cell>
-              <Cell className={`flex-initial ${INDICATION_WIDTH}`}>
-                {rowIndication[0] ?? ""}
-              </Cell>
-              {posologies.map((posologie) => (
+          const rowCommentaires =
+            "commentaires" in medicament
+              ? medicament.commentaires
+                  .flatMap(
+                    (commentaire) =>
+                      extractCommentaire(
+                        commentaire,
+                        rowData.commentaires?.[commentaire.id],
+                      ).checked && {
+                        text: commentaire.texte,
+                      },
+                  )
+                  .filter((item): item is { text: string } => item !== false)
+              : [];
+
+          const rowCustomCommentaires = Object.values(
+            rowData.custom_commentaires ?? {},
+          ).map((commentaire) => ({
+            text: commentaire.texte,
+          }));
+
+          return (
+            <Table key={medicamentId} className="border-t-0">
+              <Row>
                 <Cell
-                  key={`cell_${medicamentId}_${posologie}`}
-                  className={`flex-initial ${POSOLOGIE_WIDTH} ${
-                    PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.body
-                  } p-0`}
+                  alignLeft
+                  className={`flex-initial ${INFORMATIONS_WIDTH}`}
+                  wrap={false}
                 >
-                  {rowData?.posologies?.[posologie] ?? ""}
+                  {[
+                    { text: medicament?.denomination || "", bold: true },
+
+                    {
+                      text: rowPrincipesActifs || "",
+                      className: "text-gray-700 text-sm mt-2",
+                      italic: true,
+                    },
+
+                    {
+                      text: rowVoiesAdministration || "",
+                      className: "text-sm text-gray-600 mt-2",
+                    },
+                    {
+                      text: rowFrigo || "",
+                      className: "text-sm text-gray-600 mt-2",
+                      italic: true,
+                    },
+                    {
+                      text: rowConservation ?? "",
+                      className: "text-sm text-gray-600 mt-2 mb-auto",
+                      italic: true,
+                    },
+                  ].filter((line) => line.text !== "")}
                 </Cell>
-              ))}
-              <Cell alignLeft>
-                {[...rowCommentaires, ...rowCustomCommentaires]}
-              </Cell>
-            </Row>
-          </Table>
-        );
-      })}
+                <Cell className={`flex-initial ${INDICATION_WIDTH}`}>
+                  {rowIndication[0] ?? ""}
+                </Cell>
+                {posologies.map((posologie) => (
+                  <Cell
+                    key={`cell_${medicamentId}_${posologie}`}
+                    className={`flex-initial ${POSOLOGIE_WIDTH} ${
+                      PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.body
+                    } p-0`}
+                  >
+                    {rowData?.posologies?.[posologie] ?? ""}
+                  </Cell>
+                ))}
+                <Cell alignLeft>
+                  {[...rowCommentaires, ...rowCustomCommentaires]}
+                </Cell>
+              </Row>
+            </Table>
+          );
+        },
+      )}
       {precautions.map((precaution) => (
         <View
           key={precaution.id}

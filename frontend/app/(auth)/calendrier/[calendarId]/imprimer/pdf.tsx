@@ -1,4 +1,4 @@
-import CommonPdf from "@/app/_components/pdf";
+import CommonPdf from "@/app/modules-pdf-base";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Calendar, Medicament } from "@prisma/client";
 import { Rect, Svg, Text, View } from "@react-pdf/renderer";

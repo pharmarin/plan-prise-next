@@ -2,10 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Card from "@/app/_components/card";
-import MedicamentSelect from "@/app/_components/select-medicament";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
+import Card from "@/app/(auth)/modules-card";
 import NavbarModule from "@/app/(auth)/modules-navbar";
 import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
 import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
@@ -15,6 +14,7 @@ import {
   saveDataAction,
 } from "@/app/(auth)/plan/actions";
 import usePlanStore from "@/app/(auth)/plan/state";
+import MedicamentSelect from "@/app/modules-select-medicament";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Plan } from "@prisma/client";
@@ -177,10 +177,9 @@ const PlanClient = ({
                 });
                 await saveFormData();
               }}
-              renderBody={(medicament) => (
-                <PlanCardBody medicament={medicament} />
-              )}
-            />
+            >
+              {(medicament) => <PlanCardBody medicament={medicament} />}
+            </Card>
           ))}
         </form>
         <MedicamentSelect
