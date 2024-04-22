@@ -9,11 +9,9 @@ import NavbarModule from "@/app/(auth)/modules-navbar";
 import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
 import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
 import {
-  addMedicAction,
   deletePlanAction,
   findManyMedicsAction,
   findPrecautionsAction,
-  removeMedicAction,
   saveDataAction,
 } from "@/app/(auth)/plan/actions";
 import usePlanStore from "@/app/(auth)/plan/state";
@@ -27,7 +25,6 @@ import { useShallow } from "zustand/react/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
-import CardLoading from "@plan-prise/ui/components/card-loading";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
 
@@ -51,8 +48,9 @@ const PlanClient = ({
 
   const [ready, setReady] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [firstSavePending, setFirstSavePending] = useState(false);
 
-  const { init, addMedic, removeMedic, setIsSaving } = usePlanStore(
+  const { init, setIsSaving } = usePlanStore(
     useShallow((state) => ({
       init: state.init,
       addMedic: state.addMedic,
@@ -83,19 +81,56 @@ const PlanClient = ({
     }
   }, [findManyMedics, searchValue]);
 
-  const [addingMedics, setAddingMedics] = useState<
-    { id: string; denomination: string }[]
-  >([]);
-
-  const [removingMedics, setRemovingMedics] = useState<
-    { id: string; denomination: string }[]
-  >([]);
-  const removingMedicsId = removingMedics.map((medic) => medic.id);
+  const saveFormData = async () => {
+    setIsSaving(true);
+    saveDataDebounced.cancel();
+    await saveDataDebounced({
+      planId,
+      data: usePlanStore.getState().data ?? {},
+    });
+  };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
-      await saveDataAction(data);
+      const currentId = usePlanStore.getState().id;
+
+      if (currentId === PLAN_NEW && firstSavePending) {
+        if (firstSavePending) {
+          return undefined;
+        } else {
+          setFirstSavePending(true);
+        }
+      }
+
+      await saveDataAction(data)
+        .then(transformResponse)
+        .then(async (response) => {
+          if (currentId === PLAN_NEW) {
+            if (typeof response === "object" && "id" in response) {
+              setPlanId(response.id);
+              setDisplayId(response.displayId);
+              usePlanStore.setState({
+                id: response.id,
+                data: response.data ?? {},
+              });
+              router.replace(routes.plan({ planId: response.displayId }));
+              await saveFormData();
+            }
+
+            if (firstSavePending) {
+              setFirstSavePending(false);
+            }
+          }
+        })
+        .catch(() => {
+          toast({
+            title: `Impossible de mettre à jour le calendrier`,
+            description: "Veuillez réessayer",
+            variant: "destructive",
+          });
+        });
+
       setIsSaving(false);
     }, 2000),
     [],
@@ -140,80 +175,44 @@ const PlanClient = ({
             });
           }}
         >
-          {medics?.map((id) =>
-            removingMedicsId.includes(id) ? (
-              <CardLoading
-                key={`plan_${plan.id}_${id}_removing`}
-                denomination={
-                  removingMedics.find((medic) => medic.id === id)
-                    ?.denomination ?? ""
-                }
-                type="deleting"
-              />
-            ) : (
-              <Card
-                key={`plan_${plan.id}_${id}`}
-                medicamentId={id}
-                medicamentData={
-                  isCuid(id)
-                    ? medicaments.find((medicament) => medicament.id === id)
-                    : {
-                        id,
-                        denomination: id,
-                        indications: [],
-                        conservationFrigo: false,
-                        conservationDuree: [],
-                        voiesAdministration: [],
-                        commentaires: [],
-                        medics_simpleId: 0,
-                        principesActifs: [],
-                        precaution_old: "",
-                        precautionId: null,
-                        createdAt: new Date(),
-                        updatedAt: null,
-                      }
-                }
-                removeMedic={async (medicament: PP.Medicament.Identifier) => {
-                  setRemovingMedics((state) => [
-                    ...state,
-                    {
-                      id: medicament.id,
-                      denomination: medicament.denomination,
-                    },
-                  ]);
-                  await removeMedicAction({
-                    planId: planId,
-                    medicId: medicament.id,
-                  })
-                    .then(transformResponse)
-                    .then(() => removeMedic(medicament.id))
-                    .catch(() => {
-                      toast({
-                        title: `Impossible de supprimer ${medicament.denomination} pour le moment`,
-                        description: "Veuillez réessayer",
-                        variant: "destructive",
-                      });
-                    })
-                    .finally(() => {
-                      setRemovingMedics((state) => [
-                        ...state.filter((medic) => medic.id !== medicament.id),
-                      ]);
-                    });
-                }}
-                renderBody={(medicament) => (
-                  <PlanCardBody medicament={medicament} />
-                )}
-              />
-            ),
-          )}
+          {medics?.map((medicId) => (
+            <Card
+              key={`plan_${plan.id}_${medicId}`}
+              medicamentId={medicId}
+              medicamentData={
+                isCuid(medicId)
+                  ? medicaments.find((medicament) => medicament.id === medicId)
+                  : {
+                      id: medicId,
+                      denomination: medicId,
+                      indications: [],
+                      conservationFrigo: false,
+                      conservationDuree: [],
+                      voiesAdministration: [],
+                      commentaires: [],
+                      medics_simpleId: 0,
+                      principesActifs: [],
+                      precaution_old: "",
+                      precautionId: null,
+                      createdAt: new Date(),
+                      updatedAt: null,
+                    }
+              }
+              removeMedic={async (medicament: PP.Medicament.Identifier) => {
+                usePlanStore.setState((state) => {
+                  if (state.data) {
+                    const { [medicament.id]: _, ...data } = state.data;
+                    state.data = data;
+                  }
+                });
+                await saveFormData();
+              }}
+              renderBody={(medicament) => (
+                <PlanCardBody medicament={medicament} />
+              )}
+            />
+          ))}
         </form>
-        {addingMedics.map((row) => (
-          <CardLoading
-            key={`plan_${plan.id}_${row.id}_adding`}
-            denomination={row.denomination}
-            type="adding"
-          />
-        ))}
         <ReactSelect<SelectValueType>
           classNames={{
             control: () => "!border-0 !rounded-lg !shadow-md",
@@ -242,45 +241,12 @@ const PlanClient = ({
                 });
                 return;
               }
-              setAddingMedics((state) => [
-                ...state,
-                {
-                  id: value.id,
-                  denomination: value.custom ? value.id : value.denomination,
-                },
-              ]);
-              await addMedicAction({
-                planId: planId,
-                medicId: value.id,
-              })
-                .then(transformResponse)
-                .then((response) => {
-                  if (planId === PLAN_NEW) {
-                    if (typeof response === "object" && "id" in response) {
-                      setPlanId(response.id);
-                      setDisplayId(response.displayId);
-                      init(response);
-                      router.replace(
-                        routes.plan({ planId: response.displayId }),
-                      );
-                    }
-                  } else {
-                    addMedic(value.id);
-                  }
-                })
-                .catch(() => {
-                  toast({
-                    title: `Impossible d'ajouter ${value.denomination} pour le moment`,
-                    description: "Veuillez réessayer",
-                    variant: "destructive",
-                  });
-                })
-                .finally(() => {
-                  selectRef.current?.clearValue();
-                  setAddingMedics((state) => [
-                    ...state.filter((medic) => medic.id !== value.id),
-                  ]);
-                });
+              usePlanStore.setState((state) => {
+                if (state.data) {
+                  state.data[value.id] = {};
+                }
+              });
+              await saveFormData();
             }
           }}
           onInputChange={(value, action) => {

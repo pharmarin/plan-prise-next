@@ -7,10 +7,8 @@ import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import { MUTATION_SUCCESS, PLAN_NEW } from "@plan-prise/api/constants";
-import type { Plan } from "@plan-prise/db-prisma";
+import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import prisma from "@plan-prise/db-prisma";
-import PP_Error from "@plan-prise/errors";
 
 /**
  * QUERIES
@@ -76,113 +74,6 @@ export const findPrecautionsAction = authAction(
  * MUTATIONS
  */
 
-const addMedic = (medicId: string, medicsOrder: Plan["medicsOrder"]) => {
-  if (isCuid(medicId)) {
-    return {
-      medics: { connect: { id: medicId } },
-      medicsOrder: [
-        ...(Array.isArray(medicsOrder) ? medicsOrder : []),
-        medicId,
-      ],
-    };
-  } else {
-    return {
-      medicsOrder: [
-        ...(Array.isArray(medicsOrder) ? medicsOrder : []),
-        medicId,
-      ],
-    };
-  }
-};
-
-export const addMedicAction = authAction(
-  z.object({
-    planId: z.string().cuid2().or(z.literal(PLAN_NEW)),
-    medicId: z.string(),
-  }),
-  async ({ medicId, planId }, { userId }) => {
-    if (planId === PLAN_NEW) {
-      const user = await prisma.user.update({
-        where: { id: userId },
-        data: {
-          maxId: { increment: 1 },
-        },
-        select: { maxId: true },
-      });
-
-      const plan = await prisma.plan.create({
-        data: {
-          displayId: user.maxId,
-          ...addMedic(medicId, []),
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
-        },
-        include: {
-          medics: {
-            include: {
-              commentaires: true,
-              principesActifs: true,
-            },
-          },
-        },
-      });
-
-      return plan;
-    } else {
-      const plan = await prisma.plan.findUniqueOrThrow({
-        where: { id: planId },
-      });
-
-      if (
-        Array.isArray(plan.medicsOrder) &&
-        plan.medicsOrder.includes(medicId)
-      ) {
-        throw new PP_Error("PLAN_MEDICAMENT_ALREADY_ADDED_ERROR");
-      }
-
-      await prisma.plan.update({
-        where: { id: planId, user: { id: userId } },
-        data: addMedic(medicId, plan.medicsOrder),
-      });
-
-      return MUTATION_SUCCESS;
-    }
-  },
-);
-
-export const removeMedicAction = authAction(
-  z.object({ planId: z.string().cuid2(), medicId: z.string() }),
-  async ({ medicId, planId }, { userId }) => {
-    const plan = await prisma.plan.findUniqueOrThrow({
-      where: { id: planId, user: { id: userId } },
-      include: { medics: true },
-    });
-
-    await prisma.plan.update({
-      where: { id: planId },
-      data: {
-        medics: isCuid(medicId) ? { disconnect: { id: medicId } } : undefined,
-        medicsOrder: Array.isArray(plan.medicsOrder)
-          ? plan.medicsOrder.filter((id) => id !== medicId)
-          : [],
-      },
-      include: {
-        medics: {
-          include: {
-            commentaires: true,
-            principesActifs: true,
-          },
-        },
-      },
-    });
-
-    return MUTATION_SUCCESS;
-  },
-);
-
 export const saveDataAction = authAction(
   z.object({
     planId: z.string().cuid2(),
@@ -223,7 +114,7 @@ export const saveDataAction = authAction(
     ),
   }),
   async ({ planId, data }, { userId }) => {
-    await prisma.plan.update({
+    const plan = await prisma.plan.update({
       where: {
         id: planId,
         user: { id: userId },
@@ -231,9 +122,10 @@ export const saveDataAction = authAction(
       data: {
         data: data,
       },
+      select: { id: true, displayId: true },
     });
 
-    return MUTATION_SUCCESS;
+    return plan;
   },
 );
 
