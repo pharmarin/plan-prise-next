@@ -54,7 +54,6 @@ const CalendarClient = ({
   useEffect(() => {
     // Init state with server component data when mounted
     useCalendarStore.setState({
-      id: calendar.id,
       data: calendar.data ?? {},
     });
     setReady(true);
@@ -63,24 +62,21 @@ const CalendarClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
-      const currentId = useCalendarStore.getState().id;
-
-      if (currentId === CALENDAR_NEW && firstSavePending) {
+      if (calendarId === CALENDAR_NEW && firstSavePending) {
         return undefined;
       }
-      if (currentId === CALENDAR_NEW) {
+      if (calendarId === CALENDAR_NEW) {
         setFirstSavePending(true);
       }
 
       const response = await saveDataAction(data)
         .then(transformResponse)
         .then(async (response) => {
-          if (currentId === CALENDAR_NEW) {
+          if (calendarId === CALENDAR_NEW) {
             if (typeof response === "object" && "id" in response) {
               setCalendarId(response.id);
               setDisplayId(response.displayId);
               useCalendarStore.setState({
-                id: response.id,
                 data: response.data ?? {},
               });
               router.replace(
@@ -112,7 +108,7 @@ const CalendarClient = ({
     setIsSaving(true);
     saveDataDebounced.cancel();
     await saveDataDebounced({
-      calendarId: useCalendarStore.getState().id ?? "",
+      calendarId,
       data: useCalendarStore.getState().data ?? {},
     });
   };

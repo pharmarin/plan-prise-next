@@ -93,9 +93,7 @@ const PlanClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
-      const currentId = usePlanStore.getState().id;
-
-      if (currentId === PLAN_NEW && firstSavePending) {
+      if (planId === PLAN_NEW && firstSavePending) {
         if (firstSavePending) {
           return undefined;
         } else {
@@ -106,12 +104,11 @@ const PlanClient = ({
       await saveDataAction(data)
         .then(transformResponse)
         .then(async (response) => {
-          if (currentId === PLAN_NEW) {
+          if (planId === PLAN_NEW) {
             if (typeof response === "object" && "id" in response) {
               setPlanId(response.id);
               setDisplayId(response.displayId);
               usePlanStore.setState({
-                id: response.id,
                 data: response.data ?? {},
               });
               router.replace(routes.plan({ planId: response.displayId }));

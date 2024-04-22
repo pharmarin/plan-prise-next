@@ -12,7 +12,6 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type State = {
-  id?: Plan["id"];
   data?: Plan["data"];
   medics?: string[];
   settings?: Plan["settings"];
@@ -44,7 +43,6 @@ const usePlanStore = create(
       touched: false,
       init: (plan) =>
         setState((state) => {
-          state.id = plan.id;
           state.data = plan.data ?? {};
           state.medics = Object.keys(plan.data ?? {});
           state.settings = merge(PLAN_SETTINGS_DEFAULT, plan.settings);

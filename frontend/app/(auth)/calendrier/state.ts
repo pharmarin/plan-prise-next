@@ -7,7 +7,6 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type State = {
-  id?: string;
   data?: Record<
     string,
     (Partial<PP.Calendar.DataItem> & { startDate: string; endDate: string })[]
@@ -35,7 +34,6 @@ export const emptyIteration = (startDate?: Date) => ({
 const useCalendarStore = create(
   subscribeWithSelector(
     immer<State & Actions>((setState) => ({
-      id: undefined,
       data: undefined,
       isSaving: false,
       touched: false,
