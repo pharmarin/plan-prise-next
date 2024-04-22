@@ -19,6 +19,7 @@ import {
 import usePlanStore from "@/app/(auth)/plan/state";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
+import type { Plan } from "@prisma/client";
 import { debounce } from "lodash-es";
 import type { SelectInstance } from "react-select";
 import ReactSelect from "react-select";
@@ -37,7 +38,13 @@ type SelectValueType = {
   custom?: boolean;
 };
 
-const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
+const PlanClient = ({
+  medicaments,
+  plan,
+}: {
+  medicaments: PP.Medicament.Include[];
+  plan: Plan;
+}) => {
   const selectRef = useRef<SelectInstance<SelectValueType> | null>(null);
   const router = useRouter();
   const { toast } = useToast();
@@ -149,7 +156,7 @@ const PlanClient = ({ plan }: { plan: PP.Plan.Include }) => {
                 medicamentId={id}
                 medicamentData={
                   isCuid(id)
-                    ? plan.medics.find((medicament) => medicament.id === id)
+                    ? medicaments.find((medicament) => medicament.id === id)
                     : {
                         id,
                         denomination: id,

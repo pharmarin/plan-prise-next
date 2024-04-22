@@ -22,7 +22,7 @@ type State = {
 };
 
 type Actions = {
-  init: (plan: PP.Plan.Include) => void;
+  init: (plan: Plan) => void;
   setData: (path: string, value: string | boolean) => void;
   unsetData: (path: string) => void;
   addMedic: (id: string) => void;
@@ -46,9 +46,7 @@ const usePlanStore = create(
         setState((state) => {
           state.id = plan.id;
           state.data = plan.data ?? {};
-          state.medics = Array.isArray(plan.medicsOrder)
-            ? (plan.medicsOrder as string[])
-            : [];
+          state.medics = Object.keys(plan.data ?? {});
           state.settings = merge(PLAN_SETTINGS_DEFAULT, plan.settings);
           state.canPrint =
             (state.medics || []).length > 0 ? true : PLAN_NO_MEDIC_WARNING;

@@ -14,11 +14,6 @@ const Plan = async ({ params }: { params: unknown }) => {
 
     const plan = await prisma.plan.findFirstOrThrow({
       where: { displayId: Number(planId), user: { id: session?.user.id } },
-      include: {
-        medics: {
-          include: { commentaires: true, principesActifs: true },
-        },
-      },
     });
 
     let data = {};
@@ -37,13 +32,22 @@ const Plan = async ({ params }: { params: unknown }) => {
       data = plan.data ?? {};
     }
 
+    const medics = await prisma.medicament.findMany({
+      where: { OR: Object.keys(data).map((medicId) => ({ id: medicId })) },
+      include: { principesActifs: true, commentaires: true, precaution: true },
+    });
+
     return (
       <>
         <Navigation
           title={`Plan de prise n°${plan.displayId}`}
           returnTo={routes.plans()}
         />
-        <PlanClient plan={{ ...plan, data: data }} data-superjson />
+        <PlanClient
+          plan={{ ...plan, data: data }}
+          medicaments={medics}
+          data-superjson
+        />
       </>
     );
   } catch (error) {

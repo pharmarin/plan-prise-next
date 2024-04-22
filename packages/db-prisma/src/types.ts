@@ -21,7 +21,7 @@ declare global {
         "poso_soir" = "Soir",
         "poso_coucher" = "Coucher",
       }
-      type MedicsOrder = string[];
+      type MedicsOrder = string[] | null;
       type DataItem = {
         indication?: string;
         conservation?: string;

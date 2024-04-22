@@ -121,7 +121,6 @@ model Medicament {
   precaution_old      String?
   precaution          Precaution?     @relation(fields: [precautionId], references: [id])
   medics_simpleId     Int?
-  plans               Plan[]
   precautionId        Int?
   createdAt           DateTime        @default(now())
   updatedAt           DateTime?       @updatedAt
@@ -143,19 +142,18 @@ model Precaution {
 }
 
 model Plan {
-  id          String       @id @default(cuid())
-  medics      Medicament[]
+  id          String    @id @default(cuid())
   /// [Plan.MedicsOrder]
-  medicsOrder Json         @default("[]")
+  medicsOrder Json      @default("[]")
   /// [Plan.Data]
   data        Json?
   /// [Plan.Settings]
   settings    Json?
-  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String?
   displayId   Int
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime?    @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
 
   @@index([userId])
   @@map("plans")
