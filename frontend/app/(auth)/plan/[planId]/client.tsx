@@ -1,9 +1,5 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { transformResponse } from "@/app/_safe-actions/safe-actions";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import Card from "@/app/(auth)/modules-card";
 import NavbarModule from "@/app/(auth)/modules-navbar";
 import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
@@ -18,11 +14,15 @@ import {
   PLAN_SETTINGS_DEFAULT,
 } from "@/app/(auth)/plan/constants";
 import usePlanStore from "@/app/(auth)/plan/state";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import MedicamentSelect from "@/app/modules-select-medicament";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Plan } from "@prisma/client";
 import { debounce, merge } from "lodash-es";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
@@ -92,7 +92,7 @@ const PlanClient = ({
         })
         .catch(() => {
           toast({
-            title: `Impossible de mettre à jour le calendrier`,
+            title: `Impossible de mettre à jour le plan de prise`,
             description: "Veuillez réessayer",
             variant: "destructive",
           });
