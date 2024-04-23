@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import PlanClient from "@/app/(auth)/plan/[planId]/client";
+import { migrateMedicsOrder } from "@/app/(auth)/plan/functions";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
@@ -16,21 +17,7 @@ const Plan = async ({ params }: { params: unknown }) => {
       where: { displayId: Number(planId), user: { id: session?.user.id } },
     });
 
-    let data = {};
-    if (plan.medicsOrder) {
-      data = Object.fromEntries(
-        plan.medicsOrder.map((medicId) => [
-          medicId,
-          plan?.data?.[medicId] ?? {},
-        ]),
-      );
-      await prisma.plan.update({
-        where: { id: plan.id },
-        data: { medicsOrder: null },
-      });
-    } else {
-      data = plan.data ?? {};
-    }
+    const data = await migrateMedicsOrder(plan);
 
     const medics = await prisma.medicament.findMany({
       where: { OR: Object.keys(data).map((medicId) => ({ id: medicId })) },

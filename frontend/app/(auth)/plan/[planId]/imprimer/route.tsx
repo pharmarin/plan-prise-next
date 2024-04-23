@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import PrintPDF from "@/app/(auth)/plan/[planId]/imprimer/pdf-document";
+import { migrateMedicsOrder } from "@/app/(auth)/plan/functions";
 import { routes } from "@/app/routes-schema";
 import { renderToBuffer } from "@react-pdf/renderer";
 
@@ -17,19 +18,17 @@ export const GET = async (request: Request, context: { params: unknown }) => {
 
   const plan = await prisma.plan.findFirstOrThrow({
     where: { displayId: planId, userId: session.user.id },
-    include: {
-      medics: {
-        include: {
-          commentaires: true,
-          principesActifs: true,
-          precaution: true,
-        },
-      },
-    },
+  });
+
+  const data = await migrateMedicsOrder(plan);
+
+  const medics = await prisma.medicament.findMany({
+    where: { OR: Object.keys(data).map((medicId) => ({ id: medicId })) },
+    include: { principesActifs: true, commentaires: true, precaution: true },
   });
 
   const buffer = await renderToBuffer(
-    <PrintPDF plan={plan} user={session?.user} />,
+    <PrintPDF medicaments={medics} plan={plan} user={session?.user} />,
   );
 
   return new Response(buffer, {

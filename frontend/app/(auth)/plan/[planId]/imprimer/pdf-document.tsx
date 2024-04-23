@@ -9,7 +9,7 @@ import CommonPdf from "@/app/modules-pdf-base";
 import { PlanPrisePosologies } from "@/types/plan";
 import { extractVoieAdministration } from "@/utils/medicament";
 import { isCuid } from "@paralleldrive/cuid2";
-import type { Precaution } from "@prisma/client";
+import type { Plan, Precaution } from "@prisma/client";
 import { Text, View } from "@react-pdf/renderer";
 import { uniqBy } from "lodash-es";
 import Html from "react-pdf-html";
@@ -20,17 +20,19 @@ import PP_Error from "@plan-prise/errors";
 import { Cell, Header, Row, Table } from "@plan-prise/ui/components/PDF";
 
 const PrintPDF = ({
+  medicaments,
   plan,
   user,
 }: {
-  plan: PP.Plan.Include;
+  medicaments: PP.Medicament.Include[];
+  plan: Plan;
   user: UserSession;
 }) => {
   const tw = createTw({});
 
   const posologies = extractPosologiesSettings(plan.settings?.posos);
   const precautions = uniqBy(
-    plan.medics
+    medicaments
       .flatMap((medic) => medic.precaution)
       .filter(
         (precaution): precaution is Precaution =>
@@ -83,7 +85,7 @@ const PrintPDF = ({
       {[...(Array.isArray(plan.medicsOrder) ? plan.medicsOrder : [])].map(
         (medicamentId) => {
           const medicament = isCuid(medicamentId)
-            ? plan.medics.find((medic) => medic.id === medicamentId)
+            ? medicaments.find((medic) => medic.id === medicamentId)
             : { denomination: medicamentId };
 
           if (!medicament) {
