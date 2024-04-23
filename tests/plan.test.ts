@@ -136,14 +136,16 @@ test.describe("plan tests", () => {
 
     const result = {} as PP.Plan.Data;
 
+    for (const medicament of medicaments) {
+      result[medicament.id] = {};
+    }
+
     for (let index = 0; index < medicaments.length; index++) {
       const medicament = medicaments[index];
 
       if (!medicament) {
         throw new Error("Medicament not found");
       }
-
-      result[medicament.id] = {};
 
       const row = page.getByTestId("plan-card").nth(index);
       const commentairesGroup = row.getByTestId("plan-card-commentaire-group");

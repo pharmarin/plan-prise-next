@@ -20,9 +20,10 @@ export const getFakePlan = (
   userId: string,
 ): Prisma.PlanCreateInput => ({
   displayId: faker.number.int({ max: 99999 }),
-  medicsOrder: randomMedics.map((medicament) => medicament.id),
   user: { connect: { id: userId } },
-  data: {},
+  data: Object.fromEntries(
+    randomMedics.map((medicament) => [medicament.id, {}]),
+  ),
   settings: {},
 });
 
