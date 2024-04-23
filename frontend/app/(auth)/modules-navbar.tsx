@@ -71,10 +71,11 @@ const ModulesNavbar = ({
   });
 
   useEffect(() => {
-    displayId > 0 &&
-      setTitle(
-        `${type === "plan" ? "Plan de prise" : "Calendrier"} n°${displayId}`,
-      );
+    setTitle(
+      displayId > 0
+        ? `${type === "plan" ? "Plan de prise" : "Calendrier"} n°${displayId}`
+        : `Nouveau ${type === "plan" ? "plan de prise" : "calendrier"}`,
+    );
   }, [displayId, setTitle, type]);
 
   useEffect(() => {
