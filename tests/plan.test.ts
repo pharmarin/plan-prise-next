@@ -108,7 +108,7 @@ test.describe("plan tests", () => {
     }
   });
 
-  test("should edit test", async ({ page, fakeUserLoggedIn }) => {
+  test("should edit plan", async ({ page, fakeUserLoggedIn }) => {
     test.slow();
 
     const medicaments = await Promise.all([
@@ -140,8 +140,13 @@ test.describe("plan tests", () => {
       result[medicament.id] = {};
     }
 
-    for (let index = 0; index < medicaments.length; index++) {
-      const medicament = medicaments[index];
+    // TODO: Use medicaments order instead of medics from data
+    const medicsFromData = Object.keys(fakePlan.data ?? {});
+
+    for (let index = 0; index < medicsFromData.length; index++) {
+      const medicament = medicaments.find(
+        (medic) => medic.id === medicsFromData[index],
+      );
 
       if (!medicament) {
         throw new Error("Medicament not found");
