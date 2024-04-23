@@ -1,7 +1,9 @@
 import { z } from "zod";
 
+import { PLAN_NEW } from "@plan-prise/api/constants";
+
 export const savePlanDataSchema = z.object({
-  planId: z.string().cuid2(),
+  planId: z.union([z.literal(PLAN_NEW), z.string().cuid2()]),
   data: z.record(
     z.string(),
     z.object({
