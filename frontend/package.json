@@ -6,7 +6,7 @@
     "build": "pnpm with-env next build",
     "build:analyze": "ANALYZE=true pnpm build",
     "clean": "git clean -xdf .next .turbo node_modules",
-    "dev": "pnpm with-env next dev --turbo",
+    "dev": "pnpm with-env next dev",
     "env:generate": "gen-env-types .env",
     "format": "prettier --check \"**/*.{mjs,ts,md,json,tsx}\"",
     "lint": "pnpm with-env next lint",

@@ -40,8 +40,8 @@ const CalendarClient = ({
   );
   const isSaving = useCalendarStore((state) => state.isSaving);
   const canPrint = useCalendarStore((state) => !state.touched);
-  const calendarId = useCalendarStore((state) => state.id ?? "");
-  const displayId = useCalendarStore((state) => state.displayId ?? -1);
+  const calendarId = useCalendarStore((state) => state.id);
+  const displayId = useCalendarStore((state) => state.displayId);
 
   const { addMedic, removeMedic, setIsSaving } = useCalendarStore(
     useShallow((state) => ({
@@ -63,17 +63,19 @@ const CalendarClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
-      if (calendarId === CALENDAR_NEW && firstSavePending) {
-        return undefined;
-      }
-      if (calendarId === CALENDAR_NEW) {
+      if (useCalendarStore.getState().id === CALENDAR_NEW) {
+        if (firstSavePending) {
+          return undefined;
+        }
         setFirstSavePending(true);
       }
 
       const response = await saveDataAction(data)
         .then(transformResponse)
         .then(async (response) => {
-          if (calendarId === CALENDAR_NEW) {
+          const currentId = useCalendarStore.getState().id;
+
+          if (currentId === CALENDAR_NEW) {
             if (typeof response === "object" && "id" in response) {
               useCalendarStore.setState({
                 id: response.id,
@@ -109,7 +111,7 @@ const CalendarClient = ({
     setIsSaving(true);
     saveDataDebounced.cancel();
     await saveDataDebounced({
-      calendarId,
+      calendarId: useCalendarStore.getState().id ?? "",
       data: useCalendarStore.getState().data ?? {},
     });
   };
@@ -122,7 +124,7 @@ const CalendarClient = ({
     <div className="space-y-4">
       <NavbarModule
         canPrint={canPrint}
-        displayId={displayId}
+        displayId={displayId ?? -1}
         id={calendarId}
         isSaving={isSaving}
         medicsLength={medicIds.length}

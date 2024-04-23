@@ -3,23 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authAction } from "@/app/_safe-actions/safe-actions";
+import { getNewDisplayId } from "@/app/actions";
 import { routes } from "@/app/routes-schema";
 import { z } from "zod";
 
 import { CALENDAR_NEW, MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import prisma from "@plan-prise/db-prisma";
-
-const getNewDisplayId = async (userId: string) => {
-  const user = await prisma.user.update({
-    where: { id: userId },
-    data: {
-      maxId: { increment: 1 },
-    },
-    select: { maxId: true },
-  });
-
-  return user.maxId;
-};
 
 export const saveDataAction = authAction(
   z.object({
@@ -46,6 +35,7 @@ export const saveDataAction = authAction(
           data,
           userId,
         },
+        select: { id: true, displayId: true },
       });
 
       return calendar;
@@ -58,6 +48,7 @@ export const saveDataAction = authAction(
         data: {
           data: data,
         },
+        select: { id: true, displayId: true },
       });
 
       return MUTATION_SUCCESS;

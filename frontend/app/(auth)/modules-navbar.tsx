@@ -49,9 +49,10 @@ const ModulesNavbar = ({
   const [{ isLoading: isDeleting }, deleteAction] =
     useAsyncCallback(onDeleteAction);
 
-  useEventListener(
-    EVENTS.DELETE,
-    async () => type === "plan" && deleteAction({ planId: id }),
+  useEventListener(EVENTS.DELETE, async () =>
+    type === "plan"
+      ? deleteAction({ planId: id })
+      : deleteAction({ calendarId: id }),
   );
 
   useEventListener(
@@ -63,7 +64,9 @@ const ModulesNavbar = ({
     if (isSaving) return;
     if (canPrint === true) {
       window.open(
-        type === "plan" ? routes.planPrint({ planId: displayId }) : undefined,
+        type === "plan"
+          ? routes.planPrint({ planId: displayId })
+          : routes.calendarPrint({ calendarId: displayId }),
       );
     } else {
       document.getElementsByClassName("action-required")[0]?.scrollIntoView();

@@ -1,5 +1,9 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { transformResponse } from "@/app/_safe-actions/safe-actions";
+import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import Card from "@/app/(auth)/modules-card";
 import NavbarModule from "@/app/(auth)/modules-navbar";
 import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
@@ -14,15 +18,11 @@ import {
   PLAN_SETTINGS_DEFAULT,
 } from "@/app/(auth)/plan/constants";
 import usePlanStore from "@/app/(auth)/plan/state";
-import { transformResponse } from "@/app/_safe-actions/safe-actions";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import MedicamentSelect from "@/app/modules-select-medicament";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Plan } from "@prisma/client";
 import { debounce, merge } from "lodash-es";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import { PLAN_NEW } from "@plan-prise/api/constants";
@@ -49,14 +49,14 @@ const PlanClient = ({
   );
   const canPrint = usePlanStore((state) => state.canPrint);
   const isSaving = usePlanStore((state) => state.isSaving);
-  const planId = usePlanStore((state) => state.id ?? "");
-  const displayId = usePlanStore((state) => state.displayId ?? -1);
+  const planId = usePlanStore((state) => state.id);
+  const displayId = usePlanStore((state) => state.displayId);
 
   const saveFormData = async () => {
     setIsSaving(true);
     saveDataDebounced.cancel();
     await saveDataDebounced({
-      planId,
+      planId: usePlanStore.getState().id ?? "",
       data: usePlanStore.getState().data ?? {},
     });
   };
@@ -64,7 +64,7 @@ const PlanClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async (data: Parameters<typeof savePlanDataAction>["0"]) => {
-      if (planId === PLAN_NEW && firstSavePending) {
+      if (usePlanStore.getState().id === PLAN_NEW && firstSavePending) {
         if (firstSavePending) {
           return undefined;
         } else {
@@ -75,7 +75,9 @@ const PlanClient = ({
       await savePlanDataAction(data)
         .then(transformResponse)
         .then(async (response) => {
-          if (planId === PLAN_NEW) {
+          const currentId = usePlanStore.getState().id;
+
+          if (currentId === PLAN_NEW) {
             if (typeof response === "object" && "id" in response) {
               usePlanStore.setState({
                 id: response.id,
@@ -124,7 +126,7 @@ const PlanClient = ({
     <>
       <NavbarModule
         canPrint={canPrint}
-        displayId={displayId}
+        displayId={displayId ?? -1}
         id={planId}
         isSaving={isSaving}
         medicsLength={(medicIds ?? []).length}
@@ -137,20 +139,10 @@ const PlanClient = ({
         setShow={() => setShowSettings(false)}
       />
       <div className="space-y-4">
-        <form
-          className="space-y-4"
-          onChange={async () => {
-            setIsSaving(true);
-            saveDataDebounced.cancel();
-            await saveDataDebounced({
-              planId,
-              data: usePlanStore.getState().data ?? {},
-            });
-          }}
-        >
+        <form className="space-y-4" onChange={async () => await saveFormData()}>
           {medicIds?.map((medicId) => (
             <Card
-              key={`plan_${plan.id}_${medicId}`}
+              key={`plan_${planId}_${medicId}`}
               medicamentId={medicId}
               medicamentData={
                 isCuid(medicId)

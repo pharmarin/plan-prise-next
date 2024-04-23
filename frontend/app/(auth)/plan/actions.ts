@@ -4,11 +4,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authAction } from "@/app/_safe-actions/safe-actions";
 import { savePlanDataSchema } from "@/app/(auth)/plan/validation";
+import { getNewDisplayId } from "@/app/actions";
 import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { MUTATION_SUCCESS, PLAN_NEW } from "@plan-prise/api/constants";
 import type { Plan } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
@@ -102,18 +103,33 @@ export const findPrecautionsAction = authAction(
 export const savePlanDataAction = authAction(
   savePlanDataSchema,
   async ({ planId, data }, { userId }) => {
-    const plan = await prisma.plan.update({
-      where: {
-        id: planId,
-        user: { id: userId },
-      },
-      data: {
-        data: data,
-      },
-      select: { id: true, displayId: true },
-    });
+    if (planId === PLAN_NEW) {
+      const displayId = await getNewDisplayId(userId);
 
-    return plan;
+      const plan = await prisma.plan.create({
+        data: {
+          displayId,
+          data,
+          userId,
+        },
+        select: { id: true, displayId: true },
+      });
+
+      return plan;
+    } else {
+      const plan = await prisma.plan.update({
+        where: {
+          id: planId,
+          user: { id: userId },
+        },
+        data: {
+          data: data,
+        },
+        select: { id: true, displayId: true },
+      });
+
+      return plan;
+    }
   },
 );
 
