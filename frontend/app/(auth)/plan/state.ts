@@ -10,8 +10,7 @@ import { immer } from "zustand/middleware/immer";
 type State = {
   id?: Plan["id"];
   displayId?: Plan["displayId"];
-  data?: Plan["data"];
-  medics?: string[];
+  data?: PP.Plan.Data1;
   settings?: Plan["settings"];
   isSaving: boolean;
   touched: boolean;
@@ -19,8 +18,8 @@ type State = {
 };
 
 type Actions = {
-  setData: (path: string, value: string | boolean) => void;
-  unsetData: (path: string) => void;
+  setData: (medicId: string, path: string, value: string | boolean) => void;
+  unsetData: (medicId: string, path: string) => void;
   setSetting: (path: string, value: boolean) => void;
   setIsSaving: (isSaving: boolean) => void;
   setCanPrint: (canPrint: boolean | string) => void;
@@ -37,20 +36,26 @@ const usePlanStore = create(
       isSaving: false,
       canPrint: true,
       touched: false,
-      setData: (path, value) => {
+      setData: (medicId, path, value) => {
         setState((state) => {
           state.touched = true;
+          const medicIndex = state.data?.findIndex(
+            (row) => row.medicId === medicId,
+          );
           state.data = set(
-            (state.data ?? {}) as object,
-            path,
+            state.data ?? [],
+            `${medicIndex}.data.${path}`,
             value,
-          ) as PP.Plan.Data;
+          ) as PP.Plan.Data1;
         });
       },
-      unsetData: (path) =>
+      unsetData: (medicId, path) =>
         setState((state) => {
           state.touched = true;
-          unset((state.data ?? {}) as object, path);
+          const medicIndex = state.data?.findIndex(
+            (row) => row.medicId === medicId,
+          );
+          unset(state.data ?? [], `${medicIndex}.data.${path}`);
         }),
       setSetting: (path, value) =>
         setState((state) => {
@@ -65,7 +70,7 @@ const usePlanStore = create(
         }),
       setCanPrint: (canPrint) =>
         setState((state) => {
-          state.canPrint = (state.medics ?? []).length > 0 ? canPrint : false;
+          state.canPrint = (state.data ?? []).length > 0 ? canPrint : false;
         }),
     })),
   ),

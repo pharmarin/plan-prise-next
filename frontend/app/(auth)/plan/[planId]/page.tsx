@@ -20,7 +20,9 @@ const Plan = async ({ params }: { params: unknown }) => {
     const data = await migrateMedicsOrder(plan);
 
     const medics = await prisma.medicament.findMany({
-      where: { OR: Object.keys(data).map((medicId) => ({ id: medicId })) },
+      where: {
+        OR: data.map((row) => ({ id: row.medicId })),
+      },
       include: { principesActifs: true, commentaires: true, precaution: true },
     });
 

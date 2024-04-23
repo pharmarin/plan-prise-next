@@ -34,11 +34,11 @@ const PrintCalendar = ({
   const events: Record<string, { denomination: string; quantity: string }[]> =
     {};
 
-  for (const [id, data] of Object.entries(calendar.data ?? {})) {
-    const denomination = isCuid(id)
-      ? medicaments.find((medicament) => medicament.id === id)?.denomination ??
-        ""
-      : id;
+  for (const { medicId, data } of calendar.data ?? []) {
+    const denomination = isCuid(medicId)
+      ? medicaments.find((medicament) => medicament.id === medicId)
+          ?.denomination ?? ""
+      : medicId;
 
     for (const recurrence of data) {
       const startDate = new Date(recurrence.startDate);

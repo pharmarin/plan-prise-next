@@ -35,7 +35,7 @@ const PlanClient = ({
   plan,
 }: {
   medicaments?: PP.Medicament.Include[];
-  plan: Plan;
+  plan: Plan & { data: PP.Plan.Data1 };
 }) => {
   const router = useRouter();
   const { toast } = useToast();
@@ -45,7 +45,7 @@ const PlanClient = ({
 
   const setIsSaving = usePlanStore((state) => state.setIsSaving);
   const medicIds = usePlanStore(
-    useShallow((state) => Object.keys(state.data ?? {})),
+    useShallow((state) => (state.data ?? []).map((row) => row.medicId)),
   );
   const canPrint = usePlanStore((state) => state.canPrint);
   const isSaving = usePlanStore((state) => state.isSaving);
@@ -55,15 +55,12 @@ const PlanClient = ({
   const saveFormData = async () => {
     setIsSaving(true);
     saveDataDebounced.cancel();
-    await saveDataDebounced({
-      planId: usePlanStore.getState().id ?? "",
-      data: usePlanStore.getState().data ?? {},
-    });
+    await saveDataDebounced();
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
-    debounce(async (data: Parameters<typeof savePlanDataAction>["0"]) => {
+    debounce(async () => {
       if (usePlanStore.getState().id === PLAN_NEW && firstSavePending) {
         if (firstSavePending) {
           return undefined;
@@ -72,7 +69,10 @@ const PlanClient = ({
         }
       }
 
-      await savePlanDataAction(data)
+      await savePlanDataAction({
+        planId: usePlanStore.getState().id ?? "",
+        data: usePlanStore.getState().data ?? [],
+      })
         .then(transformResponse)
         .then(async (response) => {
           const currentId = usePlanStore.getState().id;
@@ -166,8 +166,9 @@ const PlanClient = ({
               removeMedic={async (medicament: PP.Medicament.Identifier) => {
                 usePlanStore.setState((state) => {
                   if (state.data) {
-                    const { [medicament.id]: _, ...data } = state.data;
-                    state.data = data;
+                    state.data = state.data.filter(
+                      (row) => row.medicId !== medicament.id,
+                    );
                   }
                 });
                 await saveFormData();
@@ -188,7 +189,10 @@ const PlanClient = ({
             }
             usePlanStore.setState((state) => {
               if (state.data) {
-                state.data[value.id] = {};
+                state.data.push({
+                  medicId: value.id,
+                  data: {},
+                });
               }
             });
             await saveFormData();

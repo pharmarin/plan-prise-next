@@ -36,7 +36,7 @@ const CalendarClient = ({
   const [firstSavePending, setFirstSavePending] = useState(false);
 
   const medicIds = useCalendarStore(
-    useShallow((state) => Object.keys(state.data ?? {})),
+    useShallow((state) => (state.data ?? []).map((row) => row.medicId)),
   );
   const isSaving = useCalendarStore((state) => state.isSaving);
   const canPrint = useCalendarStore((state) => !state.touched);
@@ -56,13 +56,13 @@ const CalendarClient = ({
     useCalendarStore.setState({
       id: calendar.id,
       displayId: calendar.displayId,
-      data: calendar.data ?? {},
+      data: calendar.data ?? [],
     });
   }, [calendar]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
-    debounce(async (data: Parameters<typeof saveDataAction>["0"]) => {
+    debounce(async () => {
       if (useCalendarStore.getState().id === CALENDAR_NEW) {
         if (firstSavePending) {
           return undefined;
@@ -70,7 +70,10 @@ const CalendarClient = ({
         setFirstSavePending(true);
       }
 
-      const response = await saveDataAction(data)
+      const response = await saveDataAction({
+        calendarId: useCalendarStore.getState().id ?? "",
+        data: useCalendarStore.getState().data ?? [],
+      })
         .then(transformResponse)
         .then(async (response) => {
           const currentId = useCalendarStore.getState().id;
@@ -110,10 +113,7 @@ const CalendarClient = ({
   const saveFormData = async () => {
     setIsSaving(true);
     saveDataDebounced.cancel();
-    await saveDataDebounced({
-      calendarId: useCalendarStore.getState().id ?? "",
-      data: useCalendarStore.getState().data ?? {},
-    });
+    await saveDataDebounced();
   };
 
   if (!calendarId) {

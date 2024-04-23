@@ -15,7 +15,9 @@ const PlanPosologie = ({
   name: keyof typeof PlanPrisePosologies;
 }) => {
   const data = usePlanStore(
-    (state) => state.data?.[medicament.id]?.posologies?.[name],
+    (state) =>
+      state.data?.find((row) => row.medicId === medicament.id)?.data
+        ?.posologies?.[name],
   );
   const setData = usePlanStore((state) => state.setData);
 
@@ -26,7 +28,8 @@ const PlanPosologie = ({
         data-testid={`plan-input-posologies-${name}`}
         onChange={(event) =>
           setData(
-            `${medicament.id}.posologies.${name}`,
+            medicament.id,
+            `posologies.${name}`,
             event.currentTarget.value,
           )
         }

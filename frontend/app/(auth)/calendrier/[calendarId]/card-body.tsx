@@ -17,7 +17,10 @@ const CalendarCardBody = ({
   onInputChange: () => void;
 }) => {
   const data = useCalendarStore(
-    useShallow((state) => state.data?.[medicament.id]),
+    useShallow(
+      (state) =>
+        state.data?.find((row) => row.medicId === medicament.id)?.data ?? [],
+    ),
   );
   const { setData, pushEmptyIteration, removeIteration } = useCalendarStore(
     useShallow((state) => ({
@@ -29,7 +32,7 @@ const CalendarCardBody = ({
 
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
-      {(data && data?.length > 0 ? data : []).map((iteration, index) => {
+      {(data.length > 0 ? data : []).map((iteration, index) => {
         const previousIterationEndDate = data?.[index - 1]?.endDate;
         const disabledBefore =
           index > 0
@@ -71,13 +74,15 @@ const CalendarCardBody = ({
                     onChange={(value) => {
                       value &&
                         setData(
-                          `${medicament.id}.${index}.startDate`,
+                          medicament.id,
+                          `${index}.startDate`,
                           toYYYYMMDD(value),
                         );
                       value &&
                         value > new Date(iteration.endDate) &&
                         setData(
-                          `${medicament.id}.${index}.endDate`,
+                          medicament.id,
+                          `${index}.endDate`,
                           toYYYYMMDD(value),
                         );
                       onInputChange();
@@ -106,7 +111,8 @@ const CalendarCardBody = ({
                     onChange={(value) => {
                       value &&
                         setData(
-                          `${medicament.id}.${index}.endDate`,
+                          medicament.id,
+                          `${index}.endDate`,
                           toYYYYMMDD(value),
                         );
                       onInputChange();
@@ -136,7 +142,8 @@ const CalendarCardBody = ({
               <Input
                 onChange={(event) => {
                   setData(
-                    `${medicament.id}.${index}.quantity`,
+                    medicament.id,
+                    `${index}.quantity`,
                     event.currentTarget.value,
                   );
                   onInputChange();
@@ -150,7 +157,8 @@ const CalendarCardBody = ({
                 <Input
                   onChange={(event) => {
                     setData(
-                      `${medicament.id}.${index}.frequency`,
+                      medicament.id,
+                      `${index}.frequency`,
                       event.currentTarget.value,
                     );
                     onInputChange();

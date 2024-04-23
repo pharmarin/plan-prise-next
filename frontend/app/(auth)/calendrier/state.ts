@@ -10,10 +10,13 @@ import { immer } from "zustand/middleware/immer";
 type State = {
   id?: Calendar["id"];
   displayId?: Calendar["displayId"];
-  data?: Record<
-    string,
-    (Partial<PP.Calendar.DataItem> & { startDate: string; endDate: string })[]
-  >;
+  data?: {
+    medicId: string;
+    data: (Partial<PP.Calendar.DataItem> & {
+      startDate: string;
+      endDate: string;
+    })[];
+  }[];
   isSaving: boolean;
   touched: boolean;
 };
@@ -21,7 +24,11 @@ type State = {
 type Actions = {
   addMedic: (id: string) => void;
   removeMedic: (id: string) => void;
-  setData: (path: string, value: string | boolean | Date) => void;
+  setData: (
+    medicId: string,
+    path: string,
+    value: string | boolean | Date,
+  ) => void;
   pushEmptyIteration: (medicId: string) => void;
   removeIteration: (medicId: string, index: number) => void;
   setIsSaving: (isSaving: boolean) => void;
@@ -43,24 +50,28 @@ const useCalendarStore = create(
       addMedic: (medicId) =>
         setState((state) => {
           if (!state.data) {
-            state.data = {};
+            state.data = [];
           }
 
-          if (!Object.keys(state.data).includes(medicId)) {
-            state.data[medicId] = [];
+          if (!state.data.map((row) => row.medicId).includes(medicId)) {
+            state.data.push({
+              medicId,
+              data: [],
+            });
           }
         }),
       removeMedic: (medicId) =>
         setState((state) => {
-          if (state.data?.[medicId]) {
-            delete state.data[medicId];
-          }
+          state.data = state.data?.filter((row) => row.medicId !== medicId);
         }),
-      setData: (path, value) => {
+      setData: (medicId, path, value) => {
         setState((state) => {
+          const medicIndex = state.data?.findIndex(
+            (row) => row.medicId === medicId,
+          );
           state.data = set(
-            (state.data ?? {}) as object,
-            path,
+            state.data ?? [],
+            `${medicIndex}.data.${path}`,
             value,
           ) as PP.Calendar.Data;
         });
@@ -68,14 +79,18 @@ const useCalendarStore = create(
       pushEmptyIteration: (medicId) =>
         setState((state) => {
           if (!state.data) {
-            state.data = {};
+            state.data = [];
           }
 
+          const entry = state.data.find((row) => row.medicId === medicId);
           const previousEndDate =
-            state.data[medicId]?.[(state.data[medicId] ?? [])?.length - 1]
-              ?.endDate;
+            entry?.data?.[(entry.data ?? [])?.length - 1]?.endDate;
 
-          state.data[medicId]?.push(
+          if (!entry?.data) {
+            entry!.data = [];
+          }
+
+          entry?.data.push(
             emptyIteration(
               previousEndDate ? new Date(previousEndDate) : undefined,
             ),
@@ -83,15 +98,9 @@ const useCalendarStore = create(
         }),
       removeIteration: (medicId, index) =>
         setState((state) => {
-          if (state.data?.[medicId]) {
-            set(
-              state,
-              `data.${medicId}`,
-              (state.data[medicId] ?? []).filter(
-                (_id, iteration) => iteration !== index,
-              ),
-            );
-          }
+          const entry = state.data?.find((row) => row.medicId === medicId);
+          entry!.data =
+            entry?.data.filter((_, iteration) => iteration !== index) ?? [];
         }),
       setIsSaving: (isSaving) =>
         setState((state) => {

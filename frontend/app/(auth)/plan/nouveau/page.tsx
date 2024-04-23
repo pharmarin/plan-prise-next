@@ -8,10 +8,10 @@ import { PLAN_NEW } from "@plan-prise/api/constants";
 
 const PlanNew = () => {
   const plan = useMemo(
-    (): Plan => ({
+    (): Plan & { data: PP.Plan.Data1 } => ({
       id: PLAN_NEW,
       medicsOrder: null,
-      data: {},
+      data: [],
       settings: {},
       userId: "",
       displayId: -1,

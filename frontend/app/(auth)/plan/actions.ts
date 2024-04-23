@@ -15,22 +15,27 @@ import prisma from "@plan-prise/db-prisma";
 
 /** MIGRATION */
 
-export const migrateMedicsOrder = async (plan: Plan): Promise<PP.Plan.Data> => {
+export const migrateMedicsOrder = async (
+  plan: Plan,
+): Promise<PP.Plan.Data1> => {
   "use server";
 
-  let data = {};
+  let data: PP.Plan.Data1 = [];
 
-  if (plan.medicsOrder) {
-    data = Object.fromEntries(
-      plan.medicsOrder.map((medicId) => [medicId, plan?.data?.[medicId] ?? {}]),
-    );
+  if (Array.isArray(plan.data)) {
+    data = plan.data ?? [];
+  } else {
+    for (const medicId of plan?.medicsOrder ?? []) {
+      data.push({
+        medicId,
+        data: (plan.data ?? {})?.[medicId] ?? {},
+      });
+    }
 
     await prisma.plan.update({
       where: { id: plan.id },
       data: { medicsOrder: null },
     });
-  } else {
-    data = plan.data ?? {};
   }
 
   return data;

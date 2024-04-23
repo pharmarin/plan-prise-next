@@ -15,7 +15,9 @@ const PlanCommentaire = ({
   medicament: Medicament;
 }) => {
   const data = usePlanStore(
-    (state) => state.data?.[medicament.id]?.commentaires?.[commentaire.id],
+    (state) =>
+      state.data?.find((row) => row.medicId === medicament.id)?.data
+        ?.commentaires?.[commentaire.id],
   );
   const setData = usePlanStore((state) => state.setData);
 
@@ -30,7 +32,8 @@ const PlanCommentaire = ({
         checked={comment.checked}
         onCheckedChange={(checked) =>
           setData(
-            `${medicament.id}.commentaires.${commentaire.id}.checked`,
+            medicament.id,
+            `commentaires.${commentaire.id}.checked`,
             checked,
           )
         }
@@ -46,7 +49,8 @@ const PlanCommentaire = ({
           className={twMerge(!comment.checked && "text-gray-400")}
           onChange={(event) =>
             setData(
-              `${medicament.id}.commentaires.${commentaire.id}.texte`,
+              medicament.id,
+              `commentaires.${commentaire.id}.texte`,
               event.currentTarget.value,
             )
           }

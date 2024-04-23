@@ -134,10 +134,13 @@ test.describe("plan tests", () => {
 
     await page.goto(`/plan/${fakePlan.displayId}`);
 
-    const result = {} as PP.Plan.Data;
+    const result = [] as PP.Plan.Data1;
 
     for (const medicament of medicaments) {
-      result[medicament.id] = {};
+      result.push({
+        medicId: medicament.id,
+        data: {},
+      });
     }
 
     // TODO: Use medicaments order instead of medics from data
@@ -190,7 +193,7 @@ test.describe("plan tests", () => {
         where: { id: fakePlan.id },
       });
 
-      result[medicament.id]!.indication = "test";
+      result[index]!.data.indication = "test";
 
       expect(planData.data).toEqual(result);
 
@@ -208,25 +211,25 @@ test.describe("plan tests", () => {
           .getByTestId(`plan-input-posologies-${posologie}`)
           .fill("test");
 
-        if (typeof result[medicament.id]?.posologies === "undefined") {
-          result[medicament.id]!.posologies = {
+        if (typeof result[index]?.data.posologies === "undefined") {
+          result[index]!.data.posologies = {
             [posologie]: "test",
           } as Record<keyof typeof PP.Plan.PlanPrisePosologies, string>;
         } else {
-          result[medicament.id]!.posologies![posologie] = "test";
+          result[index]!.data.posologies![posologie] = "test";
         }
       }
 
       // COMMENTAIRES
 
-      result[medicament.id]!.commentaires = {};
+      result[index]!.data.commentaires = {};
 
       for (let index = 0; index < medicament.commentaires.length; index++) {
         const element = commentairesGroup.nth(index);
 
         await element.locator("textarea").fill("Test commentaire");
 
-        result[medicament.id]!.commentaires![
+        result[index]!.data.commentaires![
           medicament.commentaires[index]?.id ?? ""
         ] = {
           texte: "Test commentaire",
@@ -234,7 +237,7 @@ test.describe("plan tests", () => {
 
         await element.locator("button[role=checkbox]").click();
 
-        result[medicament.id]!.commentaires![
+        result[index]!.data.commentaires![
           medicament.commentaires[index]?.id ?? ""
         ]!.checked = !!medicament.commentaires[index]?.population;
       }

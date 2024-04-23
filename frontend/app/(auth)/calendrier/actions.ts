@@ -13,16 +13,18 @@ import prisma from "@plan-prise/db-prisma";
 export const saveDataAction = authAction(
   z.object({
     calendarId: z.union([z.literal(CALENDAR_NEW), z.string().cuid2()]),
-    data: z.record(
-      z.string(),
-      z.array(
-        z.object({
-          startDate: z.string(),
-          endDate: z.string(),
-          quantity: z.coerce.string().optional(),
-          frequency: z.coerce.number().optional(),
-        }),
-      ),
+    data: z.array(
+      z.object({
+        medicId: z.string(),
+        data: z.array(
+          z.object({
+            startDate: z.string(),
+            endDate: z.string(),
+            quantity: z.coerce.string().optional(),
+            frequency: z.coerce.number().optional(),
+          }),
+        ),
+      }),
     ),
   }),
   async ({ calendarId, data }, { userId }) => {

@@ -11,7 +11,7 @@ const CalendarNewPage = () => {
     (): Calendar => ({
       id: CALENDAR_NEW,
       displayId: -1,
-      data: {},
+      data: [],
       userId: "",
       createdAt: new Date(),
       updatedAt: null,
