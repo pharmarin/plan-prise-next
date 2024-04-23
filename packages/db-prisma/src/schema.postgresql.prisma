@@ -144,7 +144,7 @@ model Precaution {
 model Plan {
   id          String    @id @default(cuid())
   /// [Plan.MedicsOrder]
-  medicsOrder Json      @default("[]")
+  medicsOrder Json?
   /// [Plan.Data]
   data        Json?
   /// [Plan.Settings]
