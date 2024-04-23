@@ -34,7 +34,7 @@
     "@types/lodash-es": "4.17.12",
     "jose": "5.2.4",
     "mailersend": "2.2.0",
-    "zod": "3.22.5"
+    "zod": "3.23.3"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "0.2.0",
