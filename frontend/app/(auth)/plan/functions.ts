@@ -1,7 +1,5 @@
 import { PLAN_SETTINGS_DEFAULT } from "@/app/(auth)/plan/constants";
-import type { Commentaire, Medicament, Plan } from "@prisma/client";
-
-import prisma from "@plan-prise/db-prisma";
+import type { Commentaire, Medicament } from "@prisma/client";
 
 export const extractPosologie = (data?: string) => data ?? "";
 
@@ -74,23 +72,4 @@ export const extractPosologiesSettings = (
       (poso): poso is keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"] =>
         poso !== undefined,
     );
-};
-
-export const migrateMedicsOrder = async (plan: Plan): Promise<PP.Plan.Data> => {
-  let data = {};
-
-  if (plan.medicsOrder) {
-    data = Object.fromEntries(
-      plan.medicsOrder.map((medicId) => [medicId, plan?.data?.[medicId] ?? {}]),
-    );
-
-    await prisma.plan.update({
-      where: { id: plan.id },
-      data: { medicsOrder: null },
-    });
-  } else {
-    data = plan.data ?? {};
-  }
-
-  return data;
 };

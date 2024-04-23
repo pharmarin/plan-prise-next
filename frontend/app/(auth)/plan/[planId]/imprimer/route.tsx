@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import PrintPDF from "@/app/(auth)/plan/[planId]/imprimer/pdf-document";
-import { migrateMedicsOrder } from "@/app/(auth)/plan/functions";
+import { migrateMedicsOrder } from "@/app/(auth)/plan/actions";
 import { routes } from "@/app/routes-schema";
 import { renderToBuffer } from "@react-pdf/renderer";
 

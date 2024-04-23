@@ -9,7 +9,31 @@ import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import type { Plan } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
+
+/** MIGRATION */
+
+export const migrateMedicsOrder = async (plan: Plan): Promise<PP.Plan.Data> => {
+  "use server";
+
+  let data = {};
+
+  if (plan.medicsOrder) {
+    data = Object.fromEntries(
+      plan.medicsOrder.map((medicId) => [medicId, plan?.data?.[medicId] ?? {}]),
+    );
+
+    await prisma.plan.update({
+      where: { id: plan.id },
+      data: { medicsOrder: null },
+    });
+  } else {
+    data = plan.data ?? {};
+  }
+
+  return data;
+};
 
 /**
  * QUERIES

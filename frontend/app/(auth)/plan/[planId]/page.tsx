@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import PlanClient from "@/app/(auth)/plan/[planId]/client";
-import { migrateMedicsOrder } from "@/app/(auth)/plan/functions";
+import { migrateMedicsOrder } from "@/app/(auth)/plan/actions";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
