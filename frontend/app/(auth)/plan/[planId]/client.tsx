@@ -34,7 +34,7 @@ const PlanClient = ({
   medicaments,
   plan,
 }: {
-  medicaments: PP.Medicament.Include[];
+  medicaments?: PP.Medicament.Include[];
   plan: Plan;
 }) => {
   const router = useRouter();
@@ -154,7 +154,7 @@ const PlanClient = ({
               medicamentId={medicId}
               medicamentData={
                 isCuid(medicId)
-                  ? medicaments.find((medicament) => medicament.id === medicId)
+                  ? medicaments?.find((medicament) => medicament.id === medicId)
                   : {
                       id: medicId,
                       denomination: medicId,
