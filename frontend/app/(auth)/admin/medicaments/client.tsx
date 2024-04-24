@@ -4,7 +4,6 @@ import { routes } from "@/app/routes-schema";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { toUpper } from "lodash-es";
 
 import { Badge } from "@plan-prise/ui/badge";
 import { DataTable, DataTableColumnHeader } from "@plan-prise/ui/data-table";
@@ -22,7 +21,8 @@ const MedicsClient = ({
     never
   >[] = [
     columnHelper.accessor("denomination", {
-      cell: ({ row }) => toUpper(row.getValue("denomination") ?? ""),
+      cell: ({ row }) =>
+        String(row.getValue("denomination") ?? "").toUpperCase(),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Dénomination" />
       ),

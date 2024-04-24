@@ -1,4 +1,4 @@
-import CommonPdf from "@/app/_components/pdf";
+import CommonPdf from "@/app/modules-pdf-base";
 import { isCuid } from "@paralleldrive/cuid2";
 import type { Calendar, Medicament } from "@prisma/client";
 import { Rect, Svg, Text, View } from "@react-pdf/renderer";
@@ -34,11 +34,11 @@ const PrintCalendar = ({
   const events: Record<string, { denomination: string; quantity: string }[]> =
     {};
 
-  for (const [id, data] of Object.entries(calendar.data ?? {})) {
-    const denomination = isCuid(id)
-      ? medicaments.find((medicament) => medicament.id === id)?.denomination ??
-        ""
-      : id;
+  for (const { medicId, data } of calendar.data ?? []) {
+    const denomination = isCuid(medicId)
+      ? medicaments.find((medicament) => medicament.id === medicId)
+          ?.denomination ?? ""
+      : medicId;
 
     for (const recurrence of data) {
       const startDate = new Date(recurrence.startDate);

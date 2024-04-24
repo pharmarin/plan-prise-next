@@ -14,7 +14,9 @@ const PlanCommentaireCustomItem = ({
   medicId: string;
 }) => {
   const data = usePlanStore(
-    (state) => state.data?.[medicId]?.custom_commentaires?.[commentId],
+    (state) =>
+      state.data?.find((row) => row.medicId === medicId)?.data
+        ?.custom_commentaires?.[commentId],
   );
   const { setData, unsetData } = usePlanStore((state) => ({
     setData: state.setData,
@@ -30,8 +32,9 @@ const PlanCommentaireCustomItem = ({
       <Button
         className="p-0"
         onClick={() => {
-          unsetData(`${medicId}.custom_commentaires.${commentId}`);
+          unsetData(medicId, `custom_commentaires.${commentId}`);
         }}
+        type="button"
         variant="link"
       >
         <XIcon className="h-4 w-4 text-teal-600 hover:text-teal-700" />
@@ -39,7 +42,8 @@ const PlanCommentaireCustomItem = ({
       <Textarea
         onChange={(event) =>
           setData(
-            `${medicId}.custom_commentaires.${commentId}.texte`,
+            medicId,
+            `custom_commentaires.${commentId}.texte`,
             event.currentTarget.value,
           )
         }
@@ -51,7 +55,9 @@ const PlanCommentaireCustomItem = ({
 
 const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
   const data = usePlanStore(
-    (state) => state.data?.[medicament.id]?.custom_commentaires,
+    (state) =>
+      state.data?.find((row) => row.medicId === medicament.id)?.data
+        ?.custom_commentaires,
   );
   const setData = usePlanStore((state) => state.setData);
 
@@ -67,11 +73,9 @@ const PlanCommentaireCustom = ({ medicament }: { medicament: Medicament }) => {
       <Button
         className="p-0"
         onClick={() =>
-          setData(
-            `${medicament.id}.custom_commentaires.${createId()}.texte`,
-            "",
-          )
+          setData(medicament.id, `custom_commentaires.${createId()}.texte`, "")
         }
+        type="button"
         variant="link"
       >
         <PlusIcon className="mr-3 h-4 w-4" /> Ajouter un commentaire

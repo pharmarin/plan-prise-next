@@ -1,6 +1,6 @@
 "use client";
 
-import { findManyMedicsAction } from "@/app/_components/actions";
+import { findManyMedicsAction } from "@/app/actions";
 import debounce from "debounce-promise";
 
 import MultiSelect from "@plan-prise/ui/components/multi-select";

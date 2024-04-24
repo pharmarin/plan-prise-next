@@ -5,6 +5,18 @@ import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";
 
+export const getNewDisplayId = async (userId: string) => {
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      maxId: { increment: 1 },
+    },
+    select: { maxId: true },
+  });
+
+  return user.maxId;
+};
+
 export const findMedicAction = authAction(
   z.object({
     medicId: z.string().cuid2(),

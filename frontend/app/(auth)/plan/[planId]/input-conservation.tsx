@@ -55,7 +55,7 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
               </span>
               <Button
                 className="p-0"
-                onClick={() => unsetData(`${medicament.id}.conservation`)}
+                onClick={() => unsetData(medicament.id, "conservation")}
                 variant="link"
               >
                 Changer de laboratoire
@@ -66,7 +66,7 @@ const PlanConservation = ({ medicament }: { medicament: Medicament }) => {
       ) : (
         <Select
           onValueChange={(value) => {
-            setData(`${medicament.id}.conservation`, value);
+            setData(medicament.id, "conservation", value);
             setCanPrint(true);
           }}
         >

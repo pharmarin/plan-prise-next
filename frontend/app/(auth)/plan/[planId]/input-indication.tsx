@@ -42,14 +42,14 @@ const PlanIndication = ({ medicament }: { medicament: Medicament }) => {
       {extracted.length <= 1 ? (
         <Input
           onChange={(event) =>
-            setData(`${medicament.id}.indication`, event.currentTarget.value)
+            setData(medicament.id, "indication", event.currentTarget.value)
           }
           value={extracted[0] ?? ""}
         />
       ) : (
         <Select
           onValueChange={(value) => {
-            setData(`${medicament.id}.indication`, value);
+            setData(medicament.id, "indication", value);
             setCanPrint(true);
           }}
         >

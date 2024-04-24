@@ -16,15 +16,16 @@ const Calendar = async ({ params }: { params: unknown }) => {
       where: { displayId: calendarId, user: { id: session?.user.id } },
     });
 
-    const medicamentIdArray = Object.keys(calendar.data ?? {})
+    const medicamentIdArray = (calendar.data ?? [])
+      .map((row) => row.medicId)
       .map((medicId) => (isCuid(medicId) ? medicId : undefined))
       .filter((medicId): medicId is string => Boolean(medicId));
     const medicaments =
       medicamentIdArray.length > 0
         ? await prisma.medicament.findMany({
             where: {
-              OR: Object.keys(calendar.data ?? {}).map((medicId) => ({
-                id: medicId,
+              OR: (calendar.data ?? []).map((row) => ({
+                id: row.medicId,
               })),
             },
             include: { principesActifs: true },

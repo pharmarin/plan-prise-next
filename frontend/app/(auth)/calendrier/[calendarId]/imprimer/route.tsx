@@ -19,7 +19,7 @@ export const GET = async (request: Request, context: { params: unknown }) => {
     where: { displayId: calendarId, userId: session.user.id },
   });
   const medicaments = await prisma.medicament.findMany({
-    where: { id: { in: Object.keys(calendar.data ?? {}) } },
+    where: { id: { in: (calendar.data ?? []).map((row) => row.medicId) } },
   });
 
   const buffer = await renderToBuffer(

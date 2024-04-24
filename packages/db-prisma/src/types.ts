@@ -21,7 +21,7 @@ declare global {
         "poso_soir" = "Soir",
         "poso_coucher" = "Coucher",
       }
-      type MedicsOrder = string[];
+      type MedicsOrder = string[] | null;
       type DataItem = {
         indication?: string;
         conservation?: string;
@@ -32,7 +32,8 @@ declare global {
         commentaires?: Record<string, { checked?: boolean; texte?: string }>;
         custom_commentaires?: Record<string, { texte: string }>;
       };
-      type Data = Record<string, DataItem>;
+      type Data1 = { medicId: string; data: DataItem }[];
+      type Data = Record<string, DataItem> | Data1;
       type Settings = {
         posos?: Record<keyof typeof PlanPrisePosologies, boolean>;
       };
@@ -46,7 +47,7 @@ declare global {
 declare global {
   namespace PP {
     namespace Medicament {
-      type Custom = { denomination: string };
+      type Custom = { id: string; denomination: string };
       type Identifier = {
         id: MedicamentType["id"];
         denomination: MedicamentType["denomination"];
@@ -85,7 +86,7 @@ declare global {
         quantity: string;
         frequency: number;
       };
-      type Data = Record<string, DataItem[]>;
+      type Data = { medicId: string; data: DataItem[] }[];
     }
   }
 }

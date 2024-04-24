@@ -1,6 +1,6 @@
 import { createRequire } from "module";
 import { expect } from "@playwright/test";
-import { startCase, toUpper } from "lodash-es";
+import { startCase } from "lodash-es";
 
 import getUrl from "@plan-prise/api/utils/url";
 import { checkPassword } from "@plan-prise/auth/lib/password-utils";
@@ -82,7 +82,9 @@ test.describe("auth", () => {
     expect(registeredUser?.firstName).toBe(
       startCase((fakeUser.firstName ?? "").toLowerCase()),
     );
-    expect(registeredUser?.lastName).toBe(toUpper(fakeUser.lastName ?? ""));
+    expect(registeredUser?.lastName).toBe(
+      (fakeUser.lastName ?? "").toUpperCase(),
+    );
     expect(registeredUser?.displayName).toBe(
       startCase((fakeUser.displayName ?? "").toLowerCase()),
     );
@@ -115,7 +117,9 @@ test.describe("auth", () => {
     expect(registeredUser?.firstName).toBe(
       startCase((fakeUser.firstName ?? "").toLowerCase()),
     );
-    expect(registeredUser?.lastName).toBe(toUpper(fakeUser.lastName ?? ""));
+    expect(registeredUser?.lastName).toBe(
+      (fakeUser.lastName ?? "").toUpperCase(),
+    );
     expect(registeredUser?.displayName).toBe(
       startCase((fakeUser.displayName ?? "").toLowerCase()),
     );

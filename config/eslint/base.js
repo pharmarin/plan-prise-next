@@ -6,6 +6,7 @@ const config = {
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "prettier",
+    "plugin:you-dont-need-lodash-underscore/compatible",
   ],
   env: {
     es2022: true,
@@ -30,6 +31,7 @@ const config = {
     "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
     "@typescript-eslint/no-misused-promises": [2, { checksVoidReturn: false }],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+    "you-dont-need-lodash-underscore/capitalize": "off",
   },
   ignorePatterns: [
     "**/.eslintrc.cjs",

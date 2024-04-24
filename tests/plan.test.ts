@@ -47,8 +47,9 @@ test.describe("plan tests", () => {
   });
 
   test("should display plan", async ({ page, fakePlan }) => {
+    const medicIds = (fakePlan.data ?? []).map((row) => row.medicId);
     const medicaments = await prisma.medicament.findMany({
-      where: { OR: fakePlan.medicsOrder.map((medicId) => ({ id: medicId })) },
+      where: { id: { in: medicIds } },
       include: { commentaires: true },
     });
 
@@ -60,7 +61,7 @@ test.describe("plan tests", () => {
 
     for (let index = 0; index < medicaments.length; index++) {
       const medicament = medicaments.find(
-        (medicament) => medicament.id === fakePlan.medicsOrder[index],
+        (medicament) => medicament.id === medicIds[index],
       );
 
       if (!medicament) {
@@ -107,7 +108,7 @@ test.describe("plan tests", () => {
     }
   });
 
-  test("should edit test", async ({ page, fakeUserLoggedIn }) => {
+  test("should edit plan", async ({ page, fakeUserLoggedIn }) => {
     test.slow();
 
     const medicaments = await Promise.all([
@@ -133,18 +134,27 @@ test.describe("plan tests", () => {
 
     await page.goto(`/plan/${fakePlan.displayId}`);
 
-    const result = {} as PP.Plan.Data;
+    const result = [] as PP.Plan.Data1;
 
-    for (let index = 0; index < medicaments.length; index++) {
-      const medicament = medicaments[index];
+    for (const medicament of medicaments) {
+      result.push({
+        medicId: medicament.id,
+        data: {},
+      });
+    }
+
+    for (
+      let medicamentIndex = 0;
+      medicamentIndex < medicaments.length;
+      medicamentIndex++
+    ) {
+      const medicament = medicaments[medicamentIndex];
 
       if (!medicament) {
         throw new Error("Medicament not found");
       }
 
-      result[medicament.id] = {};
-
-      const row = page.getByTestId("plan-card").nth(index);
+      const row = page.getByTestId("plan-card").nth(medicamentIndex);
       const commentairesGroup = row.getByTestId("plan-card-commentaire-group");
 
       // INDICATION
@@ -182,7 +192,7 @@ test.describe("plan tests", () => {
         where: { id: fakePlan.id },
       });
 
-      result[medicament.id]!.indication = "test";
+      result[medicamentIndex]!.data.indication = "test";
 
       expect(planData.data).toEqual(result);
 
@@ -200,35 +210,39 @@ test.describe("plan tests", () => {
           .getByTestId(`plan-input-posologies-${posologie}`)
           .fill("test");
 
-        if (typeof result[medicament.id]?.posologies === "undefined") {
-          result[medicament.id]!.posologies = {
+        if (typeof result[medicamentIndex]?.data.posologies === "undefined") {
+          result[medicamentIndex]!.data.posologies = {
             [posologie]: "test",
           } as Record<keyof typeof PP.Plan.PlanPrisePosologies, string>;
         } else {
-          result[medicament.id]!.posologies![posologie] = "test";
+          result[medicamentIndex]!.data.posologies![posologie] = "test";
         }
       }
 
       // COMMENTAIRES
 
-      result[medicament.id]!.commentaires = {};
+      result[medicamentIndex]!.data.commentaires = {};
 
-      for (let index = 0; index < medicament.commentaires.length; index++) {
-        const element = commentairesGroup.nth(index);
+      for (
+        let commentairesIndex = 0;
+        commentairesIndex < medicament.commentaires.length;
+        commentairesIndex++
+      ) {
+        const element = commentairesGroup.nth(commentairesIndex);
 
         await element.locator("textarea").fill("Test commentaire");
 
-        result[medicament.id]!.commentaires![
-          medicament.commentaires[index]?.id ?? ""
+        result[medicamentIndex]!.data.commentaires![
+          medicament.commentaires[commentairesIndex]?.id ?? ""
         ] = {
           texte: "Test commentaire",
         };
 
         await element.locator("button[role=checkbox]").click();
 
-        result[medicament.id]!.commentaires![
-          medicament.commentaires[index]?.id ?? ""
-        ]!.checked = !!medicament.commentaires[index]?.population;
+        result[medicamentIndex]!.data.commentaires![
+          medicament.commentaires[commentairesIndex]?.id ?? ""
+        ]!.checked = !!medicament.commentaires[commentairesIndex]?.population;
       }
     }
 
@@ -252,9 +266,13 @@ test.describe("plan tests", () => {
       .getByTestId("plan-settings-dialog")
       .locator("button[role=switch]");
 
-    for (let index = 0; index < (await pososSwitches.count()); index++) {
-      const posoSwitch = pososSwitches.nth(index);
-      const posoKey = Object.keys(PlanPrisePosologies)[index];
+    for (
+      let pososIndex = 0;
+      pososIndex < (await pososSwitches.count());
+      pososIndex++
+    ) {
+      const posoSwitch = pososSwitches.nth(pososIndex);
+      const posoKey = Object.keys(PlanPrisePosologies)[pososIndex];
       const currentState = await posoSwitch.getAttribute("data-state");
       const shouldBeChecked = randomPosos.includes(posoKey ?? "");
 
