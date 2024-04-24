@@ -113,8 +113,7 @@ const PlanClient = ({
       displayId: plan.displayId,
       data: plan.data ?? {},
       settings: merge(PLAN_SETTINGS_DEFAULT, plan.settings),
-      canPrint:
-        Object.keys(plan.data ?? {}).length > 0 ? true : PLAN_NO_MEDIC_WARNING,
+      canPrint: plan.data.length > 0 ? true : PLAN_NO_MEDIC_WARNING,
     });
   }, [plan]);
 

@@ -6,8 +6,8 @@ import prisma from "@plan-prise/db-prisma";
 import { authTest } from "./auth.fixture";
 
 type PlanFixture = {
-  fakePlan: Plan;
-  fakePlans: Plan[];
+  fakePlan: Plan & { data: PP.Plan.Data1 };
+  fakePlans: (Plan & { data: PP.Plan.Data1 })[];
 };
 
 const getRandomMedics = async () =>
@@ -21,9 +21,10 @@ export const getFakePlan = (
 ): Prisma.PlanCreateInput => ({
   displayId: faker.number.int({ max: 99999 }),
   user: { connect: { id: userId } },
-  data: Object.fromEntries(
-    randomMedics.map((medicament) => [medicament.id, {}]),
-  ),
+  data: randomMedics.map((medicament) => ({
+    medicId: medicament.id,
+    data: {},
+  })),
   settings: {},
 });
 
@@ -37,7 +38,7 @@ export const planTest = authTest.extend<PlanFixture>({
       data: fakeGeneratedPlan,
     });
 
-    await use(fakePlan);
+    await use(fakePlan as Plan & { data: PP.Plan.Data1 });
 
     await prisma.plan.delete({
       where: {
@@ -56,7 +57,7 @@ export const planTest = authTest.extend<PlanFixture>({
       fakeGeneratedPlans.map((plan) => prisma.plan.create({ data: plan })),
     );
 
-    await use(fakePlans);
+    await use(fakePlans as (Plan & { data: PP.Plan.Data1 })[]);
 
     await prisma.plan.deleteMany({
       where: {
