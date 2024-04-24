@@ -2,7 +2,7 @@
   "name": "@plan-prise/api-pharmaciens",
   "version": "0.1.0",
   "devDependencies": {
-    "@plan-prise/tsconfig": "*",
+    "@plan-prise/tsconfig": "workspace:*",
     "@types/node": "20.12.7",
     "@types/node-fetch": "2.6.11",
     "@types/unzipper": "0.10.9",

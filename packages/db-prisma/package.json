@@ -29,9 +29,9 @@
     "@prisma/client": "5.13.0"
   },
   "devDependencies": {
-    "@plan-prise/eslint-config": "0.2.0",
-    "@plan-prise/prettier-config": "0.1.0",
-    "@plan-prise/tsconfig": "0.1.0",
+    "@plan-prise/eslint-config": "workspace:*",
+    "@plan-prise/prettier-config": "workspace:*",
+    "@plan-prise/tsconfig": "workspace:*",
     "dotenv-cli": "7.4.1",
     "eslint": "8.57.0",
     "prisma": "5.13.0",

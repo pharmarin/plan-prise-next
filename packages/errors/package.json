@@ -22,9 +22,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@plan-prise/eslint-config": "0.2.0",
-    "@plan-prise/prettier-config": "^0.1.0",
-    "@plan-prise/tsconfig": "^0.1.0",
+    "@plan-prise/eslint-config": "workspace:*",
+    "@plan-prise/prettier-config": "workspace:*",
+    "@plan-prise/tsconfig": "workspace:*",
     "eslint": "8.57.0",
     "typescript": "5.4.5"
   },
