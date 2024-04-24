@@ -18,9 +18,9 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@plan-prise/eslint-config": "0.2.0",
-    "@plan-prise/prettier-config": "0.1.0",
-    "@plan-prise/tsconfig": "0.1.0",
+    "@plan-prise/eslint-config": "workspace:*",
+    "@plan-prise/prettier-config": "workspace:*",
+    "@plan-prise/tsconfig": "workspace:*",
     "@types/react": "18.2.79",
     "eslint": "8.57.0",
     "tailwindcss": "3.4.3",
@@ -34,7 +34,7 @@
   "prettier": "@plan-prise/prettier-config",
   "dependencies": {
     "@headlessui/react": "1.7.19",
-    "@plan-prise/tailwind-config": "*",
+    "@plan-prise/tailwind-config": "workspace:*",
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-checkbox": "1.0.4",
     "@radix-ui/react-dialog": "1.0.5",

@@ -23,13 +23,13 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@plan-prise/db-prisma": "*"
+    "@plan-prise/db-prisma": "workspace:*"
   },
   "devDependencies": {
     "@paralleldrive/cuid2": "2.2.2",
-    "@plan-prise/eslint-config": "0.2.0",
-    "@plan-prise/prettier-config": "^0.1.0",
-    "@plan-prise/tsconfig": "^0.1.0",
+    "@plan-prise/eslint-config": "workspace:*",
+    "@plan-prise/prettier-config": "workspace:*",
+    "@plan-prise/tsconfig": "workspace:*",
     "@types/cli-progress": "3.11.5",
     "@types/lodash-es": "4.17.12",
     "cli-progress": "3.12.0",

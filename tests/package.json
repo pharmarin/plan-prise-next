@@ -18,9 +18,9 @@
     "@playwright/test": "1.42.1"
   },
   "devDependencies": {
-    "@plan-prise/eslint-config": "0.2.0",
-    "@plan-prise/prettier-config": "^0.1.0",
-    "@plan-prise/tsconfig": "^0.1.0",
+    "@plan-prise/eslint-config": "workspace:*",
+    "@plan-prise/prettier-config": "workspace:*",
+    "@plan-prise/tsconfig": "workspace:*",
     "@types/lodash-es": "4.17.12",
     "eslint": "8.57.0",
     "lodash-es": "4.17.21",
