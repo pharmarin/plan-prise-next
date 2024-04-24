@@ -13,7 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { toUpper } from "lodash-es";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -52,7 +51,8 @@ const PrincipesActifsClient = ({
 
   const columns: ColumnDef<PrincipeActif, never>[] = [
     columnHelper.accessor("denomination", {
-      cell: ({ row }) => toUpper(row.getValue("denomination") ?? ""),
+      cell: ({ row }) =>
+        String(row.getValue("denomination") ?? "").toUpperCase(),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Dénomination" />
       ),
