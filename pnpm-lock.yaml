@@ -221,8 +221,8 @@ importers:
         specifier: 8.16.0
         version: 8.16.0(react-dom@18.2.0)(react@18.2.0)
       '@tremor/react':
-        specifier: 3.16.1
-        version: 3.16.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.3)
+        specifier: 3.16.2
+        version: 3.16.2(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.3)
       '@vercel/analytics':
         specifier: 1.2.2
         version: 1.2.2(next@14.2.2)(react@18.2.0)
@@ -2751,8 +2751,8 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: false
 
-  /@tremor/react@3.16.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.3):
-    resolution: {integrity: sha512-ablAsFL7twiUYf57gMAS2ar6YTajsQ7fs63vqlC2i9DpLuhFSrwEp69y1a6bxXP+KH0etYRMj6xxCvdCdiy8mQ==}
+  /@tremor/react@3.16.2(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-Isdc+Sf4WHlnrAAO8Hk/nK84HiXzCZvb6ZFRHrzOkF+APm6nDhvKPRorXcXZ2BKSS5T5L0QVsid5fIxly8kRdA==}
     peerDependencies:
       react: ^18.0.0
       react-dom: '>=16.6.0'
