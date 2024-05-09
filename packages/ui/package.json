@@ -33,7 +33,7 @@
   },
   "prettier": "@plan-prise/prettier-config",
   "dependencies": {
-    "@headlessui/react": "1.7.19",
+    "@headlessui/react": "2.0.3",
     "@plan-prise/tailwind-config": "workspace:*",
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-checkbox": "1.0.4",
