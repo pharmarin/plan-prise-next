@@ -9,6 +9,11 @@ import DatePicker from "@plan-prise/ui/components/date-picker";
 import { Input } from "@plan-prise/ui/input";
 import { Label } from "@plan-prise/ui/label";
 
+const endDateUpdateNeeded = (startDate: Date, previousEndDate: Date) =>
+  startDate > previousEndDate;
+const nextStartDateUpdateNeeded = (endDate: Date, nextStartDate?: Date) =>
+  nextStartDate && endDate > nextStartDate;
+
 const CalendarCardBody = ({
   medicament,
   onInputChange,
@@ -33,7 +38,12 @@ const CalendarCardBody = ({
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
       {(data.length > 0 ? data : []).map((iteration, index) => {
+        const startDate = new Date(iteration.startDate);
+        const endDate = new Date(iteration.endDate);
         const previousIterationEndDate = data?.[index - 1]?.endDate;
+        const nextIterationStartDate = data?.[index + 1]?.startDate
+          ? new Date(data?.[index + 1]!.startDate)
+          : undefined;
         const disabledBefore =
           index > 0
             ? addDays(
@@ -48,24 +58,26 @@ const CalendarCardBody = ({
           return null;
         }
 
+        if (endDateUpdateNeeded(startDate, endDate)) {
+          setData(medicament.id, `${index}.endDate`, toYYYYMMDD(startDate));
+          onInputChange();
+        }
+
+        if (nextStartDateUpdateNeeded(endDate, nextIterationStartDate)) {
+          setData(
+            medicament.id,
+            `${index + 1}.startDate`,
+            toYYYYMMDD(addDays(endDate, 1)),
+          );
+          onInputChange();
+        }
+
         return (
           <div
             key={index}
             className="relative space-y-4 rounded-lg border border-gray-200 p-4"
           >
             <div className="flex items-center space-x-4">
-              <Button
-                className="absolute right-4 top-4 h-6 w-6 rounded-full p-0"
-                onClick={() => {
-                  removeIteration(medicament.id, index);
-                  onInputChange();
-                }}
-                size="sm"
-                type="button"
-                variant="destructive"
-              >
-                <XIcon />
-              </Button>
               <div className="flex flex-col space-y-4">
                 <div className="flex flex-col space-y-2">
                   <Label>Date de début</Label>
@@ -79,7 +91,7 @@ const CalendarCardBody = ({
                           toYYYYMMDD(value),
                         );
                       value &&
-                        value > new Date(iteration.endDate) &&
+                        endDateUpdateNeeded(value, endDate) &&
                         setData(
                           medicament.id,
                           `${index}.endDate`,
@@ -92,6 +104,8 @@ const CalendarCardBody = ({
                       iteration.startDate
                         ? new Date(iteration.startDate)
                         : disabledBefore
+                          ? addDays(disabledBefore, 1)
+                          : new Date()
                     }
                   />
                 </div>
@@ -115,6 +129,16 @@ const CalendarCardBody = ({
                           `${index}.endDate`,
                           toYYYYMMDD(value),
                         );
+                      value &&
+                        nextStartDateUpdateNeeded(
+                          endDate,
+                          nextIterationStartDate,
+                        ) &&
+                        setData(
+                          medicament.id,
+                          `${index + 1}.startDate`,
+                          toYYYYMMDD(addDays(endDate, 1)),
+                        );
                       onInputChange();
                     }}
                     placeholder="Date de fin"
@@ -126,16 +150,30 @@ const CalendarCardBody = ({
                   />
                 </div>
               </div>
-              {iteration.startDate && iteration.endDate && (
-                <p className="my-2 text-center text-sm font-semibold">
-                  Soit{" "}
-                  {differenceInDays(
-                    new Date(iteration.endDate),
-                    new Date(iteration.startDate),
-                  ) + 1}{" "}
-                  jour(s)
-                </p>
-              )}
+              <div>
+                <Button
+                  className="absolute right-4 top-4 h-6 w-6 rounded-full p-0"
+                  onClick={() => {
+                    removeIteration(medicament.id, index);
+                    onInputChange();
+                  }}
+                  size="sm"
+                  type="button"
+                  variant="destructive"
+                >
+                  <XIcon />
+                </Button>
+                {iteration.startDate && iteration.endDate && (
+                  <p className="my-2 text-center text-sm font-semibold">
+                    Soit{" "}
+                    {differenceInDays(
+                      new Date(iteration.endDate),
+                      new Date(iteration.startDate),
+                    ) + 1}{" "}
+                    jour(s)
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex flex-col space-y-2">
               <Label>Quantité à administrer</Label>
