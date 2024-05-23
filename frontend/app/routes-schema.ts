@@ -9,11 +9,15 @@ export enum GUEST_ROUTES {
 }
 
 export enum AUTH_ROUTES {
+  PROFILE = "/profil",
   PLAN_INDEX = "/plan",
   PLAN_SINGLE = "/plan/[planId]",
   PLAN_PRINT = "/plan/[planId]/imprimer",
   PLAN_NEW = "/plan/nouveau",
-  PROFILE = "/profil",
+  CALENDAR_INDEX = "/calendrier",
+  CALENDAR_SINGLE = "/calendrier/[calendarId]",
+  CALENDAR_PRINT = "/calendrier/[calendarId]/imprimer",
+  CALENDAR_NEW = "/calendrier/nouveau",
 }
 
 export enum ADMIN_ROUTES {
@@ -43,6 +47,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
     passwordReset: defineRoute(GUEST_ROUTES.PASSWORD_RESET),
 
     // Auth routes
+    profil: defineRoute(AUTH_ROUTES.PROFILE),
     plans: defineRoute(AUTH_ROUTES.PLAN_INDEX),
     plan: defineRoute(AUTH_ROUTES.PLAN_SINGLE, {
       params: z.object({
@@ -55,7 +60,14 @@ export const { routes, useSafeParams, useSafeSearchParams } =
       }),
     }),
     planCreate: defineRoute(AUTH_ROUTES.PLAN_NEW),
-    profil: defineRoute(AUTH_ROUTES.PROFILE),
+    calendars: defineRoute(AUTH_ROUTES.CALENDAR_INDEX),
+    calendar: defineRoute(AUTH_ROUTES.CALENDAR_SINGLE, {
+      params: z.object({ calendarId: z.coerce.number() }),
+    }),
+    calendarPrint: defineRoute(AUTH_ROUTES.CALENDAR_PRINT, {
+      params: z.object({ calendarId: z.coerce.number() }),
+    }),
+    calendarCreate: defineRoute(AUTH_ROUTES.CALENDAR_NEW),
 
     // Admin routes
     adminDashboard: defineRoute(ADMIN_ROUTES.DASHBOARD),

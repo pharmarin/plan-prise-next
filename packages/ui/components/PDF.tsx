@@ -99,6 +99,7 @@ export const Cell = ({
   alignTop,
   children,
   className,
+  lineClassName,
   wrap,
   ...props
 }: (
@@ -115,6 +116,7 @@ export const Cell = ({
   alignLeft?: boolean;
   alignTop?: boolean;
   className?: string;
+  lineClassName?: string;
   wrap?: boolean;
 }) => (
   <Col className={twMerge(alignTop && "items-start", className)} wrap={wrap}>
@@ -133,7 +135,11 @@ export const Cell = ({
         ))}
       </View>
     ) : (
-      <Line alignLeft={alignLeft} bold={"bold" in props && props.bold}>
+      <Line
+        alignLeft={alignLeft}
+        bold={"bold" in props && props.bold}
+        className={lineClassName}
+      >
         {children}
       </Line>
     )}

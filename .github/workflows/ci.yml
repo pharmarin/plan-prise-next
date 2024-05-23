@@ -1,33 +1,31 @@
 name: CI
 
 on:
-  create:
   pull_request:
-    branches: ["*"]
+    branches: ["!renovate/**", "**"]
   push:
-    branches: ["main"]
-  merge_group:
+    branches: ["renovate/**"]
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-  RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
-  NEXT_PUBLIC_CAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+  RECAPTCHA_SECRET: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+  NEXT_PUBLIC_CAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
   NEXTAUTH_URL: http://127.0.0.1:3000
   CROSS_SITE_SECRET: ${{ secrets.CROSS_SITE_SECRET }}
   BACKEND_URL: https://api.plandeprise.fr
   PRISMA_GENERATE: "prisma generate --schema=./src/schema.cockroach.prisma"
 
 jobs:
-  build-lint:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v3
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -40,39 +38,18 @@ jobs:
           echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Setup turbo cache
-        uses: actions/cache@v3
-        with:
-          path: "**/.turbo"
-          key: ${{ runner.os }}-turbo-${{ github.run_id }}-${{ github.run_number }}
-
-      - name: Setup nextjs cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/frontend/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
       - name: Install deps (with cache)
         run: pnpm install
 
       - name: Build, lint and type-check
         run: pnpm turbo lint typecheck --filter=!@plan-prise/db-migration
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_URL_POSTGRE: ${{ secrets.DATABASE_URL_POSTGRE }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          PRISMA_GENERATE: "prisma generate --schema=./src/schema.cockroach.prisma"
 
       - name: Format
         id: prettier
@@ -95,17 +72,15 @@ jobs:
           path: diff.html
           retention-days: 3
 
-  auth-test:
+  build:
     runs-on: ubuntu-latest
-
-    needs: "build-lint"
-
+    needs: check
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v3
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -118,26 +93,73 @@ jobs:
           echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Setup turbo cache
-        uses: actions/cache@v3
-        with:
-          path: "**/.turbo"
-          key: ${{ runner.os }}-turbo-${{ github.run_id }}-${{ github.run_number }}
-
       - name: Setup nextjs cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.npm
-            ${{ github.workspace }}/frontend/.next/cache
+            ${{ github.workspace }}/frontend/.next
+          # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Install deps (with cache)
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm build
+
+  tests:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        test-files:
+          - auth
+          - plan
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Setup nextjs cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/frontend/.next
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
@@ -146,7 +168,7 @@ jobs:
         run: echo version=$(cat tests/package.json | jq -r '.dependencies."@playwright/test"') >> "$GITHUB_OUTPUT"
 
       - name: Get cache for playwright
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: |
@@ -164,7 +186,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test tests/${{ matrix.test-files }}.test.ts
 
       - name: Upload report
         uses: actions/upload-artifact@v3

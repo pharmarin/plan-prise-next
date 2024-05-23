@@ -8,6 +8,7 @@ import Credentials from "next-auth/providers/credentials";
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
+import { env } from "../env.mjs";
 import { NEXT_AUTH_PAGES } from "./config";
 import checkRecaptcha from "./lib/check-recaptcha";
 import { checkPassword } from "./lib/password-utils";
@@ -76,12 +77,14 @@ export const nextAuthOptions: NextAuthOptions = {
 
         const recaptcha = await checkRecaptcha(credentials.recaptcha);
 
-        if (!recaptcha) {
-          throw new PP_Error("RECAPTCHA_LOADING_ERROR");
-        }
+        if (!env.CI) {
+          if (!recaptcha) {
+            throw new PP_Error("RECAPTCHA_LOADING_ERROR");
+          }
 
-        if (recaptcha <= 0.5) {
-          throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
+          if (recaptcha <= 0.5) {
+            throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
+          }
         }
 
         // Add logic here to look up the user from the credentials supplied

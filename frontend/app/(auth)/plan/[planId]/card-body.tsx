@@ -1,8 +1,8 @@
-import PlanCommentaire from "@/app/(auth)/plan/_components/Inputs/PlanCommentaire";
-import PlanCommentaireCustom from "@/app/(auth)/plan/_components/Inputs/PlanCommentaireCustom";
-import PlanConservation from "@/app/(auth)/plan/_components/Inputs/PlanConservation";
-import PlanIndication from "@/app/(auth)/plan/_components/Inputs/PlanIndication";
-import PlanPosologie from "@/app/(auth)/plan/_components/Inputs/PlanPosologie";
+import PlanCommentaire from "@/app/(auth)/plan/[planId]/input-comments";
+import PlanConservation from "@/app/(auth)/plan/[planId]/input-conservation";
+import PlanCommentaireCustom from "@/app/(auth)/plan/[planId]/input-custom-comments";
+import PlanIndication from "@/app/(auth)/plan/[planId]/input-indication";
+import PlanPosologie from "@/app/(auth)/plan/[planId]/input-posologie";
 import { extractPosologiesSettings } from "@/app/(auth)/plan/functions";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { ThermometerSnowflake } from "lucide-react";

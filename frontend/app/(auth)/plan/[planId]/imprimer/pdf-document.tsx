@@ -5,11 +5,12 @@ import {
   extractIndication,
   extractPosologiesSettings,
 } from "@/app/(auth)/plan/functions";
+import CommonPdf from "@/app/modules-pdf-base";
 import { PlanPrisePosologies } from "@/types/plan";
 import { extractVoieAdministration } from "@/utils/medicament";
 import { isCuid } from "@paralleldrive/cuid2";
-import type { Precaution } from "@prisma/client";
-import { Document, Page, Text, View } from "@react-pdf/renderer";
+import type { Plan, Precaution } from "@prisma/client";
+import { Text, View } from "@react-pdf/renderer";
 import { uniqBy } from "lodash-es";
 import Html from "react-pdf-html";
 import { createTw } from "react-pdf-tailwind";
@@ -19,17 +20,19 @@ import PP_Error from "@plan-prise/errors";
 import { Cell, Header, Row, Table } from "@plan-prise/ui/components/PDF";
 
 const PrintPDF = ({
+  medicaments,
   plan,
   user,
 }: {
-  plan: PP.Plan.Include;
+  medicaments: PP.Medicament.Include[];
+  plan: Plan & { data: PP.Plan.Data1 };
   user: UserSession;
 }) => {
   const tw = createTw({});
 
   const posologies = extractPosologiesSettings(plan.settings?.posos);
   const precautions = uniqBy(
-    plan.medics
+    medicaments
       .flatMap((medic) => medic.precaution)
       .filter(
         (precaution): precaution is Precaution =>
@@ -43,94 +46,55 @@ const PrintPDF = ({
   const POSOLOGIE_WIDTH = posologies.length > 6 ? "w-16" : "w-20";
 
   return (
-    <Document>
-      <Page orientation="landscape" size="A4" style={tw("p-8 pb-12 relative")}>
-        <View fixed>
-          <View>
-            <Text
-              style={[
-                tw("text-sm text-gray-800"),
-                {
-                  fontFamily: "Helvetica-Bold",
-                },
-              ]}
+    <CommonPdf
+      header="Un plan pour vous aider à mieux prendre vos médicaments"
+      footer={`Plan de prise n°${plan.displayId} édité par ${user?.displayName ?? `${user?.firstName} ${user?.lastName}`} le ${new Date().toLocaleString(
+        "fr-FR",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        },
+      )}`}
+    >
+      <Table fixed>
+        <Row>
+          <Header className={`flex-initial ${INFORMATIONS_WIDTH}`}>
+            Médicament
+          </Header>
+          <Header className={`flex-initial ${INDICATION_WIDTH}`}>
+            Indication
+          </Header>
+          {posologies.map((posologie) => (
+            <Header
+              key={`header_${posologie}`}
+              className={`flex-initial ${POSOLOGIE_WIDTH} ${
+                PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.header
+              } ${
+                posologies.length > 6 && posologie === "poso_coucher"
+                  ? "text-xs"
+                  : ""
+              }`}
             >
-              Un plan pour vous aider à mieux prendre vos médicaments
-            </Text>
-            <Text
-              style={[
-                tw("text-sm text-gray-800 mb-1"),
-                {
-                  fontFamily: "Helvetica-Bold",
-                },
-              ]}
-            >
-              Ceci n&apos;est pas une ordonnance.
-            </Text>
-          </View>
-        </View>
-        <Text
-          style={tw("text-sm text-gray-800 absolute bottom-6 left-8")}
-          fixed
-        >
-          Plan de prise n°{plan.displayId} édité par{" "}
-          {user?.displayName ?? `${user?.firstName} ${user?.lastName}`} le{" "}
-          {new Date().toLocaleString("fr-FR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}
-        </Text>
-        <Text
-          style={tw("text-sm text-gray-800 absolute bottom-6 right-8")}
-          render={({ pageNumber, totalPages }) =>
-            `${pageNumber} sur ${totalPages}`
-          }
-          fixed
-        />
-        <Table fixed>
-          <Row>
-            <Header className={`flex-initial ${INFORMATIONS_WIDTH}`}>
-              Médicament
+              {PlanPrisePosologies[posologie]}
             </Header>
-            <Header className={`flex-initial ${INDICATION_WIDTH}`}>
-              Indication
-            </Header>
-            {posologies.map((posologie) => (
-              <Header
-                key={`header_${posologie}`}
-                className={`flex-initial ${POSOLOGIE_WIDTH} ${
-                  PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.header
-                } ${
-                  posologies.length > 6 && posologie === "poso_coucher"
-                    ? "text-xs"
-                    : ""
-                }`}
-              >
-                {
-                  PlanPrisePosologies[
-                    posologie as keyof typeof PlanPrisePosologies
-                  ]
-                }
-              </Header>
-            ))}
-            <Header>Commentaires</Header>
-          </Row>
-        </Table>
-        {[
-          ...(Array.isArray(plan.medicsOrder)
-            ? (plan.medicsOrder as string[])
-            : []),
-        ].map((medicamentId) => {
+          ))}
+          <Header>Commentaires</Header>
+        </Row>
+      </Table>
+      {(plan.data ?? [])
+        .map((row) => row.medicId)
+        .map((medicamentId) => {
           const medicament = isCuid(medicamentId)
-            ? plan.medics.find((medic) => medic.id === medicamentId)
-            : { denomination: medicamentId };
+            ? medicaments.find((medic) => medic.id === medicamentId)
+            : { id: medicamentId, denomination: medicamentId };
 
           if (!medicament) {
             return undefined;
           }
 
-          const rowData = plan.data?.[medicamentId] ?? {};
+          const rowData =
+            plan.data?.find((row) => row.medicId === medicamentId)?.data ?? {};
 
           const rowIndication = extractIndication(
             medicament,
@@ -231,9 +195,7 @@ const PrintPDF = ({
                       PLAN_POSOLOGIE_COLOR?.[posologie as "poso_matin"]?.body
                     } p-0`}
                   >
-                    {rowData?.posologies?.[
-                      posologie as keyof typeof PlanPrisePosologies
-                    ] ?? ""}
+                    {rowData?.posologies?.[posologie] ?? ""}
                   </Cell>
                 ))}
                 <Cell alignLeft>
@@ -243,40 +205,39 @@ const PrintPDF = ({
             </Table>
           );
         })}
-        {precautions.map((precaution) => (
-          <View
-            key={precaution.id}
-            style={[
-              tw("rounded-lg border p-4 mt-4"),
-              { borderColor: precaution.couleur },
-            ]}
-            wrap={false}
+      {precautions.map((precaution) => (
+        <View
+          key={precaution.id}
+          style={[
+            tw("rounded-lg border p-4 mt-4"),
+            { borderColor: precaution.couleur },
+          ]}
+          wrap={false}
+        >
+          <Text style={[tw("text-sm"), { fontFamily: "Helvetica-Bold" }]}>
+            {precaution.titre}
+          </Text>
+          <Html
+            style={tw("text-sm")}
+            stylesheet={{
+              p: {
+                marginVertical: 0,
+              },
+              ul: {
+                marginVertical: 0,
+                width: "95%",
+              },
+              ol: {
+                marginVertical: 0,
+                width: "95%",
+              },
+            }}
           >
-            <Text style={[tw("text-sm"), { fontFamily: "Helvetica-Bold" }]}>
-              {precaution.titre}
-            </Text>
-            <Html
-              style={tw("text-sm")}
-              stylesheet={{
-                p: {
-                  marginVertical: 0,
-                },
-                ul: {
-                  marginVertical: 0,
-                  width: "95%",
-                },
-                ol: {
-                  marginVertical: 0,
-                  width: "95%",
-                },
-              }}
-            >
-              {precaution.contenu}
-            </Html>
-          </View>
-        ))}
-      </Page>
-    </Document>
+            {precaution.contenu}
+          </Html>
+        </View>
+      ))}
+    </CommonPdf>
   );
 };
 

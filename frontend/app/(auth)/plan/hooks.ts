@@ -13,7 +13,7 @@ export const useIndication = (
 ) => {
   const customData = usePlanStore(
     (state) =>
-      state.data?.["id" in medicament ? medicament.id : medicament.denomination]
+      state.data?.find((row) => row.medicId === medicament.id)?.data
         ?.indication,
   );
 
@@ -33,7 +33,7 @@ export const useConservation = (
 ) => {
   const customData = usePlanStore(
     (state) =>
-      state.data?.["id" in medicament ? medicament.id : medicament.denomination]
+      state.data?.find((row) => row.medicId === medicament.id)?.data
         ?.conservation,
   );
 

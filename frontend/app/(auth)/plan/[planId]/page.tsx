@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import PlanClient from "@/app/(auth)/plan/[planId]/client";
+import { migrateMedicsOrder } from "@/app/(auth)/plan/actions";
 import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 
@@ -14,11 +15,15 @@ const Plan = async ({ params }: { params: unknown }) => {
 
     const plan = await prisma.plan.findFirstOrThrow({
       where: { displayId: Number(planId), user: { id: session?.user.id } },
-      include: {
-        medics: {
-          include: { commentaires: true, principesActifs: true },
-        },
+    });
+
+    const data = await migrateMedicsOrder(plan);
+
+    const medics = await prisma.medicament.findMany({
+      where: {
+        OR: data.map((row) => ({ id: row.medicId })),
       },
+      include: { principesActifs: true, commentaires: true, precaution: true },
     });
 
     return (
@@ -27,7 +32,11 @@ const Plan = async ({ params }: { params: unknown }) => {
           title={`Plan de prise n°${plan.displayId}`}
           returnTo={routes.plans()}
         />
-        <PlanClient plan={plan} data-superjson />
+        <PlanClient
+          plan={{ ...plan, data: data }}
+          medicaments={medics}
+          data-superjson
+        />
       </>
     );
   } catch (error) {

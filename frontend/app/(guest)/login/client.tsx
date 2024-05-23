@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/(guest)/login/validation";
 import { routes, useSafeSearchParams } from "@/app/routes-schema";
+import { env } from "@/env.mjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -43,11 +44,12 @@ const LoginForm = () => {
   } = form;
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    if (!executeRecaptcha) {
+    if (!executeRecaptcha && !env.CI) {
       throw new PP_Error("RECAPTCHA_LOADING_ERROR");
     }
 
-    const recaptcha = await executeRecaptcha("enquiryFormSubmit");
+    const recaptcha =
+      executeRecaptcha && (await executeRecaptcha("enquiryFormSubmit"));
 
     const signInResponse = await signIn("credentials", {
       email: values.email,

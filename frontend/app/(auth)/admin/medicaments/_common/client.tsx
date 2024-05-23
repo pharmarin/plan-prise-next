@@ -19,7 +19,6 @@ import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { mergeArray } from "@/utils/merge-array";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createId } from "@paralleldrive/cuid2";
-import type { Commentaire } from "@prisma/client";
 import { capitalize } from "lodash-es";
 import { PlusIcon, X } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -103,7 +102,7 @@ const MedicClient = ({
 
       setReadOnly(true);
 
-      if (!medicament) {
+      if (!medicament && response?.id) {
         router.push(
           routes.medicament({
             medicamentId: response.id,
@@ -202,7 +201,7 @@ const MedicClient = ({
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <fieldset className="space-y-4" disabled={readOnly}>
+          <fieldset className="space-y-4" disabled={readOnly || undefined}>
             <FormServerError />
             <FormField
               control={form.control}
@@ -236,6 +235,7 @@ const MedicClient = ({
                     <MultiSelect
                       disabled={readOnly}
                       keys={{ value: "id", label: "denomination" }}
+                      multiple={true}
                       onSearchChange={async (value) =>
                         (await findManyPrincipesActifsAction({
                           query: value,
@@ -261,6 +261,7 @@ const MedicClient = ({
                     <MultiSelect
                       disabled={readOnly}
                       keys={{ label: "label", value: "value" }}
+                      multiple={true}
                       onChange={(values) =>
                         field.onChange(values.map((value) => value.value))
                       }
@@ -416,7 +417,8 @@ const MedicClient = ({
                   draft: value,
                 })
               }
-              updateFromArray={(commentaire: Commentaire) => {
+              updateFromArray={(commentaire) => {
+                if (!commentaire) return;
                 commentairesCache.push(commentaire);
                 commentairesFieldArray.update(index, {
                   commentaireId: commentaire.id,

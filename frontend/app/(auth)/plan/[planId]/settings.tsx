@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { saveSettingsAction } from "@/app/(auth)/plan/[planId]/actions";
+import { saveSettingsAction } from "@/app/(auth)/plan/actions";
 import usePlanStore from "@/app/(auth)/plan/state";
 import { PlanPrisePosologies } from "@/types/plan";
 import { debounce } from "lodash-es";

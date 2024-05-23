@@ -18,13 +18,13 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@plan-prise/eslint-config": "0.2.0",
-    "@plan-prise/prettier-config": "0.1.0",
-    "@plan-prise/tsconfig": "0.1.0",
-    "@types/react": "18.2.66",
+    "@plan-prise/eslint-config": "workspace:*",
+    "@plan-prise/prettier-config": "workspace:*",
+    "@plan-prise/tsconfig": "workspace:*",
+    "@types/react": "18.3.2",
     "eslint": "8.57.0",
-    "tailwindcss": "3.4.1",
-    "typescript": "5.4.2"
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5"
   },
   "eslintConfig": {
     "extends": [
@@ -33,8 +33,7 @@
   },
   "prettier": "@plan-prise/prettier-config",
   "dependencies": {
-    "@headlessui/react": "1.7.18",
-    "@plan-prise/tailwind-config": "*",
+    "@plan-prise/tailwind-config": "workspace:*",
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-checkbox": "1.0.4",
     "@radix-ui/react-dialog": "1.0.5",
@@ -47,23 +46,25 @@
     "@radix-ui/react-switch": "1.0.3",
     "@radix-ui/react-toast": "1.1.5",
     "@radix-ui/react-tooltip": "1.0.7",
-    "@react-pdf/renderer": "3.3.8",
-    "@tailwindcss/typography": "0.5.10",
-    "@tanstack/react-table": "8.13.2",
+    "@react-pdf/renderer": "3.4.4",
+    "@tailwindcss/typography": "0.5.13",
+    "@tanstack/react-table": "8.17.3",
     "class-variance-authority": "0.7.0",
-    "clsx": "2.1.0",
-    "cmdk": "0.2.1",
-    "lucide-react": "0.358.0",
-    "next": "14.1.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-hook-form": "7.51.0",
-    "react-pdf": "7.7.1",
+    "clsx": "2.1.1",
+    "cmdk": "1.0.0",
+    "date-fns": "3.6.0",
+    "lucide-react": "0.379.0",
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-day-picker": "8.10.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "7.51.5",
+    "react-pdf": "8.0.2",
     "react-pdf-tailwind": "2.3.0",
     "react-textarea-autosize": "8.5.3",
-    "tailwind-merge": "2.2.1",
+    "tailwind-merge": "2.3.0",
     "tailwindcss-animate": "1.0.7",
-    "usehooks-ts": "3.0.1",
-    "vaul": "0.9.0"
+    "usehooks-ts": "3.1.0",
+    "vaul": "0.9.1"
   }
 }

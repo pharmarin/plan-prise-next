@@ -1,4 +1,4 @@
-import { startCase, toUpper } from "lodash-es";
+import { startCase } from "lodash-es";
 
 import type { User } from "@plan-prise/db-prisma";
 
@@ -59,6 +59,6 @@ export const sendMailReinitPassword = (
 
 export const formatFirstName = (firstName: string) =>
   startCase(firstName.toLowerCase());
-export const formatLastName = (lastName: string) => toUpper(lastName);
+export const formatLastName = (lastName: string) => lastName.toUpperCase();
 export const formatDisplayName = (displayName?: string | null) =>
   displayName ? startCase(displayName.toLowerCase()) : null;
