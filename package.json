@@ -34,6 +34,11 @@
     "turbo": "1.13.3",
     "typescript": "5.4.5"
   },
+  "pnpm": {
+    "overrides": {
+      "@react-pdf/layout": "3.11.5"
+    }
+  },
   "packageManager": "pnpm@9.1.2",
   "eslintConfig": {
     "extends": [

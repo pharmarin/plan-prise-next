@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+overrides:
+  '@react-pdf/layout': 3.11.5
+
 importers:
 
   .:
@@ -1593,8 +1596,8 @@ packages:
   '@react-pdf/image@2.3.6':
     resolution: {integrity: sha512-7iZDYZrZlJqNzS6huNl2XdMcLFUo68e6mOdzQeJ63d5eApdthhSHBnkGzHfLhH5t8DCpZNtClmklzuLL63ADfw==}
 
-  '@react-pdf/layout@3.12.1':
-    resolution: {integrity: sha512-BxSeykDxvADlpe4OGtQ7NH46QXq3uImAYsTHOPLCwbXMniQ1O3uCBx7H+HthxkCNshgYVPp9qS3KyvQv/oIZwg==}
+  '@react-pdf/layout@3.11.5':
+    resolution: {integrity: sha512-VLOzWIODUKw0ZTrS9XDkwl3q1OHKG8qd6OyCZZ7Q8/SijAh9ho70HEc/f1ffBFmM0nGrKMG0M3L0/7z1XKmOGw==}
 
   '@react-pdf/pdfkit@3.1.10':
     resolution: {integrity: sha512-P/qPBtCFo2HDJD0i6NfbmoBRrsOVO8CIogYsefwG4fklTo50zNgnMM5U1WLckTuX8Qt1ThiQuokmTG5arheblA==}
@@ -6174,7 +6177,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@react-pdf/layout@3.12.1':
+  '@react-pdf/layout@3.11.5':
     dependencies:
       '@babel/runtime': 7.24.5
       '@react-pdf/fns': 2.2.1
@@ -6224,7 +6227,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.5
       '@react-pdf/font': 2.5.1
-      '@react-pdf/layout': 3.12.1
+      '@react-pdf/layout': 3.11.5
       '@react-pdf/pdfkit': 3.1.10
       '@react-pdf/primitives': 3.1.1
       '@react-pdf/render': 3.4.4
