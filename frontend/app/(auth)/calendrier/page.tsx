@@ -12,8 +12,8 @@ const CalendarsIndex = async () => {
     where: {
       user: { id: session?.user.id },
     },
-    /* select: { displayId: true },
-    orderBy: { displayId: "asc" }, */
+    select: { displayId: true },
+    orderBy: { displayId: "asc" },
   });
 
   return (
