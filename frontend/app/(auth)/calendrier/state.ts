@@ -2,6 +2,7 @@
 
 import { toYYYYMMDD } from "@/app/(auth)/calendrier/utils";
 import type { Calendar } from "@prisma/client";
+import { addDays } from "date-fns";
 import { set } from "lodash-es";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
@@ -92,7 +93,9 @@ const useCalendarStore = create(
 
           entry?.data.push(
             emptyIteration(
-              previousEndDate ? new Date(previousEndDate) : undefined,
+              previousEndDate
+                ? addDays(new Date(previousEndDate), 1)
+                : new Date(),
             ),
           );
         }),
