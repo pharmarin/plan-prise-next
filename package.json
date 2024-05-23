@@ -36,7 +36,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@react-pdf/layout": "3.11.5"
+      "@react-pdf/layout": "3.12.1"
     }
   },
   "packageManager": "pnpm@9.1.2",
