@@ -13,11 +13,11 @@ export enum AUTH_ROUTES {
   PLAN_INDEX = "/plan",
   PLAN_SINGLE = "/plan/[planId]",
   PLAN_PRINT = "/plan/[planId]/imprimer",
-  PLAN_NEW = "/plan/nouveau",
+  NEW = "/plan/nouveau",
   CALENDAR_INDEX = "/calendrier",
   CALENDAR_SINGLE = "/calendrier/[calendarId]",
   CALENDAR_PRINT = "/calendrier/[calendarId]/imprimer",
-  CALENDAR_NEW = "/calendrier/nouveau",
+  NEW = "/calendrier/nouveau",
 }
 
 export enum ADMIN_ROUTES {
@@ -59,7 +59,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         planId: z.coerce.number(),
       }),
     }),
-    planCreate: defineRoute(AUTH_ROUTES.PLAN_NEW),
+    planCreate: defineRoute(AUTH_ROUTES.NEW),
     calendars: defineRoute(AUTH_ROUTES.CALENDAR_INDEX),
     calendar: defineRoute(AUTH_ROUTES.CALENDAR_SINGLE, {
       params: z.object({ calendarId: z.coerce.number() }),
@@ -67,7 +67,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
     calendarPrint: defineRoute(AUTH_ROUTES.CALENDAR_PRINT, {
       params: z.object({ calendarId: z.coerce.number() }),
     }),
-    calendarCreate: defineRoute(AUTH_ROUTES.CALENDAR_NEW),
+    calendarCreate: defineRoute(AUTH_ROUTES.NEW),
 
     // Admin routes
     adminDashboard: defineRoute(ADMIN_ROUTES.DASHBOARD),

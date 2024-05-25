@@ -4,12 +4,12 @@ import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 import type { Calendar } from "@prisma/client";
 
-import { CALENDAR_NEW } from "@plan-prise/api/constants";
+import { NEW } from "@plan-prise/api/constants";
 
 const CalendarNewPage = () => {
   const calendar = useMemo(
     (): Calendar => ({
-      id: CALENDAR_NEW,
+      id: NEW,
       displayId: -1,
       data: [],
       userId: "",

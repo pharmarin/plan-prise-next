@@ -9,7 +9,7 @@ import { useEventListener } from "@/utils/event-listener";
 import type { SafeAction } from "next-safe-action";
 import type { ZodSchema } from "zod";
 
-import { PLAN_NEW } from "@plan-prise/api/constants";
+import { NEW } from "@plan-prise/api/constants";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
 
 enum EVENTS {
@@ -41,6 +41,9 @@ const ModulesNavbar = ({
     }
   | { type: "calendar"; onDeleteAction: SafeAction<ZodSchema, void> }
 )) => {
+  const setShowSettings =
+    "setShowSettings" in props ? props.setShowSettings : undefined;
+
   const { setOptions, setTitle } = useNavigationState((state) => ({
     setOptions: state.setOptions,
     setTitle: state.setTitle,
@@ -57,7 +60,7 @@ const ModulesNavbar = ({
 
   useEventListener(
     EVENTS.SETTINGS,
-    () => "setShowSettings" in props && props.setShowSettings(true),
+    () => setShowSettings && setShowSettings(true),
   );
 
   useEventListener(EVENTS.PRINT, () => {
@@ -104,17 +107,21 @@ const ModulesNavbar = ({
               event: EVENTS.DELETE,
               tooltip: "Supprimer le plan de prise",
             },
-            {
-              icon: "settings",
-              className: cn(
-                "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
-                {
-                  "cursor-not-allowed bg-gray-600": id === PLAN_NEW,
-                },
-              ),
-              disabled: id === PLAN_NEW,
-              event: EVENTS.SETTINGS,
-            },
+            ...(setShowSettings
+              ? [
+                  {
+                    icon: "settings",
+                    className: cn(
+                      "rounded-full bg-orange-400 p-1 text-white plan-settings-button",
+                      {
+                        "cursor-not-allowed bg-gray-600": id === NEW,
+                      },
+                    ),
+                    disabled: id === NEW,
+                    event: EVENTS.SETTINGS,
+                  } as const,
+                ]
+              : []),
             {
               icon: "printer",
               className: cn("rounded-full bg-green-700 p-1 text-white", {
@@ -131,7 +138,16 @@ const ModulesNavbar = ({
           ]
         : [],
     );
-  }, [canPrint, id, isDeleting, isSaving, medicsLength, setOptions, type]);
+  }, [
+    canPrint,
+    id,
+    isDeleting,
+    isSaving,
+    medicsLength,
+    setOptions,
+    setShowSettings,
+    type,
+  ]);
 
   return null;
 };
