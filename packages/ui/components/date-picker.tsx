@@ -72,7 +72,7 @@ const DatePicker = ({
             numberOfMonths={2}
             onDayPointerEnter={(day) => {
               if (daysFromDate && day >= daysFromDate) {
-                setHoveredDays(differenceInDays(day, daysFromDate) + 1);
+                setHoveredDays(differenceInDays(day, daysFromDate) + 2);
               } else {
                 setHoveredDays(undefined);
               }
