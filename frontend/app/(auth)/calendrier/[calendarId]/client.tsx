@@ -18,7 +18,7 @@ import type { Calendar, Medicament, PrincipeActif } from "@prisma/client";
 import { debounce } from "lodash-es";
 import { useShallow } from "zustand/react/shallow";
 
-import { CALENDAR_NEW } from "@plan-prise/api/constants";
+import { NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
@@ -63,7 +63,7 @@ const CalendarClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async () => {
-      if (useCalendarStore.getState().id === CALENDAR_NEW) {
+      if (useCalendarStore.getState().id === NEW) {
         if (firstSavePending) {
           return undefined;
         }
@@ -78,7 +78,7 @@ const CalendarClient = ({
         .then(async (response) => {
           const currentId = useCalendarStore.getState().id;
 
-          if (currentId === CALENDAR_NEW) {
+          if (currentId === NEW) {
             if (typeof response === "object" && "id" in response) {
               useCalendarStore.setState({
                 id: response.id,

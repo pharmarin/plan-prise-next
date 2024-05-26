@@ -4,12 +4,12 @@ import { routes } from "@/app/routes-schema";
 import { Navigation } from "@/app/state-navigation";
 import type { Plan } from "@prisma/client";
 
-import { PLAN_NEW } from "@plan-prise/api/constants";
+import { NEW } from "@plan-prise/api/constants";
 
 const PlanNew = () => {
   const plan = useMemo(
     (): Plan & { data: PP.Plan.Data1 } => ({
-      id: PLAN_NEW,
+      id: NEW,
       medicsOrder: null,
       data: [],
       settings: {},

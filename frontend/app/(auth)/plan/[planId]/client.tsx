@@ -25,7 +25,7 @@ import type { Plan } from "@prisma/client";
 import { debounce, merge } from "lodash-es";
 import { useShallow } from "zustand/react/shallow";
 
-import { PLAN_NEW } from "@plan-prise/api/constants";
+import { NEW } from "@plan-prise/api/constants";
 import errors from "@plan-prise/errors/errors.json";
 import LoadingScreen from "@plan-prise/ui/components/pages/Loading";
 import { useToast } from "@plan-prise/ui/shadcn/hooks/use-toast";
@@ -61,7 +61,7 @@ const PlanClient = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const saveDataDebounced = useCallback(
     debounce(async () => {
-      if (usePlanStore.getState().id === PLAN_NEW && firstSavePending) {
+      if (usePlanStore.getState().id === NEW && firstSavePending) {
         if (firstSavePending) {
           return undefined;
         } else {
@@ -77,7 +77,7 @@ const PlanClient = ({
         .then(async (response) => {
           const currentId = usePlanStore.getState().id;
 
-          if (currentId === PLAN_NEW) {
+          if (currentId === NEW) {
             if (typeof response === "object" && "id" in response) {
               usePlanStore.setState({
                 id: response.id,
