@@ -9,7 +9,7 @@ import { routes } from "@/app/routes-schema";
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import { MUTATION_SUCCESS, PLAN_NEW } from "@plan-prise/api/constants";
+import { MUTATION_SUCCESS, NEW } from "@plan-prise/api/constants";
 import type { Plan } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
@@ -108,7 +108,7 @@ export const findPrecautionsAction = authAction(
 export const savePlanDataAction = authAction(
   savePlanDataSchema,
   async ({ planId, data }, { userId }) => {
-    if (planId === PLAN_NEW) {
+    if (planId === NEW) {
       const displayId = await getNewDisplayId(userId);
 
       const plan = await prisma.plan.create({

@@ -7,12 +7,12 @@ import { getNewDisplayId } from "@/app/actions";
 import { routes } from "@/app/routes-schema";
 import { z } from "zod";
 
-import { CALENDAR_NEW, MUTATION_SUCCESS } from "@plan-prise/api/constants";
+import { MUTATION_SUCCESS, NEW } from "@plan-prise/api/constants";
 import prisma from "@plan-prise/db-prisma";
 
 export const saveDataAction = authAction(
   z.object({
-    calendarId: z.union([z.literal(CALENDAR_NEW), z.string().cuid2()]),
+    calendarId: z.union([z.literal(NEW), z.string().cuid2()]),
     data: z.array(
       z.object({
         medicId: z.string(),
@@ -28,7 +28,7 @@ export const saveDataAction = authAction(
     ),
   }),
   async ({ calendarId, data }, { userId }) => {
-    if (calendarId === CALENDAR_NEW) {
+    if (calendarId === NEW) {
       const displayId = await getNewDisplayId(userId);
 
       const calendar = await prisma.calendar.create({
