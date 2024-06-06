@@ -16,7 +16,7 @@
     "with-env": "dotenv -e ../.env --"
   },
   "dependencies": {
-    "@hookform/resolvers": "3.5.0",
+    "@hookform/resolvers": "3.6.0",
     "@paralleldrive/cuid2": "2.2.2",
     "@plan-prise/api": "workspace:*",
     "@plan-prise/api-pharmaciens": "workspace:*",
