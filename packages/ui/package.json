@@ -45,7 +45,7 @@
     "@radix-ui/react-slot": "1.1.0",
     "@radix-ui/react-switch": "1.1.0",
     "@radix-ui/react-toast": "1.2.1",
-    "@radix-ui/react-tooltip": "1.0.7",
+    "@radix-ui/react-tooltip": "1.1.1",
     "@react-pdf/renderer": "3.4.4",
     "@tailwindcss/typography": "0.5.13",
     "@tanstack/react-table": "8.17.3",
