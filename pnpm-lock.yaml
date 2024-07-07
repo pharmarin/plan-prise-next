@@ -495,8 +495,8 @@ importers:
         specifier: workspace:*
         version: link:../../config/typescript
       '@types/cli-progress':
-        specifier: 3.11.5
-        version: 3.11.5
+        specifier: 3.11.6
+        version: 3.11.6
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -1972,8 +1972,8 @@ packages:
   '@types/bcryptjs@2.4.6':
     resolution: {integrity: sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==}
 
-  '@types/cli-progress@3.11.5':
-    resolution: {integrity: sha512-D4PbNRbviKyppS5ivBGyFO29POlySLmA2HyUFE4p5QGazAMM3CwkKWcvTl8gvElSuxRh6FPKL8XmidX873ou4g==}
+  '@types/cli-progress@3.11.6':
+    resolution: {integrity: sha512-cE3+jb9WRlu+uOSAugewNpITJDt1VF8dHOopPO4IABFc3SXYL5WE/+PTz/FCdZRRfIujiWW3n3aMbv1eIGVRWA==}
 
   '@types/d3-array@3.2.1':
     resolution: {integrity: sha512-Y2Jn2idRrLzUfAKV2LyRImR+y4oa2AntrgID95SHJxuMUrkNXmanDSed71sRNZysveJVt1hLLemQZIady0FpEg==}
@@ -6831,7 +6831,7 @@ snapshots:
 
   '@types/bcryptjs@2.4.6': {}
 
-  '@types/cli-progress@3.11.5':
+  '@types/cli-progress@3.11.6':
     dependencies:
       '@types/node': 20.14.10
 
