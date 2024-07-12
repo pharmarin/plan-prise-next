@@ -17,7 +17,7 @@
     "typecheck": "turbo typecheck --filter=!@plan-prise/db-migration"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "4.3.1",
     "@manypkg/cli": "0.21.4",
     "@plan-prise/api": "workspace:*",
     "@plan-prise/auth": "workspace:*",
