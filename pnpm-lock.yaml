@@ -275,8 +275,8 @@ importers:
         specifier: 7.52.1
         version: 7.52.1(react@18.3.1)
       react-pdf-html:
-        specifier: 2.0.4
-        version: 2.0.4(@react-pdf/renderer@3.4.4(react@18.3.1))(react@18.3.1)
+        specifier: 2.0.5
+        version: 2.0.5(@react-pdf/renderer@3.4.4(react@18.3.1))(react@18.3.1)
       react-pdf-tailwind:
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.4.5))
@@ -4501,11 +4501,11 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-pdf-html@2.0.4:
-    resolution: {integrity: sha512-AA+24Yg8nGgxiHMcGOcUXrTXIFyegdQ/YaMiPkvEusarntpiUCHLzahq39sRofewhbtKMUKslRHRgrEqNet1Ag==}
+  react-pdf-html@2.0.5:
+    resolution: {integrity: sha512-9KyE3AyYuUIp3x1u4kkH3bCZ1CKOVDSYS5m3261U+o8bSttGa8gWZec9llfZeoydSnPva+TUlT51wMK1lwXlgA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      '@react-pdf/renderer': '>=3'
+      '@react-pdf/renderer': '>=3.4.4'
       react: '>=16'
 
   react-pdf-tailwind@2.3.0:
@@ -9596,7 +9596,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-pdf-html@2.0.4(@react-pdf/renderer@3.4.4(react@18.3.1))(react@18.3.1):
+  react-pdf-html@2.0.5(@react-pdf/renderer@3.4.4(react@18.3.1))(react@18.3.1):
     dependencies:
       '@react-pdf/renderer': 3.4.4(react@18.3.1)
       css-tree: 1.1.3
