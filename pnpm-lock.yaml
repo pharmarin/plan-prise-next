@@ -218,8 +218,8 @@ importers:
         specifier: 7.118.0
         version: 7.118.0(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.93.0)
       '@t3-oss/env-nextjs':
-        specifier: 0.10.1
-        version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
+        specifier: 0.11.0
+        version: 0.11.0(typescript@5.4.5)(zod@3.23.8)
       '@tanstack/react-table':
         specifier: 8.19.3
         version: 8.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -354,8 +354,8 @@ importers:
         specifier: workspace:*
         version: link:../db-prisma
       '@t3-oss/env-nextjs':
-        specifier: 0.10.1
-        version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
+        specifier: 0.11.0
+        version: 0.11.0(typescript@5.4.5)(zod@3.23.8)
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -430,8 +430,8 @@ importers:
         specifier: 5.17.0
         version: 5.17.0(prisma@5.17.0)
       '@t3-oss/env-nextjs':
-        specifier: 0.10.1
-        version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
+        specifier: 0.11.0
+        version: 0.11.0(typescript@5.4.5)(zod@3.23.8)
       bcryptjs:
         specifier: 2.4.3
         version: 2.4.3
@@ -1897,8 +1897,8 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@t3-oss/env-core@0.10.1':
-    resolution: {integrity: sha512-GcKZiCfWks5CTxhezn9k5zWX3sMDIYf6Kaxy2Gx9YEQftFcz8hDRN56hcbylyAO3t4jQnQ5ifLawINsNgCDpOg==}
+  '@t3-oss/env-core@0.11.0':
+    resolution: {integrity: sha512-PSalC5bG0a7XbyoLydiQdAnx3gICX6IQNctvh+TyLrdFxsxgocdj9Ui7sd061UlBzi+z4aIGjnem1kZx9QtUgQ==}
     peerDependencies:
       typescript: '>=5.0.0'
       zod: ^3.0.0
@@ -1906,8 +1906,8 @@ packages:
       typescript:
         optional: true
 
-  '@t3-oss/env-nextjs@0.10.1':
-    resolution: {integrity: sha512-iy2qqJLnFh1RjEWno2ZeyTu0ufomkXruUsOZludzDIroUabVvHsrSjtkHqwHp1/pgPUzN3yBRHMILW162X7x2Q==}
+  '@t3-oss/env-nextjs@0.11.0':
+    resolution: {integrity: sha512-gcRrY2CzSMSrxDf5+fKCUfzbBK125IxOcJHcoMVdjcTmYxEgIZFZ5qPPtngOY3UmTeXSqRZOGuNiosqWTFTkMw==}
     peerDependencies:
       typescript: '>=5.0.0'
       zod: ^3.0.0
@@ -6728,15 +6728,15 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@t3-oss/env-core@0.10.1(typescript@5.4.5)(zod@3.23.8)':
+  '@t3-oss/env-core@0.11.0(typescript@5.4.5)(zod@3.23.8)':
     dependencies:
       zod: 3.23.8
     optionalDependencies:
       typescript: 5.4.5
 
-  '@t3-oss/env-nextjs@0.10.1(typescript@5.4.5)(zod@3.23.8)':
+  '@t3-oss/env-nextjs@0.11.0(typescript@5.4.5)(zod@3.23.8)':
     dependencies:
-      '@t3-oss/env-core': 0.10.1(typescript@5.4.5)(zod@3.23.8)
+      '@t3-oss/env-core': 0.11.0(typescript@5.4.5)(zod@3.23.8)
       zod: 3.23.8
     optionalDependencies:
       typescript: 5.4.5
