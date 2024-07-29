@@ -1,33 +1,54 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["**/.env"],
-  "globalDotEnv": [".env"],
+  "globalDependencies": [
+    "**/.env",
+    ".env"
+  ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "next-env.d.ts",
+        ".expo/**"
+      ]
     },
     "dev": {
       "persistent": true,
       "cache": false
     },
     "format": {
-      "outputs": ["node_modules/.cache/.prettiercache"],
+      "outputs": [
+        "node_modules/.cache/.prettiercache"
+      ],
       "outputMode": "new-only"
     },
     "lint": {
-      "outputs": ["node_modules/.cache/.eslintcache"]
+      "outputs": [
+        "node_modules/.cache/.eslintcache"
+      ]
     },
-    "pretest": { "cache": false },
+    "pretest": {
+      "cache": false
+    },
     "start": {
       "persistent": true
     },
     "test": {
-      "dependsOn": ["pretest"],
-      "outputs": ["playwright-report/**"]
+      "dependsOn": [
+        "pretest"
+      ],
+      "outputs": [
+        "playwright-report/**"
+      ]
     },
     "typecheck": {
-      "outputs": ["node_modules/.cache/tsbuildinfo.json"]
+      "outputs": [
+        "node_modules/.cache/tsbuildinfo.json"
+      ]
     },
     "clean": {
       "cache": false
