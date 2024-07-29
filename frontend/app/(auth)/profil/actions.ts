@@ -21,9 +21,9 @@ import {
 import prisma, { exclude } from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
-export const updateCurrentUserAction = authAction(
-  updateUserSchema,
-  async ({ id, ...input }) => {
+export const updateCurrentUserAction = authAction
+  .schema(updateUserSchema)
+  .action(async ({ parsedInput: { id, ...input } }) => {
     const user = exclude(
       await prisma.user.update({
         where: { id },
@@ -42,39 +42,37 @@ export const updateCurrentUserAction = authAction(
     revalidateTag("user-navbar-infos");
 
     return user;
-  },
-);
+  });
 
-export const updateCurrentUserPasswordAction = authAction(
-  updateUserPasswordSchema,
-  async (input, { userId }) => {
+export const updateCurrentUserPasswordAction = authAction
+  .schema(updateUserPasswordSchema)
+  .action(async ({ parsedInput, ctx: { userId } }) => {
     const user = await prisma.user.findUniqueOrThrow({
       where: { id: userId },
       select: { password: true },
     });
 
-    if (await checkPassword(input.current_password, user.password)) {
+    if (await checkPassword(parsedInput.current_password, user.password)) {
       await prisma.user.update({
         where: { id: userId },
-        data: { password: await hashPassword(input.password) },
+        data: { password: await hashPassword(parsedInput.password) },
       });
 
       return MUTATION_SUCCESS;
     }
 
     throw new PP_Error("PASSWORD_MISMATCH");
-  },
-);
+  });
 
-export const deleteCurrentUserAction = authAction(
-  deleteCurrentUserSchema,
-  async (input, { userId }) => {
+export const deleteCurrentUserAction = authAction
+  .schema(deleteCurrentUserSchema)
+  .action(async ({ parsedInput, ctx: { userId } }) => {
     const user = await prisma.user.findUniqueOrThrow({
       where: { id: userId },
       select: { password: true },
     });
 
-    if (await checkPassword(input.password, user.password)) {
+    if (await checkPassword(parsedInput.password, user.password)) {
       await prisma.user.delete({
         where: {
           id: userId,
@@ -85,5 +83,4 @@ export const deleteCurrentUserAction = authAction(
     }
 
     throw new PP_Error("PASSWORD_MISMATCH");
-  },
-);
+  });

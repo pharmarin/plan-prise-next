@@ -10,24 +10,26 @@ import { z } from "zod";
 import { MUTATION_SUCCESS, NEW } from "@plan-prise/api/constants";
 import prisma from "@plan-prise/db-prisma";
 
-export const saveDataAction = authAction(
-  z.object({
-    calendarId: z.union([z.literal(NEW), z.string().cuid2()]),
-    data: z.array(
-      z.object({
-        medicId: z.string(),
-        data: z.array(
-          z.object({
-            startDate: z.string(),
-            endDate: z.string(),
-            quantity: z.coerce.string().optional(),
-            frequency: z.coerce.number().optional(),
-          }),
-        ),
-      }),
-    ),
-  }),
-  async ({ calendarId, data }, { userId }) => {
+export const saveDataAction = authAction
+  .schema(
+    z.object({
+      calendarId: z.union([z.literal(NEW), z.string().cuid2()]),
+      data: z.array(
+        z.object({
+          medicId: z.string(),
+          data: z.array(
+            z.object({
+              startDate: z.string(),
+              endDate: z.string(),
+              quantity: z.coerce.string().optional(),
+              frequency: z.coerce.number().optional(),
+            }),
+          ),
+        }),
+      ),
+    }),
+  )
+  .action(async ({ parsedInput: { calendarId, data }, ctx: { userId } }) => {
     if (calendarId === NEW) {
       const displayId = await getNewDisplayId(userId);
 
@@ -55,12 +57,11 @@ export const saveDataAction = authAction(
 
       return MUTATION_SUCCESS;
     }
-  },
-);
+  });
 
-export const deleteCalendarAction = authAction(
-  z.object({ calendarId: z.string().cuid2() }),
-  async ({ calendarId }, { userId }) => {
+export const deleteCalendarAction = authAction
+  .schema(z.object({ calendarId: z.string().cuid2() }))
+  .action(async ({ parsedInput: { calendarId }, ctx: { userId } }) => {
     await prisma.calendar.delete({
       where: {
         id: calendarId,
@@ -70,5 +71,4 @@ export const deleteCalendarAction = authAction(
 
     revalidatePath(routes.calendars());
     redirect(routes.calendars());
-  },
-);
+  });

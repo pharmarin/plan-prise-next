@@ -7,11 +7,13 @@ import { sendMailApproved } from "@plan-prise/api";
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import prisma, { exclude } from "@plan-prise/db-prisma";
 
-export const approveUserAction = adminAction(
-  z.object({
-    userId: z.string().cuid2(),
-  }),
-  async ({ userId }) => {
+export const approveUserAction = adminAction
+  .schema(
+    z.object({
+      userId: z.string().cuid2(),
+    }),
+  )
+  .action(async ({ parsedInput: { userId } }) => {
     const user = exclude(
       await prisma.user.update({
         where: { id: userId },
@@ -30,14 +32,12 @@ export const approveUserAction = adminAction(
     }
 
     return MUTATION_SUCCESS;
-  },
-);
+  });
 
-export const deleteUserAction = adminAction(
-  z.object({ userId: z.string().cuid2() }),
-  async ({ userId }) => {
+export const deleteUserAction = adminAction
+  .schema(z.object({ userId: z.string().cuid2() }))
+  .action(async ({ parsedInput: { userId } }) => {
     await prisma.user.delete({ where: { id: userId } });
 
     return MUTATION_SUCCESS;
-  },
-);
+  });

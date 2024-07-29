@@ -9,11 +9,9 @@ import { hashPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
-export const resetPasswordAction = guestAction(
-  resetPasswordSchema,
-  async (input) => {
-    const { password, token } = input;
-
+export const resetPasswordAction = guestAction
+  .schema(resetPasswordSchema)
+  .action(async ({ parsedInput: { password, token } }) => {
     try {
       const { payload } = await verifyJWT(token);
 
@@ -30,5 +28,4 @@ export const resetPasswordAction = guestAction(
     } catch (error) {
       throw new PP_Error("SERVER_ERROR");
     }
-  },
-);
+  });

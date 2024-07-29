@@ -1,4 +1,3 @@
-import type { SafeAction } from "next-safe-action";
 import { createSafeActionClient } from "next-safe-action";
 import type { Schema } from "zod";
 
@@ -7,28 +6,24 @@ import PP_Error from "@plan-prise/errors";
 
 export const guestAction = createSafeActionClient();
 
-export const authAction = createSafeActionClient({
-  middleware: async () => {
-    const session = await getServerSession();
+export const authAction = createSafeActionClient().use(async ({ next }) => {
+  const session = await getServerSession();
 
-    if (session?.user) {
-      return { userId: session?.user?.id };
-    }
+  if (session?.user) {
+    return next({ ctx: { userId: session?.user?.id } });
+  }
 
-    throw new PP_Error("UNAUTHORIZED_AUTH");
-  },
+  throw new PP_Error("UNAUTHORIZED_AUTH");
 });
 
-export const adminAction = createSafeActionClient({
-  middleware: async () => {
-    const session = await getServerSession();
+export const adminAction = createSafeActionClient().use(async ({ next }) => {
+  const session = await getServerSession();
 
-    if (session?.user?.admin) {
-      return { userId: session?.user?.id };
-    }
+  if (session?.user?.admin) {
+    return next({ ctx: { userId: session?.user?.id } });
+  }
 
-    throw new PP_Error("UNAUTHORIZED_ADMIN");
-  },
+  throw new PP_Error("UNAUTHORIZED_ADMIN");
 });
 
 export const transformResponse = <S extends Schema, Data>(

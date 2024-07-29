@@ -10,13 +10,15 @@ import checkRecaptcha from "@plan-prise/auth/lib/check-recaptcha";
 import prisma from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
-export const sendPasswordResetLinkAction = guestAction(
-  z.object({
-    email: z.string().email(),
-    recaptcha: z.string(),
-  }),
-  async (input) => {
-    const recaptcha = await checkRecaptcha(input.recaptcha ?? "");
+export const sendPasswordResetLinkAction = guestAction
+  .schema(
+    z.object({
+      email: z.string().email(),
+      recaptcha: z.string(),
+    }),
+  )
+  .action(async ({ parsedInput }) => {
+    const recaptcha = await checkRecaptcha(parsedInput.recaptcha ?? "");
 
     if (!recaptcha) {
       throw new PP_Error("RECAPTCHA_LOADING_ERROR");
@@ -27,7 +29,7 @@ export const sendPasswordResetLinkAction = guestAction(
     }
 
     const user = await prisma.user.findUniqueOrThrow({
-      where: { email: input.email },
+      where: { email: parsedInput.email },
     });
 
     const token = await signJWT({ user_id: user.id });
@@ -35,5 +37,4 @@ export const sendPasswordResetLinkAction = guestAction(
     await sendMailReinitPassword(user, token);
 
     return MUTATION_SUCCESS;
-  },
-);
+  });

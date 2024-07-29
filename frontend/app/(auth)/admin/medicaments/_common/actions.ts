@@ -13,11 +13,13 @@ import { z } from "zod";
 import type { Prisma } from "@plan-prise/db-prisma";
 import prisma from "@plan-prise/db-prisma";
 
-export const findManyPrincipesActifsAction = adminAction(
-  z.object({
-    query: z.string(),
-  }),
-  async ({ query }) => {
+export const findManyPrincipesActifsAction = adminAction
+  .schema(
+    z.object({
+      query: z.string(),
+    }),
+  )
+  .action(async ({ parsedInput: { query } }) => {
     if (query.length < 4) return undefined;
 
     return await prisma.principeActif.findMany({
@@ -29,12 +31,11 @@ export const findManyPrincipesActifsAction = adminAction(
       },
       take: 10,
     });
-  },
-);
+  });
 
-export const upsertMedicAction = adminAction(
-  upsertMedicSchema,
-  async (input) => {
+export const upsertMedicAction = adminAction
+  .schema(upsertMedicSchema)
+  .action(async ({ parsedInput }) => {
     const {
       id,
       conservationDuree,
@@ -44,7 +45,7 @@ export const upsertMedicAction = adminAction(
       voiesAdministration,
       principesActifs,
       commentaires,
-    } = input;
+    } = parsedInput;
 
     const data:
       | Prisma.MedicamentUpsertArgs["update"]
@@ -76,21 +77,19 @@ export const upsertMedicAction = adminAction(
     revalidatePath(routes.medicaments());
 
     return medicament;
-  },
-);
+  });
 
-export const deleteMedicAction = adminAction(
-  z.object({ medicId: z.string().cuid2() }),
-  async ({ medicId }) => {
+export const deleteMedicAction = adminAction
+  .schema(z.object({ medicId: z.string().cuid2() }))
+  .action(async ({ parsedInput: { medicId } }) => {
     await prisma.medicament.delete({ where: { id: medicId } });
     revalidatePath(routes.medicaments());
     redirect(routes.medicaments());
-  },
-);
+  });
 
-export const upsertCommentaireAction = adminAction(
-  upsertCommentaireSchema,
-  async ({ id, medicId, ...input }) => {
+export const upsertCommentaireAction = adminAction
+  .schema(upsertCommentaireSchema)
+  .action(async ({ parsedInput: { id, medicId, ...input } }) => {
     const commentaire = await prisma.commentaire.upsert({
       where: {
         id,
@@ -111,13 +110,12 @@ export const upsertCommentaireAction = adminAction(
     }
 
     return commentaire;
-  },
-);
+  });
 
-export const deleteCommentaireAction = adminAction(
-  z.object({ commentaireId: z.string().cuid2() }),
-  ({ commentaireId }) =>
+export const deleteCommentaireAction = adminAction
+  .schema(z.object({ commentaireId: z.string().cuid2() }))
+  .action(({ parsedInput: { commentaireId } }) =>
     prisma.commentaire.delete({
       where: { id: commentaireId },
     }),
-);
+  );

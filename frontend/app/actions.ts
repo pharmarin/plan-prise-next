@@ -17,22 +17,26 @@ export const getNewDisplayId = async (userId: string) => {
   return user.maxId;
 };
 
-export const findMedicAction = authAction(
-  z.object({
-    medicId: z.string().cuid2(),
-  }),
-  ({ medicId }) =>
+export const findMedicAction = authAction
+  .schema(
+    z.object({
+      medicId: z.string().cuid2(),
+    }),
+  )
+  .action(({ parsedInput: { medicId } }) =>
     prisma.medicament.findUniqueOrThrow({
       where: { id: medicId },
       include: { commentaires: true, principesActifs: true },
     }),
-);
+  );
 
-export const findManyMedicsAction = authAction(
-  z.object({
-    query: z.string(),
-  }),
-  async ({ query }) => {
+export const findManyMedicsAction = authAction
+  .schema(
+    z.object({
+      query: z.string(),
+    }),
+  )
+  .action(async ({ parsedInput: { query } }) => {
     const results =
       query && query.length > 0
         ? await prisma.medicament.findMany({
@@ -54,5 +58,4 @@ export const findManyMedicsAction = authAction(
         : [];
 
     return results;
-  },
-);
+  });
