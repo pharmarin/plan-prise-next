@@ -1,37 +1,43 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": [
-    "**/.env",
-    ".env"
-  ],
+  "globalDependencies": ["**/.env", ".env"],
   "tasks": {
     "build": {
-      "env": ["DATABASE_URL_POSTGRE", "BACKEND_URL", "RECAPTCHA_SECRET"],
-      "dependsOn": [
-        "^build"
+      "env": [
+        "ANALYZE",
+        "BACKEND_URL",
+        "CI",
+        "DATABASE_URL_POSTGRE",
+        "MAINTENANCE_MODE",
+        "NEXT_PUBLIC_CAPTCHA_SITE_KEY",
+        "NTFY_ADMIN_URL",
+        "PLAYWRIGHT_TEST_BASE_URL",
+        "RECAPTCHA_SECRET"
       ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "next-env.d.ts",
-        ".expo/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
     },
     "dev": {
       "persistent": true,
       "cache": false
     },
     "format": {
-      "outputs": [
-        "node_modules/.cache/.prettiercache"
-      ],
+      "outputs": ["node_modules/.cache/.prettiercache"],
       "outputLogs": "new-only"
     },
     "lint": {
-      "env": ["DATABASE_URL_POSTGRE", "BACKEND_URL"],
-      "outputs": [
-        "node_modules/.cache/.eslintcache"
-      ]
+      "env": [
+        "ANALYZE",
+        "BACKEND_URL",
+        "CI",
+        "DATABASE_URL_POSTGRE",
+        "MAINTENANCE_MODE",
+        "NEXT_PUBLIC_CAPTCHA_SITE_KEY",
+        "NTFY_ADMIN_URL",
+        "PLAYWRIGHT_TEST_BASE_URL",
+        "RECAPTCHA_SECRET"
+      ],
+      "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "pretest": {
       "cache": false
@@ -40,17 +46,11 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": [
-        "pretest"
-      ],
-      "outputs": [
-        "playwright-report/**"
-      ]
+      "dependsOn": ["pretest"],
+      "outputs": ["playwright-report/**"]
     },
     "typecheck": {
-      "outputs": [
-        "node_modules/.cache/tsbuildinfo.json"
-      ]
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "clean": {
       "cache": false
