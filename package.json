@@ -26,12 +26,12 @@
     "@plan-prise/eslint-config": "workspace:*",
     "@plan-prise/prettier-config": "workspace:*",
     "@plan-prise/tsconfig": "workspace:*",
-    "@turbo/gen": "1.13.4",
-    "@types/node": "20.14.12",
+    "@turbo/gen": "2.0.9",
+    "@types/node": "20.14.13",
     "eslint": "8.57.0",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "0.6.5",
-    "turbo": "1.13.4",
+    "turbo": "2.0.9",
     "typescript": "5.4.5"
   },
   "pnpm": {

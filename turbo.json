@@ -1,9 +1,19 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["**/.env"],
-  "globalDotEnv": [".env"],
-  "pipeline": {
+  "globalDependencies": ["**/.env", ".env"],
+  "tasks": {
     "build": {
+      "env": [
+        "ANALYZE",
+        "BACKEND_URL",
+        "CI",
+        "DATABASE_URL_POSTGRE",
+        "MAINTENANCE_MODE",
+        "NEXT_PUBLIC_CAPTCHA_SITE_KEY",
+        "NTFY_ADMIN_URL",
+        "PLAYWRIGHT_TEST_BASE_URL",
+        "RECAPTCHA_SECRET"
+      ],
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
     },
@@ -13,12 +23,25 @@
     },
     "format": {
       "outputs": ["node_modules/.cache/.prettiercache"],
-      "outputMode": "new-only"
+      "outputLogs": "new-only"
     },
     "lint": {
+      "env": [
+        "ANALYZE",
+        "BACKEND_URL",
+        "CI",
+        "DATABASE_URL_POSTGRE",
+        "MAINTENANCE_MODE",
+        "NEXT_PUBLIC_CAPTCHA_SITE_KEY",
+        "NTFY_ADMIN_URL",
+        "PLAYWRIGHT_TEST_BASE_URL",
+        "RECAPTCHA_SECRET"
+      ],
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
-    "pretest": { "cache": false },
+    "pretest": {
+      "cache": false
+    },
     "start": {
       "persistent": true
     },
