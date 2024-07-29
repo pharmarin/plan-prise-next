@@ -27,6 +27,7 @@
       "outputLogs": "new-only"
     },
     "lint": {
+      "env": ["DATABASE_URL_POSTGRE", "BACKEND_URL"],
       "outputs": [
         "node_modules/.cache/.eslintcache"
       ]
