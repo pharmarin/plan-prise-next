@@ -6,6 +6,7 @@
   ],
   "tasks": {
     "build": {
+      "env": ["DATABASE_URL_POSTGRE", "BACKEND_URL"],
       "dependsOn": [
         "^build"
       ],
