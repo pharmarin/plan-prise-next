@@ -101,12 +101,12 @@ export const migratePlanNew = async () => {
                 : formatString(customData?.indication ?? "")
               : formatString(customData?.indication ?? ""),
           posologies:
-            customData?.lever ??
+            (customData?.lever ??
             customData?.matin ??
             customData?.midi ??
             customData?.dixhuith ??
             customData?.soir ??
-            customData?.coucher
+            customData?.coucher)
               ? {
                   poso_lever:
                     customData?.lever && customData?.lever.length > 0
