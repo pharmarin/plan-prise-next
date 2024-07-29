@@ -6,7 +6,7 @@
   ],
   "tasks": {
     "build": {
-      "env": ["DATABASE_URL_POSTGRE", "BACKEND_URL"],
+      "env": ["DATABASE_URL_POSTGRE", "BACKEND_URL", "RECAPTCHA_SECRET"],
       "dependsOn": [
         "^build"
       ],
