@@ -412,8 +412,8 @@ importers:
         specifier: 5.4.5
         version: 5.4.5
       unzipper:
-        specifier: 0.12.2
-        version: 0.12.2
+        specifier: 0.12.3
+        version: 0.12.3
 
   packages/auth:
     dependencies:
@@ -5184,8 +5184,8 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
-  unzipper@0.12.2:
-    resolution: {integrity: sha512-ecRhBc+ZfQkYnRr8L7OkxvAAWDkqP3Dun9CHUmYYZx/mErGdy7N7ju6ODJ7uKmm9PD99aAG8grxzl5y9lmEK2A==}
+  unzipper@0.12.3:
+    resolution: {integrity: sha512-PZ8hTS+AqcGxsaQntl3IRBw65QrBI6lxzqDEL7IAo/XCEqRTKGfOX56Vea5TH9SZczRVxuzk1re04z/YjuYCJA==}
 
   update-browserslist-db@1.0.15:
     resolution: {integrity: sha512-K9HWH62x3/EalU1U6sjSZiylm9C8tgq2mSvshZpqc7QE69RaA2qjhkW2HlNA0tFpEbtyFz7HTqbSdN4MSwUodA==}
@@ -10373,7 +10373,7 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unzipper@0.12.2:
+  unzipper@0.12.3:
     dependencies:
       bluebird: 3.7.2
       duplexer2: 0.1.4
