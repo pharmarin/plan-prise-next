@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { revalidatePath } from "@/app/(auth)/admin/actions";
 import { approveUserAction } from "@/app/(auth)/admin/utilisateurs/actions";
 import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
@@ -36,7 +35,6 @@ const TestButton = ({
 
         if (response?.data === MUTATION_SUCCESS) {
           setIsApproved(true);
-          await revalidatePath("/admin/utilisateurs");
         }
       }}
     >
