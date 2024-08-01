@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { findMedicAction } from "@/app/actions";
 import { extractVoieAdministration } from "@/utils/medicament";
 import { XIcon } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 
 import PP_Error from "@plan-prise/errors";
 import { Button } from "@plan-prise/ui/button";
@@ -23,8 +23,14 @@ const Card = ({
   medicamentId: string;
   removeMedic: (medicament: PP.Medicament.Identifier) => void;
 }) => {
-  const [{ data: medicament, isLoading, isSuccess, isError }, findMedic] =
-    useAsyncCallback(findMedicAction);
+  const {
+    executeAsync: findMedic,
+    result: { data: medicament },
+    isExecuting: isLoading,
+    status,
+  } = useAction(findMedicAction);
+  const isSuccess = status === "hasSucceeded";
+  const isError = status === "hasErrored";
 
   useEffect(() => {
     if (medicamentData === undefined && !isLoading && !isSuccess && !isError) {

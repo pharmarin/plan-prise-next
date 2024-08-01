@@ -19,7 +19,7 @@ const Error = ({
 
   return (
     <html lang="fr">
-      <body className="flex min-h-screen w-screen flex-col bg-white/30  bg-cover px-2 backdrop-blur-sm">
+      <body className="flex min-h-screen w-screen flex-col bg-white/30 bg-cover px-2 backdrop-blur-sm">
         <ErrorSkeleton
           title="Une erreur est survenue"
           subtitle={`${error?.message} (${error?.digest})`}

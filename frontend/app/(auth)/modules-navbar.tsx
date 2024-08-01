@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
+import type { deleteCalendarAction } from "@/app/(auth)/calendrier/actions";
 import type { deletePlanAction } from "@/app/(auth)/plan/actions";
 import { routes } from "@/app/routes-schema";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
-import type { SafeAction } from "next-safe-action";
-import type { ZodSchema } from "zod";
+import { useAction } from "next-safe-action/hooks";
 
 import { NEW } from "@plan-prise/api/constants";
 import { cn } from "@plan-prise/ui/shadcn/lib/utils";
@@ -39,7 +38,7 @@ const ModulesNavbar = ({
       onDeleteAction: typeof deletePlanAction;
       setShowSettings: (value: boolean) => void;
     }
-  | { type: "calendar"; onDeleteAction: SafeAction<ZodSchema, void> }
+  | { type: "calendar"; onDeleteAction: typeof deleteCalendarAction }
 )) => {
   const setShowSettings =
     "setShowSettings" in props ? props.setShowSettings : undefined;
@@ -49,13 +48,18 @@ const ModulesNavbar = ({
     setTitle: state.setTitle,
   }));
 
-  const [{ isLoading: isDeleting }, deleteAction] =
-    useAsyncCallback(onDeleteAction);
+  const { executeAsync: deleteAction, isExecuting: isDeleting } = useAction(
+    onDeleteAction as typeof type extends "plan"
+      ? typeof deletePlanAction
+      : typeof deleteCalendarAction,
+  );
 
   useEventListener(EVENTS.DELETE, async () =>
     type === "plan"
-      ? deleteAction({ planId: id })
-      : deleteAction({ calendarId: id }),
+      ? (deleteAction as unknown as typeof deletePlanAction)({ planId: id })
+      : deleteAction({
+          calendarId: id,
+        }),
   );
 
   useEventListener(

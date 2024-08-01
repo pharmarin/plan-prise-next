@@ -36,8 +36,8 @@ const PrintCalendar = ({
 
   for (const { medicId, data } of calendar.data ?? []) {
     const denomination = isCuid(medicId)
-      ? medicaments.find((medicament) => medicament.id === medicId)
-          ?.denomination ?? ""
+      ? (medicaments.find((medicament) => medicament.id === medicId)
+          ?.denomination ?? "")
       : medicId;
 
     for (const recurrence of data) {

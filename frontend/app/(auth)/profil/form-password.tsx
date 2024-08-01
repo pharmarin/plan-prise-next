@@ -1,9 +1,9 @@
 "use client";
 
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { updateCurrentUserPasswordAction } from "@/app/(auth)/profil/actions";
 import { updateUserPasswordSchema } from "@/app/(auth)/profil/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -23,9 +23,10 @@ import {
 import { Input } from "@plan-prise/ui/input";
 
 const EditPassword = () => {
-  const [{ data }, updateCurrentUserPassword] = useAsyncCallback(
-    updateCurrentUserPasswordAction,
-  );
+  const {
+    result: { data },
+    executeAsync: updateCurrentUserPassword,
+  } = useAction(updateCurrentUserPasswordAction);
 
   const form = useForm<z.infer<typeof updateUserPasswordSchema>>({
     resolver: zodResolver(updateUserPasswordSchema),

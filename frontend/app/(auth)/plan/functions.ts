@@ -52,7 +52,7 @@ export const extractConservation = (
             laboratoire: data,
           },
         ]
-      : defaultValue ?? [],
+      : (defaultValue ?? []),
   };
 };
 
@@ -61,10 +61,10 @@ export const extractPosologiesSettings = (
 ) => {
   return Object.keys(PLAN_SETTINGS_DEFAULT.posos)
     .map((poso) =>
-      posos?.[poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]] ??
+      (posos?.[poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]] ??
       PLAN_SETTINGS_DEFAULT.posos[
         poso as keyof (typeof PLAN_SETTINGS_DEFAULT)["posos"]
-      ] === true
+      ] === true)
         ? poso
         : undefined,
     )

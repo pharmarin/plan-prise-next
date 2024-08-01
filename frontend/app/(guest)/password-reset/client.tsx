@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { resetPasswordAction } from "@/app/(guest)/password-reset/actions";
 import { resetPasswordSchema } from "@/app/(guest)/password-reset/validation";
 import { routes } from "@/app/routes-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -34,7 +34,10 @@ const PasswordResetForm: React.FC<{ token: string; email: string }> = ({
 }) => {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const [{ data }, resetPassword] = useAsyncCallback(resetPasswordAction);
+  const {
+    result: { data },
+    executeAsync: resetPassword,
+  } = useAction(resetPasswordAction);
 
   const [credentials] = useState({ email, token });
 

@@ -13,7 +13,7 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
       <Analytics />
       <SpeedInsights />
       <body
-        className="flex min-h-screen w-screen flex-col bg-white/30  bg-cover px-2"
+        className="flex min-h-screen w-screen flex-col bg-white/30 bg-cover px-2"
         style={{ backgroundImage: `url(${background.src})` }}
       >
         <GlobalProviders>{children}</GlobalProviders>
