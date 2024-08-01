@@ -1,3 +1,8 @@
+import type {
+  BindArgsValidationErrors,
+  SafeActionResult,
+  ValidationErrors,
+} from "next-safe-action";
 import { createSafeActionClient } from "next-safe-action";
 import type { Schema } from "zod";
 
@@ -26,8 +31,16 @@ export const adminAction = createSafeActionClient().use(async ({ next }) => {
   throw new PP_Error("UNAUTHORIZED_ADMIN");
 });
 
-export const transformResponse = <S extends Schema, Data>(
-  response?: Awaited<ReturnType<SafeAction<S, Data>>>,
+export const transformResponse = <
+  S extends Schema,
+  Data,
+  BAS extends readonly Schema[],
+  ServerError,
+  Context extends readonly Schema[],
+  CVE extends ValidationErrors<S>,
+  CBAVE extends BindArgsValidationErrors<BAS>,
+>(
+  response?: SafeActionResult<ServerError, S, BAS, CVE, CBAVE, Data, Context>,
 ) => {
   if (!response) {
     return;
@@ -35,7 +48,7 @@ export const transformResponse = <S extends Schema, Data>(
 
   if (response?.serverError) {
     throw new Error(
-      response.serverError ?? "Server action failed without error",
+      (response.serverError as string) ?? "Server action failed without error",
     );
   }
 

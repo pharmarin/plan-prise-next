@@ -1,9 +1,9 @@
 "use client";
 
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { sendPasswordResetLinkAction } from "@/app/(guest)/forgot-password/actions";
 import { forgotPasswordSchema } from "@/app/(guest)/forgot-password/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -26,9 +26,10 @@ import { Input } from "@plan-prise/ui/input";
 
 const ForgotPasswordForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const [{ data }, sendPasswordResetLink] = useAsyncCallback(
-    sendPasswordResetLinkAction,
-  );
+  const {
+    result: { data },
+    executeAsync: sendPasswordResetLink,
+  } = useAction(sendPasswordResetLinkAction);
 
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     mode: "all",

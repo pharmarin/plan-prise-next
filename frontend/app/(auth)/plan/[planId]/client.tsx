@@ -3,14 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { transformResponse } from "@/app/_safe-actions/safe-actions";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import Card from "@/app/(auth)/modules-card";
 import NavbarModule from "@/app/(auth)/modules-navbar";
 import PlanCardBody from "@/app/(auth)/plan/[planId]/card-body";
 import PlanSettings from "@/app/(auth)/plan/[planId]/settings";
 import {
   deletePlanAction,
-  findPrecautionsAction,
   savePlanDataAction,
 } from "@/app/(auth)/plan/actions";
 import {
@@ -105,8 +103,6 @@ const PlanClient = ({
     [],
   );
 
-  const [{ data: precautions }] = useAsyncCallback(findPrecautionsAction);
-
   useEffect(() => {
     usePlanStore.setState({
       id: plan.id,
@@ -197,23 +193,6 @@ const PlanClient = ({
             await saveFormData();
           }}
         />
-        {precautions && (
-          <div className="mt-8 space-y-4">
-            {precautions.map((precaution) => (
-              <div
-                key={precaution.id}
-                className="rounded-lg border p-4 shadow-md"
-                style={{ borderColor: precaution.couleur }}
-              >
-                <p className="font-semibold">{precaution.titre}</p>
-                <p
-                  className="prose"
-                  dangerouslySetInnerHTML={{ __html: precaution.contenu }}
-                />
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </>
   );

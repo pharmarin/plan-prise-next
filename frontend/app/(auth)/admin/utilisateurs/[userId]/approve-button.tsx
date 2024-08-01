@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import { revalidatePath } from "@/app/(auth)/admin/actions";
 import { approveUserAction } from "@/app/(auth)/admin/utilisateurs/actions";
 import type { User } from "@prisma/client";
 import { Check, Loader2, X } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { Button } from "@plan-prise/ui/button";
@@ -20,7 +20,8 @@ const TestButton = ({
 }) => {
   const [isApproved, setIsApproved] = useState(approved);
 
-  const [{ isLoading }, approveUser] = useAsyncCallback(approveUserAction);
+  const { isExecuting: isLoading, executeAsync: approveUser } =
+    useAction(approveUserAction);
 
   return (
     <Button
@@ -33,10 +34,9 @@ const TestButton = ({
       onClick={async () => {
         const response = await approveUser({ userId });
 
-        if (response === MUTATION_SUCCESS) {
+        if (response?.data === MUTATION_SUCCESS) {
           setIsApproved(true);
-
-          revalidatePath("/admin/utilisateurs");
+          await revalidatePath("/admin/utilisateurs");
         }
       }}
     >

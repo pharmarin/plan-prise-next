@@ -1,4 +1,3 @@
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deleteCommentaireAction,
   upsertCommentaireAction,
@@ -8,6 +7,7 @@ import { voiesAdministrationDisplay } from "@/utils/medicament";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Commentaire, VoieAdministration } from "@prisma/client";
 import { PencilIcon, SaveIcon, Trash2Icon } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -46,12 +46,10 @@ const CommentaireCard = ({
   setDraft: (value: boolean) => void;
   updateFromArray: (comment: Commentaire | undefined) => void;
 }) => {
-  const [deleteCommentaireMutation, deleteCommentaire] = useAsyncCallback(
-    deleteCommentaireAction,
-  );
-  const [upsertCommentaireMutation, upsertCommentaire] = useAsyncCallback(
-    upsertCommentaireAction,
-  );
+  const { executeAsync: deleteCommentaire, ...deleteCommentaireMutation } =
+    useAction(deleteCommentaireAction);
+  const { executeAsync: upsertCommentaire, ...upsertCommentaireMutation } =
+    useAction(upsertCommentaireAction);
 
   const form = useForm<z.infer<typeof upsertCommentaireFormSchema>>({
     resolver: zodResolver(upsertCommentaireFormSchema),
@@ -73,7 +71,7 @@ const CommentaireCard = ({
         id: commentaire.id,
         medicId,
       });
-      updateFromArray(response);
+      updateFromArray(response?.data);
     } catch (e) {
       setDraft(true);
       console.log("Error saving comment", e);
@@ -99,7 +97,7 @@ const CommentaireCard = ({
               ) : (
                 <Button
                   className="h-6 w-6 hover:text-green-500"
-                  loading={upsertCommentaireMutation.isLoading}
+                  loading={upsertCommentaireMutation.isExecuting}
                   size="icon"
                   type="submit"
                   variant="ghost"
@@ -108,7 +106,7 @@ const CommentaireCard = ({
                 </Button>
               )}
               <Button
-                loading={deleteCommentaireMutation.isLoading}
+                loading={deleteCommentaireMutation.isExecuting}
                 onClick={async () => {
                   try {
                     if (!commentaire) return;
