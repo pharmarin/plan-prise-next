@@ -20,63 +20,89 @@ import { hashPassword } from "@plan-prise/auth/lib/password-utils";
 import prisma, { Prisma } from "@plan-prise/db-prisma";
 import PP_Error from "@plan-prise/errors";
 
-export const registerAction = guestAction(registerSchema, async (input) => {
-  const recaptcha = await checkRecaptcha(input.recaptcha ?? "");
+export const registerAction = guestAction
+  .schema(registerSchema)
+  .action(async ({ parsedInput }) => {
+    const recaptcha = await checkRecaptcha(parsedInput.recaptcha ?? "");
 
-  if (!recaptcha) {
-    throw new PP_Error("RECAPTCHA_LOADING_ERROR");
-  }
-
-  if (recaptcha <= 0.5) {
-    throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
-  }
-
-  const firstName = formatFirstName(input.firstName);
-  const lastName = formatLastName(input.lastName);
-  const displayName = formatDisplayName(input.displayName);
-
-  try {
-    await prisma.user.create({
-      data: {
-        email: input.email,
-        firstName,
-        lastName,
-        displayName,
-        student: input.student ?? false,
-        certificate:
-          input.certificate && "data" in input.certificate
-            ? input.certificate.data
-            : undefined,
-        rpps: input.rpps ? BigInt(input.rpps) : undefined,
-        password: await hashPassword(input.password),
-      },
-    });
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        throw new PP_Error("USER_REGISTER_CONFLICT");
-      }
+    if (!recaptcha) {
+      throw new PP_Error("RECAPTCHA_LOADING_ERROR");
     }
 
-    console.error("Error registering: ", error);
-    throw new PP_Error("USER_REGISTER_ERROR");
-  }
+    if (recaptcha <= 0.5) {
+      throw new PP_Error("RECAPTCHA_VALIDATION_ERROR");
+    }
 
-  try {
-    const userFromRPPS = findOne(Number(input.rpps));
+    const firstName = formatFirstName(parsedInput.firstName);
+    const lastName = formatLastName(parsedInput.lastName);
+    const displayName = formatDisplayName(parsedInput.displayName);
 
-    if (
-      userFromRPPS &&
-      lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
-      firstName.toLowerCase() === userFromRPPS.firstName.toLowerCase()
-    ) {
-      await prisma.user.update({
-        where: { email: input.email },
-        data: { approvedAt: new Date() },
+    try {
+      await prisma.user.create({
+        data: {
+          email: parsedInput.email,
+          firstName,
+          lastName,
+          displayName,
+          student: parsedInput.student ?? false,
+          certificate:
+            parsedInput.certificate && "data" in parsedInput.certificate
+              ? parsedInput.certificate.data
+              : undefined,
+          rpps: parsedInput.rpps ? BigInt(parsedInput.rpps) : undefined,
+          password: await hashPassword(parsedInput.password),
+        },
       });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2002") {
+          throw new PP_Error("USER_REGISTER_CONFLICT");
+        }
+      }
 
-      if (process.env.CI !== "true") {
-        await sendMailApproved({ email: input.email, firstName, lastName });
+      console.error("Error registering: ", error);
+      throw new PP_Error("USER_REGISTER_ERROR");
+    }
+
+    try {
+      const userFromRPPS = findOne(Number(parsedInput.rpps));
+
+      if (
+        userFromRPPS &&
+        lastName.toLowerCase() === userFromRPPS?.lastName.toLowerCase() &&
+        firstName.toLowerCase() === userFromRPPS.firstName.toLowerCase()
+      ) {
+        await prisma.user.update({
+          where: { email: parsedInput.email },
+          data: { approvedAt: new Date() },
+        });
+
+        if (process.env.CI !== "true") {
+          await sendMailApproved({
+            email: parsedInput.email,
+            firstName,
+            lastName,
+          });
+
+          await fetch(env.NTFY_ADMIN_URL ?? "", {
+            method: "POST",
+            body: `${(
+              await prisma.user.count({ where: { approvedAt: null } })
+            ).toString()} en attente`,
+            headers: {
+              Tags: "+1,robot",
+              Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
+            },
+          });
+        }
+      } else {
+        if (process.env.CI !== "true") {
+          await sendMailRegistered({
+            email: parsedInput.email,
+            firstName,
+            lastName,
+          });
+        }
 
         await fetch(env.NTFY_ADMIN_URL ?? "", {
           method: "POST",
@@ -84,40 +110,18 @@ export const registerAction = guestAction(registerSchema, async (input) => {
             await prisma.user.count({ where: { approvedAt: null } })
           ).toString()} en attente`,
           headers: {
-            Tags: "+1,robot",
-            Title: `Nouvelle inscription approuvée automatiquement sur plandeprise.fr`,
+            Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
+            Click: getUrl(routes.users() as `/${string}`),
+            Tags: "+1",
+            Title: `Nouvelle inscription à valider sur plandeprise.fr`,
           },
         });
       }
-    } else {
-      if (process.env.CI !== "true") {
-        await sendMailRegistered({ email: input.email, firstName, lastName });
-      }
+    } catch (error) {
+      console.error("Error sending registration mail: ", error);
+
+      throw new PP_Error("USER_REGISTER_WARNING");
     }
-  } catch (error) {
-    console.error("Error sending registration mail: ", error);
 
-    throw new PP_Error("USER_REGISTER_WARNING");
-  }
-
-  try {
-    if (process.env.CI !== "true") {
-      await fetch(env.NTFY_ADMIN_URL ?? "", {
-        method: "POST",
-        body: `${(
-          await prisma.user.count({ where: { approvedAt: null } })
-        ).toString()} en attente`,
-        headers: {
-          Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
-          Click: getUrl(routes.users() as `/${string}`),
-          Tags: "+1",
-          Title: `Nouvelle inscription sur plandeprise.fr`,
-        },
-      });
-    }
-  } catch (error) {
-    console.error("Error sending registration admin notification: ", error);
-  }
-
-  return MUTATION_SUCCESS;
-});
+    return MUTATION_SUCCESS;
+  });
