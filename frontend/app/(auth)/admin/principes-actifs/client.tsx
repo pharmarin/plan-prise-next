@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deletePrincipeActifAction,
   upsertPrincipeActifAction,
@@ -13,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { PrincipeActif } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
+import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -43,9 +43,8 @@ const PrincipesActifsClient = ({
   const router = useRouter();
   const { edit: selectedId } = useSafeSearchParams("principesActifs");
 
-  const [{ isLoading: isDeleting }, deletePrincipeActif] = useAsyncCallback(
-    deletePrincipeActifAction,
-  );
+  const { isExecuting: isDeleting, executeAsync: deletePrincipeActif } =
+    useAction(deletePrincipeActifAction);
 
   const columnHelper = createColumnHelper<PrincipeActif>();
 

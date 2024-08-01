@@ -2,10 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { authAction } from "@/app/_safe-actions/safe-actions";
 import { savePlanDataSchema } from "@/app/(auth)/plan/validation";
 import { getNewDisplayId } from "@/app/actions";
 import { routes } from "@/app/routes-schema";
+import { authAction } from "@/app/safe-actions";
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
@@ -45,22 +45,26 @@ export const migrateMedicsOrder = async (
  * QUERIES
  */
 
-export const findMedicAction = authAction(
-  z.object({
-    medicId: z.string().cuid2(),
-  }),
-  ({ medicId }) =>
+export const findMedicAction = authAction
+  .schema(
+    z.object({
+      medicId: z.string().cuid2(),
+    }),
+  )
+  .action(({ parsedInput: { medicId } }) =>
     prisma.medicament.findUniqueOrThrow({
       where: { id: medicId },
       include: { commentaires: true, principesActifs: true },
     }),
-);
+  );
 
-export const findManyMedicsAction = authAction(
-  z.object({
-    query: z.string(),
-  }),
-  async ({ query }) => {
+export const findManyMedicsAction = authAction
+  .schema(
+    z.object({
+      query: z.string(),
+    }),
+  )
+  .action(async ({ parsedInput: { query } }) => {
     const results =
       query && query.length > 0
         ? await prisma.medicament.findMany({
@@ -79,12 +83,11 @@ export const findManyMedicsAction = authAction(
         : [];
 
     return results;
-  },
-);
+  });
 
-export const findPrecautionsAction = authAction(
-  z.object({ query: z.array(z.string()).optional() }),
-  async ({ query }) => {
+export const findPrecautionsAction = authAction
+  .schema(z.object({ query: z.array(z.string()).optional() }))
+  .action(async ({ parsedInput: { query } }) => {
     if (!query) {
       return [];
     }
@@ -98,16 +101,15 @@ export const findPrecautionsAction = authAction(
         },
       },
     });
-  },
-);
+  });
 
 /**
  * MUTATIONS
  */
 
-export const savePlanDataAction = authAction(
-  savePlanDataSchema,
-  async ({ planId, data }, { userId }) => {
+export const savePlanDataAction = authAction
+  .schema(savePlanDataSchema)
+  .action(async ({ parsedInput: { planId, data }, ctx: { userId } }) => {
     if (planId === NEW) {
       const displayId = await getNewDisplayId(userId);
 
@@ -135,12 +137,11 @@ export const savePlanDataAction = authAction(
 
       return plan;
     }
-  },
-);
+  });
 
-export const deletePlanAction = authAction(
-  z.object({ planId: z.string().cuid2() }),
-  async ({ planId }, { userId }) => {
+export const deletePlanAction = authAction
+  .schema(z.object({ planId: z.string().cuid2() }))
+  .action(async ({ parsedInput: { planId }, ctx: { userId } }) => {
     await prisma.plan.delete({
       where: {
         id: planId,
@@ -150,8 +151,7 @@ export const deletePlanAction = authAction(
 
     revalidatePath(routes.plans());
     redirect(routes.plans());
-  },
-);
+  });
 
 const planSettingsSchema = z.object({
   posos: z.object({
@@ -166,14 +166,15 @@ const planSettingsSchema = z.object({
   }),
 });
 
-export const saveSettingsAction = authAction(
-  z.object({ planId: z.string().cuid2(), settings: planSettingsSchema }),
-  async ({ planId, settings }, { userId }) => {
+export const saveSettingsAction = authAction
+  .schema(
+    z.object({ planId: z.string().cuid2(), settings: planSettingsSchema }),
+  )
+  .action(async ({ parsedInput: { planId, settings }, ctx: { userId } }) => {
     await prisma.plan.update({
       where: { id: planId, user: { id: userId } },
       data: { settings },
     });
 
     return MUTATION_SUCCESS;
-  },
-);
+  });

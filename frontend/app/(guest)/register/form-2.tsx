@@ -2,10 +2,10 @@
 
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
-import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import { registerAction } from "@/app/(guest)/register/actions";
 import type { registerSchema } from "@/app/(guest)/register/validation";
 import { registerSchemaStep2 } from "@/app/(guest)/register/validation";
+import { transformResponse } from "@/app/safe-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";

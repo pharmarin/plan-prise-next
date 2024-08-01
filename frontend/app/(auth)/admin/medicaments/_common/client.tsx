@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { transformResponse } from "@/app/_safe-actions/safe-actions";
-import { useAsyncCallback } from "@/app/_safe-actions/use-async-hook";
 import {
   deleteMedicAction,
   findManyPrincipesActifsAction,
@@ -12,6 +10,7 @@ import {
 import CommentaireCard from "@/app/(auth)/admin/medicaments/_common/card-commentaire";
 import { upsertMedicSchema } from "@/app/(auth)/admin/medicaments/_common/validation";
 import { routes } from "@/app/routes-schema";
+import { transformResponse } from "@/app/safe-actions";
 import type { NavigationItem } from "@/app/state-navigation";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";
@@ -21,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createId } from "@paralleldrive/cuid2";
 import { capitalize } from "lodash-es";
 import { PlusIcon, X } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -63,8 +63,8 @@ const MedicClient = ({
 
   const router = useRouter();
 
-  const [{ isLoading: isDeleting }, deleteMedic] =
-    useAsyncCallback(deleteMedicAction);
+  const { isExecuting: isDeleting, executeAsync: deleteMedic } =
+    useAction(deleteMedicAction);
 
   const setOptions = useNavigationState((state) => state.setOptions);
 
