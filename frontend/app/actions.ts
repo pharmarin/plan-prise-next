@@ -1,6 +1,6 @@
 "use server";
 
-import { authAction } from "@/app/_safe-actions/safe-actions";
+import { authAction } from "@/app/safe-actions";
 import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";

@@ -1,9 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { adminAction } from "@/app/_safe-actions/safe-actions";
 import { upsertPrincipeActifSchema } from "@/app/(auth)/admin/principes-actifs/validation";
 import { routes } from "@/app/routes-schema";
+import { adminAction } from "@/app/safe-actions";
 import { z } from "zod";
 
 import prisma from "@plan-prise/db-prisma";

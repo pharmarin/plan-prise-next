@@ -1,8 +1,8 @@
 "use server";
 
-import { guestAction } from "@/app/_safe-actions/safe-actions";
 import { registerSchema } from "@/app/(guest)/register/validation";
 import { routes } from "@/app/routes-schema";
+import { guestAction } from "@/app/safe-actions";
 import { env } from "@/env.mjs";
 
 import {

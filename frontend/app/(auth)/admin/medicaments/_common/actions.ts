@@ -2,12 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { adminAction } from "@/app/_safe-actions/safe-actions";
 import {
   upsertCommentaireSchema,
   upsertMedicSchema,
 } from "@/app/(auth)/admin/medicaments/_common/validation";
 import { routes } from "@/app/routes-schema";
+import { adminAction } from "@/app/safe-actions";
 import { z } from "zod";
 
 import type { Prisma } from "@plan-prise/db-prisma";

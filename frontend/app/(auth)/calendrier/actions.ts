@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { authAction } from "@/app/_safe-actions/safe-actions";
 import { getNewDisplayId } from "@/app/actions";
 import { routes } from "@/app/routes-schema";
+import { authAction } from "@/app/safe-actions";
 import { z } from "zod";
 
 import { MUTATION_SUCCESS, NEW } from "@plan-prise/api/constants";

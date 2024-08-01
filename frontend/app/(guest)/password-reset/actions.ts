@@ -1,7 +1,7 @@
 "use server";
 
-import { guestAction } from "@/app/_safe-actions/safe-actions";
 import { resetPasswordSchema } from "@/app/(guest)/password-reset/validation";
+import { guestAction } from "@/app/safe-actions";
 
 import { MUTATION_SUCCESS } from "@plan-prise/api/constants";
 import { verifyJWT } from "@plan-prise/api/utils/json-web-token";

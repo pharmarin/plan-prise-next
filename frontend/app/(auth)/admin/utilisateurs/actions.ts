@@ -1,6 +1,6 @@
 "use server";
 
-import { adminAction } from "@/app/_safe-actions/safe-actions";
+import { adminAction } from "@/app/safe-actions";
 import { z } from "zod";
 
 import { sendMailApproved } from "@plan-prise/api";

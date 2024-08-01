@@ -2,10 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { authAction } from "@/app/_safe-actions/safe-actions";
 import { savePlanDataSchema } from "@/app/(auth)/plan/validation";
 import { getNewDisplayId } from "@/app/actions";
 import { routes } from "@/app/routes-schema";
+import { authAction } from "@/app/safe-actions";
 import { isCuid } from "@paralleldrive/cuid2";
 import { z } from "zod";
 

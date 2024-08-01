@@ -1,6 +1,6 @@
 "use server";
 
-import { guestAction } from "@/app/_safe-actions/safe-actions";
+import { guestAction } from "@/app/safe-actions";
 import { z } from "zod";
 
 import { sendMailReinitPassword } from "@plan-prise/api";

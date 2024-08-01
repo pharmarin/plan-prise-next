@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { transformResponse } from "@/app/_safe-actions/safe-actions";
 import {
   deleteMedicAction,
   findManyPrincipesActifsAction,
@@ -11,6 +10,7 @@ import {
 import CommentaireCard from "@/app/(auth)/admin/medicaments/_common/card-commentaire";
 import { upsertMedicSchema } from "@/app/(auth)/admin/medicaments/_common/validation";
 import { routes } from "@/app/routes-schema";
+import { transformResponse } from "@/app/safe-actions";
 import type { NavigationItem } from "@/app/state-navigation";
 import { useNavigationState } from "@/app/state-navigation";
 import { useEventListener } from "@/utils/event-listener";

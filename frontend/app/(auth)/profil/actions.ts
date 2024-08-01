@@ -1,12 +1,12 @@
 "use server";
 
 import { revalidatePath, revalidateTag } from "next/cache";
-import { authAction } from "@/app/_safe-actions/safe-actions";
 import {
   deleteCurrentUserSchema,
   updateUserPasswordSchema,
   updateUserSchema,
 } from "@/app/(auth)/profil/validation";
+import { authAction } from "@/app/safe-actions";
 
 import {
   formatDisplayName,
