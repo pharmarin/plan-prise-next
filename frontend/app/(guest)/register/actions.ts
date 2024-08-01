@@ -103,15 +103,6 @@ export const registerAction = guestAction
             lastName,
           });
         }
-      }
-    } catch (error) {
-      console.error("Error sending registration mail: ", error);
-
-      throw new PP_Error("USER_REGISTER_WARNING");
-    }
-
-    try {
-      if (process.env.CI !== "true") {
         await fetch(env.NTFY_ADMIN_URL ?? "", {
           method: "POST",
           body: `${(
@@ -121,12 +112,14 @@ export const registerAction = guestAction
             Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
             Click: getUrl(routes.users() as `/${string}`),
             Tags: "+1",
-            Title: `Nouvelle inscription sur plandeprise.fr`,
+            Title: `Nouvelle inscription à valider sur plandeprise.fr`,
           },
         });
       }
     } catch (error) {
-      console.error("Error sending registration admin notification: ", error);
+      console.error("Error sending registration mail: ", error);
+
+      throw new PP_Error("USER_REGISTER_WARNING");
     }
 
     return MUTATION_SUCCESS;
