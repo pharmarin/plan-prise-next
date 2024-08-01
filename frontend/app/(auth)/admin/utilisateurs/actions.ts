@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { routes } from "@/app/routes-schema";
 import { adminAction } from "@/app/safe-actions";
 import { z } from "zod";
 
@@ -21,6 +23,7 @@ export const approveUserAction = adminAction
       }),
       ["password"],
     );
+    revalidatePath(routes.users());
 
     try {
       await sendMailApproved(user);
@@ -38,6 +41,6 @@ export const deleteUserAction = adminAction
   .schema(z.object({ userId: z.string().cuid2() }))
   .action(async ({ parsedInput: { userId } }) => {
     await prisma.user.delete({ where: { id: userId } });
-
+    revalidatePath(routes.users());
     return MUTATION_SUCCESS;
   });
