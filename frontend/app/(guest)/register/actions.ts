@@ -102,19 +102,20 @@ export const registerAction = guestAction
             firstName,
             lastName,
           });
+
+          await fetch(env.NTFY_ADMIN_URL ?? "", {
+            method: "POST",
+            body: `${(
+              await prisma.user.count({ where: { approvedAt: null } })
+            ).toString()} en attente`,
+            headers: {
+              Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
+              Click: getUrl(routes.users() as `/${string}`),
+              Tags: "+1",
+              Title: `Nouvelle inscription à valider sur plandeprise.fr`,
+            },
+          });
         }
-        await fetch(env.NTFY_ADMIN_URL ?? "", {
-          method: "POST",
-          body: `${(
-            await prisma.user.count({ where: { approvedAt: null } })
-          ).toString()} en attente`,
-          headers: {
-            Actions: `view, Approuver, ${getUrl(routes.users() as `/${string}`)}`,
-            Click: getUrl(routes.users() as `/${string}`),
-            Tags: "+1",
-            Title: `Nouvelle inscription à valider sur plandeprise.fr`,
-          },
-        });
       }
     } catch (error) {
       console.error("Error sending registration mail: ", error);
