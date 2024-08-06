@@ -49,7 +49,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-google-recaptcha-v3": "1.10.1",
-    "react-hook-form": "7.52.1",
+    "react-hook-form": "7.52.2",
     "react-pdf-html": "2.0.5",
     "react-pdf-tailwind": "2.3.0",
     "superjson": "2.2.1",
