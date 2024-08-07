@@ -397,8 +397,8 @@ importers:
         specifier: 2.6.11
         version: 2.6.11
       '@types/unzipper':
-        specifier: 0.10.9
-        version: 0.10.9
+        specifier: 0.10.10
+        version: 0.10.10
       csv-parse:
         specifier: 5.5.6
         version: 5.5.6
@@ -2008,8 +2008,8 @@ packages:
   '@types/tinycolor2@1.4.6':
     resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}
 
-  '@types/unzipper@0.10.9':
-    resolution: {integrity: sha512-vHbmFZAw8emNAOVkHVbS3qBnbr0x/qHQZ+ei1HE7Oy6Tyrptl+jpqnOX+BF5owcu/HZLOV0nJK+K9sjs1Ox2JA==}
+  '@types/unzipper@0.10.10':
+    resolution: {integrity: sha512-jKJdNxhmCHTZsaKW5x0qjn6rB+gHk0w5VFbEKsw84i+RJqXZyfTmGnpjDcKqzMpjz7VVLsUBMtO5T3mVidpt0g==}
 
   '@typescript-eslint/eslint-plugin@7.18.0':
     resolution: {integrity: sha512-94EQTWZ40mzBc42ATNIBimBEDltSJ9RQHCC8vc/PDbxi4k8dVwUAv4o98dk50M1zB+JGFxp43FP7f8+FP8R6Sw==}
@@ -6891,7 +6891,7 @@ snapshots:
 
   '@types/tinycolor2@1.4.6': {}
 
-  '@types/unzipper@0.10.9':
+  '@types/unzipper@0.10.10':
     dependencies:
       '@types/node': 20.14.14
 
