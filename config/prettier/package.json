@@ -16,7 +16,7 @@
   "devDependencies": {
     "@plan-prise/tsconfig": "workspace:*",
     "@types/node": "20.14.14",
-    "typescript": "5.4.5"
+    "typescript": "5.5.4"
   },
   "prettier": "@plan-prise/prettier-config"
 }
