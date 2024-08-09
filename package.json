@@ -30,7 +30,7 @@
     "@types/node": "20.14.14",
     "eslint": "8.57.0",
     "prettier": "3.3.3",
-    "prettier-plugin-tailwindcss": "0.6.5",
+    "prettier-plugin-tailwindcss": "0.6.6",
     "turbo": "2.0.12",
     "typescript": "5.4.5"
   },
