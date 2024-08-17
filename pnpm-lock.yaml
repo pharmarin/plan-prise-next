@@ -257,8 +257,8 @@ importers:
         specifier: 7.6.3
         version: 7.6.3(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
       next-safe-navigation:
-        specifier: 0.3.2
-        version: 0.3.2(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8)
+        specifier: 0.3.3
+        version: 0.3.3(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8)
       next-superjson-plugin:
         specifier: 0.6.3
         version: 0.6.3(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.1)
@@ -3957,8 +3957,8 @@ packages:
       zod:
         optional: true
 
-  next-safe-navigation@0.3.2:
-    resolution: {integrity: sha512-Y0HiEsRXe7qgM9TEbGbVkq/X68rKDg+/RkHnacNyRGCm6ZY50ieLpqJaMpzm9xBPytVoOwNHnxE5Mh7RxzQvUg==}
+  next-safe-navigation@0.3.3:
+    resolution: {integrity: sha512-R9Boed5xHw3S9YkhR+j8kaWqj4WVMBDzD4G035Zo7rRYTZuHe7WAasar8LcSAwB/1jsnhNDI4L/pWzyrUKycTA==}
     peerDependencies:
       next: '>=13.0.0'
       typescript: '>=4.8.2'
@@ -9081,7 +9081,7 @@ snapshots:
     optionalDependencies:
       zod: 3.23.8
 
-  next-safe-navigation@0.3.2(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8):
+  next-safe-navigation@0.3.3(next@14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8):
     dependencies:
       next: 14.2.5(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       typescript: 5.4.5
