@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@plan-prise/db-prisma": "workspace:*",
-    "@t3-oss/env-nextjs": "0.11.0",
+    "@t3-oss/env-nextjs": "0.11.1",
     "@types/lodash-es": "4.17.12",
     "jose": "5.7.0",
     "mailersend": "2.2.0",
