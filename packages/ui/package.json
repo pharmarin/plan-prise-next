@@ -47,7 +47,7 @@
     "@radix-ui/react-toast": "1.2.1",
     "@radix-ui/react-tooltip": "1.1.2",
     "@react-pdf/renderer": "3.4.4",
-    "@tailwindcss/typography": "0.5.14",
+    "@tailwindcss/typography": "0.5.15",
     "@tanstack/react-table": "8.20.5",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
