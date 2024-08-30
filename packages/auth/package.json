@@ -39,7 +39,7 @@
     "@plan-prise/prettier-config": "workspace:*",
     "@plan-prise/tsconfig": "workspace:*",
     "@types/bcryptjs": "2.4.6",
-    "@types/react": "18.3.4",
+    "@types/react": "18.3.5",
     "eslint": "8.57.0",
     "typescript": "5.4.5"
   },
