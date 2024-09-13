@@ -360,8 +360,8 @@ importers:
         specifier: 4.17.12
         version: 4.17.12
       jose:
-        specifier: 5.8.0
-        version: 5.8.0
+        specifier: 5.9.1
+        version: 5.9.1
       mailersend:
         specifier: 2.3.0
         version: 2.3.0
@@ -3605,8 +3605,8 @@ packages:
   jose@4.15.5:
     resolution: {integrity: sha512-jc7BFxgKPKi94uOvEmzlSWFFe2+vASyXaKUpdQKatWAESU2MWjDfFf0fdfc83CDKcA5QecabZeNLyfhe3yKNkg==}
 
-  jose@5.8.0:
-    resolution: {integrity: sha512-E7CqYpL/t7MMnfGnK/eg416OsFCVUrU/Y3Vwe7QjKhu/BkS1Ms455+2xsqZQVN57/U2MHMBvEb5SrmAZWAIntA==}
+  jose@5.9.1:
+    resolution: {integrity: sha512-8verKvy4GThlXSRe1qOcHGcRW9tKVv0YrLildFf6q3RQh3V/OxCXAkVsLhsw9tNOXFJ/EsIGOxWMmISBd/osTQ==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -8756,7 +8756,7 @@ snapshots:
 
   jose@4.15.5: {}
 
-  jose@5.8.0: {}
+  jose@5.9.1: {}
 
   js-tokens@4.0.0: {}
 
