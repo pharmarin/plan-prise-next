@@ -39,7 +39,7 @@
       "@react-pdf/layout": "3.11.5"
     }
   },
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@9.11.0",
   "eslintConfig": {
     "extends": [
       "@plan-prise/eslint-config/base"
