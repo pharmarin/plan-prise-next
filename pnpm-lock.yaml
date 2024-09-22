@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@react-pdf/layout': 3.11.5
+  '@react-pdf/layout': 3.13.0
 
 importers:
 
@@ -1706,8 +1706,8 @@ packages:
   '@react-pdf/image@2.3.6':
     resolution: {integrity: sha512-7iZDYZrZlJqNzS6huNl2XdMcLFUo68e6mOdzQeJ63d5eApdthhSHBnkGzHfLhH5t8DCpZNtClmklzuLL63ADfw==}
 
-  '@react-pdf/layout@3.11.5':
-    resolution: {integrity: sha512-VLOzWIODUKw0ZTrS9XDkwl3q1OHKG8qd6OyCZZ7Q8/SijAh9ho70HEc/f1ffBFmM0nGrKMG0M3L0/7z1XKmOGw==}
+  '@react-pdf/layout@3.13.0':
+    resolution: {integrity: sha512-lpPj/EJYHFOc0ALiJwLP09H28B4ADyvTjxOf67xTF+qkWd+dq1vg7dw3wnYESPnWk5T9NN+HlUenJqdYEY9AvA==}
 
   '@react-pdf/pdfkit@3.2.0':
     resolution: {integrity: sha512-OBfCcnTC6RpD9uv9L2woF60Zj1uQxhLFzTBXTdcYE9URzPE/zqXIyzpXEA4Vf3TFbvBCgFE2RzJ2ZUS0asq7yA==}
@@ -1726,8 +1726,8 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@react-pdf/stylesheet@4.2.5':
-    resolution: {integrity: sha512-XnmapeCW+hDuNdVwpuvO04WKv71wAs8aH+saIq29Bo2fp1SxznHTcQArTZtK6Wgr/E9BHXeB2iAPpUZuI6G+xA==}
+  '@react-pdf/stylesheet@4.3.0':
+    resolution: {integrity: sha512-x7IVZOqRrUum9quuDeFXBveXwBht+z/6B0M+z4a4XjfSg1vZVvzoTl07Oa1yvQ/4yIC5yIkG2TSMWeKnDB+hrw==}
 
   '@react-pdf/textkit@4.4.1':
     resolution: {integrity: sha512-Jl9wdTqIvJ5pX+vAGz0EOhP7ut5Two9H6CzTKo/YYPeD79cM2yTXF3JzTERBC28y7LR0Waq9D2LHQjI+b/EYUQ==}
@@ -6441,14 +6441,14 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@react-pdf/layout@3.11.5':
+  '@react-pdf/layout@3.13.0':
     dependencies:
       '@babel/runtime': 7.24.5
       '@react-pdf/fns': 2.2.1
       '@react-pdf/image': 2.3.6
       '@react-pdf/pdfkit': 3.2.0
       '@react-pdf/primitives': 3.1.1
-      '@react-pdf/stylesheet': 4.2.5
+      '@react-pdf/stylesheet': 4.3.0
       '@react-pdf/textkit': 4.4.1
       '@react-pdf/types': 2.6.0
       cross-fetch: 3.1.8
@@ -6491,7 +6491,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.5
       '@react-pdf/font': 2.5.2
-      '@react-pdf/layout': 3.11.5
+      '@react-pdf/layout': 3.13.0
       '@react-pdf/pdfkit': 3.2.0
       '@react-pdf/primitives': 3.1.1
       '@react-pdf/render': 3.5.0
@@ -6505,7 +6505,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@react-pdf/stylesheet@4.2.5':
+  '@react-pdf/stylesheet@4.3.0':
     dependencies:
       '@babel/runtime': 7.24.5
       '@react-pdf/fns': 2.2.1
