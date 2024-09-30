@@ -35,7 +35,7 @@
     "dotenv-cli": "7.4.2",
     "eslint": "8.57.0",
     "prisma": "5.20.0",
-    "prisma-json-types-generator": "3.0.4",
+    "prisma-json-types-generator": "3.1.1",
     "typescript": "5.4.5"
   },
   "eslintConfig": {
