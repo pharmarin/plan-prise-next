@@ -28,7 +28,7 @@
     "@plan-prise/tsconfig": "workspace:*",
     "@turbo/gen": "2.2.1",
     "@types/node": "20.16.13",
-    "eslint": "8.57.0",
+    "eslint": "9.13.0",
     "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "0.6.8",
     "turbo": "2.2.1",
