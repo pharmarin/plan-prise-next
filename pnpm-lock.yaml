@@ -254,8 +254,8 @@ importers:
         specifier: 4.24.10
         version: 4.24.10(next@14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-safe-action:
-        specifier: 7.9.8
-        version: 7.9.8(next@14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
+        specifier: 7.9.9
+        version: 7.9.9(next@14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
       next-safe-navigation:
         specifier: 0.3.3
         version: 0.3.3(next@14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8)
@@ -3869,8 +3869,8 @@ packages:
       nodemailer:
         optional: true
 
-  next-safe-action@7.9.8:
-    resolution: {integrity: sha512-BliKlsBEeMXySr9lCpI6jCVIRv00dwIf3hfcL6abtwYPLYEcrurUECFfCk5T4AkjD3GKXzmPLQuhre5r37jUOQ==}
+  next-safe-action@7.9.9:
+    resolution: {integrity: sha512-wFKKCgfHNsObfbDrbOQV8WAE6RnVx7dwmuUazqdNaTL3ZdDzUlRTnIIVI36qSjmgA3zwwxj3nvfxgK9d0fWr5w==}
     engines: {node: '>=18.17'}
     peerDependencies:
       '@sinclair/typebox': '>= 0.33.3'
@@ -8839,7 +8839,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       uuid: 8.3.2
 
-  next-safe-action@7.9.8(next@14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8):
+  next-safe-action@7.9.9(next@14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8):
     dependencies:
       next: 14.2.16(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
