@@ -224,8 +224,8 @@ importers:
         specifier: 8.20.5
         version: 8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tremor/react':
-        specifier: 3.18.3
-        version: 3.18.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.4.5)))
+        specifier: 3.18.4
+        version: 3.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.4.5)))
       '@vercel/analytics':
         specifier: 1.3.2
         version: 1.3.2(next@14.2.17(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -1673,8 +1673,8 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@tremor/react@3.18.3':
-    resolution: {integrity: sha512-7QyGE2W9f2FpwH24TKy3/mqBgLl4sHZeQcXP3rxXZ8W2AUq7AVaG1+vIT3xXxISrkh7zknjWlZsuhoF8NWNVDw==}
+  '@tremor/react@3.18.4':
+    resolution: {integrity: sha512-HDjYbuzxQIZvosGzB1j1nCSuLLRdKRHPfRmoGUyI57cesbThFzWuFHz07Sio9Vhk/ew3TKJUZPy+ljfZ3u1M4g==}
     peerDependencies:
       react: ^18.0.0
       react-dom: '>=16.6.0'
@@ -4180,6 +4180,9 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  react-is@18.3.1:
+    resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
+
   react-pdf-html@2.1.2:
     resolution: {integrity: sha512-5gQDiQIeQq+fm5cZHAveDLnYoArVVtZksaWdwpwT2rCyIuzqazJaP197tWg9JjXSK2u66yMwzVHvbcPqzrv5Yw==}
     engines: {node: '>=16.0.0'}
@@ -4279,8 +4282,8 @@ packages:
   recharts-scale@0.4.5:
     resolution: {integrity: sha512-kivNFO+0OcUNu7jQquLXAxz1FIwZj8nrj+YkOKc5694NbjCvcT6aSZiIzNzd2Kul4o4rTto8QVR9lMNtxD4G1w==}
 
-  recharts@2.12.7:
-    resolution: {integrity: sha512-hlLJMhPQfv4/3NBSAyq3gzGg4h2v69RJh6KU7b3pXYNNAELs9kEoXOjbkxdXpALqKBoVmVptGfLpxdaVYqjmXQ==}
+  recharts@2.13.3:
+    resolution: {integrity: sha512-YDZ9dOfK9t3ycwxgKbrnDlRC4BHdjlY73fet3a0C1+qGMjXVZe6+VXmpOIIhzkje5MMEL8AN4hLIe4AMskBzlA==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
@@ -6162,7 +6165,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@tremor/react@3.18.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.4.5)))':
+  '@tremor/react@3.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.4.5)))':
     dependencies:
       '@floating-ui/react': 0.19.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@headlessui/react': 1.7.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6172,7 +6175,7 @@ snapshots:
       react-day-picker: 8.10.1(date-fns@3.6.0)(react@18.3.1)
       react-dom: 18.3.1(react@18.3.1)
       react-transition-state: 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      recharts: 2.12.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      recharts: 2.13.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwind-merge: 2.5.4
     transitivePeerDependencies:
       - tailwindcss
@@ -8868,6 +8871,8 @@ snapshots:
 
   react-is@16.13.1: {}
 
+  react-is@18.3.1: {}
+
   react-pdf-html@2.1.2(@react-pdf/renderer@3.4.5(react@18.3.1))(react@18.3.1):
     dependencies:
       '@react-pdf/renderer': 3.4.5(react@18.3.1)
@@ -9000,14 +9005,14 @@ snapshots:
     dependencies:
       decimal.js-light: 2.5.1
 
-  recharts@2.12.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  recharts@2.13.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       clsx: 2.1.1
       eventemitter3: 4.0.7
       lodash: 4.17.21
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-is: 16.13.1
+      react-is: 18.3.1
       react-smooth: 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recharts-scale: 0.4.5
       tiny-invariant: 1.3.3
