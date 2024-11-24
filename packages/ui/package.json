@@ -62,7 +62,7 @@
     "react-pdf": "8.0.2",
     "react-pdf-tailwind": "2.3.0",
     "react-textarea-autosize": "8.5.5",
-    "tailwind-merge": "2.5.4",
+    "tailwind-merge": "2.5.5",
     "tailwindcss-animate": "1.0.7",
     "usehooks-ts": "3.1.0",
     "vaul": "0.9.9"
