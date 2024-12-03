@@ -41,7 +41,7 @@
     "immer": "10.1.1",
     "lodash-es": "4.17.21",
     "lucide-react": "0.464.0",
-    "next": "14.2.18",
+    "next": "14.2.19",
     "next-auth": "4.24.10",
     "next-safe-action": "7.9.9",
     "next-safe-navigation": "0.3.3",
@@ -61,7 +61,7 @@
     "zustand": "4.5.5"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "14.2.18",
+    "@next/bundle-analyzer": "14.2.19",
     "@types/debounce-promise": "3.1.9",
     "@types/lodash-es": "4.17.12",
     "@types/node": "22.10.1",
