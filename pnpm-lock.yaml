@@ -261,7 +261,7 @@ importers:
         version: 0.3.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8)
       next-superjson-plugin:
         specifier: 0.6.3
-        version: 0.6.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.1)
+        version: 0.6.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.2)
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -281,8 +281,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)(ts-node@10.9.2(@types/node@22.10.1)(typescript@5.4.5))
       superjson:
-        specifier: 2.2.1
-        version: 2.2.1
+        specifier: 2.2.2
+        version: 2.2.2
       tailwind-merge:
         specifier: 2.5.5
         version: 2.5.5
@@ -4598,8 +4598,8 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
-  superjson@2.2.1:
-    resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
+  superjson@2.2.2:
+    resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
 
   supports-color@5.5.0:
@@ -8423,11 +8423,11 @@ snapshots:
       typescript: 5.4.5
       zod: 3.23.8
 
-  next-superjson-plugin@0.6.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.1):
+  next-superjson-plugin@0.6.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.2):
     dependencies:
       hoist-non-react-statics: 3.3.2
       next: 14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      superjson: 2.2.1
+      superjson: 2.2.2
 
   next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -9371,7 +9371,7 @@ snapshots:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
-  superjson@2.2.1:
+  superjson@2.2.2:
     dependencies:
       copy-anything: 3.0.5
 
