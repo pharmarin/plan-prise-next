@@ -34,7 +34,7 @@
     "@types/lodash-es": "4.17.12",
     "jose": "5.9.6",
     "mailersend": "2.3.0",
-    "zod": "3.23.8"
+    "zod": "3.24.0"
   },
   "devDependencies": {
     "@plan-prise/eslint-config": "workspace:*",

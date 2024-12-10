@@ -219,7 +219,7 @@ importers:
         version: 7.120.1(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.97.1)
       '@t3-oss/env-nextjs':
         specifier: 0.11.1
-        version: 0.11.1(typescript@5.4.5)(zod@3.23.8)
+        version: 0.11.1(typescript@5.4.5)(zod@3.24.0)
       '@tanstack/react-table':
         specifier: 8.20.5
         version: 8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -255,10 +255,10 @@ importers:
         version: 4.24.11(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-safe-action:
         specifier: 7.9.9
-        version: 7.9.9(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
+        version: 7.9.9(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.0)
       next-safe-navigation:
         specifier: 0.3.3
-        version: 0.3.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8)
+        version: 0.3.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.24.0)
       next-superjson-plugin:
         specifier: 0.6.3
         version: 0.6.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.2)
@@ -293,11 +293,11 @@ importers:
         specifier: 3.1.0
         version: 3.1.0(react@18.3.1)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.0
+        version: 3.24.0
       zod-form-data:
         specifier: 2.0.2
-        version: 2.0.2(zod@3.23.8)
+        version: 2.0.2(zod@3.24.0)
       zustand:
         specifier: 4.5.5
         version: 4.5.5(@types/react@18.3.13)(immer@10.1.1)(react@18.3.1)
@@ -355,7 +355,7 @@ importers:
         version: link:../db-prisma
       '@t3-oss/env-nextjs':
         specifier: 0.11.1
-        version: 0.11.1(typescript@5.4.5)(zod@3.23.8)
+        version: 0.11.1(typescript@5.4.5)(zod@3.24.0)
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -366,8 +366,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.0
+        version: 3.24.0
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: workspace:*
@@ -431,7 +431,7 @@ importers:
         version: 5.22.0(prisma@5.22.0)
       '@t3-oss/env-nextjs':
         specifier: 0.11.1
-        version: 0.11.1(typescript@5.4.5)(zod@3.23.8)
+        version: 0.11.1(typescript@5.4.5)(zod@3.24.0)
       bcryptjs:
         specifier: 2.4.3
         version: 2.4.3
@@ -451,8 +451,8 @@ importers:
         specifier: 0.0.1
         version: 0.0.1
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.0
+        version: 3.24.0
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: workspace:*
@@ -5117,8 +5117,8 @@ packages:
     peerDependencies:
       zod: '>= 3.11.0'
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@3.24.0:
+    resolution: {integrity: sha512-Hz+wiY8yD0VLA2k/+nsg2Abez674dDGTai33SwNvMPuf9uIrBC9eFgIMQxBBbHFxVXi8W+5nX9DcAh9YNSQm/w==}
 
   zustand@4.5.5:
     resolution: {integrity: sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==}
@@ -6242,16 +6242,16 @@ snapshots:
       '@swc/counter': 0.1.3
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.11.1(typescript@5.4.5)(zod@3.23.8)':
+  '@t3-oss/env-core@0.11.1(typescript@5.4.5)(zod@3.24.0)':
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.0
     optionalDependencies:
       typescript: 5.4.5
 
-  '@t3-oss/env-nextjs@0.11.1(typescript@5.4.5)(zod@3.23.8)':
+  '@t3-oss/env-nextjs@0.11.1(typescript@5.4.5)(zod@3.24.0)':
     dependencies:
-      '@t3-oss/env-core': 0.11.1(typescript@5.4.5)(zod@3.23.8)
-      zod: 3.23.8
+      '@t3-oss/env-core': 0.11.1(typescript@5.4.5)(zod@3.24.0)
+      zod: 3.24.0
     optionalDependencies:
       typescript: 5.4.5
 
@@ -8500,19 +8500,19 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       uuid: 8.3.2
 
-  next-safe-action@7.9.9(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8):
+  next-safe-action@7.9.9(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.0):
     dependencies:
       next: 14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.0
 
-  next-safe-navigation@0.3.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.23.8):
+  next-safe-navigation@0.3.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)(zod@3.24.0):
     dependencies:
       next: 14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       typescript: 5.4.5
-      zod: 3.23.8
+      zod: 3.24.0
 
   next-superjson-plugin@0.6.3(next@14.2.20(@playwright/test@1.42.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(superjson@2.2.2):
     dependencies:
@@ -10004,11 +10004,11 @@ snapshots:
 
   yoga-layout@2.0.1: {}
 
-  zod-form-data@2.0.2(zod@3.23.8):
+  zod-form-data@2.0.2(zod@3.24.0):
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.0
 
-  zod@3.23.8: {}
+  zod@3.24.0: {}
 
   zustand@4.5.5(@types/react@18.3.13)(immer@10.1.1)(react@18.3.1):
     dependencies:
