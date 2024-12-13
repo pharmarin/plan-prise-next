@@ -58,7 +58,7 @@
     "react": "18.3.1",
     "react-day-picker": "8.10.1",
     "react-dom": "18.3.1",
-    "react-hook-form": "7.54.0",
+    "react-hook-form": "7.54.1",
     "react-pdf": "8.0.2",
     "react-pdf-tailwind": "2.3.0",
     "react-textarea-autosize": "8.5.6",
