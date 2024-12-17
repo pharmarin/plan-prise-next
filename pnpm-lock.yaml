@@ -135,7 +135,7 @@ importers:
     dependencies:
       '@tailwindcss/typography':
         specifier: 0.5.15
-        version: 0.5.15(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
+        version: 0.5.15(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
       autoprefixer:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.49)
@@ -143,11 +143,11 @@ importers:
         specifier: 8.4.49
         version: 8.4.49
       tailwindcss:
-        specifier: 3.4.16
-        version: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
+        specifier: 3.4.17
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
+        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
     devDependencies:
       '@plan-prise/eslint-config':
         specifier: workspace:*
@@ -342,8 +342,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2(webpack@5.97.1)
       tailwindcss:
-        specifier: 3.4.16
-        version: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
+        specifier: 3.4.17
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
       webpack:
         specifier: 5.97.1
         version: 5.97.1
@@ -620,7 +620,7 @@ importers:
         version: 3.4.5(react@18.3.1)
       '@tailwindcss/typography':
         specifier: 0.5.15
-        version: 0.5.15(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
+        version: 0.5.15(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
       '@tanstack/react-table':
         specifier: 8.20.6
         version: 8.20.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -668,7 +668,7 @@ importers:
         version: 2.5.5
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
+        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))
       usehooks-ts:
         specifier: 3.1.0
         version: 3.1.0(react@18.3.1)
@@ -692,8 +692,8 @@ importers:
         specifier: 8.57.0
         version: 8.57.0
       tailwindcss:
-        specifier: 3.4.16
-        version: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
+        specifier: 3.4.17
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
       typescript:
         specifier: 5.4.5
         version: 5.4.5
@@ -4703,8 +4703,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss@3.4.16:
-    resolution: {integrity: sha512-TI4Cyx7gDiZ6r44ewaJmt0o6BrMCT5aK5e0rmJ/G9Xq3w7CX/5VXl/zIPEJZFUK5VEqwByyhqNPycPlvcK4ZNw==}
+  tailwindcss@3.4.17:
+    resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -6290,13 +6290,13 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@tailwindcss/typography@0.5.15(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))':
+  '@tailwindcss/typography@0.5.15(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)))':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
 
   '@tanstack/react-table@8.20.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -9032,7 +9032,7 @@ snapshots:
   react-pdf-tailwind@2.3.0(react@18.3.1)(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)):
     dependencies:
       '@react-pdf/renderer': 3.4.5(react@18.3.1)
-      tailwindcss: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
     transitivePeerDependencies:
       - encoding
       - react
@@ -9534,11 +9534,11 @@ snapshots:
 
   tailwind-merge@2.5.5: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))):
     dependencies:
-      tailwindcss: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5))
 
-  tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)):
+  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
