@@ -296,8 +296,8 @@ importers:
         specifier: 3.24.1
         version: 3.24.1
       zod-form-data:
-        specifier: 2.0.2
-        version: 2.0.2(zod@3.24.1)
+        specifier: 2.0.5
+        version: 2.0.5(zod@3.24.1)
       zustand:
         specifier: 4.5.5
         version: 4.5.5(@types/react@18.3.18)(immer@10.1.1)(react@18.3.1)
@@ -5357,8 +5357,8 @@ packages:
   yoga-layout@2.0.1:
     resolution: {integrity: sha512-tT/oChyDXelLo2A+UVnlW9GU7CsvFMaEnd9kVFsaiCQonFAXd3xrHhkLYu+suwwosrAEQ746xBU+HvYtm1Zs2Q==}
 
-  zod-form-data@2.0.2:
-    resolution: {integrity: sha512-sKTi+k0fvkxdakD0V5rq+9WVJA3cuTQUfEmNqvHrTzPLvjfLmkkBLfR0ed3qOi9MScJXTHIDH/jUNnEJ3CBX4g==}
+  zod-form-data@2.0.5:
+    resolution: {integrity: sha512-T7dV6lTBCwkd8PyvJVCnjXKpgXomU8gEm/TcvEZY7qNdRhIo9T17HrdlHIK68PzTAYaV2HxR9rgwpTSWv0L+QQ==}
     peerDependencies:
       zod: '>= 3.11.0'
 
@@ -10667,7 +10667,7 @@ snapshots:
 
   yoga-layout@2.0.1: {}
 
-  zod-form-data@2.0.2(zod@3.24.1):
+  zod-form-data@2.0.5(zod@3.24.1):
     dependencies:
       zod: 3.24.1
 
