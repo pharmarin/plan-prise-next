@@ -22,7 +22,7 @@
     "@plan-prise/prettier-config": "workspace:*",
     "@plan-prise/tsconfig": "workspace:*",
     "@types/react": "18.3.18",
-    "eslint": "8.57.0",
+    "eslint": "8.57.1",
     "tailwindcss": "3.4.17",
     "typescript": "5.4.5"
   },
