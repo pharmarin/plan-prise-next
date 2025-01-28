@@ -30,7 +30,7 @@
     "@plan-prise/ui": "workspace:*",
     "@prisma/client": "5.22.0",
     "@react-pdf/renderer": "3.4.5",
-    "@sentry/nextjs": "7.120.2",
+    "@sentry/nextjs": "8.52.0",
     "@t3-oss/env-nextjs": "0.11.1",
     "@tanstack/react-table": "8.20.6",
     "@tremor/react": "3.18.6",
