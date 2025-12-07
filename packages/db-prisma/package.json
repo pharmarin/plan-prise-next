@@ -33,7 +33,7 @@
     "@plan-prise/prettier-config": "workspace:*",
     "@plan-prise/tsconfig": "workspace:*",
     "dotenv-cli": "7.4.4",
-    "eslint": "8.57.0",
+    "eslint": "8.57.1",
     "prisma": "5.22.0",
     "prisma-json-types-generator": "3.2.2",
     "typescript": "5.4.5"
