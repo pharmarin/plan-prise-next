@@ -54,7 +54,7 @@
     "react-pdf-tailwind": "2.3.0",
     "superjson": "2.2.2",
     "tailwind-merge": "2.6.0",
-    "typescript": "5.4.5",
+    "typescript": "5.7.3",
     "usehooks-ts": "3.1.0",
     "zod": "3.24.1",
     "zod-form-data": "2.0.5",
